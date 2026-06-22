@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import WhatsAppFab from './components/WhatsAppFab'
 import GlobalSEO from './components/GlobalSEO'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
 // Original pages
 import Home from './pages/Home.tsx'
@@ -69,6 +70,7 @@ function Router() {
       <ScrollToTop />
       <Navbar />
       <main>
+        <ErrorBoundary>
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
@@ -208,6 +210,7 @@ function Router() {
 
           <Route component={NotFound} />
         </Switch>
+        </ErrorBoundary>
       </main>
       <Footer />
       <WhatsAppFab />
