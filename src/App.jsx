@@ -64,13 +64,14 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const [location] = useLocation()
   return (
     <>
       <GlobalSEO />
       <ScrollToTop />
       <Navbar />
       <main>
-        <ErrorBoundary>
+        <ErrorBoundary resetKey={location}>
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
@@ -205,8 +206,8 @@ function Router() {
             {(params) => <BlogDetailPage slug={params.slug} />}
           </Route>
 
-          {/* Event type pages (bodas, corporativos, xv-anos, etc.) */}
-          <Route path="/:slug" component={EventTypePage} />
+          {/* Catch-all: ServicePage handles all slugs gracefully */}
+          <Route path="/:slug" component={ServicePage} />
 
           <Route component={NotFound} />
         </Switch>
