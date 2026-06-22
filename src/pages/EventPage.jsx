@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { whatsappLink, WHY_BODASESOR } from '../data/site'
+import { whatsappLink, WHY_BODASESOR, img } from '../data/site'
 import SectionCTA from '../components/SectionCTA'
 
 const EVENT_DATA = {
   bodas: {
     title: 'Servicios para Bodas en México',
     hero: 'Todo lo que necesitas para la boda de tus sueños en un solo lugar',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Una boda es mucho más que un evento: es la celebración del amor y el comienzo de una nueva historia. Bodasesor nació para acompañar a las parejas en la organización de su día más importante, ofreciendo acceso a los mejores proveedores de México en un solo lugar. Hemos acompañado más de 1,000 bodas en todo México.',
     services: [
       { cat: 'Banquete & Catering', items: ['Banquete Formal', 'Paella Valenciana', 'Taquiza de Guisados', 'Parrillada Argentina', 'Canapés Premium', 'Barra de Sushi'], to: '/banquetes-catering' },
@@ -21,7 +21,7 @@ const EVENT_DATA = {
   corporativos: {
     title: 'Eventos Corporativos Profesionales en México',
     hero: 'Eventos empresariales que proyectan la imagen que tu marca merece',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Los eventos corporativos son la carta de presentación de tu empresa ante clientes, socios y colaboradores. Desde coffee breaks para juntas hasta congresos de 5,000 personas, pasando por cenas de gala, lanzamientos de producto y posadas navideñas empresariales: Bodasesor tiene la experiencia y los proveedores para hacerlo impecable.',
     services: [
       { cat: 'Catering Corporativo', items: ['Coffee Break Ejecutivo', 'Canapés Premium', 'Desayuno Social', 'Comida Corrida', 'Alimentos para Empresas', 'Bocadillos'], to: '/banquetes-catering' },
@@ -34,7 +34,7 @@ const EVENT_DATA = {
   'xv-anos': {
     title: 'Servicios para XV Años en México',
     hero: 'El festejo de quince años más especial de tu vida',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Los XV años son uno de los eventos más especiales en la cultura mexicana. Bodasesor te ofrece todos los servicios para que tu fiesta de quince años sea perfecta: desde el banquete y las barras de bebidas hasta el DJ, la decoración floral y la fotografía.',
     services: [
       { cat: 'Banquete & Catering', items: ['Banquete Formal', 'Taquiza de Guisados', 'Barra de Crepas', 'Barra de Sushi', 'Repostería'], to: '/banquetes-catering' },
@@ -46,7 +46,7 @@ const EVENT_DATA = {
   'baby-shower': {
     title: 'Baby Shower — Bodasesor Eventos',
     hero: 'Celebra la llegada de tu bebé con estilo',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Un baby shower es la celebración perfecta para dar la bienvenida a un nuevo integrante de la familia. Bodasesor te ofrece todos los servicios para que tu baby shower sea un evento memorable: catering gourmet, decoración temática, mesa de dulces y mucho más.',
     services: [
       { cat: 'Catering', items: ['Canapés Premium', 'Bocadillos', 'Desayuno Social', 'Cupcakes Gourmet'], to: '/banquetes-catering' },
@@ -56,7 +56,7 @@ const EVENT_DATA = {
   cumpleanos: {
     title: 'Fiestas de Cumpleaños — Bodasesor Eventos',
     hero: 'Celebra un año más con una fiesta increíble',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Desde cumpleaños íntimos hasta fiestas grandes, Bodasesor tiene los servicios para hacer tu cumpleaños un evento memorable. Catering personalizado, barras de bebidas, música y más.',
     services: [
       { cat: 'Alimentos', items: ['Taquiza de Guisados', 'Parrillada Tradicional', 'Barra de Crepas', 'Barra de Pizzas'], to: '/banquetes-catering' },
@@ -67,7 +67,7 @@ const EVENT_DATA = {
   'primera-comunion': {
     title: 'Primera Comunión — Bodasesor Eventos',
     hero: 'Un día sagrado, una celebración perfecta',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'La primera comunión es un momento sagrado que merece una celebración a la altura. Bodasesor coordina todos los servicios para que el festejo sea íntimo, elegante y memorable.',
     services: [
       { cat: 'Alimentos', items: ['Banquete Formal', 'Bocadillos', 'Cupcakes Gourmet', 'Repostería'], to: '/banquetes-catering' },
@@ -77,7 +77,7 @@ const EVENT_DATA = {
   cenas: {
     title: 'Cenas de Gala — Bodasesor Eventos',
     hero: 'Cenas memorables para ocasiones especiales',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Bodasesor organiza cenas de gala, cenas empresariales y cenas temáticas para todo tipo de ocasión. Menús personalizados, servicio de meseros, decoración y música en vivo.',
     services: [
       { cat: 'Alimentos', items: ['Banquete Formal', 'Canapés Premium', 'Paella', 'Parrillada Argentina'], to: '/banquetes-catering' },
@@ -87,7 +87,7 @@ const EVENT_DATA = {
   graduaciones: {
     title: 'Graduaciones — Bodasesor Eventos',
     hero: 'Celebra el logro con una fiesta que estará en tus recuerdos',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'La graduación es un hito que merece una celebración especial. Bodasesor coordina todo: desde el banquete hasta el DJ y la decoración, para que tu fiesta de graduación sea un éxito.',
     services: [
       { cat: 'Alimentos', items: ['Banquete Formal', 'Taquiza de Guisados', 'Barra de Crepas'], to: '/banquetes-catering' },
@@ -102,7 +102,7 @@ export default function EventPage() {
   const data = EVENT_DATA[slug] || {
     title: 'Bodasesor Eventos',
     hero: 'Organizamos tu evento perfecto',
-    heroImg: '/images/banquete-hero.png',
+    heroImg: img('/images/banquete-hero.png'),
     intro: 'Contáctanos para cotizar cualquier tipo de evento.',
     services: [],
   }

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { INSTAGRAM_GROUPS, whatsappLink } from '../data/site'
+import { INSTAGRAM_GROUPS, whatsappLink, img } from '../data/site'
 import SectionCTA from '../components/SectionCTA'
 
 const ALL_IMAGES = INSTAGRAM_GROUPS.flat()
 // Add galeria images
-const GALERIA_EXTRA = Array.from({ length: 15 }, (_, i) => `/images/galeria/g${i + 1}.jpg`)
+const GALERIA_EXTRA = Array.from({ length: 15 }, (_, i) => img(`/images/galeria/g${i + 1}.jpg`))
 
 export default function Galeria() {
   const [lightbox, setLightbox] = useState(null)

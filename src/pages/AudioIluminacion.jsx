@@ -1,4 +1,4 @@
-import { whatsappLink } from '../data/site'
+import { whatsappLink, img } from '../data/site'
 import SectionCTA from '../components/SectionCTA'
 
 const CATEGORIES = [
@@ -6,33 +6,33 @@ const CATEGORIES = [
     label: 'Audio Profesional',
     icon: '🎵',
     items: [
-      { name: 'Audio Básico', img: '/images/audio/audio-basico.png', desc: 'Sistema de sonido profesional para eventos medianos' },
-      { name: 'Line Array', img: '/images/audio/audio-line-array.png', desc: 'Torres de sonido de alta potencia para grandes eventos' },
-      { name: 'Transmisión en Vivo', img: '/images/audio/transmision-vivo.png', desc: 'Streaming y transmisión en vivo de tu evento' },
+      { name: 'Audio Básico', img: img('/images/audio/audio-basico.png'), desc: 'Sistema de sonido profesional para eventos medianos' },
+      { name: 'Line Array', img: img('/images/audio/audio-line-array.png'), desc: 'Torres de sonido de alta potencia para grandes eventos' },
+      { name: 'Transmisión en Vivo', img: img('/images/audio/transmision-vivo.png'), desc: 'Streaming y transmisión en vivo de tu evento' },
     ],
   },
   {
     label: 'Iluminación',
     icon: '💡',
     items: [
-      { name: 'Par LED', img: '/images/audio/par-led.png', desc: 'Iluminación LED ambiental y de colores' },
-      { name: 'Cabezas Móviles', img: '/images/audio/cabezas-moviles.png', desc: 'Spots robotizados para espectáculo visual' },
-      { name: 'Blinders & Strobes', img: '/images/audio/blinders-strobes.png', desc: 'Efectos de luz para shows en vivo' },
-      { name: 'Guirnaldas de Luces', img: '/images/audio/guirnaldas-luces.png', desc: 'Decoración con luces para ambientación romántica' },
-      { name: 'Truss DMX', img: '/images/audio/truss-dmx.png', desc: 'Estructura de aluminio con control DMX' },
-      { name: 'Uplighting', img: '/images/audio/uplighting.png', desc: 'Iluminación perimetral de pared y columnas' },
-      { name: 'Pixel Bars', img: '/images/audio/pixel-bars.png', desc: 'Barras LED pixeladas de alto impacto visual' },
+      { name: 'Par LED', img: img('/images/audio/par-led.png'), desc: 'Iluminación LED ambiental y de colores' },
+      { name: 'Cabezas Móviles', img: img('/images/audio/cabezas-moviles.png'), desc: 'Spots robotizados para espectáculo visual' },
+      { name: 'Blinders & Strobes', img: img('/images/audio/blinders-strobes.png'), desc: 'Efectos de luz para shows en vivo' },
+      { name: 'Guirnaldas de Luces', img: img('/images/audio/guirnaldas-luces.png'), desc: 'Decoración con luces para ambientación romántica' },
+      { name: 'Truss DMX', img: img('/images/audio/truss-dmx.png'), desc: 'Estructura de aluminio con control DMX' },
+      { name: 'Uplighting', img: img('/images/audio/uplighting.png'), desc: 'Iluminación perimetral de pared y columnas' },
+      { name: 'Pixel Bars', img: img('/images/audio/pixel-bars.png'), desc: 'Barras LED pixeladas de alto impacto visual' },
     ],
   },
   {
     label: 'Efectos Especiales',
     icon: '✨',
     items: [
-      { name: 'Laser', img: '/images/audio/laser.png', desc: 'Espectáculo de luces láser profesional' },
-      { name: 'Efectos LED', img: '/images/audio/efectos-led.png', desc: 'Efectos especiales LED personalizados' },
-      { name: 'Máquinas de Humo', img: '/images/audio/maquinas-humo.png', desc: 'Máquinas de humo y cañones de espuma' },
-      { name: 'Gobos', img: '/images/audio/gobos.png', desc: 'Proyección de imágenes y logos en paredes' },
-      { name: 'Pantalla LED', img: '/images/audio/pantalla-led.png', desc: 'Pantalla LED de alta resolución' },
+      { name: 'Laser', img: img('/images/audio/laser.png'), desc: 'Espectáculo de luces láser profesional' },
+      { name: 'Efectos LED', img: img('/images/audio/efectos-led.png'), desc: 'Efectos especiales LED personalizados' },
+      { name: 'Máquinas de Humo', img: img('/images/audio/maquinas-humo.png'), desc: 'Máquinas de humo y cañones de espuma' },
+      { name: 'Gobos', img: img('/images/audio/gobos.png'), desc: 'Proyección de imágenes y logos en paredes' },
+      { name: 'Pantalla LED', img: img('/images/audio/pantalla-led.png'), desc: 'Pantalla LED de alta resolución' },
     ],
   },
 ]

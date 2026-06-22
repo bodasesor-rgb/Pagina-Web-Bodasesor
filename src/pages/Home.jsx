@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { whatsappLink, CLIENTS, TESTIMONIALS, CITIES, INSTAGRAM_GROUPS } from '../data/site'
+import { whatsappLink, CLIENTS, TESTIMONIALS, CITIES, INSTAGRAM_GROUPS, img } from '../data/site'
 
 function useCountUp(target, duration = 1800, start = false) {
   const [count, setCount] = useState(0)
@@ -153,7 +153,7 @@ function AboutSection() {
     <section className="py-20 px-4 bg-amber-50">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
         <div className="md:w-1/2">
-          <img src="/images/galeria-1.png" alt="Bodasesor equipo" className="rounded-2xl shadow-lg w-full object-cover" loading="lazy" />
+          <img src={img('/images/galeria-1.png')} alt="Bodasesor equipo" className="rounded-2xl shadow-lg w-full object-cover" loading="lazy" />
         </div>
         <div className="md:w-1/2">
           <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
@@ -279,7 +279,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/hero-bg-new.png" alt="Evento Bodasesor" className="w-full h-full object-cover" />
+          <img src={img('/images/hero-bg-new.png')} alt="Evento Bodasesor" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">

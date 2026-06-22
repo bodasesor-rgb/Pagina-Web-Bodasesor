@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { EMAIL, PHONE, INSTAGRAM, whatsappLink } from '../data/site'
+import { EMAIL, PHONE, INSTAGRAM, whatsappLink, img } from '../data/site'
 import SectionCTA from '../components/SectionCTA'
 
 export default function QuienesSomos() {
@@ -15,7 +15,7 @@ export default function QuienesSomos() {
       <section className="py-16 px-4 bg-white">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
           <div className="md:w-1/2">
-            <img src="/images/galeria-1.png" alt="Equipo Bodasesor" className="rounded-2xl shadow-lg w-full object-cover" loading="lazy" />
+            <img src={img('/images/galeria-1.png')} alt="Equipo Bodasesor" className="rounded-2xl shadow-lg w-full object-cover" loading="lazy" />
           </div>
           <div className="md:w-1/2">
             <p className="text-gray-600 mb-5 leading-relaxed">
