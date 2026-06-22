@@ -41,9 +41,34 @@ function useCountUp(target, duration = 1800, trigger = false) {
   return count
 }
 
+const HERO_REVIEWS = [
+  { initials: 'HJ', name: 'Héctor Jiménez', city: 'Monterrey', text: 'Servicio impecable, el banquete superó todas las expectativas de mis invitados.', time: 'Hace 1 día' },
+  { initials: 'CR', name: 'Cinthya Rodríguez', city: 'CDMX', text: 'Todo estuvo muy bien coordinado. Siempre muy profesionales y al pendiente de cada detalle.', time: 'Hace 3 días' },
+  { initials: 'XH', name: 'Ximena Hernández', city: 'Guadalajara', text: 'La comida estuvo exquisita de verdad 💖. Gracias por hacer mi boda un evento memorable.', time: 'Hace 1 semana' },
+  { initials: 'ST', name: 'Sandra Toledano', city: 'Monterrey', text: 'Excelente servicio. Los volvería a contratar sin duda.', time: 'Hace 2 semanas' },
+  { initials: 'AN', name: 'Adolfo Núñez', city: 'Puebla', text: 'Gran profesional. Total confianza para futuros eventos.', time: 'Hace 3 semanas' },
+  { initials: 'SC', name: 'Selene Carrillo', city: 'Querétaro', text: 'Recibí múltiples felicitaciones por el sabor de los alimentos. Puntualidad perfecta.', time: 'Hace 1 mes' },
+]
+
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
   const { city } = useCity()
+  const [reviewIdx, setReviewIdx] = useState(0)
+  const [reviewVisible, setReviewVisible] = useState(true)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setReviewVisible(false)
+      setTimeout(() => {
+        setReviewIdx(i => (i + 1) % HERO_REVIEWS.length)
+        setReviewVisible(true)
+      }, 400)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const review = HERO_REVIEWS[reviewIdx]
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
@@ -51,16 +76,32 @@ function Hero() {
         <div className="absolute inset-0 bg-[#162040]/65" />
       </div>
 
-      {/* Review badge */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 hidden md:flex items-center gap-3 bg-white/12 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-3 text-white text-sm font-serif">
-        <div className="w-9 h-9 bg-[#162040] rounded-full flex items-center justify-center text-xs font-bold text-[#f5efe8] flex-shrink-0 border-2 border-white/30">HJ</div>
-        <div>
-          <span className="font-bold">Héctor Jiménez</span>
-          <span className="text-white/60 mx-1">·</span>
-          <span className="text-white/70">Monterrey</span>
-          <div className="text-white/60 text-xs mt-0.5">Servicio impecable, el banquete superó todas las expectativas de mis invitados.</div>
+      {/* Floating review badge — cycles through all reviews */}
+      <div className={`absolute bottom-24 left-4 md:left-10 z-10 max-w-xs transition-all duration-400 ${reviewVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+        <div className="review-card-enter bg-white rounded-2xl shadow-xl px-4 py-3 flex items-start gap-3">
+          <div className="w-9 h-9 bg-[#162040] rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+            {review.initials}
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 mb-0.5">
+              <span className="font-bold text-[#162040] text-sm font-serif">{review.name}</span>
+              <span className="text-gray-400 text-xs">·</span>
+              <span className="text-gray-400 text-xs font-serif">{review.city}</span>
+            </div>
+            <p className="text-gray-600 text-xs font-serif leading-relaxed line-clamp-2">{review.text}</p>
+            <div className="flex items-center gap-1 mt-1">
+              <span className="text-amber-400 text-xs">★★★★★</span>
+              <span className="text-gray-300 text-xs ml-1">{review.time}</span>
+            </div>
+          </div>
         </div>
-        <div className="text-white/40 text-xs ml-2 whitespace-nowrap">Hace 1 día</div>
+        {/* Dots */}
+        <div className="flex gap-1 justify-center mt-2">
+          {HERO_REVIEWS.map((_, i) => (
+            <button key={i} onClick={() => { setReviewIdx(i); setReviewVisible(true) }}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === reviewIdx ? 'w-4 bg-white' : 'w-1.5 bg-white/40'}`} />
+          ))}
+        </div>
       </div>
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">

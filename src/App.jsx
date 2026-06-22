@@ -17,6 +17,7 @@ import AudioIluminacion from './pages/AudioIluminacion'
 import SalasPeriqueras from './pages/SalasPeriqueras'
 import Fotografia from './pages/Fotografia'
 import EventPage from './pages/EventPage'
+import ServicePage from './pages/ServicePage'
 import NotFound from './pages/NotFound'
 
 function ScrollToTop() {
@@ -51,8 +52,8 @@ function Router() {
           <Route path="/primera-comunion">{() => <EventPage slug="primera-comunion" />}</Route>
           <Route path="/cenas">{() => <EventPage slug="cenas" />}</Route>
           <Route path="/graduaciones">{() => <EventPage slug="graduaciones" />}</Route>
-          {/* Catch-all */}
-          <Route path="/:slug">{(params) => <EventPage slug={params.slug} />}</Route>
+          {/* Catch-all — handles all service/product/city slugs */}
+          <Route path="/:slug">{(params) => <ServicePage slug={params.slug} />}</Route>
           <Route component={NotFound} />
         </Switch>
       </main>
