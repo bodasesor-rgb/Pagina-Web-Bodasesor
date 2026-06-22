@@ -1,12 +1,2 @@
-export const salasNavItems = []
-export const periquerasNavItems = []
 export const carpasNavItems = []
-export const enteladosNavItems = []
-export const floreriaNavItems = { floral: [], globos: [], decoracion: [] }
-export const showsNavItems = { percusion: [], danza: [], tecnologia: [], circo: [] }
-export const reposteriaNavItems = []
-export const weddingNavItems = []
-export const musicaNavItems = []
-export const fotografiaNavItems = []
-export const empresasNavItems = []
-export const espaciosNavItems = []
+export const CARPAS = []
