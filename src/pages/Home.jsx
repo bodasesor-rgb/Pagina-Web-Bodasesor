@@ -30,19 +30,19 @@ function Stats() {
   const events = useCountUp(1000, 1800, visible)
   const people = useCountUp(10000, 2000, visible)
   return (
-    <section ref={ref} className="bg-gray-900 py-12">
+    <section ref={ref} className="bg-[#162040] py-12">
       <div className="max-w-5xl mx-auto px-4 grid grid-cols-3 gap-6 text-center">
         <div>
           <p className="font-serif text-4xl md:text-5xl text-accent">{events.toLocaleString()}+</p>
-          <p className="text-gray-400 text-sm mt-1 uppercase tracking-wider">Eventos realizados</p>
+          <p className="text-[#8a9bb5] text-sm mt-1 uppercase tracking-wider">Eventos realizados</p>
         </div>
         <div>
           <p className="font-serif text-4xl md:text-5xl text-accent">{people.toLocaleString()}+</p>
-          <p className="text-gray-400 text-sm mt-1 uppercase tracking-wider">Personas atendidas</p>
+          <p className="text-[#8a9bb5] text-sm mt-1 uppercase tracking-wider">Personas atendidas</p>
         </div>
         <div>
           <p className="font-serif text-4xl md:text-5xl text-accent">4.6/5</p>
-          <p className="text-gray-400 text-sm mt-1 uppercase tracking-wider">Calificación promedio</p>
+          <p className="text-[#8a9bb5] text-sm mt-1 uppercase tracking-wider">Calificación promedio</p>
         </div>
       </div>
     </section>
@@ -63,16 +63,16 @@ function Services() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Lo que hacemos</p>
-          <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-4">Nuestros servicios</h2>
-          <p className="text-gray-500 max-w-xl mx-auto">Todo lo que necesitas para hacer de tu evento una experiencia inolvidable</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-[#162040] mb-4">Nuestros servicios</h2>
+          <p className="text-[#8a9bb5] max-w-xl mx-auto">Todo lo que necesitas para hacer de tu evento una experiencia inolvidable</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s) => (
             <Link key={s.to} to={s.to}
               className="group p-7 rounded-2xl border border-gray-100 hover:border-secondary hover:shadow-lg transition-all bg-white">
               <div className="text-4xl mb-4">{s.icon}</div>
-              <h3 className="font-serif text-xl text-gray-900 mb-2 group-hover:text-primary transition-colors">{s.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+              <h3 className="font-serif text-xl text-[#162040] mb-2 group-hover:text-primary transition-colors">{s.title}</h3>
+              <p className="text-[#8a9bb5] text-sm leading-relaxed">{s.desc}</p>
             </Link>
           ))}
         </div>
@@ -90,12 +90,12 @@ function InstagramGallery() {
   }, [total])
   const group = INSTAGRAM_GROUPS[slide]
   return (
-    <section className="py-20 px-4 bg-gray-50">
+    <section className="py-20 px-4 bg-[#f5efe8]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">@bodasesormx</p>
-          <h2 className="font-serif text-4xl text-gray-900">Galería de Eventos</h2>
-          <p className="text-gray-500 mt-2">Más de 145 fotos reales de eventos realizados por Bodasesor en todo México.</p>
+          <h2 className="font-serif text-4xl text-[#162040]">Galería de Eventos</h2>
+          <p className="text-[#8a9bb5] mt-2">Más de 145 fotos reales de eventos realizados por Bodasesor en todo México.</p>
         </div>
         <div className="grid grid-cols-3 gap-3">
           {group.map((src, i) => (
@@ -132,14 +132,14 @@ function HowItWorks() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14">
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Cómo funciona</p>
-          <h2 className="font-serif text-4xl text-gray-900">Organizar tu evento es más fácil de lo que piensas</h2>
+          <h2 className="font-serif text-4xl text-[#162040]">Organizar tu evento es más fácil de lo que piensas</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {steps.map((s) => (
             <div key={s.num} className="text-center">
               <div className="font-serif text-5xl text-amber-200 font-bold mb-3">{s.num}</div>
-              <h3 className="font-serif text-lg text-gray-900 mb-2">{s.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
+              <h3 className="font-serif text-lg text-[#162040] mb-2">{s.title}</h3>
+              <p className="text-sm text-[#8a9bb5] leading-relaxed">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -157,18 +157,18 @@ function AboutSection() {
         </div>
         <div className="md:w-1/2">
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
-          <h2 className="font-serif text-4xl text-gray-900 mb-5">Creamos eventos que se convierten en recuerdos</h2>
+          <h2 className="font-serif text-4xl text-[#162040] mb-5">Creamos eventos que se convierten en recuerdos</h2>
           <p className="text-gray-600 mb-4 leading-relaxed">
             Somos Bodasesor Eventos, una empresa especializada en la organización y producción de celebraciones en la Ciudad de México. Con más de diez años de experiencia, acompañamos a nuestros clientes en cada etapa de su evento.
           </p>
           <div className="flex gap-8 mb-6">
             <div>
               <p className="font-serif text-3xl text-primary">+10</p>
-              <p className="text-xs text-gray-500 uppercase tracking-wider">años de experiencia</p>
+              <p className="text-xs text-[#8a9bb5] uppercase tracking-wider">años de experiencia</p>
             </div>
             <div>
               <p className="font-serif text-3xl text-primary">100%</p>
-              <p className="text-xs text-gray-500 uppercase tracking-wider">atención personalizada</p>
+              <p className="text-xs text-[#8a9bb5] uppercase tracking-wider">atención personalizada</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 mb-8">
@@ -196,11 +196,11 @@ function Clients() {
   return (
     <section className="py-16 px-4 bg-white overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <p className="text-center text-gray-400 text-sm uppercase tracking-widest mb-8">Empresas que confían en nosotros</p>
+        <p className="text-center text-[#8a9bb5] text-sm uppercase tracking-widest mb-8">Empresas que confían en nosotros</p>
         <div className="relative">
           <div className="flex gap-10 animate-marquee whitespace-nowrap">
             {[...CLIENTS, ...CLIENTS].map((c, i) => (
-              <span key={i} className="text-gray-400 font-semibold text-sm flex-shrink-0 hover:text-gray-700 transition-colors">{c}</span>
+              <span key={i} className="text-[#8a9bb5] font-semibold text-sm flex-shrink-0 hover:text-gray-700 transition-colors">{c}</span>
             ))}
           </div>
         </div>
@@ -220,11 +220,11 @@ function Testimonials() {
   const pages = Math.ceil(TESTIMONIALS.length / perView)
   const visible = TESTIMONIALS.slice(active * perView, active * perView + perView)
   return (
-    <section className="py-20 px-4 bg-gray-50">
+    <section className="py-20 px-4 bg-[#f5efe8]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Nuestros clientes</p>
-          <h2 className="font-serif text-4xl text-gray-900">Lo que dicen nuestros clientes</h2>
+          <h2 className="font-serif text-4xl text-[#162040]">Lo que dicen nuestros clientes</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {visible.map((t, i) => (
@@ -236,8 +236,8 @@ function Testimonials() {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="font-semibold text-sm text-gray-900">{t.name}</p>
-                  <p className="text-xs text-gray-400">{t.type}</p>
+                  <p className="font-semibold text-sm text-[#162040]">{t.name}</p>
+                  <p className="text-xs text-[#8a9bb5]">{t.type}</p>
                 </div>
               </div>
             </div>
@@ -249,7 +249,7 @@ function Testimonials() {
               className={`w-2 h-2 rounded-full transition-all ${i === active ? 'bg-primary w-5' : 'bg-gray-300'}`} />
           ))}
         </div>
-        <p className="text-center text-gray-400 text-sm mt-4">Calificación promedio: <strong className="text-gray-700">4.6/5</strong></p>
+        <p className="text-center text-[#8a9bb5] text-sm mt-4">Calificación promedio: <strong className="text-gray-700">4.6/5</strong></p>
       </div>
     </section>
   )
@@ -257,13 +257,13 @@ function Testimonials() {
 
 function Cities() {
   return (
-    <section className="py-16 px-4 bg-gray-900 text-white">
+    <section className="py-16 px-4 bg-[#162040] text-white">
       <div className="max-w-5xl mx-auto text-center">
         <p className="text-accent text-xs font-semibold uppercase tracking-widest mb-2">Cobertura nacional</p>
         <h2 className="font-serif text-3xl mb-8">Servicio en las principales ciudades</h2>
         <div className="flex flex-wrap justify-center gap-3">
           {CITIES.map(city => (
-            <span key={city} className="px-4 py-2 bg-gray-800 hover:bg-primary/20 border border-gray-700 hover:border-accent text-gray-300 hover:text-accent rounded-full text-sm transition-colors cursor-default">
+            <span key={city} className="px-4 py-2 bg-[#1d2b52] hover:bg-primary/20 border border-gray-700 hover:border-accent text-gray-300 hover:text-accent rounded-full text-sm transition-colors cursor-default">
               {city}
             </span>
           ))}
@@ -284,7 +284,7 @@ export default function Home() {
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-6 py-2 inline-flex items-center gap-3 mb-8 text-sm text-white">
-            <span className="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-xs font-bold text-gray-900">HJ</span>
+            <span className="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-xs font-bold text-[#162040]">HJ</span>
             <span><strong>Héctor Jiménez</strong> · Monterrey · Servicio impecable, el banquete superó todas las expectativas.</span>
           </div>
           <h1 className="font-serif text-5xl md:text-7xl text-white font-semibold leading-tight mb-6">

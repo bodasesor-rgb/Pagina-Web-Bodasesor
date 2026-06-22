@@ -5,10 +5,10 @@ import SectionCTA from '../components/SectionCTA'
 export default function QuienesSomos() {
   return (
     <>
-      <section className="pt-32 pb-16 px-4 text-center bg-gray-50">
+      <section className="pt-32 pb-16 px-4 text-center bg-[#f5efe8]">
         <div className="max-w-3xl mx-auto">
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
-          <h1 className="font-serif text-5xl md:text-6xl text-gray-900 mb-6">Creamos eventos que se convierten en recuerdos</h1>
+          <h1 className="font-serif text-5xl md:text-6xl text-[#162040] mb-6">Creamos eventos que se convierten en recuerdos</h1>
         </div>
       </section>
 
@@ -29,7 +29,7 @@ export default function QuienesSomos() {
               ].map(s => (
                 <div key={s.label} className="text-center">
                   <p className="font-serif text-3xl text-primary">{s.num}</p>
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">{s.label}</p>
+                  <p className="text-xs text-[#8a9bb5] uppercase tracking-wider mt-1">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -37,9 +37,9 @@ export default function QuienesSomos() {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-16 px-4 bg-[#f5efe8]">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-serif text-3xl text-gray-900 text-center mb-10">¿Por qué elegir Bodasesor?</h2>
+          <h2 className="font-serif text-3xl text-[#162040] text-center mb-10">¿Por qué elegir Bodasesor?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: '🏆', title: 'Experiencia comprobada', desc: 'Más de una década organizando eventos de todos los tamaños, con un equipo profesional y apasionado.' },
@@ -49,8 +49,8 @@ export default function QuienesSomos() {
             ].map(f => (
               <div key={f.title} className="bg-white rounded-2xl p-6 shadow-sm text-center">
                 <div className="text-3xl mb-3">{f.icon}</div>
-                <h3 className="font-serif text-lg text-gray-900 mb-2">{f.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
+                <h3 className="font-serif text-lg text-[#162040] mb-2">{f.title}</h3>
+                <p className="text-[#8a9bb5] text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>

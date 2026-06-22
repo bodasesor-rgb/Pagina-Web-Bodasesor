@@ -6,7 +6,7 @@ export default function BanquetesCatering() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
+      <section className="pt-32 pb-16 px-4 bg-[#162040] text-white text-center">
         <div className="max-w-3xl mx-auto">
           <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Servicios de alimentos</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Banquetes y Catering</h1>
@@ -19,7 +19,7 @@ export default function BanquetesCatering() {
             className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Cotizar servicio de alimentos
           </a>
-          <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-gray-400">
+          <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-[#8a9bb5]">
             <span>✓ 25 servicios disponibles</span>
             <span>✓ Banquetes, catering y estaciones</span>
             <span>✓ Chefs certificados</span>
@@ -44,14 +44,14 @@ export default function BanquetesCatering() {
               <span className="text-3xl">{cat.icon}</span>
               <span className="text-xs text-primary font-semibold uppercase tracking-wider">Categoría</span>
             </div>
-            <h2 className="font-serif text-3xl text-gray-900 mb-2">{cat.label}</h2>
-            <p className="text-gray-500 mb-8">{cat.desc}</p>
+            <h2 className="font-serif text-3xl text-[#162040] mb-2">{cat.label}</h2>
+            <p className="text-[#8a9bb5] mb-8">{cat.desc}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {cat.items.map((item) => (
                 <Link key={item.slug} to={`/${item.slug}`}
                   className="group border border-gray-200 rounded-xl p-5 hover:border-primary/30 hover:shadow-md transition-all bg-white">
-                  <h3 className="font-serif text-lg text-gray-900 mb-1 group-hover:text-primary transition-colors">{item.name}</h3>
-                  <p className="text-gray-500 text-sm">{item.desc}</p>
+                  <h3 className="font-serif text-lg text-[#162040] mb-1 group-hover:text-primary transition-colors">{item.name}</h3>
+                  <p className="text-[#8a9bb5] text-sm">{item.desc}</p>
                 </Link>
               ))}
             </div>
@@ -59,10 +59,10 @@ export default function BanquetesCatering() {
         </section>
       ))}
 
-      <section className="py-16 px-4 bg-gray-50 text-center">
+      <section className="py-16 px-4 bg-[#f5efe8] text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-3xl text-gray-900 mb-3">¿Qué servicio es para tu evento?</h2>
-          <p className="text-gray-500 mb-8">Cotización personalizada en menos de 24 horas. También podemos combinar varios servicios para tu evento.</p>
+          <h2 className="font-serif text-3xl text-[#162040] mb-3">¿Qué servicio es para tu evento?</h2>
+          <p className="text-[#8a9bb5] mb-8">Cotización personalizada en menos de 24 horas. También podemos combinar varios servicios para tu evento.</p>
           <a href={whatsappLink('Hola, quiero cotizar catering para mi evento')}
             target="_blank" rel="noopener noreferrer"
             className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
