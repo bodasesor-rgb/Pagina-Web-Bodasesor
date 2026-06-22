@@ -160,7 +160,7 @@ export default function EventPage() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     {cat.items.map(item => (
                       <Link key={item} to={cat.to}
-                        className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 hover:border-amber-300 hover:text-amber-700 transition-all text-center">
+                        className="bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 hover:border-primary/30 hover:text-primary transition-all text-center">
                         {item}
                       </Link>
                     ))}

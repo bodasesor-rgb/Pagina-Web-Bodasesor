@@ -9,11 +9,11 @@ export default function NotFound() {
         <h1 className="font-serif text-3xl text-gray-900 mb-3">Página no encontrada</h1>
         <p className="text-gray-500 mb-8">Esta página aún está en preparación o no existe. Puedes explorar nuestros servicios desde el inicio.</p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <Link to="/" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm">
+          <Link to="/" className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-full transition-colors text-sm">
             ← Volver al inicio
           </Link>
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"
-            className="border border-gray-300 text-gray-700 hover:border-amber-400 hover:text-amber-700 font-semibold px-6 py-3 rounded-full transition-colors text-sm">
+            className="border border-gray-300 text-gray-700 hover:border-accent hover:text-primary font-semibold px-6 py-3 rounded-full transition-colors text-sm">
             Cotizar por WhatsApp
           </a>
         </div>

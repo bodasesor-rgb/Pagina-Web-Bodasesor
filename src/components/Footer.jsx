@@ -8,14 +8,14 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <Link to="/" className="font-serif text-2xl text-white font-semibold">
-            <span className="text-amber-400">B</span>odasesor
+            <span className="text-accent">B</span>odasesor
           </Link>
           <p className="mt-4 text-sm text-gray-400 leading-relaxed">
             Banquetes premium, catering gourmet y mobiliario elegante para eventos en todo México.
           </p>
           <div className="flex gap-3 mt-5">
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-gray-800 hover:bg-amber-500 flex items-center justify-center transition-colors">
+              className="w-9 h-9 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
               </svg>
@@ -42,7 +42,7 @@ export default function Footer() {
               { label: 'Galería', to: '/galeria' },
             ].map(l => (
               <li key={l.to}>
-                <Link to={l.to} className="hover:text-amber-400 transition-colors">{l.label}</Link>
+                <Link to={l.to} className="hover:text-accent transition-colors">{l.label}</Link>
               </li>
             ))}
           </ul>
@@ -61,7 +61,7 @@ export default function Footer() {
               { label: 'Quiénes Somos', to: '/quienes-somos' },
             ].map(l => (
               <li key={l.to}>
-                <Link to={l.to} className="hover:text-amber-400 transition-colors">{l.label}</Link>
+                <Link to={l.to} className="hover:text-accent transition-colors">{l.label}</Link>
               </li>
             ))}
           </ul>
@@ -73,15 +73,15 @@ export default function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex gap-2">
               <span>📞</span>
-              <a href={`tel:+52${PHONE.replace(/\s/g, '')}`} className="hover:text-amber-400 transition-colors">{PHONE}</a>
+              <a href={`tel:+52${PHONE.replace(/\s/g, '')}`} className="hover:text-accent transition-colors">{PHONE}</a>
             </li>
             <li className="flex gap-2">
               <span>✉️</span>
-              <a href={`mailto:${EMAIL}`} className="hover:text-amber-400 transition-colors">{EMAIL}</a>
+              <a href={`mailto:${EMAIL}`} className="hover:text-accent transition-colors">{EMAIL}</a>
             </li>
             <li className="flex gap-2">
               <span>📸</span>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors">{INSTAGRAM}</a>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">{INSTAGRAM}</a>
             </li>
           </ul>
           <a

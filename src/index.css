@@ -1,36 +1,180 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap');
 @import "tailwindcss";
+@import "tw-animate-css";
 
-@layer base {
-  :root {
-    --color-gold: #c8a96e;
-    --color-gold-light: #f5eddc;
-    --color-rose: #8b4a6b;
-  }
+@custom-variant dark (&:is(.dark *));
 
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    font-family: 'Lato', sans-serif;
-    color: #1a1a1a;
-  }
-
-  h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
-  }
-
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #f1f1f1; }
-  ::-webkit-scrollbar-thumb { background: #c8a96e; border-radius: 3px; }
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
+:root {
+  --button-outline: rgba(0,0,0,.10);
+  --opaque-button-border-intensity: -8;
+  --elevate-1: rgba(0,0,0,.03);
+  --elevate-2: rgba(0,0,0,.08);
+
+  /* Wine/Burgundy brand palette */
+  --background: 36 25% 97%;
+  --foreground: 340 30% 12%;
+  --border: 36 20% 83%;
+  --input: 36 20% 83%;
+  --ring: 346 55% 28%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 340 30% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 340 30% 12%;
+
+  /* Deep wine/maroon — primary brand */
+  --primary: 346 55% 28%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Champagne/warm beige */
+  --secondary: 38 40% 88%;
+  --secondary-foreground: 340 30% 20%;
+
+  --muted: 36 20% 93%;
+  --muted-foreground: 340 15% 45%;
+
+  /* Warm gold accent */
+  --accent: 40 65% 52%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --app-font-sans: 'Lato', sans-serif;
+  --app-font-serif: 'Playfair Display', serif;
+  --app-font-mono: Menlo, monospace;
+  --radius: 0.5rem;
+
+  --shadow-sm: 0px 2px 4px 0px rgba(90, 20, 40, 0.08), 0px 1px 2px -1px rgba(90, 20, 40, 0.06);
+  --shadow: 0px 4px 6px 0px rgba(90, 20, 40, 0.08), 0px 2px 4px -1px rgba(90, 20, 40, 0.06);
+  --shadow-md: 0px 6px 12px 0px rgba(90, 20, 40, 0.10), 0px 2px 4px -1px rgba(90, 20, 40, 0.06);
+  --shadow-lg: 0px 10px 24px 0px rgba(90, 20, 40, 0.12), 0px 4px 6px -1px rgba(90, 20, 40, 0.08);
+  --shadow-xl: 0px 20px 40px 0px rgba(90, 20, 40, 0.14), 0px 8px 10px -1px rgba(90, 20, 40, 0.08);
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply font-sans antialiased bg-background text-foreground; }
+  h1, h2, h3, h4, h5, h6 { @apply font-serif; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--muted)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--primary) / 0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.7); }
+
+/* Nav mega menu */
+.nav-dropdown {
+  @apply absolute top-full left-0 z-50 min-w-[220px] bg-white border border-gray-200 rounded-xl shadow-2xl opacity-0 invisible translate-y-1 transition-all duration-200;
+}
+.nav-item:hover > .nav-dropdown,
+.nav-item:focus-within > .nav-dropdown {
+  @apply opacity-100 visible translate-y-0;
+}
+.nav-sub-dropdown {
+  @apply absolute top-0 left-full z-50 min-w-[220px] bg-white border border-gray-200 rounded-xl shadow-2xl opacity-0 invisible -translate-x-1 transition-all duration-200 max-h-[70vh] overflow-y-auto;
+}
+.nav-sub-item:hover > .nav-sub-dropdown,
+.nav-sub-item:focus-within > .nav-sub-dropdown {
+  @apply opacity-100 visible translate-x-0;
+}
+
+/* Scroll bounce indicator */
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); opacity: 0.8; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+.scroll-bounce { animation: bounce-down 1.5s ease-in-out infinite; }
+
+/* Review card fade-in */
+@keyframes review-fadein {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.review-card-enter { animation: review-fadein 0.5s ease both; }
+
+/* Stats counter pulse */
+@keyframes count-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.count-in { animation: count-in 0.5s ease both; }
+
+/* WhatsApp float button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+}
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.65);
+}
+
+/* Gold divider */
+.gold-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent)), transparent);
+  margin: 0 auto;
+}
+
+/* Hover card lift */
+.card-lift { transition: transform 0.25s, box-shadow 0.25s; }
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Logo marquee carousel */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
 @layer utilities {
-  .font-serif {
-    font-family: 'Playfair Display', serif;
-  }
-  .font-sans {
-    font-family: 'Lato', sans-serif;
-  }
+  input[type="search"]::-webkit-search-cancel-button { @apply hidden; }
 }

@@ -42,14 +42,14 @@ export default function AudioIluminacion() {
     <>
       <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
         <div className="max-w-3xl mx-auto">
-          <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">Tecnología para eventos</p>
+          <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Tecnología para eventos</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Audio, Iluminación & Video</h1>
           <p className="text-gray-300 text-lg mb-8">
             Sonido profesional, iluminación espectacular y producción de video para que tu evento sea una experiencia audiovisual completa.
           </p>
           <a href={whatsappLink('Hola, me interesa cotizar audio e iluminación para mi evento')}
             target="_blank" rel="noopener noreferrer"
-            className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-full transition-colors">
+            className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Cotizar audio e iluminación
           </a>
         </div>
@@ -64,12 +64,12 @@ export default function AudioIluminacion() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
               {cat.items.map(item => (
-                <div key={item.name} className="group border border-gray-100 rounded-2xl overflow-hidden hover:shadow-md hover:border-amber-200 transition-all bg-white">
+                <div key={item.name} className="group border border-gray-100 rounded-2xl overflow-hidden hover:shadow-md hover:border-secondary transition-all bg-white">
                   <div className="aspect-square bg-gray-100 overflow-hidden">
                     <img src={item.img} alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
-                      onError={e => { e.target.parentElement.className = 'aspect-square bg-amber-50 flex items-center justify-center'; e.target.style.display = 'none' }}
+                      onError={e => { e.target.parentElement.className = 'aspect-square bg-secondary/40 flex items-center justify-center'; e.target.style.display = 'none' }}
                     />
                   </div>
                   <div className="p-4">

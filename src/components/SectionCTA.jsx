@@ -23,7 +23,7 @@ export default function SectionCTA({ title, subtitle }) {
         </a>
         <a
           href={`tel:+52${PHONE.replace(/\s/g, '')}`}
-          className="inline-flex items-center gap-2 border border-gray-600 text-white hover:border-amber-400 hover:text-amber-400 font-semibold px-7 py-3.5 rounded-full transition-colors"
+          className="inline-flex items-center gap-2 border border-gray-600 text-white hover:border-accent hover:text-accent font-semibold px-7 py-3.5 rounded-full transition-colors"
         >
           Llamar ahora
         </a>
