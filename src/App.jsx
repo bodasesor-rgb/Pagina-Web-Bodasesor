@@ -1,9 +1,11 @@
 import { Switch, Route, Router as WouterRouter } from "wouter"
 import { useEffect } from "react"
 import { useLocation } from "wouter"
+import { CityProvider } from './context/CityContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import WhatsAppFab from './components/WhatsAppFab'
+import GlobalSEO from './components/GlobalSEO'
 
 import Home from './pages/Home'
 import BanquetesCatering from './pages/BanquetesCatering'
@@ -26,6 +28,7 @@ function ScrollToTop() {
 function Router() {
   return (
     <>
+      <GlobalSEO />
       <ScrollToTop />
       <Navbar />
       <main>
@@ -64,8 +67,10 @@ export default function App() {
     ? import.meta.env.VITE_BASE_PATH.replace(/\/$/, '')
     : ''
   return (
-    <WouterRouter base={base}>
-      <Router />
-    </WouterRouter>
+    <CityProvider>
+      <WouterRouter base={base}>
+        <Router />
+      </WouterRouter>
+    </CityProvider>
   )
 }
