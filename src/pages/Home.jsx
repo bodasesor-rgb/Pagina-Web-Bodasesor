@@ -33,15 +33,15 @@ function Stats() {
     <section ref={ref} className="bg-gray-900 py-12">
       <div className="max-w-5xl mx-auto px-4 grid grid-cols-3 gap-6 text-center">
         <div>
-          <p className="font-serif text-4xl md:text-5xl text-amber-400">{events.toLocaleString()}+</p>
+          <p className="font-serif text-4xl md:text-5xl text-accent">{events.toLocaleString()}+</p>
           <p className="text-gray-400 text-sm mt-1 uppercase tracking-wider">Eventos realizados</p>
         </div>
         <div>
-          <p className="font-serif text-4xl md:text-5xl text-amber-400">{people.toLocaleString()}+</p>
+          <p className="font-serif text-4xl md:text-5xl text-accent">{people.toLocaleString()}+</p>
           <p className="text-gray-400 text-sm mt-1 uppercase tracking-wider">Personas atendidas</p>
         </div>
         <div>
-          <p className="font-serif text-4xl md:text-5xl text-amber-400">4.6/5</p>
+          <p className="font-serif text-4xl md:text-5xl text-accent">4.6/5</p>
           <p className="text-gray-400 text-sm mt-1 uppercase tracking-wider">Calificación promedio</p>
         </div>
       </div>
@@ -62,16 +62,16 @@ function Services() {
     <section className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-2">Lo que hacemos</p>
+          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Lo que hacemos</p>
           <h2 className="font-serif text-4xl md:text-5xl text-gray-900 mb-4">Nuestros servicios</h2>
           <p className="text-gray-500 max-w-xl mx-auto">Todo lo que necesitas para hacer de tu evento una experiencia inolvidable</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s) => (
             <Link key={s.to} to={s.to}
-              className="group p-7 rounded-2xl border border-gray-100 hover:border-amber-200 hover:shadow-lg transition-all bg-white">
+              className="group p-7 rounded-2xl border border-gray-100 hover:border-secondary hover:shadow-lg transition-all bg-white">
               <div className="text-4xl mb-4">{s.icon}</div>
-              <h3 className="font-serif text-xl text-gray-900 mb-2 group-hover:text-amber-700 transition-colors">{s.title}</h3>
+              <h3 className="font-serif text-xl text-gray-900 mb-2 group-hover:text-primary transition-colors">{s.title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
             </Link>
           ))}
@@ -93,7 +93,7 @@ function InstagramGallery() {
     <section className="py-20 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-2">@bodasesormx</p>
+          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">@bodasesormx</p>
           <h2 className="font-serif text-4xl text-gray-900">Galería de Eventos</h2>
           <p className="text-gray-500 mt-2">Más de 145 fotos reales de eventos realizados por Bodasesor en todo México.</p>
         </div>
@@ -107,11 +107,11 @@ function InstagramGallery() {
         <div className="flex justify-center gap-2 mt-6">
           {INSTAGRAM_GROUPS.map((_, i) => (
             <button key={i} onClick={() => setSlide(i)}
-              className={`w-2 h-2 rounded-full transition-all ${i === slide ? 'bg-amber-500 w-5' : 'bg-gray-300'}`} />
+              className={`w-2 h-2 rounded-full transition-all ${i === slide ? 'bg-primary w-5' : 'bg-gray-300'}`} />
           ))}
         </div>
         <div className="text-center mt-8">
-          <Link to="/galeria" className="inline-flex items-center gap-2 border border-gray-300 hover:border-amber-400 text-gray-700 hover:text-amber-700 font-semibold px-6 py-3 rounded-full transition-colors text-sm">
+          <Link to="/galeria" className="inline-flex items-center gap-2 border border-gray-300 hover:border-accent text-gray-700 hover:text-primary font-semibold px-6 py-3 rounded-full transition-colors text-sm">
             Ver galería completa →
           </Link>
         </div>
@@ -131,7 +131,7 @@ function HowItWorks() {
     <section className="py-20 px-4 bg-white">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14">
-          <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-2">Cómo funciona</p>
+          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Cómo funciona</p>
           <h2 className="font-serif text-4xl text-gray-900">Organizar tu evento es más fácil de lo que piensas</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -150,24 +150,24 @@ function HowItWorks() {
 
 function AboutSection() {
   return (
-    <section className="py-20 px-4 bg-amber-50">
+    <section className="py-20 px-4 bg-secondary/40">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center">
         <div className="md:w-1/2">
           <img src={img('/images/galeria-1.png')} alt="Bodasesor equipo" className="rounded-2xl shadow-lg w-full object-cover" loading="lazy" />
         </div>
         <div className="md:w-1/2">
-          <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
+          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
           <h2 className="font-serif text-4xl text-gray-900 mb-5">Creamos eventos que se convierten en recuerdos</h2>
           <p className="text-gray-600 mb-4 leading-relaxed">
             Somos Bodasesor Eventos, una empresa especializada en la organización y producción de celebraciones en la Ciudad de México. Con más de diez años de experiencia, acompañamos a nuestros clientes en cada etapa de su evento.
           </p>
           <div className="flex gap-8 mb-6">
             <div>
-              <p className="font-serif text-3xl text-amber-600">+10</p>
+              <p className="font-serif text-3xl text-primary">+10</p>
               <p className="text-xs text-gray-500 uppercase tracking-wider">años de experiencia</p>
             </div>
             <div>
-              <p className="font-serif text-3xl text-amber-600">100%</p>
+              <p className="font-serif text-3xl text-primary">100%</p>
               <p className="text-xs text-gray-500 uppercase tracking-wider">atención personalizada</p>
             </div>
           </div>
@@ -183,7 +183,7 @@ function AboutSection() {
               </div>
             ))}
           </div>
-          <Link to="/quienes-somos" className="inline-flex items-center gap-1 text-amber-700 font-semibold hover:underline text-sm">
+          <Link to="/quienes-somos" className="inline-flex items-center gap-1 text-primary font-semibold hover:underline text-sm">
             Conoce nuestra historia →
           </Link>
         </div>
@@ -223,16 +223,16 @@ function Testimonials() {
     <section className="py-20 px-4 bg-gray-50">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-2">Nuestros clientes</p>
+          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Nuestros clientes</p>
           <h2 className="font-serif text-4xl text-gray-900">Lo que dicen nuestros clientes</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {visible.map((t, i) => (
             <div key={i} className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
-              <div className="text-amber-400 text-lg mb-3">★★★★★</div>
+              <div className="text-accent text-lg mb-3">★★★★★</div>
               <p className="text-gray-600 text-sm leading-relaxed mb-5 italic">"{t.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                <div className="w-10 h-10 bg-secondary text-primary rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
                   {t.initials}
                 </div>
                 <div>
@@ -246,7 +246,7 @@ function Testimonials() {
         <div className="flex justify-center gap-2 mt-8">
           {Array.from({ length: pages }).map((_, i) => (
             <button key={i} onClick={() => setActive(i)}
-              className={`w-2 h-2 rounded-full transition-all ${i === active ? 'bg-amber-500 w-5' : 'bg-gray-300'}`} />
+              className={`w-2 h-2 rounded-full transition-all ${i === active ? 'bg-primary w-5' : 'bg-gray-300'}`} />
           ))}
         </div>
         <p className="text-center text-gray-400 text-sm mt-4">Calificación promedio: <strong className="text-gray-700">4.6/5</strong></p>
@@ -259,11 +259,11 @@ function Cities() {
   return (
     <section className="py-16 px-4 bg-gray-900 text-white">
       <div className="max-w-5xl mx-auto text-center">
-        <p className="text-amber-400 text-xs font-semibold uppercase tracking-widest mb-2">Cobertura nacional</p>
+        <p className="text-accent text-xs font-semibold uppercase tracking-widest mb-2">Cobertura nacional</p>
         <h2 className="font-serif text-3xl mb-8">Servicio en las principales ciudades</h2>
         <div className="flex flex-wrap justify-center gap-3">
           {CITIES.map(city => (
-            <span key={city} className="px-4 py-2 bg-gray-800 hover:bg-amber-500/20 border border-gray-700 hover:border-amber-400 text-gray-300 hover:text-amber-300 rounded-full text-sm transition-colors cursor-default">
+            <span key={city} className="px-4 py-2 bg-gray-800 hover:bg-primary/20 border border-gray-700 hover:border-accent text-gray-300 hover:text-accent rounded-full text-sm transition-colors cursor-default">
               {city}
             </span>
           ))}
@@ -289,14 +289,14 @@ export default function Home() {
           </div>
           <h1 className="font-serif text-5xl md:text-7xl text-white font-semibold leading-tight mb-6">
             Encuentra todo para tu evento<br/>
-            <span className="text-amber-400">en un solo lugar</span>
+            <span className="text-accent">en un solo lugar</span>
           </h1>
           <p className="text-white/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
             Banquetes premium, catering gourmet y mobiliario elegante para eventos corporativos, bodas y celebraciones en todo México
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"
-              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-full text-base transition-colors shadow-lg">
+              className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full text-base transition-colors shadow-lg">
               Cotiza por WhatsApp
             </a>
             <Link to="/banquetes-catering"
@@ -317,19 +317,19 @@ export default function Home() {
       <Cities />
 
       {/* Final CTA */}
-      <section className="bg-amber-500 py-16 px-4 text-center">
+      <section className="bg-primary py-16 px-4 text-center">
         <h2 className="font-serif text-3xl md:text-4xl text-white mb-3">¿Listo para planear tu evento?</h2>
-        <p className="text-amber-100 mb-8">Obtén una cotización personalizada en menos de 5 minutos</p>
+        <p className="text-secondary-foreground mb-8">Obtén una cotización personalizada en menos de 5 minutos</p>
         <div className="flex flex-wrap gap-4 justify-center">
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer"
-            className="bg-white text-amber-600 font-bold px-8 py-3.5 rounded-full hover:bg-amber-50 transition-colors">
+            className="bg-white text-primary font-bold px-8 py-3.5 rounded-full hover:bg-secondary transition-colors">
             Chatear por WhatsApp
           </a>
           <a href="tel:+525540080373" className="border-2 border-white text-white font-bold px-8 py-3.5 rounded-full hover:bg-white/10 transition-colors">
             Llamar ahora
           </a>
         </div>
-        <div className="flex flex-wrap gap-6 justify-center mt-6 text-amber-100 text-sm">
+        <div className="flex flex-wrap gap-6 justify-center mt-6 text-secondary-foreground text-sm">
           <span>✓ Sin compromiso</span>
           <span>✓ Respuesta en menos de 2 horas</span>
           <span>✓ Atención personalizada</span>

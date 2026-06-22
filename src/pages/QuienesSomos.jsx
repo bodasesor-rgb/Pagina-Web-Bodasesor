@@ -7,7 +7,7 @@ export default function QuienesSomos() {
     <>
       <section className="pt-32 pb-16 px-4 text-center bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <p className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
+          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-3">Quiénes somos</p>
           <h1 className="font-serif text-5xl md:text-6xl text-gray-900 mb-6">Creamos eventos que se convierten en recuerdos</h1>
         </div>
       </section>
@@ -28,7 +28,7 @@ export default function QuienesSomos() {
                 { num: '1,000+', label: 'eventos realizados' },
               ].map(s => (
                 <div key={s.label} className="text-center">
-                  <p className="font-serif text-3xl text-amber-600">{s.num}</p>
+                  <p className="font-serif text-3xl text-primary">{s.num}</p>
                   <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">{s.label}</p>
                 </div>
               ))}
@@ -63,18 +63,18 @@ export default function QuienesSomos() {
             "No solo organizamos eventos — creamos los momentos que tus invitados recordarán para siempre."
           </blockquote>
           <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-600">
-            <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 hover:text-amber-600 transition-colors">
+            <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 hover:text-primary transition-colors">
               <span>📧</span> {EMAIL}
             </a>
-            <a href={`tel:+52${PHONE.replace(/\s/g,'')}`} className="flex items-center gap-2 hover:text-amber-600 transition-colors">
+            <a href={`tel:+52${PHONE.replace(/\s/g,'')}`} className="flex items-center gap-2 hover:text-primary transition-colors">
               <span>📞</span> {PHONE}
             </a>
-            <span className="flex items-center gap-2 text-amber-600">
+            <span className="flex items-center gap-2 text-primary">
               <span>📸</span> {INSTAGRAM}
             </span>
           </div>
           <div className="mt-8">
-            <Link to="/" className="inline-flex items-center gap-2 text-amber-600 hover:underline font-semibold text-sm">
+            <Link to="/" className="inline-flex items-center gap-2 text-primary hover:underline font-semibold text-sm">
               ← Volver al inicio
             </Link>
           </div>

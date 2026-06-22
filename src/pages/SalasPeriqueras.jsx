@@ -51,14 +51,14 @@ export default function SalasPeriqueras() {
     <>
       <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
         <div className="max-w-3xl mx-auto">
-          <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">Renta de mobiliario</p>
+          <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Renta de mobiliario</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Mobiliario Premium</h1>
           <p className="text-gray-300 text-lg mb-8">
             Sillas, mesas, salas lounge, periqueras y carpas de la más alta calidad para que tu evento luzca impecable.
           </p>
           <a href={whatsappLink('Hola, me interesa cotizar mobiliario para mi evento')}
             target="_blank" rel="noopener noreferrer"
-            className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-full transition-colors">
+            className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Cotizar mobiliario
           </a>
         </div>
@@ -74,12 +74,12 @@ export default function SalasPeriqueras() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {cat.items.map(item => (
                 <div key={item.name}
-                  className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-amber-200 transition-all">
+                  className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-secondary transition-all">
                   <h3 className="font-serif text-lg text-gray-900 mb-2">{item.name}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
                   <a href={whatsappLink(`Hola, me interesa cotizar: ${item.name}`)}
                     target="_blank" rel="noopener noreferrer"
-                    className="mt-4 inline-block text-amber-600 text-sm font-semibold hover:underline">
+                    className="mt-4 inline-block text-primary text-sm font-semibold hover:underline">
                     Cotizar →
                   </a>
                 </div>

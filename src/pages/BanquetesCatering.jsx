@@ -8,15 +8,15 @@ export default function BanquetesCatering() {
       {/* Hero */}
       <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
         <div className="max-w-3xl mx-auto">
-          <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">Servicios de alimentos</p>
+          <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Servicios de alimentos</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Banquetes y Catering</h1>
           <p className="text-gray-300 text-lg mb-8">
             Desde banquetes formales de alta cocina hasta estaciones de antojitos mexicanos — todo el servicio de alimentos para tu evento en un solo catálogo.
           </p>
-          <p className="text-amber-400 text-sm mb-8">25 servicios disponibles · Banquetes formales, catering gourmet, barras de alimentos y estaciones temáticas.</p>
+          <p className="text-accent text-sm mb-8">25 servicios disponibles · Banquetes formales, catering gourmet, barras de alimentos y estaciones temáticas.</p>
           <a href={whatsappLink('Hola, me interesa cotizar servicio de alimentos para mi evento')}
             target="_blank" rel="noopener noreferrer"
-            className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-full transition-colors">
+            className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Cotizar servicio de alimentos
           </a>
           <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-gray-400">
@@ -42,15 +42,15 @@ export default function BanquetesCatering() {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-3xl">{cat.icon}</span>
-              <span className="text-xs text-amber-600 font-semibold uppercase tracking-wider">Categoría</span>
+              <span className="text-xs text-primary font-semibold uppercase tracking-wider">Categoría</span>
             </div>
             <h2 className="font-serif text-3xl text-gray-900 mb-2">{cat.label}</h2>
             <p className="text-gray-500 mb-8">{cat.desc}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {cat.items.map((item) => (
                 <Link key={item.slug} to={`/${item.slug}`}
-                  className="group border border-gray-200 rounded-xl p-5 hover:border-amber-300 hover:shadow-md transition-all bg-white">
-                  <h3 className="font-serif text-lg text-gray-900 mb-1 group-hover:text-amber-700 transition-colors">{item.name}</h3>
+                  className="group border border-gray-200 rounded-xl p-5 hover:border-primary/30 hover:shadow-md transition-all bg-white">
+                  <h3 className="font-serif text-lg text-gray-900 mb-1 group-hover:text-primary transition-colors">{item.name}</h3>
                   <p className="text-gray-500 text-sm">{item.desc}</p>
                 </Link>
               ))}
@@ -65,7 +65,7 @@ export default function BanquetesCatering() {
           <p className="text-gray-500 mb-8">Cotización personalizada en menos de 24 horas. También podemos combinar varios servicios para tu evento.</p>
           <a href={whatsappLink('Hola, quiero cotizar catering para mi evento')}
             target="_blank" rel="noopener noreferrer"
-            className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-full transition-colors">
+            className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
             Cotizar para mi evento
           </a>
         </div>

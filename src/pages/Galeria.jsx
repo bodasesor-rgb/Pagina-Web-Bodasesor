@@ -14,7 +14,7 @@ export default function Galeria() {
     <>
       <section className="pt-32 pb-12 px-4 bg-gray-900 text-white text-center">
         <div className="max-w-3xl mx-auto">
-          <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">@bodasesormx</p>
+          <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">@bodasesormx</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Galería de Eventos</h1>
           <p className="text-gray-300">Más de 145 fotos reales de eventos realizados por Bodasesor en todo México.</p>
           <div className="flex justify-center gap-10 mt-8">
@@ -24,7 +24,7 @@ export default function Galeria() {
               { num: '15+', label: 'Años de experiencia' },
             ].map(s => (
               <div key={s.label}>
-                <p className="font-serif text-3xl text-amber-400">{s.num}</p>
+                <p className="font-serif text-3xl text-accent">{s.num}</p>
                 <p className="text-gray-400 text-xs uppercase tracking-wider mt-1">{s.label}</p>
               </div>
             ))}
@@ -62,7 +62,7 @@ export default function Galeria() {
         <p className="text-gray-500 mb-8">Contáctanos hoy y recibe una cotización personalizada en menos de una hora.</p>
         <a href={whatsappLink('Hola, me interesa cotizar un evento con Bodasesor')}
           target="_blank" rel="noopener noreferrer"
-          className="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-full transition-colors">
+          className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">
           Cotizar mi evento
         </a>
       </section>
