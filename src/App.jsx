@@ -59,8 +59,9 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const basename = import.meta.env.VITE_BASE_PATH || '/'
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AppRoutes />
     </BrowserRouter>
   )
