@@ -36,7 +36,7 @@ jobs:
           VITE_BASE_PATH: /Pagina-Web-Bodasesor/
 
       - name: Copy 404 redirect
-        run: cp dist/index.html dist/404.html
+        run: cp dist/index.html dist/404.html && touch dist/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
