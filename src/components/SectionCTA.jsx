@@ -2,11 +2,11 @@ import { whatsappLink, PHONE } from '../data/site'
 
 export default function SectionCTA({ title, subtitle }) {
   return (
-    <section className="bg-gray-900 py-16 px-4 text-center">
+    <section className="bg-[#162040] py-16 px-4 text-center">
       <h2 className="font-serif text-3xl md:text-4xl text-white mb-3">
         {title || '¿Listo para planear tu evento?'}
       </h2>
-      <p className="text-gray-400 mb-8 max-w-xl mx-auto">
+      <p className="text-[#8a9bb5] mb-8 max-w-xl mx-auto">
         {subtitle || 'Obtén una cotización personalizada en menos de 5 minutos'}
       </p>
       <div className="flex flex-wrap gap-4 justify-center">
@@ -28,7 +28,7 @@ export default function SectionCTA({ title, subtitle }) {
           Llamar ahora
         </a>
       </div>
-      <div className="flex flex-wrap gap-6 justify-center mt-8 text-sm text-gray-500">
+      <div className="flex flex-wrap gap-6 justify-center mt-8 text-sm text-[#8a9bb5]">
         <span>✓ Sin compromiso</span>
         <span>✓ Respuesta en menos de 2 horas</span>
         <span>✓ Atención personalizada</span>

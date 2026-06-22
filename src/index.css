@@ -29,36 +29,37 @@
 }
 
 :root {
-  --button-outline: rgba(0,0,0,.10);
-  --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,0,0,.03);
-  --elevate-2: rgba(0,0,0,.08);
+  /* ── Exact brand colors from bodasesor.com ── */
+  --navy:        #162040;   /* primary dark navy */
+  --navy-deep:   #0d1630;   /* footer / deeper navy */
+  --navy-muted:  #8a9bb5;   /* secondary text on dark */
+  --cream:       #f5efe8;   /* warm body background */
 
-  /* Wine/Burgundy brand palette */
-  --background: 36 25% 97%;
-  --foreground: 340 30% 12%;
-  --border: 36 20% 83%;
-  --input: 36 20% 83%;
-  --ring: 346 55% 28%;
+  /* Tailwind CSS variable tokens */
+  --background: 36 20% 96%;        /* #f5efe8 cream */
+  --foreground: 222 47% 17%;       /* #162040 navy */
+  --border: 36 20% 85%;
+  --input: 36 20% 85%;
+  --ring: 222 47% 17%;
 
   --card: 0 0% 100%;
-  --card-foreground: 340 30% 12%;
+  --card-foreground: 222 47% 17%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 340 30% 12%;
+  --popover-foreground: 222 47% 17%;
 
-  /* Deep wine/maroon — primary brand */
-  --primary: 346 55% 28%;
+  /* Primary = dark navy #162040 */
+  --primary: 222 47% 17%;
   --primary-foreground: 0 0% 100%;
 
-  /* Champagne/warm beige */
-  --secondary: 38 40% 88%;
-  --secondary-foreground: 340 30% 20%;
+  /* Secondary = warm cream */
+  --secondary: 36 30% 92%;
+  --secondary-foreground: 222 47% 17%;
 
   --muted: 36 20% 93%;
-  --muted-foreground: 340 15% 45%;
+  --muted-foreground: 218 18% 56%;   /* #8a9bb5 */
 
-  /* Warm gold accent */
+  /* Accent = warm gold */
   --accent: 40 65% 52%;
   --accent-foreground: 0 0% 100%;
 
@@ -70,11 +71,11 @@
   --app-font-mono: Menlo, monospace;
   --radius: 0.5rem;
 
-  --shadow-sm: 0px 2px 4px 0px rgba(90, 20, 40, 0.08), 0px 1px 2px -1px rgba(90, 20, 40, 0.06);
-  --shadow: 0px 4px 6px 0px rgba(90, 20, 40, 0.08), 0px 2px 4px -1px rgba(90, 20, 40, 0.06);
-  --shadow-md: 0px 6px 12px 0px rgba(90, 20, 40, 0.10), 0px 2px 4px -1px rgba(90, 20, 40, 0.06);
-  --shadow-lg: 0px 10px 24px 0px rgba(90, 20, 40, 0.12), 0px 4px 6px -1px rgba(90, 20, 40, 0.08);
-  --shadow-xl: 0px 20px 40px 0px rgba(90, 20, 40, 0.14), 0px 8px 10px -1px rgba(90, 20, 40, 0.08);
+  --shadow-sm: 0px 2px 4px 0px rgba(22, 32, 64, 0.08), 0px 1px 2px -1px rgba(22, 32, 64, 0.06);
+  --shadow: 0px 4px 6px 0px rgba(22, 32, 64, 0.08), 0px 2px 4px -1px rgba(22, 32, 64, 0.06);
+  --shadow-md: 0px 6px 12px 0px rgba(22, 32, 64, 0.10), 0px 2px 4px -1px rgba(22, 32, 64, 0.06);
+  --shadow-lg: 0px 10px 24px 0px rgba(22, 32, 64, 0.12), 0px 4px 6px -1px rgba(22, 32, 64, 0.08);
+  --shadow-xl: 0px 20px 40px 0px rgba(22, 32, 64, 0.14), 0px 8px 10px -1px rgba(22, 32, 64, 0.08);
 }
 
 @layer base {

@@ -4,7 +4,7 @@ import SectionCTA from '../components/SectionCTA'
 export default function Fotografia() {
   return (
     <>
-      <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
+      <section className="pt-32 pb-16 px-4 bg-[#162040] text-white text-center">
         <div className="max-w-3xl mx-auto">
           <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Recuerdos para siempre</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Fotografía & Video</h1>
@@ -30,8 +30,8 @@ export default function Fotografia() {
             ].map(s => (
               <div key={s.title} className="border border-gray-100 rounded-2xl p-8 hover:shadow-md hover:border-secondary transition-all">
                 <div className="text-4xl mb-4">{s.icon}</div>
-                <h3 className="font-serif text-2xl text-gray-900 mb-3">{s.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-5">{s.desc}</p>
+                <h3 className="font-serif text-2xl text-[#162040] mb-3">{s.title}</h3>
+                <p className="text-[#8a9bb5] text-sm leading-relaxed mb-5">{s.desc}</p>
                 <ul className="space-y-2">
                   {s.items.map(i => (
                     <li key={i} className="flex items-center gap-2 text-sm text-gray-600">

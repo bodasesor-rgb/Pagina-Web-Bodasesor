@@ -4,7 +4,7 @@ import SectionCTA from '../components/SectionCTA'
 export default function BarrasBebidas() {
   return (
     <>
-      <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
+      <section className="pt-32 pb-16 px-4 bg-[#162040] text-white text-center">
         <div className="max-w-3xl mx-auto">
           <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Bebidas para eventos</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Barras de Bebidas</h1>
@@ -27,7 +27,7 @@ export default function BarrasBebidas() {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-gray-50">
+      <section className="py-16 px-4 bg-[#f5efe8]">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-wrap gap-3 justify-center mb-10">
             {BARRAS_SERVICES.map(s => (
@@ -38,8 +38,8 @@ export default function BarrasBebidas() {
             {BARRAS_SERVICES.map((s) => (
               <div key={s.slug} className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100 hover:shadow-md hover:border-secondary transition-all">
                 <div className="text-4xl mb-4">{s.icon}</div>
-                <h3 className="font-serif text-xl text-gray-900 mb-2">{s.name}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+                <h3 className="font-serif text-xl text-[#162040] mb-2">{s.name}</h3>
+                <p className="text-[#8a9bb5] text-sm leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -48,8 +48,8 @@ export default function BarrasBebidas() {
 
       <section className="py-16 px-4 bg-white text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-3xl text-gray-900 mb-3">¿Qué bebidas quieres en tu evento?</h2>
-          <p className="text-gray-500 mb-8">Podemos combinar varias barras en un solo paquete. Cotización personalizada en menos de 24 horas.</p>
+          <h2 className="font-serif text-3xl text-[#162040] mb-3">¿Qué bebidas quieres en tu evento?</h2>
+          <p className="text-[#8a9bb5] mb-8">Podemos combinar varias barras en un solo paquete. Cotización personalizada en menos de 24 horas.</p>
           <a href={whatsappLink('Hola, quiero cotizar barras de bebidas para mi evento')}
             target="_blank" rel="noopener noreferrer"
             className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors">

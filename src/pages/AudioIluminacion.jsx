@@ -40,7 +40,7 @@ const CATEGORIES = [
 export default function AudioIluminacion() {
   return (
     <>
-      <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
+      <section className="pt-32 pb-16 px-4 bg-[#162040] text-white text-center">
         <div className="max-w-3xl mx-auto">
           <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Tecnología para eventos</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Audio, Iluminación & Video</h1>
@@ -60,7 +60,7 @@ export default function AudioIluminacion() {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl">{cat.icon}</span>
-              <h2 className="font-serif text-3xl text-gray-900">{cat.label}</h2>
+              <h2 className="font-serif text-3xl text-[#162040]">{cat.label}</h2>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
               {cat.items.map(item => (
@@ -73,8 +73,8 @@ export default function AudioIluminacion() {
                     />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 text-sm mb-1">{item.name}</h3>
-                    <p className="text-gray-500 text-xs">{item.desc}</p>
+                    <h3 className="font-semibold text-[#162040] text-sm mb-1">{item.name}</h3>
+                    <p className="text-[#8a9bb5] text-xs">{item.desc}</p>
                   </div>
                 </div>
               ))}

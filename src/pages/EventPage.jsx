@@ -110,7 +110,7 @@ export default function EventPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 px-4 bg-gray-900 text-white text-center overflow-hidden">
+      <section className="relative pt-32 pb-20 px-4 bg-[#162040] text-white text-center overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img src={data.heroImg} alt="" className="w-full h-full object-cover" />
         </div>
@@ -127,7 +127,7 @@ export default function EventPage() {
               Llamar ahora
             </a>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-gray-400">
+          <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-[#8a9bb5]">
             <span>✓ Cotización sin compromiso</span>
             <span>✓ +1,000 eventos realizados</span>
             <span>✓ Garantía Bodasesor</span>
@@ -144,12 +144,12 @@ export default function EventPage() {
 
       {/* Services */}
       {data.services.length > 0 && (
-        <section className="py-16 px-4 bg-gray-50">
+        <section className="py-16 px-4 bg-[#f5efe8]">
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-serif text-3xl text-gray-900 text-center mb-10">
+            <h2 className="font-serif text-3xl text-[#162040] text-center mb-10">
               Servicios disponibles para {data.title.replace('Servicios para ', '').replace('Servicios Completos para ', '')}
             </h2>
-            <p className="text-center text-gray-500 mb-12">Un solo proveedor para coordinar todos los servicios de tu evento. Sin estrés, sin intermediarios.</p>
+            <p className="text-center text-[#8a9bb5] mb-12">Un solo proveedor para coordinar todos los servicios de tu evento. Sin estrés, sin intermediarios.</p>
             <div className="space-y-8">
               {data.services.map((cat) => (
                 <div key={cat.cat}>
@@ -175,14 +175,14 @@ export default function EventPage() {
       {/* Why Bodasesor */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-serif text-3xl text-center text-gray-900 mb-10">¿Por qué elegir Bodasesor?</h2>
-          <p className="text-center text-gray-500 mb-10">Más de 15 años coordinando eventos en toda la república mexicana</p>
+          <h2 className="font-serif text-3xl text-center text-[#162040] mb-10">¿Por qué elegir Bodasesor?</h2>
+          <p className="text-center text-[#8a9bb5] mb-10">Más de 15 años coordinando eventos en toda la república mexicana</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {WHY_BODASESOR.map(w => (
               <div key={w.title} className="text-center">
                 <div className="text-3xl mb-3">{w.icon}</div>
-                <h4 className="font-semibold text-gray-900 mb-2 text-sm">{w.title}</h4>
-                <p className="text-gray-500 text-xs leading-relaxed">{w.desc}</p>
+                <h4 className="font-semibold text-[#162040] mb-2 text-sm">{w.title}</h4>
+                <p className="text-[#8a9bb5] text-xs leading-relaxed">{w.desc}</p>
               </div>
             ))}
           </div>

@@ -49,7 +49,7 @@ const MOBILIARIO_CATS = [
 export default function SalasPeriqueras() {
   return (
     <>
-      <section className="pt-32 pb-16 px-4 bg-gray-900 text-white text-center">
+      <section className="pt-32 pb-16 px-4 bg-[#162040] text-white text-center">
         <div className="max-w-3xl mx-auto">
           <p className="text-accent text-sm font-semibold uppercase tracking-widest mb-3">Renta de mobiliario</p>
           <h1 className="font-serif text-5xl md:text-6xl mb-4">Mobiliario Premium</h1>
@@ -69,14 +69,14 @@ export default function SalasPeriqueras() {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
               <span className="text-3xl">{cat.icon}</span>
-              <h2 className="font-serif text-3xl text-gray-900">{cat.label}</h2>
+              <h2 className="font-serif text-3xl text-[#162040]">{cat.label}</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {cat.items.map(item => (
                 <div key={item.name}
                   className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-secondary transition-all">
-                  <h3 className="font-serif text-lg text-gray-900 mb-2">{item.name}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="font-serif text-lg text-[#162040] mb-2">{item.name}</h3>
+                  <p className="text-[#8a9bb5] text-sm leading-relaxed">{item.desc}</p>
                   <a href={whatsappLink(`Hola, me interesa cotizar: ${item.name}`)}
                     target="_blank" rel="noopener noreferrer"
                     className="mt-4 inline-block text-primary text-sm font-semibold hover:underline">

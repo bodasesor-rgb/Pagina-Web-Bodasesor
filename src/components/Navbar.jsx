@@ -54,7 +54,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className={`font-serif text-2xl font-semibold tracking-wide ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+        <Link to="/" className={`font-serif text-2xl font-semibold tracking-wide ${scrolled ? 'text-[#162040]' : 'text-white'}`}>
           <span className="text-primary">B</span>odasesor
         </Link>
 
@@ -137,7 +137,7 @@ export default function Navbar() {
                   </svg>
                 </button>
                 {openDropdown === link.label && (
-                  <div className="bg-gray-50 px-6 py-2">
+                  <div className="bg-[#f5efe8] px-6 py-2">
                     {link.children.map((child) => (
                       <Link
                         key={child.to}
