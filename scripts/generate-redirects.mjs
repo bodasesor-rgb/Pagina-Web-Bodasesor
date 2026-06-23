@@ -2,7 +2,7 @@
  * Generate legacy redirect map from Google Sheet "Paginas Bodasesor"
  *
  * Usage: node scripts/generate-redirects.mjs
- * Env:   SEO_REDIRECT_BASE (default: https://resonant-gingersnap-df3cfa.netlify.app)
+ * Env:   SITE_BASE (default: https://bodasesor.com)
  */
 import fs from 'fs'
 import path from 'path'
@@ -13,10 +13,9 @@ const SHEET_GID = '1705506615'
 const LOCAL_CSV = path.join(import.meta.dirname, 'paginas-bodasesor.csv')
 const OUT = path.join(ROOT, 'public/redirects-map.json')
 const REDIRECTS_FILE = path.join(ROOT, 'public/_redirects')
-
-const SEO_BASE = (process.env.SEO_REDIRECT_BASE || 'https://resonant-gingersnap-df3cfa.netlify.app').replace(/\/$/, '')
-const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
 const UPDATED_CSV = path.join(import.meta.dirname, 'paginas-bodasesor-actualizado.csv')
+
+const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
 
 function parseCsv(text) {
   const rows = []
@@ -87,11 +86,12 @@ function addEntry(map, fromPath, to, stats) {
   }
 }
 
-function resolveDestination(destUrl, fromPath) {
-  const absolute = toAbsoluteUrl(destUrl, fromPath)
-  if (!absolute) return null
-  // redirects-map stores absolute URLs for external + internal
-  return absolute
+function extractPathOnly(destUrl) {
+  if (!destUrl?.trim()) return null
+  if (destUrl.startsWith('http://') || destUrl.startsWith('https://')) {
+    return new URL(destUrl).pathname.replace(/\/+$/, '') || '/'
+  }
+  return destUrl.startsWith('/') ? destUrl.replace(/\/+$/, '') || '/' : `/${destUrl}`
 }
 
 function blogSlug(fromPath) {
@@ -111,7 +111,6 @@ function blogSlug(fromPath) {
 function blogDestination(fromPath) {
   const slug = blogSlug(fromPath)
   if (slug) return `${SITE_BASE}/blog/${slug}`
-  if (fromPath.startsWith('/blogs/')) return `${SITE_BASE}/blog`
   return `${SITE_BASE}/blog`
 }
 
@@ -121,22 +120,37 @@ function pageDestination(fromPath) {
   return null
 }
 
-function toAbsoluteUrl(dest, fromPath) {
-  if (!dest?.trim()) return null
+/** All redirects go to bodasesor.com — never to resonant/SEO site */
+function destinationForRow(fromPath, sheetDest) {
+  const page = pageDestination(fromPath)
+  if (page) return page
 
-  if (dest.startsWith('http://') || dest.startsWith('https://')) {
-    const parsed = new URL(dest)
-    if (parsed.hostname.includes('resonant-gingersnap-df3cfa.netlify.app')) {
-      return `${SEO_BASE}${parsed.pathname}${parsed.search}`
+  if (fromPath.startsWith('/blogs/')) {
+    return blogDestination(fromPath)
+  }
+
+  if (fromPath.startsWith('/products/')) {
+    const slug = fromPath.replace(/^\/products\//, '').split('?')[0]
+    return `${SITE_BASE}/${slug}`
+  }
+
+  if (fromPath.startsWith('/collections/')) {
+    const mapped = extractPathOnly(sheetDest)
+    if (mapped && mapped !== '/') {
+      const clean = mapped.replace(/^\/eventos\//, '/')
+      return `${SITE_BASE}${clean}`
     }
-    return dest
+    const slug = fromPath.replace(/^\/collections\//, '').split('?')[0]
+    return `${SITE_BASE}/${slug}`
   }
 
-  const pathOnly = dest.startsWith('/') ? dest : `/${dest}`
-  if (pathOnly.startsWith('/blog') || pathOnly.startsWith('/quienes-somos') || pathOnly === '/') {
-    return `${SITE_BASE}${pathOnly === '/' ? '' : pathOnly}`
+  const mapped = extractPathOnly(sheetDest)
+  if (mapped && mapped !== '/') {
+    const clean = mapped.replace(/^\/eventos\//, '/')
+    return `${SITE_BASE}${clean}`
   }
-  return `${SITE_BASE}${pathOnly}`
+
+  return null
 }
 
 function csvEscape(value) {
@@ -153,7 +167,6 @@ async function downloadSheet() {
       const res = await fetch(url)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const text = await res.text()
-      fs.writeFileSync(LOCAL_CSV, text)
       return text
     } catch (err) {
       if (attempt === 3 && fs.existsSync(LOCAL_CSV)) {
@@ -180,64 +193,47 @@ for (const row of rows) {
   if (!original) continue
 
   const fromPath = normalizePath(original)
-  let dest = resolveDestination(row['URL Nueva (destino)'], fromPath)
+  const dest = destinationForRow(fromPath, row['URL Nueva (destino)'])
   let note = row['Ciudad detectada'] || ''
 
   if (!dest) {
-    if (fromPath.startsWith('/blogs/')) {
-      dest = blogDestination(fromPath)
-      note = note || '(blog → bodasesor.com)'
-      stats.blogs++
-    } else if (fromPath.startsWith('/pages/')) {
-      dest = pageDestination(fromPath)
-      note = note || '(página → bodasesor.com)'
-      stats.pages++
-    } else {
-      stats.skipped++
-      continue
-    }
-  } else if (fromPath.startsWith('/products/')) {
-    stats.products++
-  } else if (fromPath.startsWith('/collections/')) {
-    stats.collections++
-  } else if (fromPath.startsWith('/pages/')) {
-    const override = pageDestination(fromPath)
-    if (override) dest = override
-    stats.pages++
-  } else if (fromPath.startsWith('/blogs/')) {
-    dest = blogDestination(fromPath)
-    note = note || '(blog → bodasesor.com)'
-    stats.blogs++
+    stats.skipped++
+    continue
   }
 
-  updatedRows.push({
-    original,
-    dest,
-    note,
-  })
+  if (fromPath.startsWith('/products/')) {
+    stats.products++
+    note = '(producto → bodasesor.com)'
+  } else if (fromPath.startsWith('/collections/')) {
+    stats.collections++
+    note = note || '(collection → bodasesor.com)'
+  } else if (fromPath.startsWith('/blogs/')) {
+    stats.blogs++
+    note = note || '(blog → bodasesor.com)'
+  } else if (fromPath.startsWith('/pages/')) {
+    stats.pages++
+    note = note || '(página → bodasesor.com)'
+  }
 
+  updatedRows.push({ original, dest, note })
   addEntry(map, fromPath, dest, stats)
 }
 
-// Wildcard-style fallbacks for products not explicitly listed
-map['/products/:slug'] = `${SEO_BASE}/eventos/:slug`
+// Fallback for products not in the sheet
+map['/products/:slug'] = `${SITE_BASE}/:slug`
 stats.count++
 
 const output = {
   generatedAt: new Date().toISOString(),
-  seoBase: SEO_BASE,
+  siteBase: SITE_BASE,
   totalRules: Object.keys(map).length,
   entries: map,
 }
 
 fs.writeFileSync(OUT, JSON.stringify(output, null, 0))
 
-const redirectsTxt = `# Legacy Shopify redirects — generated from Google Sheet "Paginas Bodasesor"
-# Exact matches are handled by the legacy-redirect edge function via redirects-map.json
-
-/products/:slug  ${SEO_BASE}/eventos/:slug  301!
-
-# SPA fallback is configured in netlify.toml
+const redirectsTxt = `# Legacy Shopify redirects — all go to bodasesor.com
+/products/:slug  ${SITE_BASE}/:slug  301!
 `
 
 fs.writeFileSync(REDIRECTS_FILE, redirectsTxt)
@@ -249,11 +245,9 @@ const updatedCsvLines = [
   ),
 ]
 fs.writeFileSync(UPDATED_CSV, `${updatedCsvLines.join('\n')}\n`)
-fs.writeFileSync(LOCAL_CSV, `${updatedCsvLines.join('\n')}\n`)
 
 console.log('Generated redirects:')
 console.log(`  Site base: ${SITE_BASE}`)
-console.log(`  SEO base: ${SEO_BASE}`)
 console.log(`  Products: ${stats.products}`)
 console.log(`  Collections: ${stats.collections}`)
 console.log(`  Blogs: ${stats.blogs}`)

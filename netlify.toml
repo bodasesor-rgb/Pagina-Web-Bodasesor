@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
-  SEO_REDIRECT_BASE = "https://resonant-gingersnap-df3cfa.netlify.app"
+  SITE_BASE = "https://bodasesor.com"
 
 [[edge_functions]]
   function = "legacy-redirect"
