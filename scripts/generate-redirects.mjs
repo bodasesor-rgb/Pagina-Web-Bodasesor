@@ -15,6 +15,8 @@ const OUT = path.join(ROOT, 'public/redirects-map.json')
 const REDIRECTS_FILE = path.join(ROOT, 'public/_redirects')
 
 const SEO_BASE = (process.env.SEO_REDIRECT_BASE || 'https://resonant-gingersnap-df3cfa.netlify.app').replace(/\/$/, '')
+const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
+const UPDATED_CSV = path.join(import.meta.dirname, 'paginas-bodasesor-actualizado.csv')
 
 function parseCsv(text) {
   const rows = []
@@ -86,45 +88,61 @@ function addEntry(map, fromPath, to, stats) {
 }
 
 function resolveDestination(destUrl, fromPath) {
-  if (!destUrl?.trim()) return null
+  const absolute = toAbsoluteUrl(destUrl, fromPath)
+  if (!absolute) return null
+  // redirects-map stores absolute URLs for external + internal
+  return absolute
+}
 
-  if (destUrl.startsWith('http://') || destUrl.startsWith('https://')) {
-    const parsed = new URL(destUrl)
-    if (parsed.hostname.includes('resonant-gingersnap-df3cfa.netlify.app')) {
-      return `${SEO_BASE}${parsed.pathname}${parsed.search}`
-    }
-    return destUrl
+function blogSlug(fromPath) {
+  const match = fromPath.match(/^\/blogs\/noticias\/([^/?#]+)/)
+  if (!match) return null
+  let slug = decodeURIComponent(match[1])
+  slug = slug
+    .replace(/®️/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+  if (slug.includes('estrategias-y-consejos')) {
+    slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
   }
-
-  return destUrl.startsWith('/') ? destUrl : `/${destUrl}`
+  return slug
 }
 
 function blogDestination(fromPath) {
-  const match = fromPath.match(/^\/blogs\/noticias\/([^/?#]+)/)
-  if (match) {
-    let slug = decodeURIComponent(match[1])
-    slug = slug
-      .replace(/®️/g, '')
-      .replace(/bodasesor-2024$/i, 'bodasesor-2024')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-    if (slug.includes('estrategias-y-consejos')) {
-      slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
-    }
-    return `/blog/${slug}`
-  }
-
-  if (fromPath.startsWith('/blogs/noticias')) {
-    return '/blog'
-  }
-
-  return '/blog'
+  const slug = blogSlug(fromPath)
+  if (slug) return `${SITE_BASE}/blog/${slug}`
+  if (fromPath.startsWith('/blogs/')) return `${SITE_BASE}/blog`
+  return `${SITE_BASE}/blog`
 }
 
 function pageDestination(fromPath) {
-  if (fromPath.startsWith('/pages/quienes-somos')) return '/quienes-somos'
-  if (fromPath.startsWith('/pages/contact')) return '/'
+  if (fromPath.startsWith('/pages/quienes-somos')) return `${SITE_BASE}/quienes-somos`
+  if (fromPath.startsWith('/pages/contact')) return `${SITE_BASE}/`
   return null
+}
+
+function toAbsoluteUrl(dest, fromPath) {
+  if (!dest?.trim()) return null
+
+  if (dest.startsWith('http://') || dest.startsWith('https://')) {
+    const parsed = new URL(dest)
+    if (parsed.hostname.includes('resonant-gingersnap-df3cfa.netlify.app')) {
+      return `${SEO_BASE}${parsed.pathname}${parsed.search}`
+    }
+    return dest
+  }
+
+  const pathOnly = dest.startsWith('/') ? dest : `/${dest}`
+  if (pathOnly.startsWith('/blog') || pathOnly.startsWith('/quienes-somos') || pathOnly === '/') {
+    return `${SITE_BASE}${pathOnly === '/' ? '' : pathOnly}`
+  }
+  return `${SITE_BASE}${pathOnly}`
+}
+
+function csvEscape(value) {
+  const text = String(value ?? '')
+  if (/[",\n\r]/.test(text)) return `"${text.replace(/"/g, '""')}"`
+  return text
 }
 
 async function downloadSheet() {
@@ -152,6 +170,7 @@ async function downloadSheet() {
 
 const stats = { count: 0, products: 0, collections: 0, blogs: 0, pages: 0, skipped: 0 }
 const map = {}
+const updatedRows = []
 
 const csv = await downloadSheet()
 const rows = parseCsv(csv)
@@ -162,13 +181,16 @@ for (const row of rows) {
 
   const fromPath = normalizePath(original)
   let dest = resolveDestination(row['URL Nueva (destino)'], fromPath)
+  let note = row['Ciudad detectada'] || ''
 
   if (!dest) {
     if (fromPath.startsWith('/blogs/')) {
       dest = blogDestination(fromPath)
+      note = note || '(blog → bodasesor.com)'
       stats.blogs++
     } else if (fromPath.startsWith('/pages/')) {
       dest = pageDestination(fromPath)
+      note = note || '(página → bodasesor.com)'
       stats.pages++
     } else {
       stats.skipped++
@@ -182,7 +204,17 @@ for (const row of rows) {
     const override = pageDestination(fromPath)
     if (override) dest = override
     stats.pages++
+  } else if (fromPath.startsWith('/blogs/')) {
+    dest = blogDestination(fromPath)
+    note = note || '(blog → bodasesor.com)'
+    stats.blogs++
   }
+
+  updatedRows.push({
+    original,
+    dest,
+    note,
+  })
 
   addEntry(map, fromPath, dest, stats)
 }
@@ -210,7 +242,17 @@ const redirectsTxt = `# Legacy Shopify redirects — generated from Google Sheet
 
 fs.writeFileSync(REDIRECTS_FILE, redirectsTxt)
 
+const updatedCsvLines = [
+  'URL Original (bodasesor.com),URL Nueva (destino),Ciudad detectada',
+  ...updatedRows.map((r) =>
+    [csvEscape(r.original), csvEscape(r.dest), csvEscape(r.note)].join(','),
+  ),
+]
+fs.writeFileSync(UPDATED_CSV, `${updatedCsvLines.join('\n')}\n`)
+fs.writeFileSync(LOCAL_CSV, `${updatedCsvLines.join('\n')}\n`)
+
 console.log('Generated redirects:')
+console.log(`  Site base: ${SITE_BASE}`)
 console.log(`  SEO base: ${SEO_BASE}`)
 console.log(`  Products: ${stats.products}`)
 console.log(`  Collections: ${stats.collections}`)
@@ -219,3 +261,4 @@ console.log(`  Pages: ${stats.pages}`)
 console.log(`  Skipped: ${stats.skipped}`)
 console.log(`  Total map entries: ${Object.keys(map).length}`)
 console.log(`  Output: ${OUT}`)
+console.log(`  Updated sheet CSV: ${UPDATED_CSV}`)
