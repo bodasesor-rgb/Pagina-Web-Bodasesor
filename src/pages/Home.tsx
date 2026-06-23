@@ -260,8 +260,19 @@ const FiveStars = () => (
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const { city } = useCity();
+  const { city, setCity } = useCity();
   const [location, setLocation] = useLocation();
+
+  const selectCity = (citySlug) => {
+    if (!CITY_MAP[citySlug]) return;
+    const base = stripCityFromPath(location);
+    if (base === '/') {
+      setCity({ ...CITY_MAP[citySlug] });
+    } else {
+      setLocation(withCityPath(base, citySlug));
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div>
@@ -505,13 +516,7 @@ export default function Home() {
             {cities.map(c => (
               <button
                 key={c.href}
-                onClick={() => {
-                  const slug = c.href.slice(1);
-                  if (CITY_MAP[slug]) {
-                    setLocation(withCityPath(stripCityFromPath(location), slug));
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
+                onClick={() => selectCity(c.href.slice(1))}
                 className="bg-white hover:bg-[#162040] hover:text-white text-[#162040] font-serif font-bold py-4 px-6 rounded-xl text-center transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer"
               >
                 {c.name}

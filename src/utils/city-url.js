@@ -29,18 +29,26 @@ export const STANDALONE_PAGE_ROUTES = {
   '/blog': null,
 }
 
-/** Strip `-en-{city}` or `-{city}` suffix from a slug segment */
-export function stripCityFromSlug(slug) {
-  if (!slug) return slug
+function stripCityFromSegment(segment) {
+  if (!segment) return { base: segment, citySlug: null }
+
   for (const citySlug of CITY_SLUGS) {
-    if (slug.endsWith(`-en-${citySlug}`)) {
-      return slug.slice(0, -(citySlug.length + 4))
+    // Direct concatenation: banquetescuernavaca
+    if (segment.endsWith(citySlug) && segment.length > citySlug.length) {
+      return { base: segment.slice(0, -citySlug.length), citySlug }
     }
-    if (slug.endsWith(`-${citySlug}`)) {
-      return slug.slice(0, -(citySlug.length + 1))
+    // Legacy: banquetes-en-cuernavaca
+    if (segment.endsWith(`-en-${citySlug}`) && segment.length > citySlug.length + 4) {
+      return { base: segment.slice(0, -(citySlug.length + 4)), citySlug }
     }
   }
-  return slug
+
+  return { base: segment, citySlug: null }
+}
+
+/** Strip city suffix from a single slug segment */
+export function stripCityFromSlug(slug) {
+  return stripCityFromSegment(slug).base
 }
 
 /** Parse city and base path from a URL pathname */
@@ -52,29 +60,19 @@ export function parseCityFromPath(path) {
     return { city: null, basePath: '/' }
   }
 
-  // City landing: /ciudad-de-mexico
+  // City landing: /cuernavaca, /ciudad-de-mexico
   if (segments.length === 1 && CITY_MAP[segments[0]]) {
     return { city: CITY_MAP[segments[0]], basePath: '/' }
   }
 
-  // Check last segment for city suffix
   const last = segments[segments.length - 1]
-  for (const citySlug of CITY_SLUGS) {
-    if (last.endsWith(`-en-${citySlug}`)) {
-      const baseLast = last.slice(0, -(citySlug.length + 4))
-      const baseSegments = [...segments.slice(0, -1), baseLast]
-      return {
-        city: CITY_MAP[citySlug],
-        basePath: baseSegments.length ? `/${baseSegments.join('/')}` : '/',
-      }
-    }
-    if (last.endsWith(`-${citySlug}`) && !last.endsWith(`-en-${citySlug}`)) {
-      const baseLast = last.slice(0, -(citySlug.length + 1))
-      const baseSegments = [...segments.slice(0, -1), baseLast]
-      return {
-        city: CITY_MAP[citySlug],
-        basePath: baseSegments.length ? `/${baseSegments.join('/')}` : '/',
-      }
+  const { base, citySlug } = stripCityFromSegment(last)
+
+  if (citySlug) {
+    const baseSegments = [...segments.slice(0, -1), base].filter(Boolean)
+    return {
+      city: CITY_MAP[citySlug],
+      basePath: baseSegments.length ? `/${baseSegments.join('/')}` : '/',
     }
   }
 
@@ -86,23 +84,33 @@ export function stripCityFromPath(path) {
   return parseCityFromPath(path).basePath
 }
 
-/** Apply city to a path — home becomes /{city}, others get -en-{city} suffix */
+/**
+ * Apply city to a path.
+ * Home stays at / (city shown via pin/context).
+ * Services → /{service}{citySlug}  e.g. /banquetescuernavaca
+ */
 export function withCityPath(path, citySlug) {
   if (!citySlug || !CITY_MAP[citySlug]) return stripCityFromPath(path)
 
   const { basePath } = parseCityFromPath(path)
 
+  // Home URL stays at root; city is reflected in UI pin
   if (basePath === '/') {
-    return `/${citySlug}`
+    return '/'
   }
 
   const segments = basePath.split('/').filter(Boolean)
   const last = segments.pop()
-  segments.push(`${last}-en-${citySlug}`)
+  segments.push(`${last}${citySlug}`)
   return `/${segments.join('/')}`
 }
 
 /** Whether a slug param is a known city landing page */
 export function isCityLandingSlug(slug) {
   return Boolean(slug && CITY_MAP[slug])
+}
+
+/** Resolve a product/page slug that may include a city suffix */
+export function resolveBaseSlug(slug) {
+  return stripCityFromSlug(slug)
 }

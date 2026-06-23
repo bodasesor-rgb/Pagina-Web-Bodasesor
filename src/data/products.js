@@ -3997,20 +3997,21 @@ export function getProductBySlug(slug) {
   let p = PRODUCTS.find(p => p.slug === slug);
   if (p) return { ...DEFAULT_PRODUCT, ...p };
   
-  // City suffix variants
+  // City suffix variants (concatenated: banquetescuernavaca, or legacy -en-)
   const citySuffixes = [
-    'ciudad-de-mexico','estado-de-mexico','guadalajara','monterrey','queretaro',
-    'puebla','cancun','merida','aguascalientes','leon','los-cabos','morelia','oaxaca',
-    'pachuca','puerto-vallarta','san-luis-potosi','san-miguel-allende','tijuana',
-    'toluca','torreon','veracruz','cdmx','gdl','mty','df',
-  ];
+    'san-miguel-allende','san-luis-potosi','ciudad-de-mexico','estado-de-mexico',
+    'puerto-vallarta','los-cabos','aguascalientes','guadalajara','monterrey',
+    'cancun','cuernavaca','tijuana','veracruz','morelia','oaxaca','pachuca',
+    'queretaro','toluca','torreon','merida','puebla','leon',
+  ].sort((a, b) => b.length - a.length);
+
   for (const city of citySuffixes) {
-    if (slug.endsWith('-en-' + city)) {
-      p = PRODUCTS.find(p => p.slug === slug.slice(0, -(city.length + 4)));
+    if (slug.endsWith(city) && slug.length > city.length) {
+      p = PRODUCTS.find(p => p.slug === slug.slice(0, -city.length));
       if (p) return { ...DEFAULT_PRODUCT, ...p, slug };
     }
-    if (slug.endsWith('-' + city)) {
-      p = PRODUCTS.find(p => p.slug === slug.slice(0, -(city.length + 1)));
+    if (slug.endsWith('-en-' + city)) {
+      p = PRODUCTS.find(p => p.slug === slug.slice(0, -(city.length + 4)));
       if (p) return { ...DEFAULT_PRODUCT, ...p, slug };
     }
   }

@@ -4,6 +4,7 @@ import { useCity } from "../context/CityContext";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { Lightbox } from "../components/Lightbox";
 import { getProductBySlug } from "../data/products";
+import { stripCityFromSlug } from "../utils/city-url";
 import EventTypePage from "./EventTypePage";
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
@@ -441,33 +442,14 @@ interface ServicePageProps {
 }
 
 export default function ServicePage({ params }: ServicePageProps) {
-  const slug = params.chairSlug
+  const rawSlug = params.chairSlug
     ? `silla-${params.chairSlug}`
     : params.mesaSlug
     ? `mesa-${params.mesaSlug}`
     : params.slug;
 
-  // City-aware lookup: strip known city suffix and find base product
-  const CITY_SUFFIXES = [
-    'san-miguel-allende','san-luis-potosi','ciudad-de-mexico','estado-de-mexico',
-    'puerto-vallarta','los-cabos','aguascalientes','guadalajara','monterrey',
-    'cancun','cuernavaca','tijuana','veracruz','morelia','oaxaca','pachuca',
-    'queretaro','toluca','torreon','merida','puebla','leon','cdmx','df',
-  ].sort((a, b) => b.length - a.length);
-
-  let product = getProductBySlug(slug);
-  if (!product) {
-    for (const city of CITY_SUFFIXES) {
-      if (slug.endsWith(`-en-${city}`)) {
-        const p = getProductBySlug(slug.slice(0, -(city.length + 4)));
-        if (p) { product = p; break; }
-      }
-      if (slug.endsWith(`-${city}`)) {
-        const p = getProductBySlug(slug.slice(0, -(city.length + 1)));
-        if (p) { product = p; break; }
-      }
-    }
-  }
+  const slug = stripCityFromSlug(rawSlug);
+  const product = getProductBySlug(rawSlug) ?? getProductBySlug(slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);

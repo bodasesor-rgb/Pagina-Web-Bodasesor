@@ -189,13 +189,16 @@ const ddHeading = "px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wides
 
 // ─── City badge (own component so it always reads fresh context) ──────────────
 function CityBadge() {
-  const { city } = useCity();
+  const { city, setCity } = useCity();
   const [location, setLocation] = useLocation();
   if (!city) return null;
   return (
     <button
       key={city.slug}
-      onClick={() => setLocation(stripCityFromPath(location))}
+      onClick={() => {
+        if (stripCityFromPath(location) === '/') setCity(null);
+        else setLocation(stripCityFromPath(location));
+      }}
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
       title="Cambiar ciudad"
     >
@@ -935,7 +938,23 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [mobileSubExpanded, setMobileSubExpanded] = useState(null);
   const [location, setLocation] = useLocation();
-  const { city } = useCity();
+  const { city, setCity } = useCity();
+
+  const selectCity = (citySlug) => {
+    if (!CITY_MAP[citySlug]) return;
+    const base = stripCityFromPath(location);
+    if (base === '/') {
+      setCity({ ...CITY_MAP[citySlug] });
+    } else {
+      setLocation(withCityPath(base, citySlug));
+    }
+  };
+
+  const clearCity = () => {
+    const base = stripCityFromPath(location);
+    if (base === '/') setCity(null);
+    else setLocation(base);
+  };
 
   useEffect(() => {
     setMobileOpen(false);
@@ -1030,10 +1049,7 @@ export default function Navbar() {
                 {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
                   <button
                     key={c.href}
-                    onClick={() => {
-                      const slug = c.href.slice(1);
-                      if (CITY_MAP[slug]) setLocation(withCityPath(stripCityFromPath(location), slug));
-                    }}
+                    onClick={() => selectCity(c.href.slice(1))}
                     className={`w-full text-left block px-4 py-1.5 text-sm font-bold font-serif transition-colors rounded hover:bg-[#f5efe8] ${c.featured ? 'text-[#162040]' : 'text-gray-700 hover:text-[#162040]'}`}
                   >
                     {city?.slug === c.href.slice(1) ? `✓ ${c.name}` : c.name}
@@ -1129,13 +1145,7 @@ export default function Navbar() {
               {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
                 <button
                   key={c.href}
-                  onClick={() => {
-                    const slug = c.href.slice(1);
-                    if (CITY_MAP[slug]) {
-                      setLocation(withCityPath(stripCityFromPath(location), slug));
-                      setMobileOpen(false);
-                    }
-                  }}
+                  onClick={() => { selectCity(c.href.slice(1)); setMobileOpen(false); }}
                   className={`w-full text-left block py-2 text-sm font-bold font-serif ${c.featured ? 'text-[#162040]' : 'text-gray-600'} ${city?.slug === c.href.slice(1) ? 'text-[#162040]' : ''}`}
                 >
                   {city?.slug === c.href.slice(1) ? `✓ ${c.name}` : c.name}
@@ -1143,7 +1153,7 @@ export default function Navbar() {
               ))}
               {city && (
                 <button
-                  onClick={() => { setLocation(stripCityFromPath(location)); setMobileOpen(false); }}
+                  onClick={() => { clearCity(); setMobileOpen(false); }}
                   className="block py-2 text-xs text-red-500 font-serif hover:text-red-700"
                 >
                   ✕ Quitar ciudad seleccionada
