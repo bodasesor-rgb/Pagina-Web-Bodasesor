@@ -6,6 +6,7 @@
  */
 import fs from 'fs'
 import path from 'path'
+import { resolveLegacyPath } from './redirect-resolver.mjs'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
 const SHEET_ID = '1IkE_zX3tjkGJuDAMzF09swEWuHSaE1wXY2SqOHNNvpk'
@@ -86,73 +87,6 @@ function addEntry(map, fromPath, to, stats) {
   }
 }
 
-function extractPathOnly(destUrl) {
-  if (!destUrl?.trim()) return null
-  if (destUrl.startsWith('http://') || destUrl.startsWith('https://')) {
-    return new URL(destUrl).pathname.replace(/\/+$/, '') || '/'
-  }
-  return destUrl.startsWith('/') ? destUrl.replace(/\/+$/, '') || '/' : `/${destUrl}`
-}
-
-function blogSlug(fromPath) {
-  const match = fromPath.match(/^\/blogs\/noticias\/([^/?#]+)/)
-  if (!match) return null
-  let slug = decodeURIComponent(match[1])
-  slug = slug
-    .replace(/®️/g, '')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-  if (slug.includes('estrategias-y-consejos')) {
-    slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
-  }
-  return slug
-}
-
-function blogDestination(fromPath) {
-  const slug = blogSlug(fromPath)
-  if (slug) return `${SITE_BASE}/blog/${slug}`
-  return `${SITE_BASE}/blog`
-}
-
-function pageDestination(fromPath) {
-  if (fromPath.startsWith('/pages/quienes-somos')) return `${SITE_BASE}/quienes-somos`
-  if (fromPath.startsWith('/pages/contact')) return `${SITE_BASE}/`
-  return null
-}
-
-/** All redirects go to bodasesor.com — never to resonant/SEO site */
-function destinationForRow(fromPath, sheetDest) {
-  const page = pageDestination(fromPath)
-  if (page) return page
-
-  if (fromPath.startsWith('/blogs/')) {
-    return blogDestination(fromPath)
-  }
-
-  if (fromPath.startsWith('/products/')) {
-    const slug = fromPath.replace(/^\/products\//, '').split('?')[0]
-    return `${SITE_BASE}/${slug}`
-  }
-
-  if (fromPath.startsWith('/collections/')) {
-    const mapped = extractPathOnly(sheetDest)
-    if (mapped && mapped !== '/') {
-      const clean = mapped.replace(/^\/eventos\//, '/')
-      return `${SITE_BASE}${clean}`
-    }
-    const slug = fromPath.replace(/^\/collections\//, '').split('?')[0]
-    return `${SITE_BASE}/${slug}`
-  }
-
-  const mapped = extractPathOnly(sheetDest)
-  if (mapped && mapped !== '/') {
-    const clean = mapped.replace(/^\/eventos\//, '/')
-    return `${SITE_BASE}${clean}`
-  }
-
-  return null
-}
-
 function csvEscape(value) {
   const text = String(value ?? '')
   if (/[",\n\r]/.test(text)) return `"${text.replace(/"/g, '""')}"`
@@ -166,8 +100,7 @@ async function downloadSheet() {
     try {
       const res = await fetch(url)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const text = await res.text()
-      return text
+      return await res.text()
     } catch (err) {
       if (attempt === 3 && fs.existsSync(LOCAL_CSV)) {
         console.warn(`Sheet download failed (${err.message}), using cached ${LOCAL_CSV}`)
@@ -193,34 +126,35 @@ for (const row of rows) {
   if (!original) continue
 
   const fromPath = normalizePath(original)
-  const dest = destinationForRow(fromPath, row['URL Nueva (destino)'])
-  let note = row['Ciudad detectada'] || ''
+  const resolved = resolveLegacyPath(fromPath)
 
-  if (!dest) {
+  if (!resolved) {
     stats.skipped++
     continue
   }
 
+  const dest = resolved.startsWith('http') ? resolved : `${SITE_BASE}${resolved}`
+  let note = ''
+
   if (fromPath.startsWith('/products/')) {
     stats.products++
-    note = '(producto → bodasesor.com)'
+    note = '(producto → página válida)'
   } else if (fromPath.startsWith('/collections/')) {
     stats.collections++
-    note = note || '(collection → bodasesor.com)'
+    note = '(collection → página válida)'
   } else if (fromPath.startsWith('/blogs/')) {
     stats.blogs++
-    note = note || '(blog → bodasesor.com)'
+    note = '(blog → bodasesor.com)'
   } else if (fromPath.startsWith('/pages/')) {
     stats.pages++
-    note = note || '(página → bodasesor.com)'
+    note = '(página → bodasesor.com)'
   }
 
   updatedRows.push({ original, dest, note })
   addEntry(map, fromPath, dest, stats)
 }
 
-// Fallback for products not in the sheet
-map['/products/:slug'] = `${SITE_BASE}/:slug`
+map['/products/:slug'] = `${SITE_BASE}/banquetes-catering`
 stats.count++
 
 const output = {
@@ -232,11 +166,9 @@ const output = {
 
 fs.writeFileSync(OUT, JSON.stringify(output, null, 0))
 
-const redirectsTxt = `# Legacy Shopify redirects — all go to bodasesor.com
-/products/:slug  ${SITE_BASE}/:slug  301!
-`
-
-fs.writeFileSync(REDIRECTS_FILE, redirectsTxt)
+fs.writeFileSync(REDIRECTS_FILE, `# Legacy Shopify redirects → valid bodasesor.com pages
+/products/:slug  ${SITE_BASE}/banquetes-catering  301!
+`)
 
 const updatedCsvLines = [
   'URL Original (bodasesor.com),URL Nueva (destino),Ciudad detectada',
@@ -254,5 +186,15 @@ console.log(`  Blogs: ${stats.blogs}`)
 console.log(`  Pages: ${stats.pages}`)
 console.log(`  Skipped: ${stats.skipped}`)
 console.log(`  Total map entries: ${Object.keys(map).length}`)
+console.log('Samples:')
+for (const sample of [
+  '/products/tarima-vinil',
+  '/products/tarima-pintada-a-mano',
+  '/collections/xv-anos-cdmx',
+  '/collections/wedding-planner-cuernavaca',
+  '/blogs/noticias/votos-matrimoniales-2024',
+]) {
+  console.log(`  ${sample} → ${map[sample]}`)
+}
 console.log(`  Output: ${OUT}`)
 console.log(`  Updated sheet CSV: ${UPDATED_CSV}`)

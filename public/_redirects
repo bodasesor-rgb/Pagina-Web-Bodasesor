@@ -1,2 +1,2 @@
-# Legacy Shopify redirects — all go to bodasesor.com
-/products/:slug  https://bodasesor.com/:slug  301!
+# Legacy Shopify redirects → valid bodasesor.com pages
+/products/:slug  https://bodasesor.com/banquetes-catering  301!
