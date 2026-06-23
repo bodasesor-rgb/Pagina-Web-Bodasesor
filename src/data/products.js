@@ -23,7 +23,7 @@ const PRODUCTS = [
       ],
       category: "banquetes",
       categoryLabel: "Banquetes",
-      categoryHref: "/banquetes",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Banquete Formal",
@@ -76,20 +76,24 @@ const PRODUCTS = [
       ],
       varieties: [
         {
-          name: "Banquete de 3 tiempos",
-          desc: "Entrada, plato fuerte y postre. Ideal para eventos de 2 horas."
-        },
-        {
           name: "Banquete de 4 tiempos",
-          desc: "Sopa o crema, entrada, plato fuerte y postre. Elegante y completo."
+          desc: "Sopa, entrada, plato fuerte y postre. Elegante y completo para cenas de gala.",
+          href: "/banquetes/4-tiempos"
         },
         {
-          name: "Banquete de 5 tiempos",
-          desc: "La experiencia completa: aperitivo, sopa, entrada, plato fuerte y postre de autor."
+          name: "Banquete de 3 tiempos",
+          desc: "Entrada, plato fuerte y postre. Ideal para eventos de 2 a 3 horas.",
+          href: "/banquetes/3-tiempos"
+        },
+        {
+          name: "Banquete de 2 tiempos",
+          desc: "Plato fuerte y postre. Práctico para eventos de mediodía o cenas ejecutivas.",
+          href: "/banquetes/2-tiempos"
         },
         {
           name: "Banquete buffet",
-          desc: "Amplia variedad de platillos servidos en estaciones. Dinámico y abundante."
+          desc: "Amplia variedad de platillos servidos en estaciones. Dinámico y abundante.",
+          href: "/banquetes/buffet"
         }
       ],
       menuExample: [
@@ -205,7 +209,7 @@ const PRODUCTS = [
       ],
       category: "banquetes",
       categoryLabel: "Banquetes",
-      categoryHref: "/banquetes",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Banquete Formal",
@@ -258,20 +262,24 @@ const PRODUCTS = [
       ],
       varieties: [
         {
-          name: "Menú cárnico",
-          desc: "Cortes de res y pollo preparados bajo estrictas normas Kosher. Sin lácteos."
+          name: "Banquete Kosher de 4 tiempos",
+          desc: "Sopa, entrada, plato fuerte y postre bajo certificación rabínica.",
+          href: "/banquete-kosher/4-tiempos"
         },
         {
-          name: "Menú lácteo",
-          desc: "Platillos con quesos, cremas y productos lácteos de origen Kosher. Sin carne."
+          name: "Banquete Kosher de 3 tiempos",
+          desc: "Entrada, plato fuerte y postre Kosher. Ideal para bodas y eventos judíos.",
+          href: "/banquete-kosher/3-tiempos"
         },
         {
-          name: "Menú Parve",
-          desc: "Platillos neutros que pueden servirse tanto con cárnicos como con lácteos."
+          name: "Banquete Kosher de 2 tiempos",
+          desc: "Plato fuerte y postre Parve o cárnico. Opción ágil y certificada.",
+          href: "/banquete-kosher/2-tiempos"
         },
         {
           name: "Buffet Kosher",
-          desc: "Amplia variedad de opciones en estaciones separadas correctamente."
+          desc: "Estaciones separadas correctamente con amplia variedad certificada.",
+          href: "/banquete-kosher/buffet"
         }
       ],
       menuExample: [
@@ -387,7 +395,7 @@ const PRODUCTS = [
       ],
       category: "banquetes",
       categoryLabel: "Banquetes",
-      categoryHref: "/banquetes",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Banquete Formal",
@@ -440,20 +448,24 @@ const PRODUCTS = [
       ],
       varieties: [
         {
-          name: "Mole negro",
-          desc: "El rey de los moles, con más de 30 ingredientes, servido sobre pavo o pollo."
+          name: "Banquete Mexicano de 4 tiempos",
+          desc: "Sopa, entrada, plato fuerte y postre con sabores auténticos de México.",
+          href: "/banquete-mexicano/4-tiempos"
         },
         {
-          name: "Chiles en nogada",
-          desc: "El platillo más patriótico: chile poblano relleno, capeado, en nogada y granada."
+          name: "Banquete Mexicano de 3 tiempos",
+          desc: "Entrada, plato fuerte y postre con recetas regionales tradicionales.",
+          href: "/banquete-mexicano/3-tiempos"
         },
         {
-          name: "Cochinita pibil",
-          desc: "Cerdo marinado en achiote y naranja agria, cocinado lentamente en hoja de plátano."
+          name: "Banquete Mexicano de 2 tiempos",
+          desc: "Plato fuerte y postre mexicano. Ideal para fiestas patrias y eventos temáticos.",
+          href: "/banquete-mexicano/2-tiempos"
         },
         {
-          name: "Carnitas",
-          desc: "Cerdo confitado en manteca al estilo michoacano, con todos sus accesorios."
+          name: "Buffet Mexicano",
+          desc: "Tacos, carnitas, antojitos y guisados en estaciones al estilo mexicano.",
+          href: "/banquete-mexicano/buffet"
         }
       ],
       menuExample: [
@@ -569,7 +581,7 @@ const PRODUCTS = [
       ],
       category: "banquetes",
       categoryLabel: "Banquetes",
-      categoryHref: "/banquetes",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Banquete Formal",
@@ -622,20 +634,24 @@ const PRODUCTS = [
       ],
       varieties: [
         {
-          name: "Cena tradicional",
-          desc: "Pavo, romeritos, bacalao y ensalada de Nochebuena. Los clásicos de siempre."
+          name: "Banquete Navideño de 4 tiempos",
+          desc: "Sopa, entrada, pavo o pierna y postre navideño. La cena de gala completa.",
+          href: "/banquete-navideno/4-tiempos"
         },
         {
-          name: "Cena fusión",
-          desc: "Tradición mexicana con toques internacionales: cordero, foie gras y postres de autor."
+          name: "Banquete Navideño de 3 tiempos",
+          desc: "Entrada, plato fuerte y postre con clásicos de Nochebuena y Navidad.",
+          href: "/banquete-navideno/3-tiempos"
         },
         {
-          name: "Posada empresarial",
-          desc: "Formato buffet con estaciones de antojitos mexicanos y ponche caliente."
+          name: "Banquete Navideño de 2 tiempos",
+          desc: "Plato fuerte y postre navideño. Ideal para posadas y cenas familiares.",
+          href: "/banquete-navideno/2-tiempos"
         },
         {
-          name: "Brindis ejecutivo",
-          desc: "Canapés y fingerfood elegante para cocktail de 1.5 horas, sin plato fuerte."
+          name: "Buffet Navideño",
+          desc: "Estaciones con pavo, romeritos, bacalao, ponche y postres de temporada.",
+          href: "/banquete-navideno/buffet"
         }
       ],
       menuExample: [

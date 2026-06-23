@@ -55,7 +55,10 @@ import QuienesSomosPage from './pages/QuienesSomosPage.tsx'
 import BlogPage from './pages/BlogPage.tsx'
 import BlogDetailPage from './pages/BlogDetailPage.tsx'
 import ServicePage from './pages/ServicePage.tsx'
+import BanqueteMenuDetailPage from './pages/BanqueteMenuDetailPage.tsx'
 import NotFound from './pages/not-found.tsx'
+
+const BANQUET_PARENT_SLUGS = ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']
 
 /** Catalog pages reachable via /{page}-en-{city} URLs */
 const STANDALONE_PAGES = {
@@ -162,6 +165,16 @@ function Router() {
 
           {/* Banquetes & Catering */}
           <Route path="/banquetes-catering" component={BanquetesCateringPage} />
+          {BANQUET_PARENT_SLUGS.map((parentSlug) => (
+            <Route key={parentSlug} path={`/${parentSlug}/:menuSlug`}>
+              {(params) => (
+                <BanqueteMenuDetailPage
+                  parentSlug={parentSlug}
+                  menuSlug={stripCityFromSlug(params.menuSlug)}
+                />
+              )}
+            </Route>
+          ))}
 
           {/* Barras de Bebidas */}
           <Route path="/barras-de-bebidas" component={BarrasBebidasPage} />

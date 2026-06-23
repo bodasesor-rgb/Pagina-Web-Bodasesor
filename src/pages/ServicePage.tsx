@@ -706,17 +706,34 @@ export default function ServicePage({ params }: ServicePageProps) {
               <p className="text-gray-500 mt-3 font-serif">Elige la que mejor se adapte a tu evento y tus invitados</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {product.varieties.map((v, i) => (
-                <div key={i} className="flex gap-4 p-5 bg-[#f5efe8]/50 rounded-2xl border border-[#162040]/10 hover:border-[#162040]/30 transition-colors">
-                  <div className="flex-shrink-0 w-8 h-8 bg-[#162040] text-white rounded-full flex items-center justify-center text-sm font-bold font-serif mt-0.5">
-                    {i + 1}
+              {product.varieties.map((v, i) => {
+                const card = (
+                  <>
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#162040] text-white rounded-full flex items-center justify-center text-sm font-bold font-serif mt-0.5">
+                      {i + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-serif font-bold text-[#162040] text-lg mb-1">{v.name}</h3>
+                      <p className="text-gray-500 text-sm leading-relaxed font-serif">{v.desc}</p>
+                      {v.href && (
+                        <span className="inline-block mt-2 text-[#162040] text-sm font-serif font-semibold underline underline-offset-2">
+                          Ver menú completo →
+                        </span>
+                      )}
+                    </div>
+                  </>
+                );
+                return v.href ? (
+                  <Link key={i} href={v.href}
+                    className="flex gap-4 p-5 bg-[#f5efe8]/50 rounded-2xl border border-[#162040]/10 hover:border-[#162040]/30 hover:shadow-md transition-all">
+                    {card}
+                  </Link>
+                ) : (
+                  <div key={i} className="flex gap-4 p-5 bg-[#f5efe8]/50 rounded-2xl border border-[#162040]/10 hover:border-[#162040]/30 transition-colors">
+                    {card}
                   </div>
-                  <div>
-                    <h3 className="font-serif font-bold text-[#162040] text-lg mb-1">{v.name}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed font-serif">{v.desc}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="mt-8 text-center">
               <a
