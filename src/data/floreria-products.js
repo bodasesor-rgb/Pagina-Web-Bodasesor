@@ -249,3 +249,7 @@ export const FLORERIA_BY_CATEGORY = {
   globos: FLORERIA.filter(p => p.category === 'globos'),
   decoracion: FLORERIA.filter(p => p.category === 'decoracion'),
 };
+
+/** @typedef {typeof FLORERIA[number]['slug']} FloreriaSlug */
+/** @typedef {typeof FLORERIA[number]} FloreriaProduct */
+export const FloreriaSlug = '';

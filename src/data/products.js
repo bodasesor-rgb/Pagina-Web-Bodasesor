@@ -2632,9 +2632,168 @@ const PRODUCTS = [
     "headline": "El inicio del siguiente capítulo, celebrado como merece",
     "seoTitle": "Organización de Graduaciones en México | Bodasesor",
     "seoDescription": "Catering, música, decoración y fotografía para fiestas de graduación. Desde graduaciones universitarias hasta de preparatoria y posgrado.",
-    "description": [],
+    "category": "eventos",
+    "categoryLabel": "Tipo de Evento",
+    "categoryHref": "/graduaciones",
+    "description": [
+      "La graduación marca el cierre de una etapa y el inicio de una nueva. Es un logro que merece ser celebrado con la misma intensidad con la que se trabajó para alcanzarlo.",
+      "Bodasesor coordina fiestas de graduación para preparatoria, universidad y posgrado: banquetes, barra libre, DJ, decoración institucional, fotografía y todos los detalles que hacen épica la noche.",
+      "Hemos organizado cientos de graduaciones en todo México. Conocemos los tiempos, los protocolos y la energía que la generación espera en su noche."
+    ],
     "related": [],
-    "included": [],
+    "included": [
+      { "icon": "🍽️", "text": "Banquete de gala, cóctel post-ceremonia o taquiza para la fiesta." },
+      { "icon": "🍹", "text": "Barra libre completa con bartenders profesionales." },
+      { "icon": "🎵", "text": "DJ con el repertorio de la generación para toda la noche." },
+      { "icon": "📸", "text": "Cobertura de ceremonia y fiesta con galería compartida." },
+      { "icon": "💐", "text": "Decoración con colores de la institución o temática elegida." },
+      { "icon": "🧁", "text": "Mesa de dulces y cupcakes personalizados para la generación." }
+    ],
+    "whyUs": [],
+    "varieties": [],
+    "menuExample": [],
+    "serviceTiers": [],
+    "integralServices": []
+  },
+  {
+    "slug": "primera-comunion",
+    "title": "Servicios para Primera Comunión",
+    "headline": "Un día sagrado celebrado con elegancia y calidez familiar",
+    "seoTitle": "Organización de Primera Comunión en México | Bodasesor",
+    "seoDescription": "Banquetes, decoración, mesa de dulces, fotografía y entretenimiento para recepciones de Primera Comunión. Todo en un solo proveedor.",
+    "category": "eventos",
+    "categoryLabel": "Tipo de Evento",
+    "categoryHref": "/primera-comunion",
+    "description": [
+      "La Primera Comunión es uno de los momentos más significativos en la vida de una familia católica. La recepción posterior debe reflejar la solemnidad del sacramento y la alegría de compartirlo con los seres queridos.",
+      "Bodasesor coordina recepciones completas: banquete o almuerzo familiar, decoración en blanco y dorado, mesa de dulces, fotografía y entretenimiento para los niños invitados.",
+      "Trabajamos con familias desde la planeación inicial para crear un evento elegante, cálido y memorable para el comuniante y todos sus invitados."
+    ],
+    "related": [],
+    "included": [
+      { "icon": "🍽️", "text": "Banquete formal o almuerzo festivo con servicio de meseros." },
+      { "icon": "💐", "text": "Decoración floral en blanco y dorado con centros de mesa." },
+      { "icon": "🍰", "text": "Pastel de Primera Comunión y mesa de postres temática." },
+      { "icon": "📸", "text": "Cobertura de la misa, recepción y momentos familiares." },
+      { "icon": "🎪", "text": "Inflables y shows para entretener a los niños invitados." },
+      { "icon": "🍹", "text": "Barra de mocteles y bebidas para toda la familia." }
+    ],
+    "whyUs": [],
+    "varieties": [],
+    "menuExample": [],
+    "serviceTiers": [],
+    "integralServices": []
+  },
+  {
+    "slug": "cenas",
+    "title": "Servicios para Cenas",
+    "headline": "Cenas elegantes con el sabor y la presentación que tu ocasión merece",
+    "seoTitle": "Organización de Cenas y Eventos Gastronómicos | Bodasesor",
+    "seoDescription": "Banquetes formales, cenas de gala, cenas privadas y eventos gastronómicos con catering premium, barra de bebidas y servicio impecable.",
+    "category": "eventos",
+    "categoryLabel": "Tipo de Evento",
+    "categoryHref": "/cenas",
+    "description": [
+      "Una cena bien organizada es una experiencia que permanece en la memoria. Ya sea una cena de gala empresarial, una cena romántica de aniversario o una reunión íntima de familia, cada detalle cuenta.",
+      "Bodasesor ofrece banquetes formales con protocolo completo, barras de bebidas premium, mesas de quesos y postres, decoración floral y música de ambiente o en vivo.",
+      "Desde 20 comensales hasta 500, adaptamos el menú, el servicio y la ambientación al tono y la escala de tu cena."
+    ],
+    "related": [],
+    "included": [
+      { "icon": "🍽️", "text": "Banquete formal con aperitivo, plato fuerte y postre." },
+      { "icon": "🍹", "text": "Barra de bebidas con cócteles, vinos y opciones sin alcohol." },
+      { "icon": "🧀", "text": "Mesa de quesos y embutidos gourmet como maridaje." },
+      { "icon": "💐", "text": "Centros de mesa florales y ambientación elegante." },
+      { "icon": "📸", "text": "Cobertura fotográfica del evento." },
+      { "icon": "🎵", "text": "Música de fondo o DJ para la velada." }
+    ],
+    "whyUs": [],
+    "varieties": [],
+    "menuExample": [],
+    "serviceTiers": [],
+    "integralServices": []
+  },
+  {
+    "slug": "comidas",
+    "title": "Servicios para Comidas",
+    "headline": "Comidas memorables para celebraciones de mediodía",
+    "seoTitle": "Organización de Comidas y Almuerzos para Eventos | Bodasesor",
+    "seoDescription": "Taquizas, comida corrida, paella, pozole y banquetes de mediodía para eventos familiares, empresariales y celebraciones especiales.",
+    "category": "eventos",
+    "categoryLabel": "Tipo de Evento",
+    "categoryHref": "/comidas",
+    "description": [
+      "Las comidas de mediodía son el corazón de muchas celebraciones mexicanas: bautizos, cumpleaños, juntas de trabajo y reuniones familiares que se extienden toda la tarde.",
+      "Bodasesor ofrece desde taquizas y comida corrida hasta banquetes formales de mediodía, paella en vivo, pozole tradicional y parrilladas familiares.",
+      "Coordinamos catering, mobiliario, bebidas y decoración para que tu comida sea completa y sin complicaciones."
+    ],
+    "related": [],
+    "included": [
+      { "icon": "🍽️", "text": "Menú completo de mediodía adaptado a tu evento." },
+      { "icon": "🌮", "text": "Taquiza, pozole o comida corrida según tu preferencia." },
+      { "icon": "🍹", "text": "Aguas frescas, refrescos y barra de bebidas." },
+      { "icon": "🪑", "text": "Mobiliario: mesas, sillas y mantelería." },
+      { "icon": "💐", "text": "Decoración de mesa para comidas especiales." },
+      { "icon": "🏛️", "text": "Espacios y venues para comidas al aire libre o en salón." }
+    ],
+    "whyUs": [],
+    "varieties": [],
+    "menuExample": [],
+    "serviceTiers": [],
+    "integralServices": []
+  },
+  {
+    "slug": "desayunos",
+    "title": "Servicios para Desayunos",
+    "headline": "Desayunos y brunchs que marcan el inicio perfecto del día",
+    "seoTitle": "Organización de Desayunos y Brunchs para Eventos | Bodasesor",
+    "seoDescription": "Desayunos sociales, coffee breaks, brunchs de celebración y desayunos corporativos con catering completo y barra de café premium.",
+    "category": "eventos",
+    "categoryLabel": "Tipo de Evento",
+    "categoryHref": "/desayunos",
+    "description": [
+      "Un buen desayuno marca el tono de todo el día. Bodasesor organiza desayunos sociales, brunchs de celebración, coffee breaks ejecutivos y desayunos corporativos con la calidad que tu evento merece.",
+      "Ofrecemos menús completos: chilaquiles, huevos rancheros, pan dulce, fruta, jugos naturales y barra de café premium con baristas profesionales.",
+      "Ideal para bodas de mañana, baby showers brunch, juntas matutinas, presentaciones de proyectos y cualquier evento que comience antes del mediodía."
+    ],
+    "related": [],
+    "included": [
+      { "icon": "🥐", "text": "Desayuno social o brunch completo con chef en sitio." },
+      { "icon": "☕", "text": "Barra de café premium con baristas profesionales." },
+      { "icon": "🥪", "text": "Bocadillos y pan dulce artesanal." },
+      { "icon": "🍰", "text": "Mesa de postres y repostería fina." },
+      { "icon": "💐", "text": "Ambientación fresca y luminosa para la mañana." },
+      { "icon": "🏛️", "text": "Terrazas y salones con vista para desayunos especiales." }
+    ],
+    "whyUs": [],
+    "varieties": [],
+    "menuExample": [],
+    "serviceTiers": [],
+    "integralServices": []
+  },
+  {
+    "slug": "lanzamientos",
+    "title": "Servicios para Lanzamientos",
+    "headline": "Lanzamientos de producto con impacto y la imagen que tu marca necesita",
+    "seoTitle": "Organización de Lanzamientos de Producto | Bodasesor",
+    "seoDescription": "Catering premium, decoración con branding, audio, iluminación, fotografía y shows para lanzamientos de producto e inauguraciones.",
+    "category": "eventos",
+    "categoryLabel": "Tipo de Evento",
+    "categoryHref": "/lanzamientos",
+    "description": [
+      "Un lanzamiento de producto es la oportunidad de generar impacto, emoción y conversación en torno a tu marca. Cada detalle del evento debe reforzar el mensaje que quieres transmitir.",
+      "Bodasesor coordina lanzamientos completos: cóctel con canapés premium, decoración con identidad visual de marca, audio e iluminación de impacto, cobertura fotográfica y shows de cierre.",
+      "Hemos producido lanzamientos para marcas nacionales e internacionales. Entendemos los tiempos de producción, la confidencialidad y la necesidad de un resultado impecable."
+    ],
+    "related": [],
+    "included": [
+      { "icon": "🫙", "text": "Canapés premium y catering de alto nivel para el cocktail." },
+      { "icon": "💐", "text": "Decoración con colores corporativos y señalética de marca." },
+      { "icon": "📸", "text": "Cobertura profesional para redes sociales y comunicados." },
+      { "icon": "🎵", "text": "Audio, iluminación y pantallas LED para presentaciones." },
+      { "icon": "🍸", "text": "Barra de bebidas y cócteles de autor con branding." },
+      { "icon": "🎭", "text": "Shows y entretenimiento para el cierre del evento." }
+    ],
     "whyUs": [],
     "varieties": [],
     "menuExample": [],

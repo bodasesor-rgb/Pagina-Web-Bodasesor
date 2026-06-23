@@ -117,7 +117,7 @@ export default function CarpaDetailPage({ slug }: Props) {
             <div>
               <h3 className="text-lg font-serif font-bold text-[#162040] mb-3">¿Qué incluye?</h3>
               <ul className="space-y-2">
-                {carpa.incluye.map(item => (
+                {(carpa.incluye ?? []).map(item => (
                   <li key={item} className="flex items-start gap-2 text-gray-600 font-serif text-sm">
                     <span className="text-[#162040] font-bold mt-0.5">✓</span>
                     {item}
@@ -130,7 +130,7 @@ export default function CarpaDetailPage({ slug }: Props) {
             <div>
               <h3 className="text-lg font-serif font-bold text-[#162040] mb-3">Ideal para</h3>
               <div className="flex flex-wrap gap-2">
-                {carpa.idealPara.map(t => (
+                {(carpa.idealPara ?? []).map(t => (
                   <span key={t} className="bg-[#f5efe8] border border-[#162040]/10 text-[#162040] text-sm font-serif px-3 py-1.5 rounded-xl">
                     {t}
                   </span>
@@ -142,7 +142,7 @@ export default function CarpaDetailPage({ slug }: Props) {
             <div>
               <h3 className="text-lg font-serif font-bold text-[#162040] mb-3">Colores y acabados disponibles</h3>
               <div className="flex flex-wrap gap-2">
-                {carpa.colores.map(c => (
+                {(carpa.colores ?? []).map(c => (
                   <span key={c} className="bg-white border border-gray-200 text-gray-700 text-sm font-serif px-3 py-1.5 rounded-xl shadow-sm">
                     {c}
                   </span>

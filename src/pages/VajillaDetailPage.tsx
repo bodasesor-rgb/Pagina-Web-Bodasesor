@@ -68,7 +68,7 @@ export default function VajillaDetailPage({ slug }: Props) {
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {product.tags.map(tag => (
+              {(product.tags ?? []).map(tag => (
                 <span key={tag} className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full">
                   {tag}
                 </span>
@@ -112,7 +112,7 @@ export default function VajillaDetailPage({ slug }: Props) {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Piezas disponibles</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {product.piezas.map(pieza => (
+            {(product.piezas ?? []).map(pieza => (
               <div key={pieza}
                 className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
                 <svg className="w-4 h-4 text-[#162040]/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

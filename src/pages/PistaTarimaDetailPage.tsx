@@ -85,7 +85,7 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {product.tags.map(tag => (
+              {(product.tags ?? []).map(tag => (
                 <span key={tag} className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full">
                   {tag}
                 </span>
@@ -131,7 +131,7 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-serif font-bold text-[#162040] mb-6">Incluye</h2>
           <div className="grid sm:grid-cols-2 gap-3">
-            {product.features.map(f => (
+            {(product.features ?? []).map(f => (
               <div key={f} className="flex items-start gap-3 bg-white rounded-xl px-4 py-3">
                 <svg className="w-5 h-5 text-[#162040] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

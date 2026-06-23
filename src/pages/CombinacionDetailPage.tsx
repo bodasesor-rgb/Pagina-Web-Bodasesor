@@ -71,7 +71,7 @@ export default function CombinacionDetailPage({ slug }: Props) {
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {combo.tags.map(tag => (
+              {(combo.tags ?? []).map(tag => (
                 <span key={tag} className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full">
                   {tag}
                 </span>

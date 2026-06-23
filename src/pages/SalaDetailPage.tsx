@@ -36,7 +36,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
   }
 
   const waMsg = WA_BASE + encodeURIComponent(`Hola, me interesa cotizar la sala: ${sala.name} para mi evento.`);
-  const allImgs = [sala.img, ...sala.gallery].filter(Boolean);
+  const allImgs = [sala.img, ...(sala.gallery ?? [])].filter(Boolean);
 
   // Find adjacent salas for prev/next nav
   const idx = SALAS_CATALOG.findIndex(s => s.slug === sala.slug);

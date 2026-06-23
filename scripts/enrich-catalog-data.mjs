@@ -24,6 +24,9 @@ function enrichShow(raw) {
 // ── Shows ──
 const showsPath = path.join(ROOT, 'src/data/shows-products.js')
 let showsSrc = fs.readFileSync(showsPath, 'utf8')
+if (showsSrc.includes('export const SHOWS = RAW_SHOWS.map(enrichShow)')) {
+  console.log('shows-products.js already enriched, skipping')
+} else {
 showsSrc = showsSrc.replace('export const SHOWS = [', 'const RAW_SHOWS = [')
 showsSrc = showsSrc.replace(
   /export const SHOWS_BY_CATEGORY = \{[\s\S]*?\};\nexport const ShowsSlug/,
@@ -51,6 +54,7 @@ export const ShowsSlug`
 )
 fs.writeFileSync(showsPath, showsSrc)
 console.log('Patched shows-products.js')
+}
 
 // ── Florería ──
 const floreriaPath = path.join(ROOT, 'src/data/floreria-products.js')

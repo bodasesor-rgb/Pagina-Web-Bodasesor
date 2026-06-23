@@ -38,7 +38,7 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
   }
 
   const waMsg = WA_BASE + encodeURIComponent(`Hola, me interesa cotizar la periquera: ${per.name} para mi evento.`);
-  const allImgs = [per.img, ...per.gallery].filter(Boolean);
+  const allImgs = [per.img, ...(per.gallery ?? [])].filter(Boolean);
 
   const idx = PERIQUERAS_CATALOG.findIndex(p => p.slug === per.slug);
   const prev = idx > 0 ? PERIQUERAS_CATALOG[idx - 1] : null;

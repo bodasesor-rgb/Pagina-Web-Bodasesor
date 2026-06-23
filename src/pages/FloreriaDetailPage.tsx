@@ -30,7 +30,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
   }
 
   const waMsg = WA_BASE + encodeURIComponent(`Hola, me interesa cotizar ${product.name} para mi evento.`);
-  const sameCategory = FLORERIA_BY_CATEGORY[product.category].filter(p => p.slug !== product.slug);
+  const sameCategory = (FLORERIA_BY_CATEGORY[product.category] ?? []).filter(p => p.slug !== product.slug);
   const idx = FLORERIA.findIndex(p => p.slug === product.slug);
   const prev = idx > 0 ? FLORERIA[idx - 1] : null;
   const next = idx < FLORERIA.length - 1 ? FLORERIA[idx + 1] : null;
@@ -69,7 +69,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
             </p>
 
             <div className="flex flex-wrap gap-2 mb-8">
-              {product.idealPara.map(tag => (
+              {(product.idealPara ?? []).map(tag => (
                 <span key={tag} className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full">{tag}</span>
               ))}
             </div>
@@ -104,7 +104,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-lg font-serif font-bold text-[#162040] mb-4">¿Qué incluye?</h2>
           <div className="grid sm:grid-cols-2 gap-3">
-            {product.incluye.map(item => (
+            {(product.incluye ?? []).map(item => (
               <div key={item} className="flex items-start gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
                 <svg className="w-4 h-4 text-[#162040]/50 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

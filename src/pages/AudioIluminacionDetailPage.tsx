@@ -72,7 +72,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
               <div>
                 <h3 className="font-serif font-bold text-[#162040] text-sm mb-3 uppercase tracking-wide">¿Qué incluye?</h3>
                 <ul className="space-y-2">
-                  {product.incluye.map((item, i) => (
+                  {(product.incluye ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
                       <span className="text-[#162040]/40 mt-0.5 flex-shrink-0">◎</span>{item}
                     </li>
@@ -82,7 +82,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
               <div>
                 <h3 className="font-serif font-bold text-[#162040] text-sm mb-3 uppercase tracking-wide">Ideal para</h3>
                 <ul className="space-y-2">
-                  {product.idealPara.map((item, i) => (
+                  {(product.idealPara ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
                       <span className="text-[#162040]/40 mt-0.5 flex-shrink-0">✦</span>{item}
                     </li>

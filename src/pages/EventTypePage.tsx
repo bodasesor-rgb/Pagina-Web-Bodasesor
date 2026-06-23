@@ -855,12 +855,12 @@ export default function EventTypePage({ product }: EventTypePageProps) {
       </section>
 
       {/* ── 2. OTROS TIPOS DE EVENTO ── */}
-      {product.related.length > 0 && (
+      {(product.related ?? []).length > 0 && (
         <section className="bg-[#162040] py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm font-semibold text-white/60 font-serif mr-2 shrink-0">Tipo de Evento:</span>
-              {product.related.map(r => (
+              {(product.related ?? []).map(r => (
                 <Link
                   key={r.href}
                   href={r.href}
@@ -883,7 +883,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                 {product.headline}
               </h2>
               <div className="space-y-4">
-                {product.description.map((para, i) => (
+                {(product.description ?? []).map((para, i) => (
                   <p key={i} className="text-gray-600 leading-relaxed font-serif text-lg">{para}</p>
                 ))}
               </div>

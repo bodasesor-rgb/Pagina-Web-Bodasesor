@@ -69,7 +69,7 @@ export default function EnteladoDetailPage({ slug }: Props) {
 
             {/* Ideal para */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {estilo.idealPara.map(tag => (
+              {(estilo.idealPara ?? []).map(tag => (
                 <span key={tag} className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full">{tag}</span>
               ))}
             </div>
@@ -88,13 +88,13 @@ export default function EnteladoDetailPage({ slug }: Props) {
 
           {/* Right: image grid */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
-            {estilo.imgPages.length === 1 ? (
+            {(estilo.imgPages ?? []).length === 1 ? (
               <div className="w-full max-w-xl h-[320px] lg:h-[440px] rounded-2xl overflow-hidden bg-[#0d1630]">
                 <img src={estilo.img} alt={estilo.name} className="w-full h-full object-cover" />
               </div>
             ) : (
-              <div className={`w-full grid gap-2 ${estilo.imgPages.length >= 4 ? 'grid-cols-2' : 'grid-cols-2'} h-[320px] lg:h-[440px]`}>
-                {estilo.imgPages.slice(0, 4).map((src, i) => (
+              <div className={`w-full grid gap-2 ${(estilo.imgPages ?? []).length >= 4 ? 'grid-cols-2' : 'grid-cols-2'} h-[320px] lg:h-[440px]`}>
+                {(estilo.imgPages ?? []).slice(0, 4).map((src, i) => (
                   <div key={i} className="rounded-xl overflow-hidden bg-[#0d1630]">
                     <img src={src} alt={`${estilo.name} ${i + 1}`} className="w-full h-full object-contain" />
                   </div>
@@ -111,7 +111,7 @@ export default function EnteladoDetailPage({ slug }: Props) {
           <div>
             <h2 className="text-lg font-serif font-bold text-[#162040] mb-4">Incluye</h2>
             <div className="space-y-2">
-              {estilo.incluye.map(item => (
+              {(estilo.incluye ?? []).map(item => (
                 <div key={item} className="flex items-start gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
                   <svg className="w-4 h-4 text-[#162040]/50 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -124,7 +124,7 @@ export default function EnteladoDetailPage({ slug }: Props) {
           <div>
             <h2 className="text-lg font-serif font-bold text-[#162040] mb-4">Colores disponibles</h2>
             <div className="space-y-2">
-              {estilo.colores.map(c => (
+              {(estilo.colores ?? []).map(c => (
                 <div key={c} className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
                   <span className="w-3 h-3 rounded-full bg-[#f5efe8] border border-[#162040]/20 flex-shrink-0" />
                   <span className="font-serif text-sm text-[#162040]">{c}</span>
