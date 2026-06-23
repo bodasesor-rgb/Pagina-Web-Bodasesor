@@ -21,6 +21,7 @@ import { empresasNavItems } from "../data/empresas-products";
 import { espaciosNavItems } from "../data/espacios-products";
 import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
 import { banquetesNavGroups } from "../data/banquetes-menus";
+import SearchBar from "./SearchBar";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -969,29 +970,9 @@ export default function Navbar() {
 
             {/* Desktop: search + actions */}
             <div className="hidden md:flex items-center space-x-6">
-              <div className="relative">
-                <form
-                  className="relative"
-                  onSubmit={e => {
-                    e.preventDefault();
-                    const q = (e.currentTarget.elements.namedItem('q') ).value.trim();
-                    if (q) window.location.href = `/buscar?q=${encodeURIComponent(q)}`;
-                  }}
-                >
-                  <input
-                    name="q"
-                    type="text"
-                    placeholder="Buscar servicios..."
-                    className="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
-                    data-testid="input-search"
-                  />
-                  <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[#162040] hover:text-[#1a2a52]">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                  </button>
-                </form>
-              </div>
+              <SearchBar
+                inputClassName="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
+              />
 
               <a href="tel:5215540080373" className="flex items-center space-x-2 hover:text-[#f5efe8] transition-colors" data-testid="link-llamar">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1120,16 +1101,11 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-200 max-h-[80vh] overflow-y-auto shadow-xl">
           <div className="px-4 pt-3 pb-2">
             {/* Search */}
-            <form className="relative mb-3" onSubmit={e => {
-              e.preventDefault();
-              const q = (e.currentTarget.elements.namedItem('q') ).value.trim();
-              if (q) window.location.href = `/buscar?q=${encodeURIComponent(q)}`;
-            }}>
-              <input name="q" type="text" placeholder="Buscar servicios..." className="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif" />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-              </button>
-            </form>
+            <SearchBar
+              onNavigate={() => setMobileOpen(false)}
+              wrapperClassName="mb-3"
+              inputClassName="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif"
+            />
 
             <MobileSection title="Ciudad" id="ciudad" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
               {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (

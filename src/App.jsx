@@ -56,6 +56,7 @@ import BlogPage from './pages/BlogPage.tsx'
 import BlogDetailPage from './pages/BlogDetailPage.tsx'
 import ServicePage from './pages/ServicePage.tsx'
 import BanqueteMenuDetailPage from './pages/BanqueteMenuDetailPage.tsx'
+import SearchPage from './pages/SearchPage.tsx'
 import NotFound from './pages/not-found.tsx'
 
 const BANQUET_PARENT_SLUGS = ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']
@@ -84,6 +85,7 @@ const STANDALONE_PAGES = {
   '/galeria': GaleriaPage,
   '/quienes-somos': QuienesSomosPage,
   '/blog': BlogPage,
+  '/buscar': SearchPage,
 }
 
 function CatchAllRoute({ slug }) {
@@ -260,6 +262,9 @@ function Router() {
           <Route path="/blog/:slug">
             {(params) => <BlogDetailPage slug={stripCityFromSlug(params.slug)} />}
           </Route>
+
+          {/* Búsqueda */}
+          <Route path="/buscar" component={SearchPage} />
 
           {/* Catch-all: city landing, city-suffixed catalog pages, and product slugs */}
           <Route path="/:slug">
