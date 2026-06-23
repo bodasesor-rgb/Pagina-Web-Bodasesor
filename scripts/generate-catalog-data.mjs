@@ -102,7 +102,7 @@ const ESPACIOS = generateFromImages('espacios', {
 })
 writeModule(
   'src/data/espacios-products.js',
-  `export const espaciosNavItems = ${JSON.stringify(ESPACIOS.map((p) => ({ href: `/espacios/${p.slug}`, name: p.name })), null, 2)}
+  `export const espaciosNavItems = ${JSON.stringify(ESPACIOS.map((p) => ({ href: `/espacios-eventos/${p.slug}`, name: p.name })), null, 2)}
 
 export const ESPACIOS = ${JSON.stringify(ESPACIOS, null, 2)}
 `

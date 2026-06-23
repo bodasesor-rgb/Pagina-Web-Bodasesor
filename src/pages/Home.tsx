@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
+import CityLink from "../components/CityLink";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import IconFromEmoji from "../components/IconFromEmoji";
 import { Lightbox } from "../components/Lightbox";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
+import { withCityPath, stripCityFromPath } from "../utils/city-url";
+
+const Link = CityLink;
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WHATSAPP_BASE = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
@@ -256,7 +260,8 @@ const FiveStars = () => (
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const { city, setCity } = useCity();
+  const { city } = useCity();
+  const [location, setLocation] = useLocation();
 
   return (
     <div>
@@ -502,9 +507,10 @@ export default function Home() {
                 key={c.href}
                 onClick={() => {
                   const slug = c.href.slice(1);
-                  const cityObj = CITY_MAP[slug];
-                  if (cityObj) setCity({ ...cityObj });
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  if (CITY_MAP[slug]) {
+                    setLocation(withCityPath(stripCityFromPath(location), slug));
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
                 }}
                 className="bg-white hover:bg-[#162040] hover:text-white text-[#162040] font-serif font-bold py-4 px-6 rounded-xl text-center transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 cursor-pointer"
               >

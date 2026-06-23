@@ -1,18 +1,18 @@
 export const espaciosNavItems = [
   {
-    "href": "/espacios/haciendas",
+    "href": "/espacios-eventos/haciendas",
     "name": "Haciendas"
   },
   {
-    "href": "/espacios/jardines",
+    "href": "/espacios-eventos/jardines",
     "name": "Jardines"
   },
   {
-    "href": "/espacios/salones",
+    "href": "/espacios-eventos/salones",
     "name": "Salones"
   },
   {
-    "href": "/espacios/terrazas",
+    "href": "/espacios-eventos/terrazas",
     "name": "Terrazas"
   }
 ]

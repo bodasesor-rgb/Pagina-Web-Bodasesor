@@ -1,6 +1,9 @@
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
+import CityLink from "./CityLink";
 
 const WHATSAPP_NUMBER = "5215540080373";
+
+const Link = CityLink;
 
 const CITIES = [
   { name: 'Ciudad de México', href: '/ciudad-de-mexico' },
@@ -67,7 +70,7 @@ export default function Footer() {
               {CITIES.map(item => (
                 <li key={item.href}>
                   <button
-                    onClick={() => { setLocation('/'); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                    onClick={() => { setLocation(item.href); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
                     className={linkClass + ' bg-transparent border-0 p-0 cursor-pointer text-left'}
                   >
                     {item.name}
