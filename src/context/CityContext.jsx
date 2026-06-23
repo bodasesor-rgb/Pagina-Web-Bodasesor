@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 
-const CityContext = createContext(null)
+const CityContext = createContext({ city: null, setCity: () => {} })
 
 export function CityProvider({ children }) {
   const [city, setCity] = useState(null)
