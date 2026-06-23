@@ -4,3 +4,4 @@ export const vajillasNavItems = {
 }
 export const VAJILLAS = []
 export const VAJILLAS_BY_CATEGORY = {}
+export const VajillaCat = ''
