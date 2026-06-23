@@ -55,6 +55,97 @@ export const BANQUET_MENU_FORMATS = [
   }
 ]
 
+export const banquetesNavItems = [
+  {
+    "name": "Banquete Formal",
+    "href": "/banquetes",
+    "children": [
+      {
+        "name": "4 Tiempos",
+        "href": "/banquetes/4-tiempos"
+      },
+      {
+        "name": "3 Tiempos",
+        "href": "/banquetes/3-tiempos"
+      },
+      {
+        "name": "2 Tiempos",
+        "href": "/banquetes/2-tiempos"
+      },
+      {
+        "name": "Buffet",
+        "href": "/banquetes/buffet"
+      }
+    ]
+  },
+  {
+    "name": "Banquete Kosher",
+    "href": "/banquete-kosher",
+    "children": [
+      {
+        "name": "4 Tiempos",
+        "href": "/banquete-kosher/4-tiempos"
+      },
+      {
+        "name": "3 Tiempos",
+        "href": "/banquete-kosher/3-tiempos"
+      },
+      {
+        "name": "2 Tiempos",
+        "href": "/banquete-kosher/2-tiempos"
+      },
+      {
+        "name": "Buffet",
+        "href": "/banquete-kosher/buffet"
+      }
+    ]
+  },
+  {
+    "name": "Banquete Mexicano",
+    "href": "/banquete-mexicano",
+    "children": [
+      {
+        "name": "4 Tiempos",
+        "href": "/banquete-mexicano/4-tiempos"
+      },
+      {
+        "name": "3 Tiempos",
+        "href": "/banquete-mexicano/3-tiempos"
+      },
+      {
+        "name": "2 Tiempos",
+        "href": "/banquete-mexicano/2-tiempos"
+      },
+      {
+        "name": "Buffet",
+        "href": "/banquete-mexicano/buffet"
+      }
+    ]
+  },
+  {
+    "name": "Banquete Navideño",
+    "href": "/banquete-navideno",
+    "children": [
+      {
+        "name": "4 Tiempos",
+        "href": "/banquete-navideno/4-tiempos"
+      },
+      {
+        "name": "3 Tiempos",
+        "href": "/banquete-navideno/3-tiempos"
+      },
+      {
+        "name": "2 Tiempos",
+        "href": "/banquete-navideno/2-tiempos"
+      },
+      {
+        "name": "Buffet",
+        "href": "/banquete-navideno/buffet"
+      }
+    ]
+  }
+]
+
 export const BANQUET_MENUS = [
   {
     "parentSlug": "banquetes",

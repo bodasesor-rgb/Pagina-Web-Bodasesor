@@ -275,12 +275,23 @@ for (const parent of PARENTS) {
   }
 }
 
+const banquetesNavItems = PARENTS.map((parent) => ({
+  name: parent.name,
+  href: parent.href,
+  children: FORMATS.map((f) => ({
+    name: f.label,
+    href: `${parent.href}/${f.slug}`,
+  })),
+}))
+
 const file = `// Banquet menu sub-pages — ${menus.length} entries (4 types × 4 formats)
 // Regenerate: node scripts/generate-banquetes-menus.mjs
 
 export const BANQUET_PARENTS = ${JSON.stringify(PARENTS, null, 2)}
 
 export const BANQUET_MENU_FORMATS = ${JSON.stringify(FORMATS.map((f) => ({ slug: f.slug, label: f.label })), null, 2)}
+
+export const banquetesNavItems = ${JSON.stringify(banquetesNavItems, null, 2)}
 
 export const BANQUET_MENUS = ${JSON.stringify(menus, null, 2)}
 

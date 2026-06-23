@@ -20,6 +20,7 @@ import { fotografiaNavItems } from "../data/fotografia-products";
 import { empresasNavItems } from "../data/empresas-products";
 import { espaciosNavItems } from "../data/espacios-products";
 import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
+import { banquetesNavItems } from "../data/banquetes-menus";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -57,12 +58,7 @@ const cateringGroups = [
   {
     heading: 'Banquetes',
     href: '/banquetes-catering#banquetes',
-    items: [
-      { name: 'Banquete Formal', href: '/banquetes' },
-      { name: 'Banquete Kosher', href: '/banquete-kosher' },
-      { name: 'Banquete Mexicano', href: '/banquete-mexicano' },
-      { name: 'Banquete Navideño', href: '/banquete-navideno' },
-    ],
+    items: banquetesNavItems,
   },
   {
     heading: 'Catering',
@@ -263,6 +259,32 @@ function NestedDropdown({ directItems, flyoutLabel, flyoutItems, align = 'left' 
   );
 }
 
+function FlyoutNavItem({ item }) {
+  const { city } = useCity();
+  const label = city ? `${item.name} ${city.short}` : item.name;
+
+  if (item.children?.length) {
+    return (
+      <div className="relative group/flyout-nav">
+        <Link href={item.href} className={`${ddLink} flex items-center justify-between pr-3 font-bold text-[#162040]`}>
+          {label}
+          <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0" />
+        </Link>
+        <div className="absolute left-full top-0 w-44 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[60] opacity-0 invisible group-hover/flyout-nav:opacity-100 group-hover/flyout-nav:visible transition-all duration-150">
+          <Link href={item.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>
+            Ver {item.name}
+          </Link>
+          <div className="border-t border-gray-100 my-1" />
+          {item.children.map((child) => (
+            <NavItemLink key={child.href} href={child.href} name={child.name} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+  return <NavItemLink href={item.href} name={item.name} />;
+}
+
 function FlyoutDropdown({ groups, align = "left", overviewHref }) {
   const [hovered, setHovered] = useState(groups[0]?.heading ?? '');
   const pos = align === 'right' ? 'right-0' : 'left-0';
@@ -303,8 +325,8 @@ function FlyoutDropdown({ groups, align = "left", overviewHref }) {
         )}
       </div>
       <div className="w-52 py-2">
-        {sortItems(active?.items ?? []).map(item => (
-          <NavItemLink key={item.href} href={item.href} name={item.name} />
+        {sortItems(active?.items ?? []).map((item) => (
+          <FlyoutNavItem key={item.href} item={item} />
         ))}
       </div>
     </div>
@@ -1156,7 +1178,18 @@ export default function Navbar() {
               <div className="border-t border-gray-100 my-1" />
               {cateringGroups.map(group => (
                 <MobileSubSection key={group.heading} title={group.heading} id={group.heading} expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                  {group.items.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                  {group.items.map(item => (
+                    item.children?.length ? (
+                      <MobileSubSection key={item.href} title={item.name} id={`${group.heading}-${item.href}`} expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
+                        <Link href={item.href} className="block py-1 text-xs font-bold text-[#162040] font-serif">Ver {item.name} →</Link>
+                        {item.children.map(c => (
+                          <Link key={c.href} href={c.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{c.name}</Link>
+                        ))}
+                      </MobileSubSection>
+                    ) : (
+                      <Link key={item.href} href={item.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{item.name}</Link>
+                    )
+                  ))}
                 </MobileSubSection>
               ))}
             </MobileSection>
