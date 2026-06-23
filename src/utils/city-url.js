@@ -6,6 +6,7 @@ export const CITY_SLUGS = Object.keys(CITY_MAP).sort((a, b) => b.length - a.leng
 /** Paths that should never receive a city suffix */
 export const CITY_EXEMPT_PREFIXES = [
   '/blog',
+  '/buscar',
   '/quienes-somos',
   '/galeria',
   '/catalogo',

@@ -18,6 +18,7 @@ const SEO_MAP = {
   '/baby-shower':          { title: 'Baby Shower',                 desc: 'Servicios para baby shower: mesa de dulces, decoración, catering y más.' },
   '/cumpleanos':           { title: 'Cumpleaños',                  desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.' },
   '/primera-comunion':     { title: 'Primera Comunión',            desc: 'Servicios completos para primera comunión: banquete, decoración y más.' },
+  '/buscar':               { title: 'Buscar servicios',            desc: 'Encuentra banquetes, mobiliario, shows, florería y todos los servicios de Bodasesor.' },
 }
 
 export default function GlobalSEO() {
