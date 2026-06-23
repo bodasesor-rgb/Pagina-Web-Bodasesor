@@ -1,0 +1,6 @@
+# Legacy Shopify redirects — generated from Google Sheet "Paginas Bodasesor"
+# Exact matches are handled by the legacy-redirect edge function via redirects-map.json
+
+/products/:slug  https://resonant-gingersnap-df3cfa.netlify.app/eventos/:slug  301!
+
+# SPA fallback is configured in netlify.toml

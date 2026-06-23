@@ -5,6 +5,23 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
+  SEO_REDIRECT_BASE = "https://resonant-gingersnap-df3cfa.netlify.app"
+
+[[edge_functions]]
+  function = "legacy-redirect"
+  path = "/products/*"
+
+[[edge_functions]]
+  function = "legacy-redirect"
+  path = "/collections/*"
+
+[[edge_functions]]
+  function = "legacy-redirect"
+  path = "/blogs/*"
+
+[[edge_functions]]
+  function = "legacy-redirect"
+  path = "/pages/*"
 
 [[redirects]]
   from = "/*"
