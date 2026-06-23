@@ -207,7 +207,9 @@ function Router() {
           </Route>
 
           {/* Catch-all: ServicePage handles all slugs gracefully */}
-          <Route path="/:slug" component={ServicePage} />
+          <Route path="/:slug">
+            {(params) => <ServicePage params={{ slug: params.slug }} />}
+          </Route>
 
           <Route component={NotFound} />
         </Switch>
