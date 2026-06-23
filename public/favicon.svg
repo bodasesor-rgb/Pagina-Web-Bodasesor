@@ -1,4 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#1a1a1a"/>
-  <text y=".9em" font-size="80" x="8" fill="#c8a96e" font-family="serif" font-weight="bold">B</text>
+  <rect width="100" height="100" fill="#ffffff"/>
+  <!-- temple arm -->
+  <rect x="8" y="38" width="5" height="18" rx="2.5" fill="#162040"/>
+  <!-- left lens -->
+  <circle cx="34" cy="44" r="16" fill="none" stroke="#162040" stroke-width="7"/>
+  <path d="M 26 36 A 8 8 0 0 1 34 30" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  <!-- right lens -->
+  <circle cx="66" cy="44" r="16" fill="none" stroke="#162040" stroke-width="7"/>
+  <!-- mustache left -->
+  <path d="M 28 72 Q 38 62 50 68 Q 42 78 28 74 Z" fill="#162040"/>
+  <!-- mustache right -->
+  <path d="M 72 72 Q 62 62 50 68 Q 58 78 72 74 Z" fill="#162040"/>
 </svg>
