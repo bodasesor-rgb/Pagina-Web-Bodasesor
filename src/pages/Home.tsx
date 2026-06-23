@@ -260,17 +260,12 @@ const FiveStars = () => (
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
-  const { city, setCity } = useCity();
+  const { city } = useCity();
   const [location, setLocation] = useLocation();
 
   const selectCity = (citySlug) => {
     if (!CITY_MAP[citySlug]) return;
-    const base = stripCityFromPath(location);
-    if (base === '/') {
-      setCity({ ...CITY_MAP[citySlug] });
-    } else {
-      setLocation(withCityPath(base, citySlug));
-    }
+    setLocation(withCityPath(stripCityFromPath(location), citySlug));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

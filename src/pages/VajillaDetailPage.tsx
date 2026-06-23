@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { VAJILLAS } from "../data/vajillas-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";

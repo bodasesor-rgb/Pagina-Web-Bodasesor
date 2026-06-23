@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { SALAS_CATALOG } from "../data/salas-periqueras-products";
 
 const WHATSAPP_NUMBER = "5215540080373";

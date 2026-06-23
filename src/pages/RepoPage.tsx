@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { REPOSTERIA } from "../data/reposteria-products";
 import type { ReposteriaProduct } from "../data/reposteria-products";
 import { useCity } from "../context/CityContext";

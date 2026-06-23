@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 
 const WA_MSG = "https://wa.me/5215540080373?text=" + encodeURIComponent("Hola, me interesa cotizar vajillas para mi evento. ¿Pueden enviarme más información?");
 

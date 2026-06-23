@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { blogPosts } from "../data/blog-data";
 import { useEffect } from "react";
 

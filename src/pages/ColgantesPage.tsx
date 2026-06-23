@@ -1,5 +1,6 @@
 import { useCity } from "../context/CityContext";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { COLGANTES, ColganteCat } from "../data/colgantes-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";

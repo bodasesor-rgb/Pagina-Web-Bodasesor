@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { FLORERIA, FLORERIA_BY_CATEGORY } from "../data/floreria-products";
 import type { FloreriaProduct } from "../data/floreria-products";
 import { useCity } from "../context/CityContext";

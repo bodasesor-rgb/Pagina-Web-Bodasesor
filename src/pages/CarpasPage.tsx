@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { CARPAS } from "../data/carpas-products";
 import { useCity } from "../context/CityContext";
 

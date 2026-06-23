@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Lightbox } from "../components/Lightbox";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import {
   Phone, CheckCircle2, ArrowRight, ExternalLink,
   Utensils, Wine, Cake, Flower2, Camera, Music, Armchair, Crown,

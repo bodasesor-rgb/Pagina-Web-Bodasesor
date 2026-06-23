@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useCity } from "../context/CityContext";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { COMBINACIONES } from "../data/combinaciones-products";
 
 const WHATSAPP_NUMBER = "5215540080373";

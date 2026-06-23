@@ -1,4 +1,6 @@
-import { useRoute, Link } from "wouter";
+import { useRoute } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { ChevronRight, Phone, MessageCircle, Star, ArrowLeft } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { findProductByHandle, getRelatedProducts, navigation } from "../data/navigation";

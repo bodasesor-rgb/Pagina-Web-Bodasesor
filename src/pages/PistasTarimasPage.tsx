@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 import { useCity } from "../context/CityContext";
 

@@ -1,7 +1,5 @@
 import { useLocation } from "wouter";
 import CityLink from "./CityLink";
-import { useCity } from "../context/CityContext";
-import { CITY_MAP } from "../data/city-data";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -21,7 +19,6 @@ const linkClass = "text-white/80 hover:text-white hover:font-bold hover:translat
 
 export default function Footer() {
   const [, setLocation] = useLocation()
-  const { setCity } = useCity()
   return (
     <footer className="bg-[#162040] text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,9 +71,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <button
                     onClick={() => {
-                      const slug = item.href.slice(1);
-                      if (CITY_MAP[slug]) setCity({ ...CITY_MAP[slug] });
-                      setLocation('/');
+                      setLocation(item.href);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className={linkClass + ' bg-transparent border-0 p-0 cursor-pointer text-left'}

@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { Home, Search } from "lucide-react";
 
 export default function NotFound() {

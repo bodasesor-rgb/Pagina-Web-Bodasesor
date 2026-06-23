@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { useCity } from "../context/CityContext";
 
 const WA = "https://wa.me/5215540080373?text=";

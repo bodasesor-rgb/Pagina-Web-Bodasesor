@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { SHOWS, ShowsSlug, SHOWS_BY_CATEGORY } from "../data/shows-products";
 import { Drum, Sparkles, Zap, CircleDot } from "lucide-react";

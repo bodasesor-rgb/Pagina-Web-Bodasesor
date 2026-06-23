@@ -85,18 +85,17 @@ export function stripCityFromPath(path) {
 }
 
 /**
- * Apply city to a path.
- * Home stays at / (city shown via pin/context).
- * Services → /{service}{citySlug}  e.g. /banquetescuernavaca
+ * Apply city to a path — always updates the URL.
+ * Home → /{citySlug}  (e.g. /cuernavaca, /ciudad-de-mexico)
+ * Services → /{service}{citySlug}  (e.g. /banquetescuernavaca)
  */
 export function withCityPath(path, citySlug) {
   if (!citySlug || !CITY_MAP[citySlug]) return stripCityFromPath(path)
 
   const { basePath } = parseCityFromPath(path)
 
-  // Home URL stays at root; city is reflected in UI pin
   if (basePath === '/') {
-    return '/'
+    return `/${citySlug}`
   }
 
   const segments = basePath.split('/').filter(Boolean)

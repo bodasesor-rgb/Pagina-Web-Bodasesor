@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { useEffect } from "react";
 import { Trophy, Handshake, Sparkles, Lightbulb, Mail, Phone, Camera } from "lucide-react";
 

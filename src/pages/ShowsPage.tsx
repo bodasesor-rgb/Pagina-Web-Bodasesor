@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { SHOWS, SHOWS_BY_CATEGORY } from "../data/shows-products";
 import type { ShowsProduct } from "../data/shows-products";
 import { useCity } from "../context/CityContext";

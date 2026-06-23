@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;

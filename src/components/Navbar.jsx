@@ -189,16 +189,13 @@ const ddHeading = "px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wides
 
 // ─── City badge (own component so it always reads fresh context) ──────────────
 function CityBadge() {
-  const { city, setCity } = useCity();
+  const { city } = useCity();
   const [location, setLocation] = useLocation();
   if (!city) return null;
   return (
     <button
       key={city.slug}
-      onClick={() => {
-        if (stripCityFromPath(location) === '/') setCity(null);
-        else setLocation(stripCityFromPath(location));
-      }}
+      onClick={() => setLocation(stripCityFromPath(location))}
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
       title="Cambiar ciudad"
     >
@@ -938,22 +935,15 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [mobileSubExpanded, setMobileSubExpanded] = useState(null);
   const [location, setLocation] = useLocation();
-  const { city, setCity } = useCity();
+  const { city } = useCity();
 
   const selectCity = (citySlug) => {
     if (!CITY_MAP[citySlug]) return;
-    const base = stripCityFromPath(location);
-    if (base === '/') {
-      setCity({ ...CITY_MAP[citySlug] });
-    } else {
-      setLocation(withCityPath(base, citySlug));
-    }
+    setLocation(withCityPath(stripCityFromPath(location), citySlug));
   };
 
   const clearCity = () => {
-    const base = stripCityFromPath(location);
-    if (base === '/') setCity(null);
-    else setLocation(base);
+    setLocation(stripCityFromPath(location));
   };
 
   useEffect(() => {

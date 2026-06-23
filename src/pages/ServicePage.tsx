@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { Lightbox } from "../components/Lightbox";

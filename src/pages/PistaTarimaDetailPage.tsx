@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useCity } from "../context/CityContext";
-import { Link } from "wouter";
+import CityLink from "../components/CityLink";
+const Link = CityLink;
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 
 const WHATSAPP_NUMBER = "5215540080373";
