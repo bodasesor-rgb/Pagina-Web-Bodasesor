@@ -1127,54 +1127,397 @@ const PRODUCTS = [
       ]
     },
     {
-      slug: "comida-corrida",
-      name: "Comida Corrida",
-      tagline: "El sabor de casa en tu empresa, todos los días",
-      short: "Servicio de comida corrida diaria para empresas: sopa, guisado, arroz, frijoles y postre. Menús rotativos para que nunca se repita en la semana.",
-      desc: "Nuestra Comida Corrida para empresas es el servicio de alimentación diaria más práctico y económico. Incluye sopa, plato fuerte (guisado o proteína), arroz o pasta, frijoles y postre o refresco. Los menús rotan semanalmente para ofrecer variedad, y pueden personalizarse para incluir opciones bajas en calorías, vegetarianas o sin gluten. Servicio en el comedor de la empresa o en sistema de charola individual.",
-      incluye: [
-        "Menú completo de 4 tiempos diario",
-        "Rotación semanal de menús",
-        "Opciones especiales de alimentación disponibles",
-        "Servicio en charola o buffet según instalaciones",
-        "Personal de servicio incluido"
-      ],
-      idealPara: [
-        "Empresas con comedor propio",
-        "Oficinas que quieren servicio diario",
-        "Equipos de trabajo en turno continuo",
-        "Empresas que buscan bienestar del colaborador"
-      ],
-      img: "/images/empresas/comida-corrida.png",
-      imgPages: [
-        "/images/empresas/comida-corrida.png"
-      ]
-    },
+        slug: "comida-corrida",
+        title: "Comida Corrida para Empresas y Eventos",
+        headline: "Alimentación completa y nutritiva para tu equipo",
+        seoTitle: "Servicio de Comida Corrida Empresarial | Bodasesor",
+        seoDescription: "Comida corrida ejecutiva para comedores de empresas, capacitaciones y eventos corporativos. Menú completo de 3 tiempos con alta calidad nutricional.",
+        description: [
+          "La comida corrida de Bodasesor es la solución perfecta para empresas, comedores industriales y eventos corporativos que requieren alimentación de calidad en gran volumen. Ofrecemos menús balanceados de 3 tiempos con variedad semanal.",
+          "Trabajamos con nutriólogos para diseñar menús que combinen sabor y valor nutricional. Desde 20 hasta 500 raciones diarias, garantizamos puntualidad, temperatura adecuada y presentación cuidada.",
+          "Ideal para: comedores de oficina, capacitaciones, juntas de trabajo, seminarios y cualquier evento donde el equipo necesite una comida satisfactoria y profesional."
+        ],
+        category: "catering",
+        categoryLabel: "Catering",
+        categoryHref: "/comida-corrida",
+        related: [
+          {
+            name: "Pozole y Tostadas",
+            href: "/pozole-tostadas"
+          },
+          {
+            name: "Paella",
+            href: "/paella"
+          },
+          {
+            name: "Comida Corrida",
+            href: "/comida-corrida"
+          },
+          {
+            name: "Coffee Break",
+            href: "/coffee-break"
+          },
+          {
+            name: "Bocadillos",
+            href: "/bocadillos"
+          },
+          {
+            name: "Canapés Premium",
+            href: "/canapes-premium"
+          },
+          {
+            name: "Desayuno Social",
+            href: "/desayuno-social"
+          }
+        ],
+        included: [
+          {
+            icon: "🥣",
+            title: "Sopa o crema",
+            desc: "Sopas de pasta, cremas de verduras o consommé según el menú del día."
+          },
+          {
+            icon: "🥗",
+            title: "Guisado principal",
+            desc: "Proteína (pollo, res, cerdo o pescado) con guarnición de verduras y/o arroz."
+          },
+          {
+            icon: "🍚",
+            title: "Arroz y frijoles",
+            desc: "Siempre incluidos como guarnición. Recetas caseras sin conservadores."
+          },
+          {
+            icon: "🍹",
+            title: "Agua fresca del día",
+            desc: "Jamaica, limón, pepino u otra agua de sabor natural preparada en el lugar."
+          },
+          {
+            icon: "🥖",
+            title: "Pan o tortillas",
+            desc: "Tortillas calientes o pan de mesa para acompañar el guisado."
+          },
+          {
+            icon: "🍮",
+            title: "Postre sencillo",
+            desc: "Fruta de temporada, gelatina, flan o arroz con leche para cerrar."
+          }
+        ],
+        varieties: [
+          {
+            name: "Menú estándar",
+            desc: "Sopa, guisado con arroz, frijoles, agua y postre. El completo de siempre."
+          },
+          {
+            name: "Menú ejecutivo",
+            desc: "Versión premium: ensalada, sopa, proteína gourmet y postre de pastelería."
+          },
+          {
+            name: "Menú vegetariano",
+            desc: "Opciones 100% vegetales sin sacrificar sabor ni valor nutricional."
+          },
+          {
+            name: "Menú dietético",
+            desc: "Bajo en carbohidratos, azúcar y sodio. Diseñado con asesoría nutricional."
+          }
+        ],
+        menuExample: [
+          "Sopa: Sopa de fideos al jitomate o crema de zanahoria",
+          "Guisado: Pollo en salsa verde con chícharos",
+          "Guarnición: Arroz a la mexicana y frijoles de olla",
+          "Bebida: Agua de Jamaica natural",
+          "Postre: Gelatina de leche o fruta de temporada"
+        ],
+        serviceTiers: [
+          {
+            name: "Básico",
+            items: [
+              "Meseros: 1 c/20 personas · 5 horas",
+              "Personal de cocina",
+              "Vajilla blanca + cubertería",
+              "Cristalería: copa + vaso",
+              "Silla Tiffany",
+              "Centro de mesa con flores de temporada",
+              "Barra: vitroleros (2 sabores) + agua + café",
+              "Barman 1 c/50 personas · charolas · hielo"
+            ]
+          },
+          {
+            name: "Tradicional",
+            items: [
+              "Meseros: 1 c/15 personas · 5 horas",
+              "Personal de cocina",
+              "Vajilla blanca + cubertería + plato base decorativo (dorado, plateado, gris garigoleado, rosa o palma)",
+              "Cristalería completa: highball, old fashion, tequileros, copas, ceniceros, jarras",
+              "Silla Tiffany + camino de mesa",
+              "Centro de mesa con flores de temporada",
+              "Barra: refrescos + margaritas s/a + agua + café + 1 sabor de agua",
+              "Barman 1 c/50 personas · charolas · hielo"
+            ]
+          },
+          {
+            name: "Premium",
+            popular: true,
+            items: [
+              "Meseros: 1 c/10 personas · 5 horas",
+              "Personal de cocina especializado",
+              "Vajilla blanca + cubertería + plato base decorativo + copas de color",
+              "Cristalería completa premium",
+              "Silla Tiffany / Crossback / Avantgarde",
+              "Mesa de madera opcional (redonda, cuadrada o rectangular)",
+              "Centro de mesa con flores de temporada",
+              "Barra completa: refrescos + margaritas s/a + agua + café + 1 sabor de agua",
+              "Barman 1 c/50 personas · charolas · hielo"
+            ]
+          }
+        ],
+        whyUs: [
+          {
+            icon: "👨‍🍳",
+            title: "Chefs certificados",
+            desc: "Nuestros chefs tienen formación en escuelas gastronómicas de primer nivel y experiencia en eventos de alto perfil."
+          },
+          {
+            icon: "🌿",
+            title: "Ingredientes frescos",
+            desc: "Trabajamos con proveedores locales seleccionados para garantizar productos de temporada y máxima frescura."
+          },
+          {
+            icon: "📋",
+            title: "Menú personalizado",
+            desc: "Adaptamos cada propuesta a tu gusto, número de invitados, tipo de evento y presupuesto."
+          }
+        ],
+        integralServices: [
+          {
+            name: "Coffee Break",
+            href: "/coffee-break",
+            icon: "☕"
+          },
+          {
+            name: "Box Lunch Ejecutivo",
+            href: "/bocadillos",
+            icon: "🥪"
+          },
+          {
+            name: "Mesas y Sillas",
+            href: "/mesas-sillas",
+            icon: "🪑"
+          },
+          {
+            name: "Canapés Premium",
+            href: "/canapes-premium",
+            icon: "🫙"
+          },
+          {
+            name: "Barras de Bebidas",
+            href: "/barra-bebidas",
+            icon: "🍹"
+          },
+          {
+            name: "Desayuno Corporativo",
+            href: "/desayuno-social",
+            icon: "🥐"
+          }
+        ]
+      },
     {
-      slug: "coffee-break",
-      name: "Coffee Break",
-      tagline: "El descanso que reactiva al equipo",
-      short: "Servicio de coffee break para juntas, capacitaciones y eventos corporativos. Café, té, snacks dulces y salados presentados con elegancia.",
-      desc: "Nuestro servicio de Coffee Break transforma los recesos de tus eventos corporativos en momentos de networking y recarga de energía. Presentamos estaciones de café y té de especialidad, junto con una selección de snacks dulces (pan dulce, muffins, galletas, fruta) y salados (sándwiches mini, quesos, botanas) en displays elegantes que refuerzan la imagen de tu empresa. Disponible en formato básico, intermedio y premium.",
-      incluye: [
-        "Estación de café y té de especialidad",
-        "Selección de snacks dulces y salados",
-        "Presentación elegante en display",
-        "Personal de servicio incluido",
-        "Vajilla y utensilios de calidad"
-      ],
-      idealPara: [
-        "Juntas de directivos",
-        "Capacitaciones corporativas",
-        "Talleres y seminarios",
-        "Presentaciones a clientes",
-        "Eventos de team building"
-      ],
-      img: "/images/empresas/coffee-break.png",
-      imgPages: [
-        "/images/empresas/coffee-break.png"
-      ]
-    },
+        slug: "coffee-break",
+        title: "Coffee Break para Eventos Corporativos",
+        headline: "La pausa perfecta que recarga energías y conecta equipos",
+        seoTitle: "Coffee Break Corporativo y Empresarial | Bodasesor",
+        seoDescription: "Servicio de coffee break para congresos, capacitaciones, juntas y eventos empresariales. Café de especialidad, bocadillos gourmet y presentación impecable.",
+        description: [
+          "Un buen coffee break transforma cualquier pausa en una experiencia gourmet. Nuestro servicio combina café de especialidad seleccionado de origen, con una selección de bocadillos dulces y salados que dejan una impresión duradera.",
+          "Atendemos desde pequeñas juntas de consejo hasta grandes congresos con miles de asistentes. Nuestro equipo llega con tiempo de anticipación, monta la estación en el espacio asignado y se encarga del servicio durante toda la sesión.",
+          "Ofrecemos opciones de café espresso, americano, cappuccino, té de hierbas y bebidas frías, acompañados de una selección de pastelería artesanal, sándwiches miniatura, fruta fresca y opciones sin gluten."
+        ],
+        category: "catering",
+        categoryLabel: "Catering",
+        categoryHref: "/coffee-break",
+        related: [
+          {
+            name: "Pozole y Tostadas",
+            href: "/pozole-tostadas"
+          },
+          {
+            name: "Paella",
+            href: "/paella"
+          },
+          {
+            name: "Comida Corrida",
+            href: "/comida-corrida"
+          },
+          {
+            name: "Coffee Break",
+            href: "/coffee-break"
+          },
+          {
+            name: "Bocadillos",
+            href: "/bocadillos"
+          },
+          {
+            name: "Canapés Premium",
+            href: "/canapes-premium"
+          },
+          {
+            name: "Desayuno Social",
+            href: "/desayuno-social"
+          }
+        ],
+        included: [
+          {
+            icon: "☕",
+            title: "Café de especialidad",
+            desc: "Café de origen seleccionado, preparado en máquina espresso profesional."
+          },
+          {
+            icon: "🫖",
+            title: "Variedad de tés",
+            desc: "Mínimo 4 tipos de té: negro, verde, menta y frutos rojos."
+          },
+          {
+            icon: "🥐",
+            title: "Pastelería artesanal",
+            desc: "Croissants, muffins, scones, pan dulce y galletas hechos el mismo día."
+          },
+          {
+            icon: "🥪",
+            title: "Sándwiches mini",
+            desc: "Opción salada: sándwiches miniatura surtidos con variedad de rellenos."
+          },
+          {
+            icon: "🍓",
+            title: "Fruta fresca",
+            desc: "Fruta cortada de temporada en presentación elegante con dips opcionales."
+          },
+          {
+            icon: "🧃",
+            title: "Jugos naturales",
+            desc: "Jugo de naranja exprimido y agua infusionada con pepino y menta."
+          }
+        ],
+        varieties: [
+          {
+            name: "Coffee Break 1",
+            desc: "Café, té, agua y galletas selectas. La pausa esencial para reuniones cortas."
+          },
+          {
+            name: "Coffee Break 2",
+            desc: "Café, té, agua, refrescos, galletas gourmet y pan dulce artesanal."
+          },
+          {
+            name: "Coffee Break 3",
+            desc: "Todo el CB2 más jugo natural, yogurt individual y fruta fresca de temporada."
+          },
+          {
+            name: "Coffee Break Gourmet 5",
+            desc: "Versión ejecutiva: sandwich, chapata o croissant relleno además de todo lo anterior."
+          },
+          {
+            name: "Coffee Break Gourmet 6",
+            desc: "El más completo: incluye chilaquiles, molletes o huevo al gusto. Ideal para jornadas largas."
+          }
+        ],
+        menuExample: [
+          "Café: Americano, espresso, cappuccino y latte",
+          "Tés: Negro, verde, menta y frutos rojos",
+          "Dulce: Croissant, pan dulce artesanal y galletas selectas",
+          "Salado (Gourmet 5): Chapata de pavo y brie o sandwich mixto",
+          "Caliente (Gourmet 6): Chilaquiles verdes con queso o molletes con frijoles"
+        ],
+        serviceTiers: [
+          {
+            name: "Básico",
+            items: [
+              "Meseros: 1 c/20 personas · 5 horas",
+              "Personal de cocina",
+              "Vajilla blanca + cubertería",
+              "Cristalería: copa + vaso",
+              "Silla Tiffany",
+              "Centro de mesa con flores de temporada",
+              "Barra: vitroleros (2 sabores) + agua + café",
+              "Barman 1 c/50 personas · charolas · hielo"
+            ]
+          },
+          {
+            name: "Tradicional",
+            items: [
+              "Meseros: 1 c/15 personas · 5 horas",
+              "Personal de cocina",
+              "Vajilla blanca + cubertería + plato base decorativo (dorado, plateado, gris garigoleado, rosa o palma)",
+              "Cristalería completa: highball, old fashion, tequileros, copas, ceniceros, jarras",
+              "Silla Tiffany + camino de mesa",
+              "Centro de mesa con flores de temporada",
+              "Barra: refrescos + margaritas s/a + agua + café + 1 sabor de agua",
+              "Barman 1 c/50 personas · charolas · hielo"
+            ]
+          },
+          {
+            name: "Premium",
+            popular: true,
+            items: [
+              "Meseros: 1 c/10 personas · 5 horas",
+              "Personal de cocina especializado",
+              "Vajilla blanca + cubertería + plato base decorativo + copas de color",
+              "Cristalería completa premium",
+              "Silla Tiffany / Crossback / Avantgarde",
+              "Mesa de madera opcional (redonda, cuadrada o rectangular)",
+              "Centro de mesa con flores de temporada",
+              "Barra completa: refrescos + margaritas s/a + agua + café + 1 sabor de agua",
+              "Barman 1 c/50 personas · charolas · hielo"
+            ]
+          }
+        ],
+        whyUs: [
+          {
+            icon: "🏆",
+            title: "+1,000 eventos realizados",
+            desc: "Más de una década organizando bodas, corporativos y fiestas en toda la república mexicana."
+          },
+          {
+            icon: "✅",
+            title: "Proveedores verificados",
+            desc: "Solo trabajamos con profesionales seleccionados que cumplen nuestros estándares de calidad y puntualidad."
+          },
+          {
+            icon: "💬",
+            title: "Atención personalizada",
+            desc: "Un asesor dedicado te acompaña desde la cotización hasta el día del evento, sin costos extra."
+          }
+        ],
+        integralServices: [
+          {
+            name: "Comida Corrida",
+            href: "/comida-corrida",
+            icon: "🍽️"
+          },
+          {
+            name: "Desayuno Corporativo",
+            href: "/desayuno-social",
+            icon: "🥐"
+          },
+          {
+            name: "Canapés Premium",
+            href: "/canapes-premium",
+            icon: "🫙"
+          },
+          {
+            name: "Alimentos Empresas",
+            href: "/alimentos-empresas",
+            icon: "🏢"
+          },
+          {
+            name: "Bocadillos",
+            href: "/bocadillos",
+            icon: "🥪"
+          },
+          {
+            name: "Mesas y Sillas",
+            href: "/mesas-sillas",
+            icon: "🪑"
+          }
+        ]
+      },
     {
       slug: "bocadillos",
       title: "Bocadillos para Eventos",

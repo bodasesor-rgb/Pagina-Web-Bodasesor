@@ -93,6 +93,19 @@ const arrayNames = [...source.matchAll(/(\w+)=\[\{slug:"/g)]
   .filter((m) => m.index > 350000 && m.index < 1_300_000)
   .map((m) => m[1])
 
+function isFullProduct(p) {
+  return Boolean(p?.title && Array.isArray(p.description))
+}
+
+function mergeProduct(existing, incoming) {
+  const next = normalizeProduct(incoming)
+  if (!existing) return next
+  // Prefer full ServicePage schema over variety/menu cards (name/desc/incluye)
+  if (isFullProduct(next) && !isFullProduct(existing)) return next
+  if (isFullProduct(existing) && !isFullProduct(next)) return existing
+  return next
+}
+
 const bySlug = new Map()
 for (const name of arrayNames) {
   const arrStr = extractProductArray(source, name)
@@ -100,7 +113,7 @@ for (const name of arrayNames) {
   try {
     const products = vm.runInNewContext(`${helperCode};(${arrStr})`, {})
     for (const p of products) {
-      if (p?.slug) bySlug.set(p.slug, normalizeProduct(p))
+      if (p?.slug) bySlug.set(p.slug, mergeProduct(bySlug.get(p.slug), p))
     }
     console.log(`OK ${name}: ${products.length} products`)
   } catch (e) {
@@ -110,7 +123,7 @@ for (const name of arrayNames) {
 
 // Keep order from existing products.js
 const currentSrc = fs.readFileSync(OUT, 'utf8')
-const slugs = [...currentSrc.matchAll(/"slug": "([^"]+)"/g)].map((m) => m[1])
+const slugs = [...currentSrc.matchAll(/slug:\s*"([^"]+)"/g)].map((m) => m[1])
 const products = slugs.map((slug) => {
   const extracted = bySlug.get(slug)
   if (!extracted) {

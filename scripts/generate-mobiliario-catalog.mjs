@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { execSync } from 'node:child_process'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
 
@@ -52,42 +53,17 @@ const DEFAULT_INCLUYE = [
 
 // ── Salas y Periqueras ────────────────────────────────────────────────────────
 function buildSalasPeriqueras() {
-  const files = listImages('salas')
-  const salas = []
-  const periqueras = []
-
-  for (const file of files) {
-    const slug = file.replace(/\.(png|jpg|jpeg|webp)$/i, '')
-    const isPeriquera = slug.startsWith('periquera-')
-    const nameSlug = isPeriquera ? slug.replace(/^periquera-/, '') : slug.replace(/^sala-/, '')
-    const name = slugToName(nameSlug)
-    const item = {
-      slug,
-      name: isPeriquera ? `Periquera ${name}` : `Sala ${name}`,
-      style: isPeriquera ? 'Periquera' : 'Sala Lounge',
-      desc: `${isPeriquera ? 'Periquera' : 'Sala lounge'} ${name.toLowerCase()} para eventos. Mobiliario premium con entrega, armado y retiro incluidos.`,
-      img: `/images/salas/${file}`,
-      gallery: [],
-      capacity: '4-8 personas',
-      colors: 'Varios acabados disponibles',
-      stock: 'Consultar disponibilidad',
-    }
-    if (isPeriquera) periqueras.push(item)
-    else salas.push(item)
+  if (!fs.existsSync(path.join(ROOT, 'live-bundle.js'))) {
+    console.warn('Skipping salas/periqueras: live-bundle.js not found')
+    return { salas: 0, periqueras: 0 }
   }
-
-  writeModule(
-    'src/data/salas-periqueras-products.js',
-    `export const salasNavItems = ${JSON.stringify(salas.map((s) => ({ href: `/salas/${s.slug}`, name: s.name })), null, 2)}
-
-export const periquerasNavItems = ${JSON.stringify(periqueras.map((p) => ({ href: `/periqueras/${p.slug}`, name: p.name })), null, 2)}
-
-export const SALAS_CATALOG = ${JSON.stringify(salas, null, 2)}
-
-export const PERIQUERAS_CATALOG = ${JSON.stringify(periqueras, null, 2)}
-`
+  execSync('node scripts/extract-salas-from-bundle.mjs', { stdio: 'inherit', cwd: ROOT })
+  const counts = execSync(
+    `node -e "import('./src/data/salas-periqueras-products.js').then(m=>process.stdout.write(m.SALAS_CATALOG.length+','+m.PERIQUERAS_CATALOG.length))"`,
+    { cwd: ROOT, encoding: 'utf8' }
   )
-  return { salas: salas.length, periqueras: periqueras.length }
+  const [salas, periqueras] = counts.trim().split(',').map(Number)
+  return { salas, periqueras }
 }
 
 // ── Vajillas ──────────────────────────────────────────────────────────────────
