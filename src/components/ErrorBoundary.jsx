@@ -4,11 +4,11 @@ import { WHATSAPP } from '../data/site'
 export class ErrorBoundary extends Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false }
+    this.state = { hasError: false, errorMsg: '' }
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, errorMsg: error?.message || String(error) }
   }
 
   componentDidCatch(error, info) {
@@ -31,9 +31,14 @@ export class ErrorBoundary extends Component {
             <h1 className="font-serif text-2xl font-bold text-[#162040] mb-3">
               Esta página está en preparación
             </h1>
-            <p className="text-gray-500 font-serif mb-8">
-              Estamos trabajando en este contenido. Por ahora puedes cotizar directamente por WhatsApp.
+            <p className="text-gray-500 font-serif mb-4">
+              Estamos trabajando en este contenido.
             </p>
+            {this.state.errorMsg && (
+              <p className="text-red-400 text-xs font-mono bg-red-50 border border-red-200 rounded p-3 mb-4 text-left break-all">
+                Error: {this.state.errorMsg}
+              </p>
+            )}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={`https://api.whatsapp.com/send?phone=${WHATSAPP}&text=Hola%2C%20me%20interesa%20cotizar%20un%20servicio`}
