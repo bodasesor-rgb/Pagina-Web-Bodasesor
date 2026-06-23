@@ -1,34 +1,34 @@
 export const empresasNavItems = [
   {
-    "href": "/empresas/alimentos-empresas",
+    "href": "/alimentos-empresas/alimentos-empresas",
     "name": "Alimentos Empresas"
   },
   {
-    "href": "/empresas/banquetes-fin-anio",
+    "href": "/alimentos-empresas/banquetes-fin-anio",
     "name": "Banquetes Fin Anio"
   },
   {
-    "href": "/empresas/box-lunch",
+    "href": "/alimentos-empresas/box-lunch",
     "name": "Box Lunch"
   },
   {
-    "href": "/empresas/coffee-break",
+    "href": "/alimentos-empresas/coffee-break",
     "name": "Coffee Break"
   },
   {
-    "href": "/empresas/comedores-industriales",
+    "href": "/alimentos-empresas/comedores-industriales",
     "name": "Comedores Industriales"
   },
   {
-    "href": "/empresas/comida-corrida",
+    "href": "/alimentos-empresas/comida-corrida",
     "name": "Comida Corrida"
   },
   {
-    "href": "/empresas/comida-diaria",
+    "href": "/alimentos-empresas/comida-diaria",
     "name": "Comida Diaria"
   },
   {
-    "href": "/empresas/para-oficinas",
+    "href": "/alimentos-empresas/para-oficinas",
     "name": "Para Oficinas"
   }
 ]
@@ -39,7 +39,7 @@ export const EMPRESAS = [
     "name": "Alimentos Empresas",
     "tagline": "Servicio profesional de alimentos empresas para tu evento",
     "short": "Contrata alimentos empresas con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/alimentos-empresas.png",
+    "img": "/images/alimentos-empresas/alimentos-empresas.png",
     "incluye": [
       "Servicio profesional de alimentos empresas",
       "Atención personalizada desde la cotización",
@@ -59,7 +59,7 @@ export const EMPRESAS = [
     "name": "Banquetes Fin Anio",
     "tagline": "Servicio profesional de banquetes fin anio para tu evento",
     "short": "Contrata banquetes fin anio con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/banquetes-fin-anio.png",
+    "img": "/images/alimentos-empresas/banquetes-fin-anio.png",
     "incluye": [
       "Servicio profesional de banquetes fin anio",
       "Atención personalizada desde la cotización",
@@ -79,7 +79,7 @@ export const EMPRESAS = [
     "name": "Box Lunch",
     "tagline": "Servicio profesional de box lunch para tu evento",
     "short": "Contrata box lunch con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/box-lunch.png",
+    "img": "/images/alimentos-empresas/box-lunch.png",
     "incluye": [
       "Servicio profesional de box lunch",
       "Atención personalizada desde la cotización",
@@ -99,7 +99,7 @@ export const EMPRESAS = [
     "name": "Coffee Break",
     "tagline": "Servicio profesional de coffee break para tu evento",
     "short": "Contrata coffee break con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/coffee-break.png",
+    "img": "/images/alimentos-empresas/coffee-break.png",
     "incluye": [
       "Servicio profesional de coffee break",
       "Atención personalizada desde la cotización",
@@ -119,7 +119,7 @@ export const EMPRESAS = [
     "name": "Comedores Industriales",
     "tagline": "Servicio profesional de comedores industriales para tu evento",
     "short": "Contrata comedores industriales con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/comedores-industriales.png",
+    "img": "/images/alimentos-empresas/comedores-industriales.png",
     "incluye": [
       "Servicio profesional de comedores industriales",
       "Atención personalizada desde la cotización",
@@ -139,7 +139,7 @@ export const EMPRESAS = [
     "name": "Comida Corrida",
     "tagline": "Servicio profesional de comida corrida para tu evento",
     "short": "Contrata comida corrida con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/comida-corrida.png",
+    "img": "/images/alimentos-empresas/comida-corrida.png",
     "incluye": [
       "Servicio profesional de comida corrida",
       "Atención personalizada desde la cotización",
@@ -159,7 +159,7 @@ export const EMPRESAS = [
     "name": "Comida Diaria",
     "tagline": "Servicio profesional de comida diaria para tu evento",
     "short": "Contrata comida diaria con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/comida-diaria.png",
+    "img": "/images/alimentos-empresas/comida-diaria.png",
     "incluye": [
       "Servicio profesional de comida diaria",
       "Atención personalizada desde la cotización",
@@ -179,7 +179,7 @@ export const EMPRESAS = [
     "name": "Para Oficinas",
     "tagline": "Servicio profesional de para oficinas para tu evento",
     "short": "Contrata para oficinas con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
-    "img": "/images/empresas/para-oficinas.png",
+    "img": "/images/alimentos-empresas/para-oficinas.png",
     "incluye": [
       "Servicio profesional de para oficinas",
       "Atención personalizada desde la cotización",

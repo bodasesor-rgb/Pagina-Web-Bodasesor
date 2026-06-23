@@ -13633,11 +13633,33 @@ const PRODUCTS = [
     }
   ];
 
+function normalizeForServicePage(p) {
+  if (!p) return null;
+  if (p.title && Array.isArray(p.description)) return p;
+  if (!p.name) return p;
+  return {
+    ...p,
+    title: p.title || p.name,
+    headline: p.headline || p.tagline || p.name,
+    description: Array.isArray(p.description)
+      ? p.description
+      : [p.desc, p.short].filter(Boolean),
+    seoTitle: p.seoTitle || `${p.name} | Bodasesor`,
+    seoDescription: p.seoDescription || p.short || p.desc || '',
+    included: p.included ?? (Array.isArray(p.incluye)
+      ? p.incluye.map((text) => ({ icon: '✓', title: text, desc: text }))
+      : []),
+    category: p.category || 'catering',
+    categoryLabel: p.categoryLabel || 'Catering',
+    categoryHref: p.categoryHref || '/banquetes-catering',
+  };
+}
+
 export function getProductBySlug(slug) {
   if (!slug) return null;
 
   let p = PRODUCTS.find(p => p.slug === slug);
-  if (p) return { ...DEFAULT_PRODUCT, ...p };
+  if (p) return normalizeForServicePage({ ...DEFAULT_PRODUCT, ...p });
 
   const citySuffixes = [
     'san-miguel-allende','san-luis-potosi','ciudad-de-mexico','estado-de-mexico',
@@ -13649,11 +13671,11 @@ export function getProductBySlug(slug) {
   for (const city of citySuffixes) {
     if (slug.endsWith(city) && slug.length > city.length) {
       p = PRODUCTS.find(p => p.slug === slug.slice(0, -city.length));
-      if (p) return { ...DEFAULT_PRODUCT, ...p, slug };
+      if (p) return normalizeForServicePage({ ...DEFAULT_PRODUCT, ...p, slug });
     }
     if (slug.endsWith('-en-' + city)) {
       p = PRODUCTS.find(p => p.slug === slug.slice(0, -(city.length + 4)));
-      if (p) return { ...DEFAULT_PRODUCT, ...p, slug };
+      if (p) return normalizeForServicePage({ ...DEFAULT_PRODUCT, ...p, slug });
     }
   }
   return null;
