@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import IconFromEmoji from "../components/IconFromEmoji";
 import { Lightbox } from "../components/Lightbox";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
@@ -11,7 +12,7 @@ const WHATSAPP_BASE = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
 // ─── Rotating review card (appears in hero bottom-left) ──────────────────────
 const heroReviews = [
   { name: "Héctor Jiménez",       city: "Monterrey",        text: "Servicio impecable, el banquete superó todas las expectativas de mis invitados.", time: "Hace 1 día",       photo: "https://i.pravatar.cc/80?img=12" },
-  { name: "Ximena Hernández",     city: "CDMX",             text: "La comida estuvo exquisita 💖, todo el equipo fue de primera desde el primer momento.", time: "Hace 3 semanas",  photo: "https://i.pravatar.cc/80?img=5"  },
+  { name: "Ximena Hernández",     city: "CDMX",             text: "La comida estuvo exquisita, todo el equipo fue de primera desde el primer momento.", time: "Hace 3 semanas",  photo: "https://i.pravatar.cc/80?img=5"  },
   { name: "Cinthya Rodríguez",    city: "Guadalajara",      text: "Todo muy bien coordinado, los meseros fueron muy atentos y puntuales.", time: "Hace 2 meses",    photo: "https://i.pravatar.cc/80?img=9"  },
   { name: "Adolfo Núñez",         city: "Puebla",           text: "Gran acompañamiento de Alejandro, total confianza para futuros eventos.", time: "Hace 8 meses",    photo: "https://i.pravatar.cc/80?img=15" },
   { name: "Sandra Toledano",      city: "Querétaro",        text: "Los volvería a contratar sin duda, excelente servicio y atención.", time: "Hace 1 semana",   photo: "https://i.pravatar.cc/80?img=20" },
@@ -236,7 +237,7 @@ const cities = [
 
 const testimonials = [
   { name: 'Cinthya Rodríguez', type: 'Evento corporativo', text: 'Desde la organización no nos preocupamos por nada, todo estuvo muy bien coordinado y el evento salió increíble. Siempre fueron muy profesionales y estuvieron al pendiente de cada detalle.' },
-  { name: 'Ximena Hernández', type: 'Boda', text: 'La comida estuvo exquisita de verdad 💖 y todo el equipo que montó, cocinó, sirvió y nos atendió ese día fue de primera. Gracias por ayudarme a hacer mi boda un evento memorable.' },
+  { name: 'Ximena Hernández', type: 'Boda', text: 'La comida estuvo exquisita de verdad y todo el equipo que montó, cocinó, sirvió y nos atendió ese día fue de primera. Gracias por ayudarme a hacer mi boda un evento memorable.' },
   { name: 'Sandra Toledano', type: 'Boda íntima', text: 'Excelente servicio y atención. Ninguna queja del equipo de cocina y meseros, organizados, amables y atentos. La comida estuvo muy rica. Los volvería a contratar sin duda.' },
   { name: 'Adolfo Núñez', type: 'Boda civil', text: 'Gran acompañamiento de Alejandro, gran profesional buscando solucionar cada uno de los retos que fueron saliendo. Total confianza para futuros eventos.' },
   { name: 'Selene Carrillo', type: 'Celebración familiar', text: 'Recibí múltiples felicitaciones de mis invitados por el sabor de los alimentos. Los meseros fueron muy amables y atentos. Destacaría la puntualidad y comprensión.' },
@@ -599,7 +600,9 @@ export default function Home() {
                 { icon: '💡', title: 'Creatividad e innovación', desc: 'Experiencias originales que sorprenden a tus invitados.' },
               ].map(p => (
                 <div key={p.title} className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="text-3xl mb-3">{p.icon}</div>
+                  <div className="w-10 h-10 rounded-xl bg-[#162040]/8 flex items-center justify-center mb-3 text-[#162040]">
+                    <IconFromEmoji emoji={p.icon} className="w-5 h-5" />
+                  </div>
                   <h3 className="font-bold text-[#162040] font-serif mb-2 text-sm">{p.title}</h3>
                   <p className="text-gray-600 font-serif text-sm leading-relaxed">{p.desc}</p>
                 </div>

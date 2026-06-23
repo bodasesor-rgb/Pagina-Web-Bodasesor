@@ -44,6 +44,8 @@ export default function BlogPage() {
         </div>
       </section>
 
+      {featured ? (
+        <>
       {/* ── Featured post ── */}
       <section className="py-16 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,6 +132,15 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+        </>
+      ) : (
+      <section className="py-20 px-4 bg-[#f5efe8]">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="font-serif text-[#162040] text-lg mb-4">Próximamente publicaremos guías y consejos para tu evento.</p>
+          <p className="font-serif text-gray-500 text-sm">Mientras tanto, contáctanos para cotizar cualquier servicio.</p>
+        </div>
+      </section>
+      )}
 
       {/* ── CTA ── */}
       <section className="bg-[#162040] py-16">

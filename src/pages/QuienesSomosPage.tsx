@@ -1,26 +1,27 @@
 import { Link } from "wouter";
 import { useEffect } from "react";
+import { Trophy, Handshake, Sparkles, Lightbulb, Mail, Phone, Camera } from "lucide-react";
 
 const WA = "https://api.whatsapp.com/send/?phone=5215540080373&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento";
 
 const pillars = [
   {
-    icon: "🏆",
+    Icon: Trophy,
     title: "Experiencia comprobada",
     desc: "Más de una década organizando eventos de todos los tamaños, con un equipo profesional y apasionado.",
   },
   {
-    icon: "🤝",
+    Icon: Handshake,
     title: "Servicio personalizado",
     desc: "Cada evento es único. Trabajamos contigo para entender tu visión y llevarla a la realidad.",
   },
   {
-    icon: "✨",
+    Icon: Sparkles,
     title: "Calidad en cada detalle",
     desc: "Nos aliamos con los mejores proveedores para garantizar catering, decoración y logística de primer nivel.",
   },
   {
-    icon: "💡",
+    Icon: Lightbulb,
     title: "Creatividad e innovación",
     desc: "Diseñamos experiencias originales que sorprenden a tus invitados y superan tus expectativas.",
   },
@@ -77,7 +78,9 @@ export default function QuienesSomosPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {pillars.map((p) => (
               <div key={p.title} className="flex gap-6 bg-[#f5efe8] rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-5xl flex-shrink-0">{p.icon}</div>
+                <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-[#162040]/8 flex items-center justify-center text-[#162040]">
+                  <p.Icon className="w-7 h-7" />
+                </div>
                 <div>
                   <h3 className="text-xl font-bold text-[#162040] font-serif mb-3">{p.title}</h3>
                   <p className="text-gray-700 font-serif leading-relaxed">{p.desc}</p>
@@ -116,12 +119,12 @@ export default function QuienesSomosPage() {
             </svg>
             Cotiza tu evento
           </a>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center text-gray-600 font-serif">
-            <span>📧 bodasesor@gmail.com</span>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center text-gray-600 font-serif items-center">
+            <span className="inline-flex items-center gap-2"><Mail className="w-4 h-4" /> bodasesor@gmail.com</span>
             <span className="hidden sm:inline">·</span>
-            <span>📞 55 4008 0373</span>
+            <span className="inline-flex items-center gap-2"><Phone className="w-4 h-4" /> 55 4008 0373</span>
             <span className="hidden sm:inline">·</span>
-            <span>📸 @bodasesormx</span>
+            <span className="inline-flex items-center gap-2"><Camera className="w-4 h-4" /> @bodasesormx</span>
           </div>
         </div>
       </section>

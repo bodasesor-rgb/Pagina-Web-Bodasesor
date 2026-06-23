@@ -370,7 +370,7 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
                   {s.img ? (
                     <img src={s.img} alt={s.name} className="h-full w-full object-contain" />
                   ) : (
-                    <span className="text-4xl">🪑</span>
+                    <Armchair className="w-10 h-10 text-[#162040]/30" />
                   )}
                 </div>
                 <div className="px-2 py-2.5 text-center">
@@ -682,6 +682,7 @@ export default function ServicePage({ params }: ServicePageProps) {
       </section>
 
       {/* ── 4. QUÉ INCLUYE ── */}
+      {product.included && product.included.length > 0 && (
       <section className="py-16 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -696,13 +697,20 @@ export default function ServicePage({ params }: ServicePageProps) {
                 <div className="w-10 h-10 rounded-xl bg-[#162040]/8 flex items-center justify-center mb-3 text-[#162040]">
                   <IconFromEmoji emoji={item.icon} className="w-5 h-5" />
                 </div>
-                <h3 className="font-serif font-bold text-[#162040] text-lg mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed font-serif">{item.desc}</p>
+                {item.title ? (
+                  <>
+                    <h3 className="font-serif font-bold text-[#162040] text-lg mb-2">{item.title}</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed font-serif">{item.desc ?? item.text ?? ''}</p>
+                  </>
+                ) : (
+                  <p className="text-[#162040] text-sm leading-relaxed font-serif">{item.text}</p>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
+      )}
 
       {/* ── 5. VARIEDADES ── */}
       {product.varieties && product.varieties.length > 0 && (
@@ -842,6 +850,7 @@ export default function ServicePage({ params }: ServicePageProps) {
       )}
 
       {/* ── 8. POR QUÉ ELEGIRNOS ── */}
+      {product.whyUs && product.whyUs.length > 0 && (
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -884,8 +893,10 @@ export default function ServicePage({ params }: ServicePageProps) {
           </div>
         </div>
       </section>
+      )}
 
       {/* ── 8. SERVICIOS INTEGRALES ── */}
+      {product.integralServices && product.integralServices.length > 0 && (
       <section className="py-16 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
@@ -910,6 +921,7 @@ export default function ServicePage({ params }: ServicePageProps) {
           </div>
         </div>
       </section>
+      )}
 
       {/* ── 10. FINAL CTA ── */}
       <section className="py-16 bg-[#162040] text-white">

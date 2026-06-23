@@ -28,6 +28,7 @@ export const carpasNavItems = [
     "name": "Domo"
   }
 ];
+
 export const CARPAS = [
   {
     "slug": "blanca",
@@ -41,7 +42,18 @@ export const CARPAS = [
       "Eventos corporativos",
       "Fiestas privadas"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Carpa de lona blanca de alta resistencia. Versátil, luminosa y perfecta para eventos al aire libre en cualquier temporada.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   },
   {
     "slug": "negra",
@@ -55,7 +67,18 @@ export const CARPAS = [
       "Lanzamientos de producto",
       "After-parties"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Carpa de lona negra para eventos nocturnos o de estética oscura. Crea una atmósfera dramática y de gran impacto visual.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   },
   {
     "slug": "transparente",
@@ -69,7 +92,18 @@ export const CARPAS = [
       "Cenas con vista al jardín",
       "Eventos de día con paisaje"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Carpa de lona cristal o PVC transparente que permite disfrutar del paisaje y la luz natural sin perder protección del clima.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   },
   {
     "slug": "versalles",
@@ -83,7 +117,18 @@ export const CARPAS = [
       "XV años de gran escala",
       "Eventos de alto perfil"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Carpa estilo europeo con acabados ornamentales, paredes de tela y remates decorativos. La opción más lujosa para eventos de primer nivel.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   },
   {
     "slug": "arabe",
@@ -97,7 +142,18 @@ export const CARPAS = [
       "Fiestas privadas",
       "Cenas especiales"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Carpa de estilo árabe con telas drapeadas en tonos cálidos, flecos y detalles ornamentales. Crea un ambiente mágico e íntimo.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   },
   {
     "slug": "entelada",
@@ -111,7 +167,18 @@ export const CARPAS = [
       "Eventos familiares",
       "Celebraciones privadas"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Carpa con interior decorado con entelados drapeados en tela. Techo y decoración en un solo elemento, listo para ambientar.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   },
   {
     "slug": "domo",
@@ -125,7 +192,17 @@ export const CARPAS = [
       "Exposiciones",
       "Eventos privados exclusivos"
     ],
-    "category": "carpas"
+    "category": "carpas",
+    "desc": "Estructura geodésica esférica de aluminio y PVC. El espacio de eventos más fotogénico y moderno del mercado.",
+    "incluye": [
+      "Instalación profesional en el venue",
+      "Estructura certificada y lona de alta resistencia",
+      "Coordinación con el equipo de montaje",
+      "Desmontaje al finalizar el evento"
+    ],
+    "colores": [
+      "Blanco",
+      "Personalizable según disponibilidad"
+    ]
   }
 ];
-export const CarpaSlug = '';

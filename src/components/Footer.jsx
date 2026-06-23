@@ -50,7 +50,7 @@ export default function Footer() {
                 { name: 'Mesas Personalizadas', href: '/mesas-personalizadas' },
                 { name: 'Mobiliario Premium', href: '/salas-periqueras' },
                 { name: 'Wedding Planner', href: '/wedding-planner' },
-                { name: '📝 Blog de Eventos', href: '/blog' },
+                { name: 'Blog de Eventos', href: '/blog' },
                 { name: 'Quiénes somos', href: '/quienes-somos' },
               ].map(item => (
                 <li key={item.href}>

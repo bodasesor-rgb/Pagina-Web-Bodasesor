@@ -1,6 +1,14 @@
 import { Link } from "wouter";
 import { useCity } from "../context/CityContext";
 import { SHOWS, ShowsSlug, SHOWS_BY_CATEGORY } from "../data/shows-products";
+import { Drum, Sparkles, Zap, CircleDot } from "lucide-react";
+
+const CATEGORY_ICONS = {
+  percusion: Drum,
+  danza: Sparkles,
+  tecnologia: Zap,
+  circo: CircleDot,
+} as const;
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -34,7 +42,7 @@ export default function ShowsDetailPage({ slug }: Props) {
   const idx = SHOWS.findIndex(p => p.slug === product.slug);
   const prev = idx > 0 ? SHOWS[idx - 1] : null;
   const next = idx < SHOWS.length - 1 ? SHOWS[idx + 1] : null;
-  const icon = product.category === 'percusion' ? '◎' : product.category === 'danza' ? '✦' : '⬡';
+  const CategoryIcon = CATEGORY_ICONS[product.category as keyof typeof CATEGORY_ICONS] ?? Sparkles;
 
   return (
     <div className="min-h-screen bg-white">
@@ -54,7 +62,7 @@ export default function ShowsDetailPage({ slug }: Props) {
             </nav>
 
             <span className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full mb-4 inline-flex items-center gap-1.5">
-              <span>{icon}</span> {product.categoryLabel}
+              <CategoryIcon className="w-3.5 h-3.5" /> {product.categoryLabel}
             </span>
 
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight mb-2 mt-3">
@@ -73,7 +81,7 @@ export default function ShowsDetailPage({ slug }: Props) {
             <p className="text-white/60 font-serif leading-relaxed mb-6 text-sm">{product.desc}</p>
 
             <div className="flex flex-wrap gap-2 mb-8">
-              {product.idealPara.map(tag => (
+              {(product.idealPara ?? []).map(tag => (
                 <span key={tag} className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full">{tag}</span>
               ))}
             </div>
@@ -92,12 +100,8 @@ export default function ShowsDetailPage({ slug }: Props) {
 
           {/* Right: image */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
-            <div className="w-full max-w-xl h-[300px] lg:h-[420px] rounded-2xl overflow-hidden bg-[#0d1630] flex items-center justify-center">
-              {product.img ? (
-                <img src={product.img} alt={product.name} className="w-full h-full object-cover" />
-              ) : (
-                <span className="text-white/10 font-serif text-8xl">{icon}</span>
-              )}
+            <div className="w-full max-w-xl h-[300px] lg:h-[420px] rounded-2xl overflow-hidden bg-[#0d1630]">
+              <img src={product.img || `/images/shows/${product.slug}.png`} alt={product.name} className="w-full h-full object-cover" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
             </div>
           </div>
         </div>
@@ -108,7 +112,7 @@ export default function ShowsDetailPage({ slug }: Props) {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-lg font-serif font-bold text-[#162040] mb-4">¿Qué incluye?</h2>
           <div className="grid sm:grid-cols-2 gap-3">
-            {product.incluye.map(item => (
+            {(product.incluye ?? []).map(item => (
               <div key={item} className="flex items-start gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
                 <svg className="w-4 h-4 text-[#162040]/50 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -172,12 +176,8 @@ export default function ShowsDetailPage({ slug }: Props) {
               {sameCategory.map(p => (
                 <Link key={p.slug} href={`/shows/${p.slug}`}
                   className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
-                  <div className="h-36 overflow-hidden bg-[#0d1630] flex items-center justify-center">
-                    {p.img ? (
-                      <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                    ) : (
-                      <span className="text-white/10 font-serif text-4xl">{icon}</span>
-                    )}
+                  <div className="h-36 overflow-hidden bg-[#0d1630]">
+                    <img src={p.img || `/images/shows/${p.slug}.png`} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
                   </div>
                   <div className="p-4">
                     <p className="font-serif font-bold text-[#162040] text-sm">{p.name}</p>

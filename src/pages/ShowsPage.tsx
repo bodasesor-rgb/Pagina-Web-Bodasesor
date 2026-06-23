@@ -2,15 +2,16 @@ import { Link } from "wouter";
 import { SHOWS, SHOWS_BY_CATEGORY } from "../data/shows-products";
 import type { ShowsProduct } from "../data/shows-products";
 import { useCity } from "../context/CityContext";
+import { Drum, Sparkles, Zap, CircleDot, CheckCircle2 } from "lucide-react";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un show de entretenimiento para mi evento. ¿Me pueden dar información?");
 
 const categoryConfig = {
-  percusion: { label: 'Percusión', icon: '◎', desc: 'Batucada, tambores LED y tambores con agua.' },
-  danza: { label: 'Show y Danza', icon: '✦', desc: 'Robot Magic, bailarinas, Krystal Dance, Las Vegas, Regional Mexicano y Alas de Isis.' },
-  tecnologia: { label: 'Tecnología y Luz', icon: '⬡', desc: 'Laser Man, Illuminates Pixel, Hologram y Fuego.' },
-  circo: { label: 'Circo', icon: '◈', desc: 'Pulsadas, Cyr Wheel, Mástil, Hula Hula, Malabares, Contorsión, Telas, Aro, Pole Dance y Clown. ~6 min por acto.' },
+  percusion: { label: 'Percusión', Icon: Drum, desc: 'Batucada, tambores LED y tambores con agua.' },
+  danza: { label: 'Show y Danza', Icon: Sparkles, desc: 'Robot Magic, bailarinas, Krystal Dance, Las Vegas, Regional Mexicano y Alas de Isis.' },
+  tecnologia: { label: 'Tecnología y Luz', Icon: Zap, desc: 'Laser Man, Illuminates Pixel, Hologram y Fuego.' },
+  circo: { label: 'Circo', Icon: CircleDot, desc: 'Pulsadas, Cyr Wheel, Mástil, Hula Hula, Malabares, Contorsión, Telas, Aro, Pole Dance y Clown. ~6 min por acto.' },
 };
 
 export default function ShowsPage() {
@@ -87,7 +88,7 @@ export default function ShowsPage() {
             {(Object.entries(categoryConfig) as [keyof typeof categoryConfig, typeof categoryConfig[keyof typeof categoryConfig]][]).map(([key, cfg]) => (
               <a key={key} href={`#${key}`}
                 className="bg-[#f5efe8] rounded-2xl p-5 hover:shadow-md transition-all border border-[#162040]/5 hover:border-[#162040]/20">
-                <p className="font-serif text-2xl text-[#162040]/30 mb-2">{cfg.icon}</p>
+                <p className="font-serif text-2xl text-[#162040]/30 mb-2"><cfg.Icon className="w-8 h-8" /></p>
                 <p className="font-serif font-bold text-[#162040] mb-1">{cfg.label}</p>
                 <p className="font-serif text-xs text-gray-500">{cfg.desc}</p>
                 <p className="font-serif text-xs text-[#162040]/50 mt-2 font-semibold">
@@ -103,7 +104,7 @@ export default function ShowsPage() {
       <section id="percusion" className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">◎</span>
+            <Drum className="w-7 h-7 text-[#162040]/40" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Percusión</h2>
@@ -119,7 +120,7 @@ export default function ShowsPage() {
       <section id="danza" className="py-12 px-4 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">✦</span>
+            <Sparkles className="w-7 h-7 text-[#162040]/40" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Show y Danza</h2>
@@ -135,7 +136,7 @@ export default function ShowsPage() {
       <section id="tecnologia" className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">⬡</span>
+            <Zap className="w-7 h-7 text-[#162040]/40" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Tecnología y Luz</h2>
@@ -151,7 +152,7 @@ export default function ShowsPage() {
       <section id="circo" className="py-12 px-4 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">◈</span>
+            <CircleDot className="w-7 h-7 text-[#162040]/40" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Circo</h2>
@@ -184,16 +185,11 @@ export default function ShowsPage() {
 
 function ShowCard({ product }: { product: ShowsProduct }) {
   const waMsg = WA_BASE + encodeURIComponent(`Hola, me interesa cotizar el show "${product.name}" para mi evento.`);
-  const icon = product.category === 'percusion' ? '◎' : product.category === 'danza' ? '✦' : product.category === 'circo' ? '◈' : '⬡';
   return (
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={`/shows/${product.slug}`}>
-        <div className="h-48 overflow-hidden bg-[#0d1630] flex items-center justify-center">
-          {product.img ? (
-            <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          ) : (
-            <span className="text-white/10 font-serif text-5xl">{icon}</span>
-          )}
+        <div className="h-48 overflow-hidden bg-[#0d1630]">
+          <img src={product.img || `/images/shows/${product.slug}.png`} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
         </div>
       </Link>
       <div className="p-5">
