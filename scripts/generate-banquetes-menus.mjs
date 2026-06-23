@@ -275,11 +275,21 @@ for (const parent of PARENTS) {
   }
 }
 
+const banquetesNavGroups = PARENTS.map((parent) => ({
+  heading: parent.name,
+  href: parent.href,
+  items: FORMATS.map((f) => ({
+    name: f.slug === 'buffet' ? 'Banquete buffet' : `Banquete ${f.label.toLowerCase()}`,
+    href: `${parent.href}/${f.slug}`,
+  })),
+}))
+
+// Legacy nested shape (parent → children)
 const banquetesNavItems = PARENTS.map((parent) => ({
   name: parent.name,
   href: parent.href,
   children: FORMATS.map((f) => ({
-    name: f.label,
+    name: f.slug === 'buffet' ? 'Banquete buffet' : `Banquete ${f.label.toLowerCase()}`,
     href: `${parent.href}/${f.slug}`,
   })),
 }))
@@ -290,6 +300,8 @@ const file = `// Banquet menu sub-pages — ${menus.length} entries (4 types × 
 export const BANQUET_PARENTS = ${JSON.stringify(PARENTS, null, 2)}
 
 export const BANQUET_MENU_FORMATS = ${JSON.stringify(FORMATS.map((f) => ({ slug: f.slug, label: f.label })), null, 2)}
+
+export const banquetesNavGroups = ${JSON.stringify(banquetesNavGroups, null, 2)}
 
 export const banquetesNavItems = ${JSON.stringify(banquetesNavItems, null, 2)}
 

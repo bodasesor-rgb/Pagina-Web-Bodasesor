@@ -55,25 +55,116 @@ export const BANQUET_MENU_FORMATS = [
   }
 ]
 
+export const banquetesNavGroups = [
+  {
+    "heading": "Banquete Formal",
+    "href": "/banquetes",
+    "items": [
+      {
+        "name": "Banquete 4 tiempos",
+        "href": "/banquetes/4-tiempos"
+      },
+      {
+        "name": "Banquete 3 tiempos",
+        "href": "/banquetes/3-tiempos"
+      },
+      {
+        "name": "Banquete 2 tiempos",
+        "href": "/banquetes/2-tiempos"
+      },
+      {
+        "name": "Banquete buffet",
+        "href": "/banquetes/buffet"
+      }
+    ]
+  },
+  {
+    "heading": "Banquete Kosher",
+    "href": "/banquete-kosher",
+    "items": [
+      {
+        "name": "Banquete 4 tiempos",
+        "href": "/banquete-kosher/4-tiempos"
+      },
+      {
+        "name": "Banquete 3 tiempos",
+        "href": "/banquete-kosher/3-tiempos"
+      },
+      {
+        "name": "Banquete 2 tiempos",
+        "href": "/banquete-kosher/2-tiempos"
+      },
+      {
+        "name": "Banquete buffet",
+        "href": "/banquete-kosher/buffet"
+      }
+    ]
+  },
+  {
+    "heading": "Banquete Mexicano",
+    "href": "/banquete-mexicano",
+    "items": [
+      {
+        "name": "Banquete 4 tiempos",
+        "href": "/banquete-mexicano/4-tiempos"
+      },
+      {
+        "name": "Banquete 3 tiempos",
+        "href": "/banquete-mexicano/3-tiempos"
+      },
+      {
+        "name": "Banquete 2 tiempos",
+        "href": "/banquete-mexicano/2-tiempos"
+      },
+      {
+        "name": "Banquete buffet",
+        "href": "/banquete-mexicano/buffet"
+      }
+    ]
+  },
+  {
+    "heading": "Banquete Navideño",
+    "href": "/banquete-navideno",
+    "items": [
+      {
+        "name": "Banquete 4 tiempos",
+        "href": "/banquete-navideno/4-tiempos"
+      },
+      {
+        "name": "Banquete 3 tiempos",
+        "href": "/banquete-navideno/3-tiempos"
+      },
+      {
+        "name": "Banquete 2 tiempos",
+        "href": "/banquete-navideno/2-tiempos"
+      },
+      {
+        "name": "Banquete buffet",
+        "href": "/banquete-navideno/buffet"
+      }
+    ]
+  }
+]
+
 export const banquetesNavItems = [
   {
     "name": "Banquete Formal",
     "href": "/banquetes",
     "children": [
       {
-        "name": "4 Tiempos",
+        "name": "Banquete 4 tiempos",
         "href": "/banquetes/4-tiempos"
       },
       {
-        "name": "3 Tiempos",
+        "name": "Banquete 3 tiempos",
         "href": "/banquetes/3-tiempos"
       },
       {
-        "name": "2 Tiempos",
+        "name": "Banquete 2 tiempos",
         "href": "/banquetes/2-tiempos"
       },
       {
-        "name": "Buffet",
+        "name": "Banquete buffet",
         "href": "/banquetes/buffet"
       }
     ]
@@ -83,19 +174,19 @@ export const banquetesNavItems = [
     "href": "/banquete-kosher",
     "children": [
       {
-        "name": "4 Tiempos",
+        "name": "Banquete 4 tiempos",
         "href": "/banquete-kosher/4-tiempos"
       },
       {
-        "name": "3 Tiempos",
+        "name": "Banquete 3 tiempos",
         "href": "/banquete-kosher/3-tiempos"
       },
       {
-        "name": "2 Tiempos",
+        "name": "Banquete 2 tiempos",
         "href": "/banquete-kosher/2-tiempos"
       },
       {
-        "name": "Buffet",
+        "name": "Banquete buffet",
         "href": "/banquete-kosher/buffet"
       }
     ]
@@ -105,19 +196,19 @@ export const banquetesNavItems = [
     "href": "/banquete-mexicano",
     "children": [
       {
-        "name": "4 Tiempos",
+        "name": "Banquete 4 tiempos",
         "href": "/banquete-mexicano/4-tiempos"
       },
       {
-        "name": "3 Tiempos",
+        "name": "Banquete 3 tiempos",
         "href": "/banquete-mexicano/3-tiempos"
       },
       {
-        "name": "2 Tiempos",
+        "name": "Banquete 2 tiempos",
         "href": "/banquete-mexicano/2-tiempos"
       },
       {
-        "name": "Buffet",
+        "name": "Banquete buffet",
         "href": "/banquete-mexicano/buffet"
       }
     ]
@@ -127,19 +218,19 @@ export const banquetesNavItems = [
     "href": "/banquete-navideno",
     "children": [
       {
-        "name": "4 Tiempos",
+        "name": "Banquete 4 tiempos",
         "href": "/banquete-navideno/4-tiempos"
       },
       {
-        "name": "3 Tiempos",
+        "name": "Banquete 3 tiempos",
         "href": "/banquete-navideno/3-tiempos"
       },
       {
-        "name": "2 Tiempos",
+        "name": "Banquete 2 tiempos",
         "href": "/banquete-navideno/2-tiempos"
       },
       {
-        "name": "Buffet",
+        "name": "Banquete buffet",
         "href": "/banquete-navideno/buffet"
       }
     ]
