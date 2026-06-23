@@ -401,7 +401,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <p className="text-[#162040] font-medium italic mb-6 font-serif text-center">¿Necesitas algo en específico? Nosotros lo preparamos</p>
-                <Link href="/categoria/catering" className="block w-full bg-[#162040] hover:bg-[#1a2a52] text-white text-center py-4 rounded-lg font-bold transition-all duration-300 font-serif mt-auto hover:scale-105 hover:shadow-xl">
+                <Link href="/banquetes-catering" className="block w-full bg-[#162040] hover:bg-[#1a2a52] text-white text-center py-4 rounded-lg font-bold transition-all duration-300 font-serif mt-auto hover:scale-105 hover:shadow-xl">
                   Solicitar menú
                 </Link>
               </div>
@@ -436,7 +436,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/categoria/bodas/wedding-planner" className="block w-full bg-[#162040] hover:bg-[#1a2a52] text-white text-center py-4 rounded-lg font-bold transition-all duration-300 font-serif mt-auto hover:scale-105 hover:shadow-xl">
+                <Link href="/wedding-planner" className="block w-full bg-[#162040] hover:bg-[#1a2a52] text-white text-center py-4 rounded-lg font-bold transition-all duration-300 font-serif mt-auto hover:scale-105 hover:shadow-xl">
                   Planear mi evento
                 </Link>
               </div>
@@ -454,11 +454,11 @@ export default function Home() {
                 <p className="text-gray-700 mb-6 font-serif">Renta de muebles elegantes para cualquier tipo de evento</p>
                 <ul className="space-y-3 mb-6 flex-grow">
                   {[
-                    { text: 'Sillas Tiffany, Ghost, Crossback', href: '/categoria/mobiliario/sillas' },
-                    { text: 'Mesas redondas, rectangulares, mármol', href: '/categoria/mobiliario/mesas' },
-                    { text: 'Salas lounge iluminadas', href: '/categoria/mobiliario/salas' },
-                    { text: 'Carpas blancas y negras', href: '/categoria/mobiliario/carpas' },
-                    { text: 'Periqueras y tarimas', href: '/categoria/mobiliario/periqueras' },
+                    { text: 'Sillas Tiffany, Ghost, Crossback', href: '/mesas-sillas' },
+                    { text: 'Mesas redondas, rectangulares, mármol', href: '/mesas-sillas' },
+                    { text: 'Salas lounge iluminadas', href: '/salas-periqueras' },
+                    { text: 'Carpas blancas y negras', href: '/carpas' },
+                    { text: 'Periqueras y tarimas', href: '/pistas-tarimas' },
                   ].map(item => (
                     <li key={item.text} className="flex items-start group">
                       <svg className="w-5 h-5 text-[#162040] mt-1 mr-3 flex-shrink-0 group-hover:scale-125 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -469,7 +469,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <p className="text-[#162040] font-medium italic mb-6 font-serif text-center">Checa nuestras opciones</p>
-                <Link href="/categoria/mobiliario" className="block w-full bg-[#162040] hover:bg-[#1a2a52] text-white text-center py-4 rounded-lg font-bold transition-all duration-300 font-serif mt-auto hover:scale-105 hover:shadow-xl">
+                <Link href="/mesas-sillas" className="block w-full bg-[#162040] hover:bg-[#1a2a52] text-white text-center py-4 rounded-lg font-bold transition-all duration-300 font-serif mt-auto hover:scale-105 hover:shadow-xl">
                   Ver catálogo
                 </Link>
               </div>

@@ -38,16 +38,12 @@ export default function CatalogoPistasTarimasPage() {
             <span className="text-white font-serif text-sm font-semibold">Catálogo 2026</span>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            <a
-              href="/catalogos/pistas-tarimas.pdf"
-              download="Catalogo-Pistas-Tarimas-Bodasesor-2026.pdf"
+            <Link
+              href="/pistas-tarimas"
               className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg font-serif text-sm font-semibold transition-colors"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Descargar PDF
-            </a>
+              Ver catálogo interactivo
+            </Link>
             <a
               href={waMsg}
               target="_blank" rel="noopener noreferrer"
@@ -59,14 +55,20 @@ export default function CatalogoPistasTarimasPage() {
         </div>
       </div>
 
-      {/* PDF embed — full height */}
-      <div className="flex-1 w-full" style={{ minHeight: 'calc(100vh - 120px)' }}>
-        <iframe
-          src="/catalogos/pistas-tarimas.pdf#view=FitH"
-          title="Catálogo Pistas y Tarimas 2026 – Bodasesor"
-          className="w-full h-full border-0"
-          style={{ minHeight: 'calc(100vh - 120px)' }}
-        />
+      {/* Catálogo interactivo */}
+      <div className="flex-1 w-full flex flex-col items-center justify-center px-4 py-20 text-center bg-[#f5efe8]">
+        <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-4">
+          Catálogo de Pistas y Tarimas 2026
+        </h1>
+        <p className="text-gray-600 font-serif text-lg max-w-xl mb-8">
+          Consulta modelos, medidas y acabados en nuestro catálogo interactivo de pistas de baile y tarimas.
+        </p>
+        <Link
+          href="/pistas-tarimas"
+          className="inline-flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-8 py-4 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105"
+        >
+          Ver catálogo completo
+        </Link>
       </div>
 
       {/* Footer CTA */}

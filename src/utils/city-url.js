@@ -3,6 +3,22 @@ import { CITY_MAP } from '../data/city-data'
 /** City slugs sorted longest-first for reliable suffix matching */
 export const CITY_SLUGS = Object.keys(CITY_MAP).sort((a, b) => b.length - a.length)
 
+/** Paths that should never receive a city suffix */
+export const CITY_EXEMPT_PREFIXES = [
+  '/blog',
+  '/quienes-somos',
+  '/galeria',
+  '/catalogo',
+  '/catalogos',
+]
+
+export function isCityExemptPath(path) {
+  const { basePath } = parseCityFromPath(path)
+  return CITY_EXEMPT_PREFIXES.some(
+    (prefix) => basePath === prefix || basePath.startsWith(`${prefix}/`),
+  )
+}
+
 /** Pages with dedicated routes (not only ServicePage catch-all) */
 export const STANDALONE_PAGE_ROUTES = {
   '/banquetes-catering': null,
@@ -91,6 +107,7 @@ export function stripCityFromPath(path) {
  */
 export function withCityPath(path, citySlug) {
   if (!citySlug || !CITY_MAP[citySlug]) return stripCityFromPath(path)
+  if (isCityExemptPath(path)) return stripCityFromPath(path)
 
   const { basePath } = parseCityFromPath(path)
 
