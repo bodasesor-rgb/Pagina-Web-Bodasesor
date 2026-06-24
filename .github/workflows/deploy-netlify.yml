@@ -30,6 +30,14 @@ jobs:
         env:
           SITE_BASE: https://bodasesor.com
 
+      - name: Verify Netlify credentials
+        run: |
+          if [ -z "${{ secrets.NETLIFY_AUTH_TOKEN }}" ] || [ -z "${{ secrets.NETLIFY_SITE_ID }}" ]; then
+            echo "::error::Faltan NETLIFY_AUTH_TOKEN o NETLIFY_SITE_ID en GitHub Secrets."
+            echo "Sin esto, Nexus/Replit pueden seguir sobrescribiendo bodasesor.com."
+            exit 1
+          fi
+
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
