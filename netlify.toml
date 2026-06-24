@@ -1,8 +1,6 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  # Solo GitHub Actions publica. Evita que Netlify/Replit sobrescriban el sitio.
-  ignore = "exit 0"
 
 [build.environment]
   NODE_VERSION = "20"
