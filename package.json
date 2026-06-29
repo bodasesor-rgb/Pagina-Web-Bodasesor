@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "generate:redirects": "node scripts/generate-redirects.mjs",
-    "build": "npm run generate:redirects && vite build",
+    "build": "npm run generate:redirects && vite build && node scripts/verify-redirects-deploy.mjs",
     "build:safe": "node scripts/safe-build.mjs",
     "sync:netlify": "node scripts/pull-netlify-live.mjs",
     "merge:netlify": "node scripts/merge-live-into-dist.mjs",

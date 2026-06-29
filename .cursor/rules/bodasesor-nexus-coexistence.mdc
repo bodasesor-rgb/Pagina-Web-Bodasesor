@@ -27,3 +27,20 @@ No sincronizar repos. No borrar `/public/images/`. No tocar paths `nexus-*`.
 Requiere `.env.local` con `NETLIFY_AUTH_TOKEN` y `NETLIFY_SITE_ID`.
 
 Rutas preservadas: `scripts/netlify-preserve.json`
+
+## Redirects legacy (Netlify) — NO romper
+
+Las ~4215 URLs `/products/`, `/collections/`, `/blogs/`, `/pages/` deben devolver **301**, no 200 HTML.
+
+| Artefacto | Rol |
+|-----------|-----|
+| `public/_redirects` | Reglas en deploy (`dist/_redirects`) |
+| `public/redirects-map.json` | Mapa JSON (backup) |
+| `netlify/edge-functions/legacy-redirect.ts` | Edge 301 si `_redirects` falla |
+| `netlify/edge-functions/redirects-map.json` | Mapa embebido en edge (sin fetch) |
+
+**Reglas:**
+- `npm run build` regenera redirects y falla si faltan (`verify-redirects-deploy.mjs`)
+- **No** añadir `[[redirects]] /* → /index.html` en `netlify.toml` — pisa `_redirects`
+- El fallback SPA va al **final** de `_redirects`: `/*  /index.html  200`
+- `build:safe` / merge **nunca** copia `_redirects` ni `redirects-map.json` desde producción

@@ -13,6 +13,7 @@ const SHEET_ID = '1IkE_zX3tjkGJuDAMzF09swEWuHSaE1wXY2SqOHNNvpk'
 const SHEET_GID = '1705506615'
 const LOCAL_CSV = path.join(import.meta.dirname, 'paginas-bodasesor.csv')
 const OUT = path.join(ROOT, 'public/redirects-map.json')
+const EDGE_OUT = path.join(ROOT, 'netlify/edge-functions/redirects-map.json')
 const REDIRECTS_FILE = path.join(ROOT, 'public/_redirects')
 const UPDATED_CSV = path.join(import.meta.dirname, 'paginas-bodasesor-actualizado.csv')
 
@@ -111,6 +112,9 @@ function buildRedirectsFile(map) {
   lines.push('')
   lines.push(`# Fallback for unknown legacy products`)
   lines.push(`/products/:slug  /banquetes-catering  301!`)
+  lines.push('')
+  lines.push(`# SPA fallback — MUST stay last`)
+  lines.push(`/*  /index.html  200`)
 
   return `${lines.join('\n')}\n`
 }
@@ -193,6 +197,7 @@ const output = {
 }
 
 fs.writeFileSync(OUT, JSON.stringify(output, null, 0))
+fs.writeFileSync(EDGE_OUT, JSON.stringify(output, null, 0))
 
 const redirectsContent = buildRedirectsFile(map)
 fs.writeFileSync(REDIRECTS_FILE, redirectsContent)
