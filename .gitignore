@@ -6,3 +6,5 @@ dist
 .env.local
 .DS_Store
 live-bundle.js
+private/credentials/
+nexus-ia-power*.json
