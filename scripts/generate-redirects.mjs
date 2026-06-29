@@ -125,6 +125,14 @@ function csvEscape(value) {
   return text
 }
 
+async function loadCsv() {
+  if (process.env.REDIRECTS_REFRESH_SHEET !== '1' && fs.existsSync(LOCAL_CSV)) {
+    console.log(`Using cached ${LOCAL_CSV} (set REDIRECTS_REFRESH_SHEET=1 to refresh from Google Sheet)`)
+    return fs.readFileSync(LOCAL_CSV, 'utf8')
+  }
+  return downloadSheet()
+}
+
 async function downloadSheet() {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`
 
@@ -150,7 +158,7 @@ const stats = { count: 0, products: 0, collections: 0, blogs: 0, pages: 0, skipp
 const map = {}
 const updatedRows = []
 
-const csv = await downloadSheet()
+const csv = await loadCsv()
 const rows = parseCsv(csv)
 
 for (const row of rows) {

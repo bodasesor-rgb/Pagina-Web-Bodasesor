@@ -1,6 +1,10 @@
 # Auto-generated — npm run generate:redirects
-# 4215 rules + fallback
+# 4225 rules + fallback
 
+/blogs/noticias?page=11  /blog  301
+/blogs/noticias?page=2  /blog  301
+/blogs/noticias?page=26  /blog  301
+/blogs/noticias?page=3  /blog  301
 /blogs/noticias?page=8  /blog  301
 /blogs/noticias/10-tendencias-de-decoracion-en-bodas  /blog/10-tendencias-de-decoracion-en-bodas  301
 /blogs/noticias/10-tendencias-de-decoracion-en-bodas/  /blog/10-tendencias-de-decoracion-en-bodas  301
@@ -1266,7 +1270,9 @@
 /collections/catering-chico-cdmx/  /banquetes-catering/ciudad-de-mexico  301
 /collections/catering-coyoacan  /banquetes-catering  301
 /collections/catering-coyoacan/  /banquetes-catering  301
+/collections/catering-cuajimalpa  /banquetes-catering  301
 /collections/catering-cuajimalpa?page=3  /banquetes-catering  301
+/collections/catering-cuajimalpa/  /banquetes-catering  301
 /collections/catering-cuernavaca  /banquetes-catering/cuernavaca  301
 /collections/catering-cuernavaca/  /banquetes-catering/cuernavaca  301
 /collections/catering-de-bebidas-cancun  /banquetes-catering/cancun  301
@@ -2617,7 +2623,9 @@
 /collections/precio-de-alquiler-de-carpas-transparentes-cdmx/  /carpas/ciudad-de-mexico  301
 /collections/precio-de-alquiler-de-mesas-rusticas-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /collections/precio-de-alquiler-de-mesas-rusticas-cdmx/  /mesas-sillas/ciudad-de-mexico  301
+/collections/precio-de-alquiler-de-mobiliario-clasico-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /collections/precio-de-alquiler-de-mobiliario-clasico-cdmx?page=3  /mesas-sillas/ciudad-de-mexico  301
+/collections/precio-de-alquiler-de-mobiliario-clasico-cdmx/  /mesas-sillas/ciudad-de-mexico  301
 /collections/precio-de-alquiler-de-sillas-crossback-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /collections/precio-de-alquiler-de-sillas-crossback-cdmx/  /mesas-sillas/ciudad-de-mexico  301
 /collections/precio-de-banquetes-a-domicilio-cdmx  /banquetes-catering/ciudad-de-mexico  301
@@ -2843,7 +2851,9 @@
 /collections/proveedores-de-catering-gourmet-cdmx/  /banquetes-catering/ciudad-de-mexico  301
 /collections/proveedores-de-catering-internacional-cdmx  /banquetes-catering/ciudad-de-mexico  301
 /collections/proveedores-de-catering-internacional-cdmx/  /banquetes-catering/ciudad-de-mexico  301
+/collections/proveedores-de-catering-vegano-cdmx  /banquetes-catering/ciudad-de-mexico  301
 /collections/proveedores-de-catering-vegano-cdmx?page=4&phcursor=eyJhbGciOiJIUzI1NiJ9.eyJzayI6InByb2R1Y3RfbGluZV9pdGVtc19jb3VudCIsInN2IjowLCJkIjoiZiIsInVpZCI6NDE4MDMzOTk4NTY0NDAsImwiOjI0LCJvIjowLCJyIjoiQ0RQIn0.X_drKYS2gDbUaIDzBpR1FkWXtEOcB-5lvNX-S14X-NA  /banquetes-catering/ciudad-de-mexico  301
+/collections/proveedores-de-catering-vegano-cdmx/  /banquetes-catering/ciudad-de-mexico  301
 /collections/proveedores-de-centros-de-mesa-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /collections/proveedores-de-centros-de-mesa-cdmx/  /mesas-sillas/ciudad-de-mexico  301
 /collections/proveedores-de-cocteleria-para-bodas-cdmx  /barras-de-bebidas/ciudad-de-mexico  301

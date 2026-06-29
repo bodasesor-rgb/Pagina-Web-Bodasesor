@@ -124,6 +124,16 @@ async function main() {
   console.log(`  Copiados desde Netlify: ${copied}`)
   console.log(`  Omitidos (SPA gana): ${skippedSpa}`)
   console.log(`  Omitidos (ya en dist): ${skippedExists}`)
+
+  const { spawnSync } = await import('node:child_process')
+  console.log('\n▶ Verificar redirects tras merge…')
+  const verify = spawnSync('node', ['scripts/verify-redirects-deploy.mjs'], {
+    cwd: ROOT,
+    stdio: 'inherit',
+  })
+  if (verify.status !== 0) {
+    throw new Error('Merge rompió los redirects — NO publicar este dist/')
+  }
   if (copied === 0) {
     console.log('\nNota: si esperabas páginas Nexus, corre npm run sync:netlify antes del build.')
   }

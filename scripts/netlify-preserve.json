@@ -16,6 +16,9 @@
   ],
   "spaWinsExact": [
     "index.html",
+    "_redirects",
+    "redirects-map.json",
+    "_headers",
     "favicon.svg",
     "icons.svg",
     "apple-touch-icon.svg"

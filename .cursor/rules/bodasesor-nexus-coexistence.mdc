@@ -44,3 +44,16 @@ Las ~4215 URLs `/products/`, `/collections/`, `/blogs/`, `/pages/` deben devolve
 - **No** añadir `[[redirects]] /* → /index.html` en `netlify.toml` — pisa `_redirects`
 - El fallback SPA va al **final** de `_redirects`: `/*  /index.html  200`
 - `build:safe` / merge **nunca** copia `_redirects` ni `redirects-map.json` desde producción
+
+## Por qué se rompen al hacer otros trabajos
+
+| Causa | Qué pasa | Protección en código |
+|-------|----------|----------------------|
+| `[[redirects]] /* → index.html` en netlify.toml | Pisa las 4216 reglas de `_redirects` | `guard-redirects.mjs` falla el build |
+| Deploy manual Nexus/Replit sin `_redirects` | Producción queda con ~215 reglas viejas | `build:safe` verifica tras merge; no publicar sin verify |
+| Build Netlify falla (edge JSON gigante, etc.) | Producción no se actualiza, queda deploy viejo | CI `verify-redirects.yml` en cada PR |
+| `vite build` sin `generate:redirects` | `dist/_redirects` incompleto | `npm run build` siempre regenera + verifica |
+| Google Sheet caído en build | Antes fallaba el build | Usa CSV local (`scripts/paginas-bodasesor.csv`) por defecto |
+
+**Siempre publicar con:** `npm run build` (Netlify) o `npm run build:safe` (con Nexus).
+**Verificar producción:** `node scripts/check-production-redirects.mjs`
