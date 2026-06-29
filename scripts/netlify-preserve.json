@@ -7,6 +7,10 @@
     "private/nexus-reports/",
     "nexus-db/"
   ],
+  "neverOverwriteFromLive": [
+    "_redirects",
+    "redirects-map.json"
+  ],
   "spaWinsPrefixes": [
     "assets/"
   ],

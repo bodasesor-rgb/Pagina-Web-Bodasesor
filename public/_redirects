@@ -4218,3 +4218,6 @@
 
 # Fallback for unknown legacy products
 /products/:slug  /banquetes-catering  301!
+
+# SPA fallback — MUST stay last
+/*  /index.html  200
