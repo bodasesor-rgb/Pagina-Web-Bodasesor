@@ -1,0 +1,29 @@
+# Bodasesor web + Nexus SEO — convivencia
+
+## Dos apps separadas
+
+- **Este repo** → bodasesor.com (Netlify) — SPA React/Vite
+- **Nexus SEO** (Seo-Nexus-2.0) → Hostinger — landings SEO masivas
+
+No sincronizar repos. No borrar `/public/images/`. No tocar paths `nexus-*`.
+
+## Antes de cambiar y publicar
+
+1. `npm run sync:netlify` — descarga producción actual a `.netlify-live/`
+2. Revisa qué hay en `.netlify-live/` (páginas Nexus/SEO)
+3. Haz tus cambios en el SPA
+4. `npm run build:safe` — build + fusiona lo de Netlify que no debe borrarse
+5. Revisa `dist/.merge-report.json`
+6. Publica solo cuando el usuario lo pida (Netlify manual o push a main)
+
+## Scripts
+
+| Comando | Qué hace |
+|---------|----------|
+| `npm run sync:netlify` | Descarga deploy publicado de Netlify |
+| `npm run build:safe` | sync + build + merge Nexus/SEO |
+| `npm run merge:netlify` | Solo merge (tras build normal) |
+
+Requiere `.env.local` con `NETLIFY_AUTH_TOKEN` y `NETLIFY_SITE_ID`.
+
+Rutas preservadas: `scripts/netlify-preserve.json`
