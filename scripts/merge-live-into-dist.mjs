@@ -37,6 +37,11 @@ function isPreservedPath(relPath, config) {
   return matchesPrefix(relPath.replace(/\\/g, '/'), config.alwaysPreservePrefixes || [])
 }
 
+function isNeverOverwriteFromLive(relPath, config) {
+  const norm = relPath.replace(/\\/g, '/')
+  return (config.neverOverwriteFromLive || []).includes(norm)
+}
+
 async function walkFiles(dir, base = dir) {
   const entries = await readdir(dir, { withFileTypes: true })
   const files = []
@@ -83,6 +88,12 @@ async function main() {
     const preserved = isPreservedPath(rel, config)
     const spaWins = shouldSpaWin(rel, config)
     const distHas = existsSync(distPath)
+    const keepBuildRedirects = isNeverOverwriteFromLive(rel, config)
+
+    if (keepBuildRedirects) {
+      skippedSpa++
+      continue
+    }
 
     if (spaWins && distHas) {
       skippedSpa++
