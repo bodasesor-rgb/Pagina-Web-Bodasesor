@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useBrowserLocation } from 'wouter/use-browser-location'
+import { resolveLegacyPathClient } from '../utils/legacy-redirect'
 
 function normalizePath(path) {
   const decoded = decodeURIComponent(path)
   return decoded.replace(/\/+$/, '') || '/'
 }
 
-function resolveDest(raw, origin) {
-  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
-  return `${origin}${raw.startsWith('/') ? raw : `/${raw}`}`
-}
-
 /**
- * Client-side fallback when Netlify _redirects / edge miss a legacy Shopify URL.
- * Loads the redirect map only for /products|collections|blogs|pages paths.
+ * Client-side redirect for legacy Shopify URLs.
+ * Runs instantly via resolver logic; full map is fallback only.
  */
 export default function LegacyShopifyRedirect() {
   const [path] = useBrowserLocation()
@@ -22,8 +18,14 @@ export default function LegacyShopifyRedirect() {
   useEffect(() => {
     let cancelled = false
     const lookup = normalizePath(path)
-    const withSlash = `${lookup}/`
+    const resolved = resolveLegacyPathClient(`${lookup}${window.location.search}`)
 
+    if (resolved) {
+      window.location.replace(resolved)
+      return
+    }
+
+    const withSlash = `${lookup}/`
     import('../../netlify/edge-functions/redirects-map.json')
       .then((mod) => {
         if (cancelled) return
@@ -34,7 +36,11 @@ export default function LegacyShopifyRedirect() {
           entries[`${lookup}${window.location.search}`]
 
         if (dest) {
-          window.location.replace(resolveDest(dest, window.location.origin))
+          window.location.replace(
+            dest.startsWith('http')
+              ? dest
+              : `${window.location.origin}${dest.startsWith('/') ? dest : `/${dest}`}`,
+          )
           return
         }
 

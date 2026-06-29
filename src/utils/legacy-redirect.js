@@ -1,10 +1,8 @@
 /**
- * Resolve legacy Shopify URLs to valid bodasesor.com pages.
+ * Client-side legacy URL resolver (mirrors scripts/redirect-resolver.mjs).
+ * Used when Netlify _redirects / edge are not active yet.
  */
-import fs from 'fs'
-import path from 'path'
-
-const ROOT = path.resolve(import.meta.dirname, '..')
+import catalogData from '../data/legacy-catalog-hrefs.json'
 
 const CITY_SUFFIXES = [
   'san-miguel-allende', 'san-luis-potosi', 'ciudad-de-mexico', 'estado-de-mexico',
@@ -98,38 +96,10 @@ const PRODUCT_ALIASES = {
   'barra-bebidas': '/barra-bebidas',
 }
 
-function loadCatalog() {
-  const productSlugs = new Set(
-    [...fs.readFileSync(path.join(ROOT, 'src/data/products.js'), 'utf8').matchAll(/slug: "([^"]+)"/g)]
-      .map((m) => m[1]),
-  )
+const productSlugs = new Set(catalogData.productSlugs)
+const catalogPaths = new Map(Object.entries(catalogData.catalogPaths))
 
-  const catalogPaths = new Map()
-  const dataDir = path.join(ROOT, 'src/data')
-
-  for (const file of fs.readdirSync(dataDir).filter((f) => f.endsWith('-products.js'))) {
-    const content = fs.readFileSync(path.join(dataDir, file), 'utf8')
-    for (const m of content.matchAll(/"href":\s*"(\/[^"]+)"/g)) {
-      const href = m[1]
-      const slug = href.split('/').filter(Boolean).pop()
-      if (slug) catalogPaths.set(slug, href)
-    }
-  }
-
-  return { productSlugs, catalogPaths }
-}
-
-export function getCatalogForClient() {
-  const { productSlugs, catalogPaths } = loadCatalog()
-  return {
-    productSlugs: [...productSlugs],
-    catalogPaths: Object.fromEntries(catalogPaths),
-  }
-}
-
-const { productSlugs, catalogPaths } = loadCatalog()
-
-export function stripCitySuffix(slug) {
+function stripCitySuffix(slug) {
   for (const city of CITY_SUFFIXES) {
     if (slug.endsWith(`-${city}`) && slug.length > city.length + 1) {
       return { base: slug.slice(0, -(city.length + 1)), city }
@@ -188,13 +158,14 @@ function resolveProductSlug(slug) {
   return '/banquetes-catering'
 }
 
-export function resolveLegacyPath(fromPath) {
-  if (fromPath.startsWith('/pages/quienes-somos')) return '/quienes-somos'
-  if (fromPath.startsWith('/pages/contact')) return '/'
-  if (fromPath.startsWith('/pages/contacto')) return '/'
+export function resolveLegacyPathClient(fromPath) {
+  const path = decodeURIComponent(fromPath).replace(/\/+$/, '') || '/'
 
-  if (fromPath.startsWith('/blogs/noticias/')) {
-    let slug = decodeURIComponent(fromPath.split('/').pop() || '')
+  if (path.startsWith('/pages/quienes-somos')) return '/quienes-somos'
+  if (path.startsWith('/pages/contact')) return '/'
+
+  if (path.startsWith('/blogs/noticias/')) {
+    let slug = path.split('/').pop() || ''
     slug = slug.replace(/®️/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
     if (slug.includes('estrategias-y-consejos')) {
       slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
@@ -202,15 +173,15 @@ export function resolveLegacyPath(fromPath) {
     return `/blog/${slug}`
   }
 
-  if (fromPath.startsWith('/blogs/')) return '/blog'
+  if (path.startsWith('/blogs/')) return '/blog'
 
-  if (fromPath.startsWith('/products/')) {
-    const slug = fromPath.replace(/^\/products\//, '').split('?')[0]
+  if (path.startsWith('/products/')) {
+    const slug = path.replace(/^\/products\//, '').split('?')[0]
     return resolveProductSlug(slug)
   }
 
-  if (fromPath.startsWith('/collections/')) {
-    const slug = fromPath.replace(/^\/collections\//, '').split('?')[0]
+  if (path.startsWith('/collections/')) {
+    const slug = path.replace(/^\/collections\//, '').split('?')[0]
     const { base, city } = stripCitySuffix(slug)
 
     if (productSlugs.has(base)) return withCity(`/${base}`, city)
@@ -229,20 +200,12 @@ export function resolveLegacyPath(fromPath) {
   return null
 }
 
-export function validateResolver() {
-  const map = JSON.parse(fs.readFileSync(path.join(ROOT, 'public/redirects-map.json'), 'utf8')).entries
-  let ok = 0
-  let bad = 0
-  for (const [from, dest] of Object.entries(map)) {
-    if (!from.startsWith('/products/') && !from.startsWith('/collections/')) continue
-    if (from.includes(':')) continue
-    const pathOnly = dest.replace('https://bodasesor.com', '')
-    const slug = pathOnly.split('/').filter(Boolean).pop()
-    const valid = productSlugs.has(slug) || [...catalogPaths.values()].some((p) => p === pathOnly || p.endsWith(pathOnly)) || [
-      '/banquetes-catering', '/bodas', '/xv-anos', '/blog', '/pistas-tarimas', '/floreria',
-    ].some((p) => pathOnly === p || pathOnly.startsWith(p + '/'))
-    if (valid) ok++
-    else bad++
-  }
-  return { ok, bad }
+export function isLegacyShopifyPath(path) {
+  const p = path.replace(/\/+$/, '') || '/'
+  return (
+    p.startsWith('/products/') ||
+    p.startsWith('/collections/') ||
+    p.startsWith('/blogs/') ||
+    p.startsWith('/pages/')
+  )
 }

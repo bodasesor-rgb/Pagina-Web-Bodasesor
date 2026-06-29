@@ -6,7 +6,7 @@
  */
 import fs from 'fs'
 import path from 'path'
-import { resolveLegacyPath } from './redirect-resolver.mjs'
+import { resolveLegacyPath, getCatalogForClient } from './redirect-resolver.mjs'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
 const SHEET_ID = '1IkE_zX3tjkGJuDAMzF09swEWuHSaE1wXY2SqOHNNvpk'
@@ -14,6 +14,7 @@ const SHEET_GID = '1705506615'
 const LOCAL_CSV = path.join(import.meta.dirname, 'paginas-bodasesor.csv')
 const OUT = path.join(ROOT, 'public/redirects-map.json')
 const EDGE_OUT = path.join(ROOT, 'netlify/edge-functions/redirects-map.json')
+const CLIENT_CATALOG_OUT = path.join(ROOT, 'src/data/legacy-catalog-hrefs.json')
 const REDIRECTS_FILE = path.join(ROOT, 'public/_redirects')
 const UPDATED_CSV = path.join(import.meta.dirname, 'paginas-bodasesor-actualizado.csv')
 
@@ -198,6 +199,7 @@ const output = {
 
 fs.writeFileSync(OUT, JSON.stringify(output, null, 0))
 fs.writeFileSync(EDGE_OUT, JSON.stringify(output, null, 0))
+fs.writeFileSync(CLIENT_CATALOG_OUT, JSON.stringify(getCatalogForClient(), null, 0))
 
 const redirectsContent = buildRedirectsFile(map)
 fs.writeFileSync(REDIRECTS_FILE, redirectsContent)
