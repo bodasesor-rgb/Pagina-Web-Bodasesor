@@ -36,8 +36,8 @@ Las ~4215 URLs `/products/`, `/collections/`, `/blogs/`, `/pages/` deben devolve
 |-----------|-----|
 | `public/_redirects` | Reglas en deploy (`dist/_redirects`) |
 | `public/redirects-map.json` | Mapa JSON (backup) |
-| `netlify/edge-functions/legacy-redirect.ts` | Edge 301 si `_redirects` falla |
-| `netlify/edge-functions/redirects-map.json` | Mapa embebido en edge (sin fetch) |
+| `netlify/edge-functions/legacy-redirect.ts` | Edge 301 backup (fetch a redirects-map.json) |
+| `public/redirects-map.json` | Mapa JSON servido como archivo estático |
 
 **Reglas:**
 - `npm run build` regenera redirects y falla si faltan (`verify-redirects-deploy.mjs`)

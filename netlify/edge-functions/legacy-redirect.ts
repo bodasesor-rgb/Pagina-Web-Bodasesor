@@ -1,11 +1,30 @@
 import type { Context } from '@netlify/edge-functions'
-import mapFile from './redirects-map.json'
 
 interface RedirectMapFile {
   entries: Record<string, string>
 }
 
-const REDIRECT_MAP = (mapFile as RedirectMapFile).entries
+let cachedMap: Record<string, string> | null = null
+
+async function loadMap(origin: string): Promise<Record<string, string>> {
+  if (cachedMap) return cachedMap
+
+  const res = await fetch(`${origin}/redirects-map.json`, {
+    headers: { Accept: 'application/json' },
+  })
+  if (!res.ok) {
+    throw new Error(`redirects-map.json ${res.status}`)
+  }
+
+  const contentType = res.headers.get('content-type') || ''
+  if (!contentType.includes('json')) {
+    throw new Error('redirects-map.json returned non-JSON')
+  }
+
+  const data = (await res.json()) as RedirectMapFile
+  cachedMap = data.entries
+  return cachedMap
+}
 
 function resolveDestination(raw: string, origin: string): string {
   if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
@@ -18,13 +37,18 @@ export default async function handler(request: Request, context: Context) {
   const withQuery = `${pathname}${url.search}`
   const withSlash = `${pathname}/`
 
-  const dest =
-    REDIRECT_MAP[withQuery] ||
-    REDIRECT_MAP[pathname] ||
-    REDIRECT_MAP[withSlash]
+  try {
+    const map = await loadMap(url.origin)
+    const dest =
+      map[withQuery] ||
+      map[pathname] ||
+      map[withSlash]
 
-  if (dest) {
-    return Response.redirect(resolveDestination(dest, url.origin), 301)
+    if (dest) {
+      return Response.redirect(resolveDestination(dest, url.origin), 301)
+    }
+  } catch {
+    // _redirects handles legacy URLs when map unavailable
   }
 
   return context.next()

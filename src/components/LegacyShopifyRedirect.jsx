@@ -26,7 +26,7 @@ export default function LegacyShopifyRedirect() {
     }
 
     const withSlash = `${lookup}/`
-    import('../../netlify/edge-functions/redirects-map.json')
+    import('../../public/redirects-map.json')
       .then((mod) => {
         if (cancelled) return
         const entries = mod.default?.entries ?? mod.entries

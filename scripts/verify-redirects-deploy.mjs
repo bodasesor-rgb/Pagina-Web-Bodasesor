@@ -10,7 +10,6 @@ const ROOT = path.resolve(import.meta.dirname, '..')
 const DIST = path.join(ROOT, 'dist')
 const REDIRECTS = path.join(DIST, '_redirects')
 const MAP = path.join(DIST, 'redirects-map.json')
-const EDGE_MAP = path.join(ROOT, 'netlify/edge-functions/redirects-map.json')
 const NETLIFY_TOML = path.join(ROOT, 'netlify.toml')
 
 const MIN_RULES = 4000
@@ -28,7 +27,6 @@ function fail(msg) {
 
 if (!fs.existsSync(REDIRECTS)) fail('dist/_redirects missing — Netlify will not redirect legacy URLs')
 if (!fs.existsSync(MAP)) fail('dist/redirects-map.json missing')
-if (!fs.existsSync(EDGE_MAP)) fail('netlify/edge-functions/redirects-map.json missing')
 
 const redirectsText = fs.readFileSync(REDIRECTS, 'utf8')
 const ruleCount = redirectsText.split('\n').filter((l) => l && !l.startsWith('#')).length
