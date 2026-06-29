@@ -1,0 +1,19 @@
+{
+  "comment": "Rutas que viven en Netlify (Nexus/SEO) y NO deben perderse al publicar el SPA.",
+  "alwaysPreservePrefixes": [
+    "eventos/",
+    "nexus-output-pages/",
+    "private/nexus-output-pages/",
+    "private/nexus-reports/",
+    "nexus-db/"
+  ],
+  "spaWinsPrefixes": [
+    "assets/"
+  ],
+  "spaWinsExact": [
+    "index.html",
+    "favicon.svg",
+    "icons.svg",
+    "apple-touch-icon.svg"
+  ]
+}
