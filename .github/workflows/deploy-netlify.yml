@@ -33,6 +33,16 @@ jobs:
         env:
           SITE_BASE: https://bodasesor.com
 
+      - name: Verify Netlify credentials
+        run: |
+          if [ -z "$NETLIFY_AUTH_TOKEN" ] || [ -z "$NETLIFY_SITE_ID" ]; then
+            echo "::error::NETLIFY_AUTH_TOKEN o NETLIFY_SITE_ID no configurados en GitHub Secrets."
+            echo "El build pasó pero NO se publicó a bodasesor.com."
+            echo "Configura secrets en: Settings → Secrets → Actions"
+            echo "O espera el deploy automático de Netlify (repo conectado → Build Active)."
+            exit 1
+          fi
+
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
