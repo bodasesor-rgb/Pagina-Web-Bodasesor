@@ -87,6 +87,34 @@ function addEntry(map, fromPath, to, stats) {
   }
 }
 
+function toRedirectDest(to) {
+  if (to.startsWith(SITE_BASE)) return to.slice(SITE_BASE.length) || '/'
+  if (to.startsWith('http://') || to.startsWith('https://')) return to
+  return to.startsWith('/') ? to : `/${to}`
+}
+
+function buildRedirectsFile(map) {
+  const lines = [
+    '# Auto-generated — npm run generate:redirects',
+    `# ${Object.keys(map).length} rules + fallback`,
+    '',
+  ]
+
+  const entries = Object.entries(map)
+    .filter(([from]) => !from.includes(':'))
+    .sort(([a], [b]) => a.localeCompare(b))
+
+  for (const [from, to] of entries) {
+    lines.push(`${from}  ${toRedirectDest(to)}  301`)
+  }
+
+  lines.push('')
+  lines.push(`# Fallback for unknown legacy products`)
+  lines.push(`/products/:slug  /banquetes-catering  301!`)
+
+  return `${lines.join('\n')}\n`
+}
+
 function csvEscape(value) {
   const text = String(value ?? '')
   if (/[",\n\r]/.test(text)) return `"${text.replace(/"/g, '""')}"`
@@ -166,9 +194,9 @@ const output = {
 
 fs.writeFileSync(OUT, JSON.stringify(output, null, 0))
 
-fs.writeFileSync(REDIRECTS_FILE, `# Legacy Shopify redirects → valid bodasesor.com pages
-/products/:slug  ${SITE_BASE}/banquetes-catering  301!
-`)
+const redirectsContent = buildRedirectsFile(map)
+fs.writeFileSync(REDIRECTS_FILE, redirectsContent)
+console.log(`  _redirects rules: ${redirectsContent.split('\n').filter((l) => l && !l.startsWith('#')).length}`)
 
 const updatedCsvLines = [
   'URL Original (bodasesor.com),URL Nueva (destino),Ciudad detectada',

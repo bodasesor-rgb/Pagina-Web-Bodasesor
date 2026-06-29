@@ -184,6 +184,7 @@ function resolveProductSlug(slug) {
 export function resolveLegacyPath(fromPath) {
   if (fromPath.startsWith('/pages/quienes-somos')) return '/quienes-somos'
   if (fromPath.startsWith('/pages/contact')) return '/'
+  if (fromPath.startsWith('/pages/contacto')) return '/'
 
   if (fromPath.startsWith('/blogs/noticias/')) {
     let slug = decodeURIComponent(fromPath.split('/').pop() || '')
