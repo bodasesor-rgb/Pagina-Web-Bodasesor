@@ -59,6 +59,7 @@ import ServicePage from './pages/ServicePage.tsx'
 import BanqueteMenuDetailPage from './pages/BanqueteMenuDetailPage.tsx'
 import SearchPage from './pages/SearchPage.tsx'
 import NotFound from './pages/not-found.tsx'
+import LegacyShopifyRedirect from './components/LegacyShopifyRedirect.jsx'
 
 const BANQUET_PARENT_SLUGS = ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']
 
@@ -123,6 +124,12 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
+
+          {/* Legacy Shopify URLs — client fallback if Netlify redirect misses */}
+          <Route path="/products/:handle" component={LegacyShopifyRedirect} />
+          <Route path="/collections/:handle" component={LegacyShopifyRedirect} />
+          <Route path="/pages/:handle" component={LegacyShopifyRedirect} />
+          <Route path="/blogs/:rest*" component={LegacyShopifyRedirect} />
 
           {/* Sillas */}
           <Route path="/sillas/:chairSlug">
