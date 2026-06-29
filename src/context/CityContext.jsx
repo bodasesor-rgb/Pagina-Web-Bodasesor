@@ -1,18 +1,24 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { useLocation } from 'wouter'
-import { parseCityFromPath } from '../utils/city-url'
+import { useBrowserLocation } from 'wouter/use-browser-location'
+import { parseCityFromPath, toCanonicalCityPath } from '../utils/city-url'
 
 const CityContext = createContext({ city: null, setCity: () => {} })
 
-/** Keeps CityContext in sync with the current URL */
+/** Keeps CityContext in sync with the current URL and normalizes legacy city URLs */
 export function CityUrlSync() {
-  const [location] = useLocation()
+  const [fullPath, setFullPath] = useBrowserLocation()
   const { setCity } = useContext(CityContext)
 
   useEffect(() => {
-    const { city } = parseCityFromPath(location)
+    const canonical = toCanonicalCityPath(fullPath)
+    const { city } = parseCityFromPath(canonical)
     setCity(city)
-  }, [location, setCity])
+
+    const normalized = fullPath.replace(/\/+$/, '') || '/'
+    if (canonical !== normalized) {
+      setFullPath(canonical, { replace: true })
+    }
+  }, [fullPath, setFullPath, setCity])
 
   return null
 }

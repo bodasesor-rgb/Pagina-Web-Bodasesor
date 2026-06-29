@@ -8,6 +8,7 @@ import WhatsAppFab from './components/WhatsAppFab'
 import GlobalSEO from './components/GlobalSEO'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
+import { useCityAwareLocation } from './utils/city-router'
 
 // Original pages
 import Home from './pages/Home.tsx'
@@ -61,7 +62,7 @@ import NotFound from './pages/not-found.tsx'
 
 const BANQUET_PARENT_SLUGS = ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']
 
-/** Catalog pages reachable via /{page}-en-{city} URLs */
+/** Catalog pages reachable with optional /{city} segment */
 const STANDALONE_PAGES = {
   '/banquetes-catering': BanquetesCateringPage,
   '/barras-de-bebidas': BarrasBebidasPage,
@@ -287,7 +288,7 @@ export default function App() {
     : ''
   return (
     <CityProvider>
-      <WouterRouter base={base}>
+      <WouterRouter base={base} hook={useCityAwareLocation}>
         <Router />
       </WouterRouter>
     </CityProvider>
