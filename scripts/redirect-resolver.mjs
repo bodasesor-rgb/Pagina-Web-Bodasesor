@@ -138,10 +138,9 @@ function normalizeCity(city) {
 function withCity(pathname, city) {
   if (!city) return pathname
   const normalized = normalizeCity(city)
-  const segments = pathname.split('/').filter(Boolean)
-  const last = segments.pop()
-  segments.push(`${last}${normalized}`)
-  return `/${segments.join('/')}`
+  const base = pathname.replace(/\/+$/, '') || '/'
+  if (base === '/') return `/${normalized}`
+  return `${base}/${normalized}`.replace(/\/+/g, '/')
 }
 
 function matchKeyword(slug) {

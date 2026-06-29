@@ -50,11 +50,11 @@ function stripCityFromSegment(segment) {
   if (!segment) return { base: segment, citySlug: null }
 
   for (const citySlug of CITY_SLUGS) {
-    // Direct concatenation: banquetescuernavaca
+    // Legacy concatenation: banquetescuernavaca
     if (segment.endsWith(citySlug) && segment.length > citySlug.length) {
       return { base: segment.slice(0, -citySlug.length), citySlug }
     }
-    // Legacy: banquetes-en-cuernavaca
+    // Legacy with preposition: banquetes-en-cuernavaca
     if (segment.endsWith(`-en-${citySlug}`) && segment.length > citySlug.length + 4) {
       return { base: segment.slice(0, -(citySlug.length + 4)), citySlug }
     }
@@ -63,14 +63,19 @@ function stripCityFromSegment(segment) {
   return { base: segment, citySlug: null }
 }
 
-/** Strip city suffix from a single slug segment */
+/** Strip city suffix from a single slug segment (legacy URLs) */
 export function stripCityFromSlug(slug) {
   return stripCityFromSegment(slug).base
 }
 
+function normalizePath(path) {
+  const p = path.replace(/\/+$/, '') || '/'
+  return p.startsWith('/') ? p : `/${p}`
+}
+
 /** Parse city and base path from a URL pathname */
 export function parseCityFromPath(path) {
-  const normalized = path.replace(/\/+$/, '') || '/'
+  const normalized = normalizePath(path)
   const segments = normalized.split('/').filter(Boolean)
 
   if (segments.length === 0) {
@@ -82,9 +87,18 @@ export function parseCityFromPath(path) {
     return { city: CITY_MAP[segments[0]], basePath: '/' }
   }
 
-  const last = segments[segments.length - 1]
-  const { base, citySlug } = stripCityFromSegment(last)
+  // Canonical: /banquete-kosher/3-tiempos/cuernavaca
+  const lastSeg = segments[segments.length - 1]
+  if (segments.length >= 2 && CITY_MAP[lastSeg]) {
+    const baseSegments = segments.slice(0, -1)
+    return {
+      city: CITY_MAP[lastSeg],
+      basePath: baseSegments.length ? `/${baseSegments.join('/')}` : '/',
+    }
+  }
 
+  // Legacy: city glued to last segment
+  const { base, citySlug } = stripCityFromSegment(lastSeg)
   if (citySlug) {
     const baseSegments = [...segments.slice(0, -1), base].filter(Boolean)
     return {
@@ -96,15 +110,15 @@ export function parseCityFromPath(path) {
   return { city: null, basePath: normalized }
 }
 
-/** Remove city suffix from a full path */
+/** Remove city from a full path */
 export function stripCityFromPath(path) {
   return parseCityFromPath(path).basePath
 }
 
 /**
- * Apply city to a path — always updates the URL.
- * Home → /{citySlug}  (e.g. /cuernavaca, /ciudad-de-mexico)
- * Services → /{service}{citySlug}  (e.g. /banquetescuernavaca)
+ * Apply city to a path.
+ * Home → /{citySlug}
+ * Services → /{service}/{citySlug}  (e.g. /banquete-kosher/3-tiempos/cuernavaca)
  */
 export function withCityPath(path, citySlug) {
   if (!citySlug || !CITY_MAP[citySlug]) return stripCityFromPath(path)
@@ -116,10 +130,21 @@ export function withCityPath(path, citySlug) {
     return `/${citySlug}`
   }
 
-  const segments = basePath.split('/').filter(Boolean)
-  const last = segments.pop()
-  segments.push(`${last}${citySlug}`)
-  return `/${segments.join('/')}`
+  return `${basePath}/${citySlug}`.replace(/\/+/g, '/')
+}
+
+/** Convert legacy concatenated city URLs to slash format */
+export function toCanonicalCityPath(path) {
+  const normalized = normalizePath(path)
+  const { city, basePath } = parseCityFromPath(normalized)
+  if (!city) return normalized
+
+  const segments = normalized.split('/').filter(Boolean)
+  if (segments.length >= 2 && segments[segments.length - 1] === city.slug) {
+    return normalized
+  }
+
+  return withCityPath(basePath, city.slug)
 }
 
 /** Whether a slug param is a known city landing page */
@@ -127,7 +152,7 @@ export function isCityLandingSlug(slug) {
   return Boolean(slug && CITY_MAP[slug])
 }
 
-/** Resolve a product/page slug that may include a city suffix */
+/** Resolve a product/page slug that may include a city suffix (legacy) */
 export function resolveBaseSlug(slug) {
   return stripCityFromSlug(slug)
 }
