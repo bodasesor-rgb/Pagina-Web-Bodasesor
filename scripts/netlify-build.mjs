@@ -19,14 +19,15 @@ function run(label, cmd, args, { optional = false } = {}) {
 }
 
 const hasNetlifyCreds =
-  Boolean(process.env.NETLIFY_AUTH_TOKEN) && Boolean(process.env.NETLIFY_SITE_ID)
+  Boolean(process.env.NETLIFY_AUTH_TOKEN) &&
+  Boolean(process.env.NETLIFY_SITE_ID || process.env.SITE_ID)
 
 if (hasNetlifyCreds) {
-  run('1/3 Descargar deploy publicado (Nexus/SEO)', 'node', ['scripts/pull-netlify-live.mjs'])
+  const siteRef = process.env.NETLIFY_SITE_ID || process.env.SITE_ID
+  console.log(`Netlify merge activo (site ${String(siteRef).slice(0, 8)}…)`)
+  run('1/3 Descargar deploy con páginas Nexus/SEO', 'node', ['scripts/pull-netlify-live.mjs'])
 } else {
-  console.warn(
-    '\n⚠ NETLIFY_AUTH_TOKEN o NETLIFY_SITE_ID no configurados.',
-  )
+  console.warn('\n⚠ Falta NETLIFY_AUTH_TOKEN o site ID (NETLIFY_SITE_ID / SITE_ID).')
   console.warn(
     '  Las páginas eventos/ y nexus-output-pages/ NO se preservarán en este build.',
   )

@@ -47,25 +47,60 @@ async function netlifyFetch(path) {
 }
 
 function resolveSiteId() {
-  const id = process.env.NETLIFY_SITE_ID
+  const id = process.env.NETLIFY_SITE_ID || process.env.SITE_ID
   if (!id) {
     throw new Error(
-      'Falta NETLIFY_SITE_ID. Netlify → Site configuration → General → API ID',
+      'Falta NETLIFY_SITE_ID o SITE_ID. Netlify → Site configuration → General → API ID',
     )
   }
   return id
 }
 
+async function deployHasNexusPages(deployId) {
+  const res = await netlifyFetch(`/deploys/${deployId}/files?per_page=1000`)
+  const files = await res.json()
+  const list = Array.isArray(files) ? files : files?.files ?? []
+  return list.some((f) => {
+    const p = (f.path || f.name || '').replace(/^\//, '')
+    return (
+      p.startsWith('eventos/') ||
+      p.startsWith('nexus-output-pages/') ||
+      p.startsWith('private/nexus-output-pages/')
+    )
+  })
+}
+
+async function pickDeployWithNexus(siteId) {
+  const deploysRes = await netlifyFetch(
+    `/sites/${siteId}/deploys?per_page=40`,
+  )
+  const deploys = await deploysRes.json()
+  if (!deploys?.length) {
+    throw new Error('No hay deploys en este sitio.')
+  }
+
+  for (const deploy of deploys) {
+    if (deploy.state !== 'ready') continue
+    try {
+      if (await deployHasNexusPages(deploy.id)) {
+        return deploy
+      }
+    } catch {
+      // try next deploy
+    }
+  }
+
+  return deploys.find((d) => d.state === 'ready') ?? deploys[0]
+}
+
 async function main() {
   await loadEnvFile()
   const siteId = resolveSiteId()
+  const hasToken = Boolean(process.env.NETLIFY_AUTH_TOKEN)
+  console.log(`Site ID: ${siteId.slice(0, 8)}… (token: ${hasToken ? 'sí' : 'no'})`)
 
-  console.log('Consultando deploy publicado en Netlify…')
-  const deploysRes = await netlifyFetch(
-    `/sites/${siteId}/deploys?per_page=1&state=published`,
-  )
-  const deploys = await deploysRes.json()
-  const deploy = deploys[0]
+  console.log('Buscando deploy con páginas Nexus/SEO…')
+  const deploy = await pickDeployWithNexus(siteId)
   if (!deploy?.id) {
     throw new Error('No hay deploy publicado en este sitio.')
   }
