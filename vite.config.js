@@ -60,6 +60,18 @@ function legacyRedirectBootPlugin() {
   }
 }
 
+function deferNonCriticalPreloadsPlugin() {
+  return {
+    name: 'defer-non-critical-preloads',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html) {
+        return html.replace(/<link rel="modulepreload" crossorigin href="\/assets\/icons-[^"]+">\n?/g, '')
+      },
+    },
+  }
+}
+
 const base = process.env.VITE_BASE_PATH || '/'
 
 export default defineConfig({
@@ -69,6 +81,7 @@ export default defineConfig({
     tailwindcss(),
     imageBasePlugin(base),
     legacyRedirectBootPlugin(),
+    deferNonCriticalPreloadsPlugin(),
   ],
   build: {
     rolldownOptions: {

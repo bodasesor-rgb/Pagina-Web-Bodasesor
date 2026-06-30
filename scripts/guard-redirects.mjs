@@ -89,8 +89,8 @@ export function guardDistArtifacts(root = ROOT) {
   const indexHtml = path.join(dist, 'index.html')
   if (fs.existsSync(indexHtml)) {
     const html = fs.readFileSync(indexHtml, 'utf8')
-    if (!html.includes('/products/') && !html.includes('legacy')) {
-      fail('dist/index.html missing inline legacy redirect boot script')
+    if (!html.includes('legacy-redirect-boot.js') && !html.includes('/products/')) {
+      fail('dist/index.html missing legacy redirect boot script')
     }
   }
 

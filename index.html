@@ -21,10 +21,17 @@
       #root{position:relative;z-index:1}
       #static-hero-copy{position:relative;z-index:2;max-width:80rem;margin:0 auto;padding:6rem 1rem 1.5rem;text-align:center;pointer-events:none}
       #static-hero-copy h1{margin:0 0 1.5rem;color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:2.25rem;line-height:1.2;font-weight:700}
+      #static-nav-shell{position:sticky;top:0;z-index:50;pointer-events:none}
+      #static-nav-shell .nav-top{height:4rem;background:#162040}
+      #static-nav-shell .nav-sub{height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
       @media (min-width:768px){#static-hero-copy{padding-top:7rem}#static-hero-copy h1{font-size:4.5rem}}
     </style>
   </head>
   <body>
+    <div id="static-nav-shell" aria-hidden="true">
+      <div class="nav-top"></div>
+      <div class="nav-sub"></div>
+    </div>
     <picture id="lcp-hero-wrap" aria-hidden="true">
       <source media="(max-width: 768px)" srcset="/images/hero-bg-new-mobile.webp" type="image/webp" />
       <source srcset="/images/hero-bg-new.webp" type="image/webp" />

@@ -939,6 +939,10 @@ export default function Navbar() {
   const [location, setLocation] = useLocation();
   const { city } = useCity();
 
+  useEffect(() => {
+    document.getElementById('static-nav-shell')?.remove();
+  }, []);
+
   const selectCity = (citySlug) => {
     if (!CITY_MAP[citySlug]) return;
     setLocation(withCityPath(stripCityFromPath(location), citySlug));

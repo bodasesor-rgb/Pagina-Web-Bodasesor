@@ -7,6 +7,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

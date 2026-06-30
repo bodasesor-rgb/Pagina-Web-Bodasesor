@@ -819,7 +819,9 @@ export default function EventTypePage({ product }: EventTypePageProps) {
           src={EVENT_HERO_IMAGES[product.slug] ?? '/images/galeria/g3.jpg'}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-contain opacity-60"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-[#162040]/55" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
