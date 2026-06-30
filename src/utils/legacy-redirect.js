@@ -197,6 +197,8 @@ export function resolveLegacyPathClient(fromPath) {
     return '/banquetes-catering'
   }
 
+  if (path.startsWith('/pages/')) return '/'
+
   return null
 }
 

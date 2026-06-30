@@ -110,6 +110,12 @@ function buildRedirectsFile(map) {
   }
 
   lines.push('')
+  lines.push(`# Fallback for unknown legacy pages`)
+  lines.push(`/pages/:slug  /  301!`)
+  lines.push('')
+  lines.push(`# Fallback for unknown legacy collections`)
+  lines.push(`/collections/:slug  /banquetes-catering  301!`)
+  lines.push('')
   lines.push(`# Fallback for unknown legacy products`)
   lines.push(`/products/:slug  /banquetes-catering  301!`)
   lines.push('')
@@ -195,7 +201,9 @@ for (const row of rows) {
 }
 
 map['/products/:slug'] = `${SITE_BASE}/banquetes-catering`
-stats.count++
+map['/pages/:slug'] = `${SITE_BASE}/`
+map['/collections/:slug'] = `${SITE_BASE}/banquetes-catering`
+stats.count += 3
 
 const output = {
   generatedAt: new Date().toISOString(),

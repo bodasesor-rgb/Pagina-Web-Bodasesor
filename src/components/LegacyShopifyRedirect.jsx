@@ -48,6 +48,14 @@ export default function LegacyShopifyRedirect() {
           return
         }
 
+        const fallback = resolveLegacyPathClient(`${lookup}${window.location.search}`)
+        if (fallback) {
+          window.location.replace(
+            `${window.location.origin}${fallback.startsWith('/') ? fallback : `/${fallback}`}`,
+          )
+          return
+        }
+
         setStatus('missing')
       })
       .catch(() => {
@@ -59,7 +67,13 @@ export default function LegacyShopifyRedirect() {
     }
   }, [path])
 
-  if (status === 'loading') {
+  useEffect(() => {
+    if (status === 'missing' || status === 'error') {
+      window.location.replace('/banquetes-catering')
+    }
+  }, [status])
+
+  if (status === 'loading' || status === 'missing' || status === 'error') {
     return (
       <div className="min-h-[50vh] flex items-center justify-center font-serif text-[#162040]">
         Redirigiendo…
@@ -67,18 +81,5 @@ export default function LegacyShopifyRedirect() {
     )
   }
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5efe8] text-[#162040] px-4">
-      <h1 className="text-4xl font-serif font-bold mb-4">Página no disponible</h1>
-      <p className="text-lg mb-8 text-gray-600 text-center max-w-md">
-        Esta URL antigua ya no existe. Te llevamos al catálogo principal.
-      </p>
-      <a
-        href="/banquetes-catering"
-        className="bg-[#162040] text-white px-6 py-3 rounded-xl font-bold font-serif hover:bg-[#1e2d52] transition-colors"
-      >
-        Ver servicios
-      </a>
-    </div>
-  )
+  return null
 }

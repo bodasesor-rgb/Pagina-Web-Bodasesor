@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4225 rules + fallback
+# 4227 rules + fallback
 
 /blogs/noticias?page=11  /blog  301
 /blogs/noticias?page=2  /blog  301
@@ -4225,6 +4225,12 @@
 /products/vouge-cdmx/  /banquetes-catering  301
 /products/zaz-photography-fotografos-cdmx  /fotografia/fotografo/ciudad-de-mexico  301
 /products/zaz-photography-fotografos-cdmx/  /fotografia/fotografo/ciudad-de-mexico  301
+
+# Fallback for unknown legacy pages
+/pages/:slug  /  301!
+
+# Fallback for unknown legacy collections
+/collections/:slug  /banquetes-catering  301!
 
 # Fallback for unknown legacy products
 /products/:slug  /banquetes-catering  301!

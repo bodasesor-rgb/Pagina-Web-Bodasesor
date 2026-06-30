@@ -59,5 +59,17 @@ export default async function handler(request: Request, context: Context) {
     return Response.redirect(resolveDestination(dest, url.origin), 301)
   }
 
+  if (pathname.startsWith('/pages/')) {
+    return Response.redirect(`${url.origin}/`, 301)
+  }
+
+  if (pathname.startsWith('/collections/')) {
+    return Response.redirect(`${url.origin}/banquetes-catering`, 301)
+  }
+
+  if (pathname.startsWith('/products/')) {
+    return Response.redirect(`${url.origin}/banquetes-catering`, 301)
+  }
+
   return context.next()
 }
