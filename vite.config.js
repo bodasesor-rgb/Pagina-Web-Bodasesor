@@ -53,8 +53,8 @@ function legacyRedirectBootPlugin() {
     },
     transformIndexHtml(html) {
       return html.replace(
-        '</head>',
-        '<script src="/legacy-redirect-boot.js" defer></script></head>',
+        '<meta charset="UTF-8" />',
+        '<meta charset="UTF-8" />\n    <script src="/legacy-redirect-boot.js"></script>',
       )
     },
   }

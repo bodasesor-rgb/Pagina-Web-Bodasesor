@@ -15,19 +15,21 @@
     <link rel="preload" as="image" href="/images/hero-bg-new-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high" />
     <link rel="preload" as="image" href="/images/hero-bg-new.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high" />
     <style>
+      body{margin:0}
       #lcp-hero-wrap{position:fixed;inset:0;z-index:0;margin:0;pointer-events:none}
       #lcp-hero-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
       #lcp-hero-wrap::after{content:"";position:absolute;inset:0;background:#16204099}
-      #root{position:relative;z-index:1}
-      #static-hero-copy{position:relative;z-index:2;max-width:80rem;margin:0 auto;padding:6rem 1rem 1.5rem;text-align:center;pointer-events:none}
+      #root{position:relative;z-index:1;min-height:100vh}
+      #static-hero-copy{position:fixed;left:0;right:0;top:7rem;z-index:2;max-width:80rem;margin:0 auto;padding:0 1rem;text-align:center;pointer-events:none}
       #static-hero-copy h1{margin:0 0 1.5rem;color:#fff;font-family:Georgia,'Times New Roman',serif;font-size:2.25rem;line-height:1.2;font-weight:700}
-      #static-nav-shell{position:sticky;top:0;z-index:50;pointer-events:none}
+      #static-nav-shell{position:fixed;top:0;left:0;right:0;z-index:50;pointer-events:none}
       #static-nav-shell .nav-top{height:4rem;background:#162040}
       #static-nav-shell .nav-sub{height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
-      @media (min-width:768px){#static-hero-copy{padding-top:7rem}#static-hero-copy h1{font-size:4.5rem}}
+      @media (min-width:768px){#static-hero-copy{top:8rem}#static-hero-copy h1{font-size:4.5rem}}
     </style>
   </head>
   <body>
+    <div id="root"></div>
     <div id="static-nav-shell" aria-hidden="true">
       <div class="nav-top"></div>
       <div class="nav-sub"></div>
@@ -48,7 +50,6 @@
     <div id="static-hero-copy" aria-hidden="true">
       <h1>Encuentra todo para tu evento en un solo lugar</h1>
     </div>
-    <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

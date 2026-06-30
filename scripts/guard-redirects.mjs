@@ -39,8 +39,8 @@ export function guardNetlifyToml(root = ROOT) {
     fail('netlify.toml must publish = "dist" (not backend/.netlify-publish or other paths)')
   }
 
-  if (!toml.includes('npm run build')) {
-    fail('netlify.toml build command must be "npm run build" (generates _redirects)')
+  if (!toml.includes('npm run build') && !toml.includes('netlify-build.mjs')) {
+    fail('netlify.toml build must run npm run build or scripts/netlify-build.mjs (generates _redirects)')
   }
 }
 

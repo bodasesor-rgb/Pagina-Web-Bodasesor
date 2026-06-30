@@ -188,10 +188,16 @@ function CityBadge() {
   if (!city) return null;
   return (
     <button
+      type="button"
       key={city.slug}
-      onClick={() => setLocation(stripCityFromPath(location))}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setLocation(stripCityFromPath(location))
+      }}
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
-      title="Cambiar ciudad"
+      title="Quitar ciudad"
+      aria-label={`Quitar filtro de ${city.name}`}
     >
       📍 {city.short}
       <X className="w-2.5 h-2.5 opacity-60 ml-0.5" />

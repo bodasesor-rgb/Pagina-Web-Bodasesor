@@ -1,6 +1,6 @@
 [build]
   # MUST run npm run build — generates dist/_redirects (4215+ rules) + edge map
-  command = "npm run build"
+  command = "node scripts/netlify-build.mjs"
   publish = "dist"
 
 [build.environment]

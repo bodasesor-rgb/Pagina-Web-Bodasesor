@@ -7,6 +7,11 @@ import {
   isCityExemptPath,
 } from './city-url'
 
+function normalizePath(path) {
+  const p = path.replace(/\/+$/, '') || '/'
+  return p.startsWith('/') ? p : `/${p}`
+}
+
 /**
  * Wouter location hook: routes match base path; browser URL keeps /city as its own segment.
  */
@@ -28,6 +33,15 @@ export function useCityAwareLocation() {
           return
         }
 
+        const normalizedTo = normalizePath(to)
+        const strippedCurrent = normalizePath(stripCityFromPath(fullPath))
+
+        // City badge / "quitar ciudad": navigate to base path without re-appending city
+        if (city && normalizedTo === strippedCurrent) {
+          setFullPath(normalizedTo, opts)
+          return
+        }
+
         const stripped = stripCityFromPath(to)
         const target =
           city?.slug && !isCityExemptPath(stripped)
@@ -39,7 +53,7 @@ export function useCityAwareLocation() {
 
       setFullPath(to, opts)
     },
-    [city, setFullPath],
+    [city, fullPath, setFullPath],
   )
 
   return [basePath, navigate]
