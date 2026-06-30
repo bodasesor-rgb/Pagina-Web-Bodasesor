@@ -1,3 +1,6 @@
+// Prefix image paths with Vite's base URL (needed for GitHub Pages sub-path)
+export const img = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+
 export const WHATSAPP = '5215540080373'
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP}`
 export const PHONE = '55 4008 0373'
@@ -178,5 +181,5 @@ export const WHY_BODASESOR = [
 // Instagram gallery images (groups of 3 per slide)
 export const INSTAGRAM_GROUPS = Array.from({ length: 10 }, (_, i) => {
   const base = i * 3
-  return [base + 1, base + 2, base + 3].map(n => `/images/instagram/ig${n}.jpg`)
+  return [base + 1, base + 2, base + 3].map(n => img(`/images/instagram/ig${n}.jpg`))
 })
