@@ -1,6 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import { useLocation } from 'wouter'
-import { searchProducts } from '../data/search-index'
+
+let searchModulePromise = null
+function loadSearchModule() {
+  if (!searchModulePromise) {
+    searchModulePromise = import('../data/search-index')
+  }
+  return searchModulePromise
+}
 
 export default function SearchBar({
   inputClassName = '',
@@ -12,11 +19,23 @@ export default function SearchBar({
   const [query, setQuery] = useState(defaultQuery)
   const [open, setOpen] = useState(false)
   const [activeIdx, setActiveIdx] = useState(-1)
+  const [searchModule, setSearchModule] = useState(null)
   const [, setLocation] = useLocation()
   const wrapperRef = useRef(null)
   const inputRef = useRef(null)
 
-  const results = query.trim().length >= 2 ? searchProducts(query, 10) : []
+  useEffect(() => {
+    if (query.trim().length < 2) return
+    let cancelled = false
+    loadSearchModule().then((mod) => {
+      if (!cancelled) setSearchModule(mod)
+    })
+    return () => { cancelled = true }
+  }, [query])
+
+  const results = searchModule && query.trim().length >= 2
+    ? searchModule.searchProducts(query, 10)
+    : []
   const showDropdown = open && query.trim().length >= 2
 
   useEffect(() => {

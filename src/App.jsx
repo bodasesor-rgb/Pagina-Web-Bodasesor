@@ -1,5 +1,5 @@
 import { Switch, Route, Router as WouterRouter } from "wouter"
-import { useEffect } from "react"
+import { useEffect, lazy, Suspense } from "react"
 import { useLocation } from "wouter"
 import { CityProvider, CityUrlSync } from './context/CityContext'
 import Navbar from './components/Navbar'
@@ -10,56 +10,64 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { useCityAwareLocation } from './utils/city-router'
 
-// Original pages
 import Home from './pages/Home.tsx'
-import GaleriaPage from './pages/GaleriaPage.tsx'
-import BanquetesCateringPage from './pages/BanquetesCateringPage.tsx'
-import BarrasBebidasPage from './pages/BarrasBebidasPage.tsx'
-import MesasPersonalizadasPage from './pages/MesasPersonalizadasPage.tsx'
-import WeddingPage from './pages/WeddingPage.tsx'
-import WeddingDetailPage from './pages/WeddingDetailPage.tsx'
-import SalasPeriquerasPage from './pages/SalasPeriquerasPage.tsx'
-import SalaDetailPage from './pages/SalaDetailPage.tsx'
-import PeriqueraDetailPage from './pages/PeriqueraDetailPage.tsx'
-import PistasTarimasPage from './pages/PistasTarimasPage.tsx'
-import PistaTarimaDetailPage from './pages/PistaTarimaDetailPage.tsx'
-import CatalogoPistasTarimasPage from './pages/CatalogoPistasTarimasPage.tsx'
-import VajillasPage from './pages/VajillasPage.tsx'
-import VajillaDetailPage from './pages/VajillaDetailPage.tsx'
-import CatalogoVajillasPage from './pages/CatalogoVajillasPage.tsx'
-import ColgantesPage from './pages/ColgantesPage.tsx'
-import ColganteDetailPage from './pages/ColganteDetailPage.tsx'
-import CatalogoColgantesPage from './pages/CatalogoColgantesPage.tsx'
-import EnteladosPage from './pages/EnteladosPage.tsx'
-import EnteladoDetailPage from './pages/EnteladoDetailPage.tsx'
-import FloreriaPage from './pages/FloreriaPage.tsx'
-import FloreriaDetailPage from './pages/FloreriaDetailPage.tsx'
-import ShowsPage from './pages/ShowsPage.tsx'
-import ShowsDetailPage from './pages/ShowsDetailPage.tsx'
-import CarpasPage from './pages/CarpasPage.tsx'
-import CarpaDetailPage from './pages/CarpaDetailPage.tsx'
-import AudioIluminacionPage from './pages/AudioIluminacionPage.tsx'
-import AudioIluminacionDetailPage from './pages/AudioIluminacionDetailPage.tsx'
-import RepoPage from './pages/RepoPage.tsx'
-import RepoDetailPage from './pages/RepoDetailPage.tsx'
-import MusicaPage from './pages/MusicaPage.tsx'
-import MusicaDetailPage from './pages/MusicaDetailPage.tsx'
-import FotografiaPage from './pages/FotografiaPage.tsx'
-import FotografiaDetailPage from './pages/FotografiaDetailPage.tsx'
-import EmpresasPage from './pages/EmpresasPage.tsx'
-import EmpresasDetailPage from './pages/EmpresasDetailPage.tsx'
-import EspaciosPage from './pages/EspaciosPage.tsx'
-import EspaciosDetailPage from './pages/EspaciosDetailPage.tsx'
-import CombinacionesPage from './pages/CombinacionesPage.tsx'
-import CombinacionDetailPage from './pages/CombinacionDetailPage.tsx'
-import QuienesSomosPage from './pages/QuienesSomosPage.tsx'
-import BlogPage from './pages/BlogPage.tsx'
-import BlogDetailPage from './pages/BlogDetailPage.tsx'
-import ServicePage from './pages/ServicePage.tsx'
-import BanqueteMenuDetailPage from './pages/BanqueteMenuDetailPage.tsx'
-import SearchPage from './pages/SearchPage.tsx'
-import NotFound from './pages/not-found.tsx'
-import LegacyShopifyRedirect from './components/LegacyShopifyRedirect.jsx'
+
+const GaleriaPage = lazy(() => import('./pages/GaleriaPage.tsx'))
+const BanquetesCateringPage = lazy(() => import('./pages/BanquetesCateringPage.tsx'))
+const BarrasBebidasPage = lazy(() => import('./pages/BarrasBebidasPage.tsx'))
+const MesasPersonalizadasPage = lazy(() => import('./pages/MesasPersonalizadasPage.tsx'))
+const WeddingPage = lazy(() => import('./pages/WeddingPage.tsx'))
+const WeddingDetailPage = lazy(() => import('./pages/WeddingDetailPage.tsx'))
+const SalasPeriquerasPage = lazy(() => import('./pages/SalasPeriquerasPage.tsx'))
+const SalaDetailPage = lazy(() => import('./pages/SalaDetailPage.tsx'))
+const PeriqueraDetailPage = lazy(() => import('./pages/PeriqueraDetailPage.tsx'))
+const PistasTarimasPage = lazy(() => import('./pages/PistasTarimasPage.tsx'))
+const PistaTarimaDetailPage = lazy(() => import('./pages/PistaTarimaDetailPage.tsx'))
+const CatalogoPistasTarimasPage = lazy(() => import('./pages/CatalogoPistasTarimasPage.tsx'))
+const VajillasPage = lazy(() => import('./pages/VajillasPage.tsx'))
+const VajillaDetailPage = lazy(() => import('./pages/VajillaDetailPage.tsx'))
+const CatalogoVajillasPage = lazy(() => import('./pages/CatalogoVajillasPage.tsx'))
+const ColgantesPage = lazy(() => import('./pages/ColgantesPage.tsx'))
+const ColganteDetailPage = lazy(() => import('./pages/ColganteDetailPage.tsx'))
+const CatalogoColgantesPage = lazy(() => import('./pages/CatalogoColgantesPage.tsx'))
+const EnteladosPage = lazy(() => import('./pages/EnteladosPage.tsx'))
+const EnteladoDetailPage = lazy(() => import('./pages/EnteladoDetailPage.tsx'))
+const FloreriaPage = lazy(() => import('./pages/FloreriaPage.tsx'))
+const FloreriaDetailPage = lazy(() => import('./pages/FloreriaDetailPage.tsx'))
+const ShowsPage = lazy(() => import('./pages/ShowsPage.tsx'))
+const ShowsDetailPage = lazy(() => import('./pages/ShowsDetailPage.tsx'))
+const CarpasPage = lazy(() => import('./pages/CarpasPage.tsx'))
+const CarpaDetailPage = lazy(() => import('./pages/CarpaDetailPage.tsx'))
+const AudioIluminacionPage = lazy(() => import('./pages/AudioIluminacionPage.tsx'))
+const AudioIluminacionDetailPage = lazy(() => import('./pages/AudioIluminacionDetailPage.tsx'))
+const RepoPage = lazy(() => import('./pages/RepoPage.tsx'))
+const RepoDetailPage = lazy(() => import('./pages/RepoDetailPage.tsx'))
+const MusicaPage = lazy(() => import('./pages/MusicaPage.tsx'))
+const MusicaDetailPage = lazy(() => import('./pages/MusicaDetailPage.tsx'))
+const FotografiaPage = lazy(() => import('./pages/FotografiaPage.tsx'))
+const FotografiaDetailPage = lazy(() => import('./pages/FotografiaDetailPage.tsx'))
+const EmpresasPage = lazy(() => import('./pages/EmpresasPage.tsx'))
+const EmpresasDetailPage = lazy(() => import('./pages/EmpresasDetailPage.tsx'))
+const EspaciosPage = lazy(() => import('./pages/EspaciosPage.tsx'))
+const EspaciosDetailPage = lazy(() => import('./pages/EspaciosDetailPage.tsx'))
+const CombinacionesPage = lazy(() => import('./pages/CombinacionesPage.tsx'))
+const CombinacionDetailPage = lazy(() => import('./pages/CombinacionDetailPage.tsx'))
+const QuienesSomosPage = lazy(() => import('./pages/QuienesSomosPage.tsx'))
+const BlogPage = lazy(() => import('./pages/BlogPage.tsx'))
+const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage.tsx'))
+const ServicePage = lazy(() => import('./pages/ServicePage.tsx'))
+const BanqueteMenuDetailPage = lazy(() => import('./pages/BanqueteMenuDetailPage.tsx'))
+const SearchPage = lazy(() => import('./pages/SearchPage.tsx'))
+const NotFound = lazy(() => import('./pages/not-found.tsx'))
+const LegacyShopifyRedirect = lazy(() => import('./components/LegacyShopifyRedirect.jsx'))
+
+function PageLoader() {
+  return (
+    <div className="min-h-[40vh] flex items-center justify-center font-serif text-[#162040]/60">
+      Cargando…
+    </div>
+  )
+}
 
 const BANQUET_PARENT_SLUGS = ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']
 
@@ -121,6 +129,7 @@ function Router() {
       <Navbar />
       <main>
         <ErrorBoundary resetKey={location}>
+        <Suspense fallback={<PageLoader />}>
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
@@ -281,6 +290,7 @@ function Router() {
 
           <Route component={NotFound} />
         </Switch>
+        </Suspense>
         </ErrorBoundary>
       </main>
       <Footer />

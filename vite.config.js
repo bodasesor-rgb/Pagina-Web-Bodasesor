@@ -20,26 +20,41 @@ function imageBasePlugin(base) {
   }
 }
 
+function buildLegacyBootScript() {
+  const result = buildSync({
+    entryPoints: ['src/legacy-redirect-boot-entry.js'],
+    write: false,
+    bundle: true,
+    minify: true,
+    format: 'iife',
+    platform: 'browser',
+  })
+  return result.outputFiles[0].text
+}
+
 function legacyRedirectBootPlugin() {
   let bootScript = ''
   return {
     name: 'legacy-redirect-boot',
     buildStart() {
-      const result = buildSync({
-        entryPoints: ['src/legacy-redirect-boot-entry.js'],
-        write: false,
-        bundle: true,
-        minify: true,
-        format: 'iife',
-        platform: 'browser',
+      bootScript = buildLegacyBootScript()
+      this.emitFile({
+        type: 'asset',
+        fileName: 'legacy-redirect-boot.js',
+        source: bootScript,
       })
-      bootScript = result.outputFiles[0].text
+    },
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.split('?')[0] !== '/legacy-redirect-boot.js') return next()
+        res.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+        res.end(buildLegacyBootScript())
+      })
     },
     transformIndexHtml(html) {
-      if (!bootScript) return html
       return html.replace(
         '</head>',
-        `<script>${bootScript}</script></head>`,
+        '<script src="/legacy-redirect-boot.js" defer></script></head>',
       )
     },
   }
@@ -55,4 +70,22 @@ export default defineConfig({
     imageBasePlugin(base),
     legacyRedirectBootPlugin(),
   ],
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: 'vendor',
+              test: /node_modules[\\/](react|react-dom|wouter|scheduler)[\\/]/,
+            },
+            {
+              name: 'icons',
+              test: /node_modules[\\/]lucide-react[\\/]/,
+            },
+          ],
+        },
+      },
+    },
+  },
 })

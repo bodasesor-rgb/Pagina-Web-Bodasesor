@@ -26,10 +26,14 @@ export default function LegacyShopifyRedirect() {
     }
 
     const withSlash = `${lookup}/`
-    import('../../public/redirects-map.json')
-      .then((mod) => {
+    fetch('/redirects-map.json', { credentials: 'same-origin' })
+      .then((res) => {
+        if (!res.ok) throw new Error(`redirects-map ${res.status}`)
+        return res.json()
+      })
+      .then((data) => {
         if (cancelled) return
-        const entries = mod.default?.entries ?? mod.entries
+        const entries = data?.entries ?? data
         const dest =
           entries[lookup] ||
           entries[withSlash] ||

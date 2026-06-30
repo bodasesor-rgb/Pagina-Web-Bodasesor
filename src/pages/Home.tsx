@@ -274,9 +274,20 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="relative min-h-[420px] flex items-center overflow-hidden" data-testid="section-hero">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero-bg-new.png')" }}>
-          <div className="absolute inset-0 bg-[#162040]/60" />
-        </div>
+        <picture className="absolute inset-0">
+          <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
+          <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
+          <img
+            src="/images/hero-bg-new.png"
+            alt=""
+            width={1408}
+            height={768}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-[#162040]/60" />
         {/* Review card */}
         <div className="hidden md:block">
           <RotatingReviewCard />
