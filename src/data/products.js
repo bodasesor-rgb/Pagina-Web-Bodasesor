@@ -13681,7 +13681,8 @@ export function getProductBySlug(slug) {
     'san-miguel-allende','san-luis-potosi','ciudad-de-mexico','estado-de-mexico',
     'puerto-vallarta','los-cabos','aguascalientes','guadalajara','monterrey',
     'cancun','cuernavaca','tijuana','veracruz','morelia','oaxaca','pachuca',
-    'queretaro','toluca','torreon','merida','puebla','leon',
+    'queretaro','toluca','torreon','merida','puebla','leon','acapulco',
+    'valle-de-bravo','cozumel','vallarta','cdmx',
   ].sort((a, b) => b.length - a.length);
 
   for (const city of citySuffixes) {

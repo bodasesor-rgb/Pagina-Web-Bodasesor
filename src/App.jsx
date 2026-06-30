@@ -5,6 +5,7 @@ import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
+import { getProductBySlug } from './data/products'
 import { useCityAwareLocation } from './utils/city-router'
 
 const Navbar = lazy(() => import('./components/Navbar'))
@@ -97,6 +98,24 @@ const STANDALONE_PAGES = {
   '/quienes-somos': QuienesSomosPage,
   '/blog': BlogPage,
   '/buscar': SearchPage,
+}
+
+function TwoSegmentCatchAll({ parent, child }) {
+  const parsed = parseCityFromPath(`/${parent}/${child}`)
+
+  if (parsed.city) {
+    const Standalone = STANDALONE_PAGES[parsed.basePath]
+    if (Standalone) return <Standalone />
+    const slug = parsed.basePath.replace(/^\//, '')
+    if (!slug) return <Home />
+    return <ServicePage params={{ slug }} />
+  }
+
+  if (getProductBySlug(parent)) {
+    return <ServicePage params={{ slug: parent }} />
+  }
+
+  return <NotFound />
 }
 
 function CatchAllRoute({ slug }) {
@@ -290,6 +309,16 @@ function Router() {
 
           {/* Búsqueda */}
           <Route path="/buscar" component={SearchPage} />
+
+          {/* Legacy /city URLs when city suffix was not recognized (fallback) */}
+          <Route path="/:parent/:child">
+            {(params) => (
+              <TwoSegmentCatchAll
+                parent={stripCityFromSlug(params.parent)}
+                child={stripCityFromSlug(params.child)}
+              />
+            )}
+          </Route>
 
           {/* Catch-all: city landing, city-suffixed catalog pages, and product slugs */}
           <Route path="/:slug">
