@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useLocation } from "wouter";
 import CityLink from "./CityLink";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
@@ -21,7 +21,8 @@ import { empresasNavItems } from "../data/empresas-products";
 import { espaciosNavItems } from "../data/espacios-products";
 import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
 import { banquetesNavGroups } from "../data/banquetes-menus";
-import SearchBar from "./SearchBar";
+
+const SearchBar = lazy(() => import("./SearchBar"));
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -970,9 +971,11 @@ export default function Navbar() {
 
             {/* Desktop: search + actions */}
             <div className="hidden md:flex items-center space-x-6">
+              <Suspense fallback={<div className="w-64 h-10 rounded-lg bg-white/20 animate-pulse" />}>
               <SearchBar
                 inputClassName="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
               />
+              </Suspense>
 
               <a href="tel:5215540080373" className="flex items-center space-x-2 hover:text-[#f5efe8] transition-colors" data-testid="link-llamar">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1101,11 +1104,13 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-200 max-h-[80vh] overflow-y-auto shadow-xl">
           <div className="px-4 pt-3 pb-2">
             {/* Search */}
+            <Suspense fallback={<div className="w-full h-10 rounded-lg bg-gray-100 animate-pulse mb-3" />}>
             <SearchBar
               onNavigate={() => setMobileOpen(false)}
               wrapperClassName="mb-3"
               inputClassName="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif"
             />
+            </Suspense>
 
             <MobileSection title="Ciudad" id="ciudad" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
               {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
