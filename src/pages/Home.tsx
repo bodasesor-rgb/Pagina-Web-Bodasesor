@@ -263,6 +263,25 @@ export default function Home() {
   const { city } = useCity();
   const [location, setLocation] = useLocation();
 
+  useEffect(() => {
+    const hero = document.getElementById('lcp-hero-wrap');
+    const copy = document.getElementById('static-hero-copy');
+    hero?.style.removeProperty('display');
+    copy?.style.removeProperty('display');
+    return () => {
+      if (hero) hero.style.display = 'none';
+      if (copy) copy.style.display = 'none';
+    };
+  }, []);
+
+  useEffect(() => {
+    const staticH1 = document.querySelector('#static-hero-copy h1');
+    if (!staticH1) return;
+    staticH1.innerHTML = city
+      ? `Encuentra todo para tu evento<br />en ${city.name}`
+      : 'Encuentra todo para tu evento<br />en un solo lugar';
+  }, [city]);
+
   const selectCity = (citySlug) => {
     if (!CITY_MAP[citySlug]) return;
     setLocation(withCityPath(stripCityFromPath(location), citySlug));
@@ -274,29 +293,17 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="relative min-h-[420px] flex items-center overflow-hidden" data-testid="section-hero">
-        <picture className="absolute inset-0">
-          <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
-          <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
-          <img
-            src="/images/hero-bg-new.png"
-            alt=""
-            width={1408}
-            height={768}
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
-        </picture>
-        <div className="absolute inset-0 bg-[#162040]/60" />
+        {/* LCP image lives in index.html (#lcp-hero-wrap) for instant paint */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true" />
         {/* Review card */}
         <div className="hidden md:block">
           <RotatingReviewCard />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center z-10 w-full">
-          <h1 key={city?.slug ?? 'default'} className="text-4xl md:text-7xl font-bold text-white mb-6 font-serif leading-tight">
+          <h1 key={city?.slug ?? 'default'} className="sr-only">
             {city
-              ? <>Encuentra todo para tu evento<br />en {city.name}</>
-              : <>Encuentra todo para tu evento<br />en un solo lugar</>
+              ? `Encuentra todo para tu evento en ${city.name}`
+              : 'Encuentra todo para tu evento en un solo lugar'
             }
           </h1>
           <p className="text-xl md:text-2xl text-[#f5efe8] mb-12 max-w-4xl mx-auto font-serif">

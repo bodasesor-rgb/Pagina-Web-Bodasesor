@@ -2,13 +2,14 @@ import { Switch, Route, Router as WouterRouter } from "wouter"
 import { useEffect, lazy, Suspense } from "react"
 import { useLocation } from "wouter"
 import { CityProvider, CityUrlSync } from './context/CityContext'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import WhatsAppFab from './components/WhatsAppFab'
 import GlobalSEO from './components/GlobalSEO'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { useCityAwareLocation } from './utils/city-router'
+
+const Navbar = lazy(() => import('./components/Navbar'))
+const Footer = lazy(() => import('./components/Footer'))
+const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
 
 import Home from './pages/Home.tsx'
 
@@ -126,7 +127,9 @@ function Router() {
       <CityUrlSync />
       <GlobalSEO />
       <ScrollToTop />
-      <Navbar />
+      <Suspense fallback={<div className="h-28 bg-white shadow-lg" aria-hidden="true" />}>
+        <Navbar />
+      </Suspense>
       <main>
         <ErrorBoundary resetKey={location}>
         <Suspense fallback={<PageLoader />}>
@@ -293,8 +296,10 @@ function Router() {
         </Suspense>
         </ErrorBoundary>
       </main>
-      <Footer />
-      <WhatsAppFab />
+      <Suspense fallback={null}>
+        <Footer />
+        <WhatsAppFab />
+      </Suspense>
     </>
   )
 }
