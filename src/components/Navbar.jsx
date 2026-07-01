@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "wouter";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useLocation } from "wouter";
+import CityLink from "./CityLink";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
+import { withCityPath, stripCityFromPath } from "../utils/city-url";
 import { salasNavItems, periquerasNavItems } from "../data/salas-periqueras-products";
 import { pistasTarimasNavItems } from "../data/pistas-tarimas-products";
 import { vajillasNavItems } from "../data/vajillas-products";
@@ -18,8 +20,13 @@ import { fotografiaNavItems } from "../data/fotografia-products";
 import { empresasNavItems } from "../data/empresas-products";
 import { espaciosNavItems } from "../data/espacios-products";
 import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
+import { banquetesNavGroups } from "../data/banquetes-menus";
+
+const SearchBar = lazy(() => import("./SearchBar"));
 
 const WHATSAPP_NUMBER = "5215540080373";
+
+const Link = CityLink;
 
 // ─── Nav data ────────────────────────────────────────────────────────────────
 
@@ -50,16 +57,7 @@ const ciudades = [
 
 
 const cateringGroups = [
-  {
-    heading: 'Banquetes',
-    href: '/banquetes-catering#banquetes',
-    items: [
-      { name: 'Banquete Formal', href: '/banquetes' },
-      { name: 'Banquete Kosher', href: '/banquete-kosher' },
-      { name: 'Banquete Mexicano', href: '/banquete-mexicano' },
-      { name: 'Banquete Navideño', href: '/banquete-navideno' },
-    ],
-  },
+  ...banquetesNavGroups,
   {
     heading: 'Catering',
     href: '/banquetes-catering#catering',
@@ -185,14 +183,21 @@ const ddHeading = "px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wides
 
 // ─── City badge (own component so it always reads fresh context) ──────────────
 function CityBadge() {
-  const { city, setCity } = useCity();
+  const { city } = useCity();
+  const [location, setLocation] = useLocation();
   if (!city) return null;
   return (
     <button
+      type="button"
       key={city.slug}
-      onClick={() => setCity(null)}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setLocation(stripCityFromPath(location))
+      }}
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
-      title="Cambiar ciudad"
+      title="Quitar ciudad"
+      aria-label={`Quitar filtro de ${city.name}`}
     >
       📍 {city.short}
       <X className="w-2.5 h-2.5 opacity-60 ml-0.5" />
@@ -298,7 +303,15 @@ function FlyoutDropdown({ groups, align = "left", overviewHref }) {
         )}
       </div>
       <div className="w-52 py-2">
-        {sortItems(active?.items ?? []).map(item => (
+        {active?.href && (
+          <>
+            <Link href={active.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-[#162040]`}>
+              Ver {active.heading} →
+            </Link>
+            <div className="border-t border-gray-100 my-1" />
+          </>
+        )}
+        {sortItems(active?.items ?? []).map((item) => (
           <NavItemLink key={item.href} href={item.href} name={item.name} />
         ))}
       </div>
@@ -930,7 +943,20 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [mobileSubExpanded, setMobileSubExpanded] = useState(null);
   const [location, setLocation] = useLocation();
-  const { city, setCity } = useCity();
+  const { city } = useCity();
+
+  useEffect(() => {
+    document.getElementById('static-nav-shell')?.remove();
+  }, []);
+
+  const selectCity = (citySlug) => {
+    if (!CITY_MAP[citySlug]) return;
+    setLocation(withCityPath(stripCityFromPath(location), citySlug));
+  };
+
+  const clearCity = () => {
+    setLocation(stripCityFromPath(location));
+  };
 
   useEffect(() => {
     setMobileOpen(false);
@@ -955,29 +981,11 @@ export default function Navbar() {
 
             {/* Desktop: search + actions */}
             <div className="hidden md:flex items-center space-x-6">
-              <div className="relative">
-                <form
-                  className="relative"
-                  onSubmit={e => {
-                    e.preventDefault();
-                    const q = (e.currentTarget.elements.namedItem('q') ).value.trim();
-                    if (q) window.location.href = `/buscar?q=${encodeURIComponent(q)}`;
-                  }}
-                >
-                  <input
-                    name="q"
-                    type="text"
-                    placeholder="Buscar servicios..."
-                    className="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
-                    data-testid="input-search"
-                  />
-                  <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[#162040] hover:text-[#1a2a52]">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                  </button>
-                </form>
-              </div>
+              <Suspense fallback={<div className="w-64 h-10 rounded-lg bg-white/20 animate-pulse" />}>
+              <SearchBar
+                inputClassName="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
+              />
+              </Suspense>
 
               <a href="tel:5215540080373" className="flex items-center space-x-2 hover:text-[#f5efe8] transition-colors" data-testid="link-llamar">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1025,11 +1033,7 @@ export default function Navbar() {
                 {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
                   <button
                     key={c.href}
-                    onClick={() => {
-                      const slug = c.href.slice(1);
-                      const cityObj = CITY_MAP[slug];
-                      if (cityObj) setCity({ ...cityObj });
-                    }}
+                    onClick={() => selectCity(c.href.slice(1))}
                     className={`w-full text-left block px-4 py-1.5 text-sm font-bold font-serif transition-colors rounded hover:bg-[#f5efe8] ${c.featured ? 'text-[#162040]' : 'text-gray-700 hover:text-[#162040]'}`}
                   >
                     {city?.slug === c.href.slice(1) ? `✓ ${c.name}` : c.name}
@@ -1110,27 +1114,19 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-200 max-h-[80vh] overflow-y-auto shadow-xl">
           <div className="px-4 pt-3 pb-2">
             {/* Search */}
-            <form className="relative mb-3" onSubmit={e => {
-              e.preventDefault();
-              const q = (e.currentTarget.elements.namedItem('q') ).value.trim();
-              if (q) window.location.href = `/buscar?q=${encodeURIComponent(q)}`;
-            }}>
-              <input name="q" type="text" placeholder="Buscar servicios..." className="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif" />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-              </button>
-            </form>
+            <Suspense fallback={<div className="w-full h-10 rounded-lg bg-gray-100 animate-pulse mb-3" />}>
+            <SearchBar
+              onNavigate={() => setMobileOpen(false)}
+              wrapperClassName="mb-3"
+              inputClassName="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif"
+            />
+            </Suspense>
 
             <MobileSection title="Ciudad" id="ciudad" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
               {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
                 <button
                   key={c.href}
-                  onClick={() => {
-                    const slug = c.href.slice(1);
-                    const cityObj = CITY_MAP[slug];
-                    if (cityObj) setCity({ ...cityObj });
-                    setMobileOpen(false);
-                  }}
+                  onClick={() => { selectCity(c.href.slice(1)); setMobileOpen(false); }}
                   className={`w-full text-left block py-2 text-sm font-bold font-serif ${c.featured ? 'text-[#162040]' : 'text-gray-600'} ${city?.slug === c.href.slice(1) ? 'text-[#162040]' : ''}`}
                 >
                   {city?.slug === c.href.slice(1) ? `✓ ${c.name}` : c.name}
@@ -1138,7 +1134,7 @@ export default function Navbar() {
               ))}
               {city && (
                 <button
-                  onClick={() => { setCity(null); setMobileOpen(false); }}
+                  onClick={() => { clearCity(); setMobileOpen(false); }}
                   className="block py-2 text-xs text-red-500 font-serif hover:text-red-700"
                 >
                   ✕ Quitar ciudad seleccionada
@@ -1151,7 +1147,12 @@ export default function Navbar() {
               <div className="border-t border-gray-100 my-1" />
               {cateringGroups.map(group => (
                 <MobileSubSection key={group.heading} title={group.heading} id={group.heading} expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                  {group.items.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                  {group.href && (
+                    <Link href={group.href} className="block py-1 text-xs font-bold text-[#162040] font-serif">Ver {group.heading} →</Link>
+                  )}
+                  {group.items.map(item => (
+                    <Link key={item.href} href={item.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{item.name}</Link>
+                  ))}
                 </MobileSubSection>
               ))}
             </MobileSection>

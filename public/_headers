@@ -1,0 +1,18 @@
+/*
+  Ensure redirects-map.json is served as JSON (not rewritten to SPA HTML).
+*/
+/redirects-map.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=604800
+
+/legacy-redirect-boot.js
+  Cache-Control: public, max-age=86400
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
