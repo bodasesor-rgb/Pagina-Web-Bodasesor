@@ -7,6 +7,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { hideStaticLcpShell, isHomePath } from './utils/static-lcp-shell'
 import { useCityAwareLocation } from './utils/city-router'
+import { resolveBasePath } from './utils/page-routes'
 
 const Navbar = lazy(() => import('./components/Navbar'))
 const Footer = lazy(() => import('./components/Footer'))
@@ -62,6 +63,7 @@ const BanqueteMenuDetailPage = lazy(() => import('./pages/BanqueteMenuDetailPage
 const SearchPage = lazy(() => import('./pages/SearchPage.tsx'))
 const NotFound = lazy(() => import('./pages/not-found.tsx'))
 const LegacyShopifyRedirect = lazy(() => import('./components/LegacyShopifyRedirect.jsx'))
+const EventosLegacyRedirect = lazy(() => import('./components/EventosLegacyRedirect.jsx'))
 
 function PageLoader() {
   return (
@@ -100,33 +102,61 @@ const STANDALONE_PAGES = {
   '/buscar': SearchPage,
 }
 
-function TwoSegmentCatchAll({ parent, child }) {
-  const parsed = parseCityFromPath(`/${parent}/${child}`)
+function RenderDetailPage({ catalog, slug }) {
+  switch (catalog) {
+    case 'pistas-tarimas': return <PistaTarimaDetailPage slug={slug} />
+    case 'vajillas': return <VajillaDetailPage slug={slug} />
+    case 'colgantes': return <ColganteDetailPage slug={slug} />
+    case 'entelados': return <EnteladoDetailPage slug={slug} />
+    case 'floreria': return <FloreriaDetailPage slug={slug} />
+    case 'shows': return <ShowsDetailPage slug={slug} />
+    case 'reposteria': return <RepoDetailPage slug={slug} />
+    case 'wedding-planner': return <WeddingDetailPage slug={slug} />
+    case 'musica': return <MusicaDetailPage slug={slug} />
+    case 'fotografia': return <FotografiaDetailPage slug={slug} />
+    case 'alimentos-empresas': return <EmpresasDetailPage slug={slug} />
+    case 'espacios-eventos': return <EspaciosDetailPage slug={slug} />
+    case 'carpas': return <CarpaDetailPage slug={slug} />
+    case 'audio-iluminacion-video': return <AudioIluminacionDetailPage slug={slug} />
+    case 'combinaciones': return <CombinacionDetailPage slug={slug} />
+    default: return <ServicePage params={{ slug }} />
+  }
+}
 
-  if (parsed.city) {
-    const Standalone = STANDALONE_PAGES[parsed.basePath]
-    if (Standalone) return <Standalone />
-    const slug = parsed.basePath.replace(/^\//, '')
-    if (!slug) return <Home />
-    return <ServicePage params={{ slug }} />
+function RenderResolvedRoute({ basePath }) {
+  const resolved = resolveBasePath(basePath)
+
+  if (resolved.kind === 'home') return <Home />
+
+  if (resolved.kind === 'standalone') {
+    const Page = STANDALONE_PAGES[resolved.path]
+    if (Page) return <Page />
   }
 
-  return <ServicePage params={{ slug: parent }} />
+  if (resolved.kind === 'detail') {
+    return <RenderDetailPage catalog={resolved.catalog} slug={resolved.slug} />
+  }
+
+  if (resolved.kind === 'banquete-menu') {
+    return (
+      <BanqueteMenuDetailPage
+        parentSlug={resolved.parentSlug}
+        menuSlug={resolved.menuSlug}
+      />
+    )
+  }
+
+  return <ServicePage params={{ slug: resolved.slug }} />
+}
+
+function TwoSegmentCatchAll({ parent, child }) {
+  const { basePath } = parseCityFromPath(`/${parent}/${child}`)
+  return <RenderResolvedRoute basePath={basePath} />
 }
 
 function CatchAllRoute({ slug }) {
   const { basePath } = parseCityFromPath(`/${slug}`)
-
-  if (basePath === '/') {
-    return <Home />
-  }
-
-  const Standalone = STANDALONE_PAGES[basePath]
-  if (Standalone) {
-    return <Standalone />
-  }
-
-  return <ServicePage params={{ slug }} />
+  return <RenderResolvedRoute basePath={basePath} />
 }
 
 function StaticLcpCleanup() {
@@ -167,6 +197,11 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
+
+          {/* Nexus legacy SEO paths → canonical SPA routes */}
+          <Route path="/eventos/:slug">
+            {(params) => <EventosLegacyRedirect slug={stripCityFromSlug(params.slug)} />}
+          </Route>
 
           {/* Legacy Shopify URLs — client fallback if Netlify redirect misses */}
           <Route path="/products/:handle" component={LegacyShopifyRedirect} />

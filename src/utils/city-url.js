@@ -50,13 +50,18 @@ function stripCityFromSegment(segment) {
   if (!segment) return { base: segment, citySlug: null }
 
   for (const citySlug of CITY_SLUGS) {
-    // Legacy concatenation: banquetescuernavaca
-    if (segment.endsWith(citySlug) && segment.length > citySlug.length) {
-      return { base: segment.slice(0, -citySlug.length), citySlug }
+    // Hyphenated legacy: bodas-cdmx, banquetes-cuernavaca
+    if (segment.endsWith(`-${citySlug}`) && segment.length > citySlug.length + 1) {
+      return { base: segment.slice(0, -(citySlug.length + 1)), citySlug }
     }
     // Legacy with preposition: banquetes-en-cuernavaca
     if (segment.endsWith(`-en-${citySlug}`) && segment.length > citySlug.length + 4) {
       return { base: segment.slice(0, -(citySlug.length + 4)), citySlug }
+    }
+    // Legacy concatenation: banquetescuernavaca
+    if (segment.endsWith(citySlug) && segment.length > citySlug.length) {
+      const base = segment.slice(0, -citySlug.length).replace(/-+$/, '')
+      if (base) return { base, citySlug }
     }
   }
 

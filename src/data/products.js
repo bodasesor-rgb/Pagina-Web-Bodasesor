@@ -13686,8 +13686,13 @@ export function getProductBySlug(slug) {
   ].sort((a, b) => b.length - a.length);
 
   for (const city of citySuffixes) {
+    if (slug.endsWith('-' + city) && slug.length > city.length + 1) {
+      p = PRODUCTS.find(p => p.slug === slug.slice(0, -(city.length + 1)));
+      if (p) return normalizeForServicePage({ ...DEFAULT_PRODUCT, ...p, slug });
+    }
     if (slug.endsWith(city) && slug.length > city.length) {
-      p = PRODUCTS.find(p => p.slug === slug.slice(0, -city.length));
+      const base = slug.slice(0, -city.length).replace(/-+$/, '');
+      p = PRODUCTS.find(p => p.slug === base);
       if (p) return normalizeForServicePage({ ...DEFAULT_PRODUCT, ...p, slug });
     }
     if (slug.endsWith('-en-' + city)) {
