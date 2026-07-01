@@ -31,12 +31,12 @@ export function guardNetlifyToml(root = ROOT) {
     }
   }
 
-  if (!toml.includes('legacy-redirect')) {
-    fail('netlify.toml missing edge function legacy-redirect')
-  }
-
   if (!toml.includes('publish = "dist"')) {
     fail('netlify.toml must publish = "dist" (not backend/.netlify-publish or other paths)')
+  }
+
+  if (toml.includes('redirects-map.json') && toml.includes('edge_functions')) {
+    console.warn('⚠ netlify.toml references edge_functions — ensure edge handlers do not fetch redirects-map.json at runtime')
   }
 
   if (!toml.includes('npm run build') && !toml.includes('netlify-build.mjs')) {
