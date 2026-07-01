@@ -1,4 +1,5 @@
 import { whatsappLink, PHONE } from '../data/site'
+import { CheckCircle2 } from 'lucide-react'
 
 export default function SectionCTA({ title, subtitle }) {
   return (
@@ -29,9 +30,9 @@ export default function SectionCTA({ title, subtitle }) {
         </a>
       </div>
       <div className="flex flex-wrap gap-6 justify-center mt-8 text-sm text-[#8a9bb5]">
-        <span>✓ Sin compromiso</span>
-        <span>✓ Respuesta en menos de 2 horas</span>
-        <span>✓ Atención personalizada</span>
+        <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> Sin compromiso</span>
+        <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> Respuesta en menos de 2 horas</span>
+        <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> Atención personalizada</span>
       </div>
     </section>
   )
