@@ -87,12 +87,13 @@ export default function Home() {
   useEffect(() => {
     const hero = document.getElementById('lcp-hero-wrap');
     const copy = document.getElementById('static-hero-copy');
-    if (copy) copy.style.display = 'none';
-    if (hero) hero.style.display = 'none';
-    return () => {
-      if (hero) hero.style.display = 'none';
+    const hideStatic = () => {
       if (copy) copy.style.display = 'none';
+      if (hero) hero.style.display = 'none';
     };
+    // Keep static hero visible until React hero has painted (Speed Index)
+    requestAnimationFrame(() => requestAnimationFrame(hideStatic));
+    return () => hideStatic();
   }, []);
 
   return (

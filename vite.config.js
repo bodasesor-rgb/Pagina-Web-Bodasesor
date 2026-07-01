@@ -51,11 +51,21 @@ function legacyRedirectBootPlugin() {
         res.end(buildLegacyBootScript())
       })
     },
-    transformIndexHtml(html) {
-      return html.replace(
-        '<meta charset="UTF-8" />',
-        '<meta charset="UTF-8" />\n    <script src="/legacy-redirect-boot.js"></script>',
-      )
+  }
+}
+
+function asyncCssPlugin() {
+  return {
+    name: 'async-css',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html) {
+        return html.replace(
+          /<link rel="stylesheet" crossorigin href="(\/assets\/index-[^"]+\.css)">/,
+          '<link rel="preload" as="style" href="$1" onload="this.onload=null;this.rel=\'stylesheet\'">' +
+            '<noscript><link rel="stylesheet" href="$1"></noscript>',
+        )
+      },
     },
   }
 }
@@ -66,7 +76,10 @@ function deferNonCriticalPreloadsPlugin() {
     transformIndexHtml: {
       order: 'post',
       handler(html) {
-        return html.replace(/<link rel="modulepreload" crossorigin href="\/assets\/icons-[^"]+">\n?/g, '')
+        return html
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/icons-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/vendor-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/rolldown-runtime-[^"]+">\n?/g, '')
       },
     },
   }
@@ -81,6 +94,7 @@ export default defineConfig({
     tailwindcss(),
     imageBasePlugin(base),
     legacyRedirectBootPlugin(),
+    asyncCssPlugin(),
     deferNonCriticalPreloadsPlugin(),
   ],
   build: {
