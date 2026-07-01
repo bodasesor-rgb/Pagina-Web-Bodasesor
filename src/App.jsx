@@ -1,5 +1,5 @@
 import { Switch, Route, Router as WouterRouter } from "wouter"
-import { useEffect, lazy, Suspense } from "react"
+import { useEffect, useLayoutEffect, lazy, Suspense } from "react"
 import { useLocation } from "wouter"
 import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
@@ -131,8 +131,8 @@ function CatchAllRoute({ slug }) {
 
 function StaticLcpCleanup() {
   const [location] = useLocation()
-  useEffect(() => {
-    if (!isHomePath(window.location.pathname)) {
+  useLayoutEffect(() => {
+    if (!isHomePath(location)) {
       hideStaticLcpShell()
     }
   }, [location])
