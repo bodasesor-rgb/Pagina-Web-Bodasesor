@@ -5,7 +5,6 @@ import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
-import { getProductBySlug } from './data/products'
 import { useCityAwareLocation } from './utils/city-router'
 
 const Navbar = lazy(() => import('./components/Navbar'))
@@ -111,11 +110,7 @@ function TwoSegmentCatchAll({ parent, child }) {
     return <ServicePage params={{ slug }} />
   }
 
-  if (getProductBySlug(parent)) {
-    return <ServicePage params={{ slug: parent }} />
-  }
-
-  return <NotFound />
+  return <ServicePage params={{ slug: parent }} />
 }
 
 function CatchAllRoute({ slug }) {

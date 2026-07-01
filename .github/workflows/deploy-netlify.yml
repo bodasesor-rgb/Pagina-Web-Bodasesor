@@ -34,37 +34,5 @@ jobs:
         env:
           SITE_BASE: https://bodasesor.com
 
-      - name: Verify Netlify credentials
-        id: netlify_creds
-        run: |
-          if [ -n "$NETLIFY_AUTH_TOKEN" ] && [ -n "$NETLIFY_SITE_ID" ]; then
-            echo "has_creds=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_creds=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Trigger Netlify build hook
-        if: steps.netlify_creds.outputs.has_creds != 'true' && env.NETLIFY_BUILD_HOOK != ''
-        run: |
-          echo "No API credentials — triggering Netlify build hook..."
-          curl -fsS -X POST "$NETLIFY_BUILD_HOOK"
-          echo "Build hook sent. Netlify will build from connected Git repo."
-
-      - name: Fail if cannot deploy
-        if: steps.netlify_creds.outputs.has_creds != 'true' && env.NETLIFY_BUILD_HOOK == ''
-        run: |
-          echo "::error::No hay NETLIFY_AUTH_TOKEN/SITE_ID ni NETLIFY_BUILD_HOOK."
-          echo "El build pasó pero bodasesor.com NO se actualizó."
-          echo "Opción A: Netlify → Deploys → Trigger deploy → Deploy site"
-          echo "Opción B: Añadir secret NETLIFY_BUILD_HOOK (Build hooks en Netlify)"
-          echo "Opción C: Añadir NETLIFY_AUTH_TOKEN + NETLIFY_SITE_ID en GitHub Secrets"
-          exit 1
-
-      - name: Deploy to Netlify
-        if: steps.netlify_creds.outputs.has_creds == 'true'
-        uses: nwtgck/actions-netlify@v3.0
-        with:
-          publish-dir: ./dist
-          production-deploy: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions (${{ github.sha }})"
+      # Netlify Git integration deploys on push — do NOT also deploy dist here
+      # (double deploy caused incomplete asset uploads and blank page)
