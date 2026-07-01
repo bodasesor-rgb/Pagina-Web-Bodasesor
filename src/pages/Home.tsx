@@ -4,6 +4,7 @@ import CityLink from "../components/CityLink";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
 import { withCityPath, stripCityFromPath } from "../utils/city-url";
+import { hideStaticLcpShell } from "../utils/static-lcp-shell";
 
 const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
 
@@ -85,12 +86,7 @@ export default function Home() {
   const [location, setLocation] = useLocation();
 
   useEffect(() => {
-    const hero = document.getElementById('lcp-hero-wrap');
-    const copy = document.getElementById('static-hero-copy');
-    const hideStatic = () => {
-      if (copy) copy.style.display = 'none';
-      if (hero) hero.style.display = 'none';
-    };
+    const hideStatic = () => hideStaticLcpShell();
     // Keep static hero visible until React hero has painted (Speed Index)
     requestAnimationFrame(() => requestAnimationFrame(hideStatic));
     return () => hideStatic();

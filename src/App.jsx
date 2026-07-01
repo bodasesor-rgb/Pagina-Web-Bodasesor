@@ -5,6 +5,7 @@ import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
+import { hideStaticLcpShell, isHomePath } from './utils/static-lcp-shell'
 import { useCityAwareLocation } from './utils/city-router'
 
 const Navbar = lazy(() => import('./components/Navbar'))
@@ -128,6 +129,16 @@ function CatchAllRoute({ slug }) {
   return <ServicePage params={{ slug }} />
 }
 
+function StaticLcpCleanup() {
+  const [location] = useLocation()
+  useEffect(() => {
+    if (!isHomePath(window.location.pathname)) {
+      hideStaticLcpShell()
+    }
+  }, [location])
+  return null
+}
+
 function ScrollToTop() {
   const [location] = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [location])
@@ -140,6 +151,7 @@ function Router() {
     <>
       <CityUrlSync />
       <GlobalSEO />
+      <StaticLcpCleanup />
       <ScrollToTop />
       <Suspense fallback={
         <div className="sticky top-0 z-50 shadow-lg" aria-hidden="true">

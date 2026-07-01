@@ -67,6 +67,19 @@
         <a class="btn-svc" href="#servicios">Ver servicios</a>
       </div>
     </div>
+    <script>
+      (function () {
+        var p = location.pathname.replace(/\/+$/, '') || '/';
+        if (p === '/') return;
+        var slug = p.slice(1);
+        var cities = 'ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz';
+        if (cities.indexOf(slug) >= 0) return;
+        ['static-hero-copy', 'lcp-hero-wrap', 'static-nav-shell'].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
