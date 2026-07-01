@@ -178,7 +178,7 @@ export default function ProductPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="btn-whatsapp-product"
-                className="flex-1 flex items-center justify-center gap-2.5 py-4 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-lg text-sm"
+                className="flex-1 flex items-center justify-center gap-2.5 py-4 bg-[#0d6849] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-lg text-sm"
               >
                 <MessageCircle size={18} />
                 Cotizar por WhatsApp
@@ -252,7 +252,7 @@ export default function ProductPage() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-xl"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0d6849] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-xl"
         >
           <MessageCircle size={18} />
           Cotizar ahora

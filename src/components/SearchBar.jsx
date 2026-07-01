@@ -123,10 +123,10 @@ export default function SearchBar({
         />
         <button
           type="submit"
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-[#162040] hover:text-[#1a2a52]"
+          className="absolute right-1 top-1/2 -translate-y-1/2 min-w-11 min-h-11 flex items-center justify-center text-[#162040] hover:text-[#1a2a52]"
           aria-label="Buscar"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
@@ -138,7 +138,7 @@ export default function SearchBar({
           role="listbox"
         >
           {results.length === 0 ? (
-            <p className="px-4 py-3 text-sm text-gray-500 font-serif">No encontramos resultados para &ldquo;{query}&rdquo;</p>
+            <p className="px-4 py-3 text-sm text-gray-600 font-serif">No encontramos resultados para &ldquo;{query}&rdquo;</p>
           ) : (
             <>
               {results.map((item, i) => (
@@ -155,7 +155,7 @@ export default function SearchBar({
                 >
                   <span className="block text-sm font-serif font-semibold text-[#162040]">{item.name}</span>
                   {item.category && (
-                    <span className="block text-xs font-serif text-gray-400 mt-0.5">{item.category}</span>
+                    <span className="block text-xs font-serif text-gray-600 mt-0.5">{item.category}</span>
                   )}
                 </button>
               ))}

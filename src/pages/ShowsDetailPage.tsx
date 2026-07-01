@@ -54,7 +54,7 @@ export default function ShowsDetailPage({ slug }: Props) {
 
           {/* Left: text */}
           <div className="lg:col-span-2 py-10 lg:py-14 lg:pr-8">
-            <nav className="flex items-center gap-2 text-xs text-white/50 mb-6 font-serif flex-wrap">
+            <nav className="flex items-center gap-2 text-xs text-[#8a9bb5] mb-6 font-serif flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
               <Link href="/shows" className="hover:text-white transition-colors">Shows</Link>
@@ -72,7 +72,7 @@ export default function ShowsDetailPage({ slug }: Props) {
             <p className="text-white/60 font-serif text-sm italic mb-4">{product.tagline}</p>
 
             <div className="flex items-center gap-2 mb-4">
-              <svg className="w-4 h-4 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 text-[#8a9bb5] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span className="font-serif text-white/60 text-sm">Duración: <strong className="text-white/80">{product.duracion}</strong></span>
@@ -89,7 +89,7 @@ export default function ShowsDetailPage({ slug }: Props) {
 
             <div className="flex flex-wrap gap-3">
               <a href={waMsg} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+                className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
                 <WaSvg /> Cotizar este show
               </a>
               <a href="tel:5215540080373"
@@ -115,7 +115,7 @@ export default function ShowsDetailPage({ slug }: Props) {
           <div className="grid sm:grid-cols-2 gap-3">
             {(product.incluye ?? []).map(item => (
               <div key={item} className="flex items-start gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
-                <svg className="w-4 h-4 text-[#162040]/50 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-[#162040]/75 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="font-serif text-sm text-[#162040]">{item}</span>
@@ -130,7 +130,7 @@ export default function ShowsDetailPage({ slug }: Props) {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#f5efe8] rounded-2xl px-6 py-5">
           <div>
             <p className="font-serif font-bold text-[#162040]">¿Quieres ver todos los shows?</p>
-            <p className="font-serif text-sm text-gray-500">Explora el catálogo completo de entretenimiento</p>
+            <p className="font-serif text-sm text-gray-600">Explora el catálogo completo de entretenimiento</p>
           </div>
           <Link href="/shows"
             className="flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-5 py-2.5 rounded-xl font-semibold font-serif text-sm transition-all hover:scale-105">
@@ -151,7 +151,7 @@ export default function ShowsDetailPage({ slug }: Props) {
               <span className="truncate">{prev.name}</span>
             </Link>
           ) : <div />}
-          <Link href="/shows" className="text-xs font-serif font-semibold text-[#162040]/50 hover:text-[#162040] uppercase tracking-wide whitespace-nowrap">
+          <Link href="/shows" className="text-xs font-serif font-semibold text-[#162040]/75 hover:text-[#162040] uppercase tracking-wide whitespace-nowrap">
             Ver catálogo
           </Link>
           {next ? (
@@ -182,7 +182,7 @@ export default function ShowsDetailPage({ slug }: Props) {
                   </div>
                   <div className="p-4">
                     <p className="font-serif font-bold text-[#162040] text-sm">{p.name}</p>
-                    <p className="font-serif text-xs text-gray-400 mt-0.5">{p.duracion}</p>
+                    <p className="font-serif text-xs text-gray-600 mt-0.5">{p.duracion}</p>
                   </div>
                 </Link>
               ))}

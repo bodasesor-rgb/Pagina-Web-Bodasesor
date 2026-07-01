@@ -29,7 +29,7 @@ function ProductCard({ name, img, href, waMsg }: { name: string; img: string; hr
         <a
           href={waMsg}
           target="_blank" rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-green-500 text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200 hover:scale-[1.02]"
+          className="w-full flex items-center justify-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200 hover:scale-[1.02]"
         >
           <WaSvg /> Cotizar
         </a>
@@ -48,7 +48,7 @@ export default function SalasPeriquerasPage() {
       {/* Hero */}
       <section className="bg-[#162040] py-14 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <nav className="flex items-center justify-center gap-2 text-sm text-white/50 mb-6 font-serif flex-wrap">
+          <nav className="flex items-center justify-center gap-2 text-sm text-[#8a9bb5] mb-6 font-serif flex-wrap">
             <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
             <span>/</span>
             <span className="text-white/80">Salas y Periqueras</span>
@@ -61,7 +61,7 @@ export default function SalasPeriquerasPage() {
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+              className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
               <WaSvg /> Cotizar por WhatsApp
             </a>
             <a href="tel:5215540080373"
@@ -118,7 +118,7 @@ export default function SalasPeriquerasPage() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <h2 className="text-3xl font-serif font-bold text-[#162040] mb-2">Salas de Estar</h2>
-            <p className="text-gray-500 font-serif">
+            <p className="text-gray-600 font-serif">
               Crea espacios de conversación cómodos y elegantes. Disponibles en múltiples estilos, colores y capacidades.
             </p>
           </div>
@@ -143,7 +143,7 @@ export default function SalasPeriquerasPage() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <h2 className="text-3xl font-serif font-bold text-[#162040] mb-2">Periqueras</h2>
-            <p className="text-gray-500 font-serif">
+            <p className="text-gray-600 font-serif">
               Excelente opción para eventos donde se requiere espacio para comer o trabajar. Estilos industriales, vintage, mármol y más.
             </p>
           </div>

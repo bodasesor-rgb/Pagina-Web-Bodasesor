@@ -24,7 +24,7 @@ export default function CarpasPage() {
       <section className="bg-[#162040] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
-            <nav className="flex items-center gap-2 text-xs text-white/50 mb-6 font-serif">
+            <nav className="flex items-center gap-2 text-xs text-[#8a9bb5] mb-6 font-serif">
               <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
               <span className="text-white/80">Carpas para Eventos</span>
@@ -35,12 +35,12 @@ export default function CarpasPage() {
             <p className="text-white/70 font-serif text-lg mb-4">
               Protección y elegancia para tus eventos al aire libre. Carpas de todos los estilos y tamaños, instaladas y retiradas por profesionales.
             </p>
-            <p className="text-white/50 font-serif text-sm mb-8">
+            <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               Desde carpas blancas clásicas hasta domos geodésicos de vanguardia. Cotizamos por metro cuadrado según el área a cubrir.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={waGeneral} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+                className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
                 <WaSvg />
                 Cotizar por WhatsApp
               </a>
@@ -130,7 +130,7 @@ export default function CarpasPage() {
                         Ver detalles
                       </Link>
                       <a href={wa} target="_blank" rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 bg-[#25D366] hover:bg-green-500 text-white text-sm font-bold font-serif py-2.5 px-3 rounded-xl transition-colors">
+                        className="flex items-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white text-sm font-bold font-serif py-2.5 px-3 rounded-xl transition-colors">
                         <WaSvg />
                       </a>
                     </div>
@@ -152,7 +152,7 @@ export default function CarpasPage() {
             Cuéntanos el tamaño de tu espacio y el tipo de evento y te enviamos una cotización sin compromiso.
           </p>
           <a href={waGeneral} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105">
+            className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105">
             <WaSvg />
             Cotizar ahora
           </a>

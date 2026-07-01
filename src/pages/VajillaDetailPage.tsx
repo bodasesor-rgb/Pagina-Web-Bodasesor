@@ -45,7 +45,7 @@ export default function VajillaDetailPage({ slug }: Props) {
 
           {/* Left: text */}
           <div className="lg:col-span-2 py-10 lg:py-14 lg:pr-8">
-            <nav className="flex items-center gap-2 text-xs text-white/50 mb-6 font-serif flex-wrap">
+            <nav className="flex items-center gap-2 text-xs text-[#8a9bb5] mb-6 font-serif flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
               <Link href="/vajillas" className="hover:text-white transition-colors">Vajillas y Estilo</Link>
@@ -78,7 +78,7 @@ export default function VajillaDetailPage({ slug }: Props) {
 
             <div className="flex flex-wrap gap-3 mb-6">
               <a href={waMsg} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+                className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
                 <WaSvg /> Cotizar por WhatsApp
               </a>
               <a href="tel:5215540080373"
@@ -87,7 +87,7 @@ export default function VajillaDetailPage({ slug }: Props) {
               </a>
             </div>
 
-            <Link href="/vajillas" className="text-white/40 hover:text-white/70 font-serif text-xs flex items-center gap-1.5 transition-colors">
+            <Link href="/vajillas" className="text-[#8a9bb5] hover:text-white/70 font-serif text-xs flex items-center gap-1.5 transition-colors">
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
@@ -116,7 +116,7 @@ export default function VajillaDetailPage({ slug }: Props) {
             {(product.piezas ?? []).map(pieza => (
               <div key={pieza}
                 className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 border border-[#162040]/8">
-                <svg className="w-4 h-4 text-[#162040]/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-[#162040]/75 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="font-serif text-sm text-[#162040]">{pieza}</span>
@@ -131,7 +131,7 @@ export default function VajillaDetailPage({ slug }: Props) {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#f5efe8] rounded-2xl px-6 py-5">
           <div>
             <p className="font-serif font-bold text-[#162040]">¿Quieres ver el catálogo completo?</p>
-            <p className="font-serif text-sm text-gray-500">Explora todas las colecciones de vajillas y estilo</p>
+            <p className="font-serif text-sm text-gray-600">Explora todas las colecciones de vajillas y estilo</p>
           </div>
           <div className="flex gap-3 flex-wrap">
             <Link href="/vajillas"
@@ -155,7 +155,7 @@ export default function VajillaDetailPage({ slug }: Props) {
             </Link>
           ) : <div />}
           <Link href="/vajillas"
-            className="text-xs font-serif font-semibold text-[#162040]/50 hover:text-[#162040] uppercase tracking-wide whitespace-nowrap">
+            className="text-xs font-serif font-semibold text-[#162040]/75 hover:text-[#162040] uppercase tracking-wide whitespace-nowrap">
             Ver catálogo
           </Link>
           {next ? (
@@ -210,7 +210,7 @@ export default function VajillaDetailPage({ slug }: Props) {
                   </div>
                   <div className="p-2.5">
                     <p className="text-xs font-serif font-semibold text-[#162040] leading-snug">{v.name}</p>
-                    <p className="text-[10px] font-serif text-gray-400 mt-0.5">{v.catLabel}</p>
+                    <p className="text-[10px] font-serif text-gray-600 mt-0.5">{v.catLabel}</p>
                   </div>
                 </Link>
               ))}

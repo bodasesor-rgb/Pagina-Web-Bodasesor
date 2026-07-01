@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component {
             <h1 className="font-serif text-2xl font-bold text-[#162040] mb-3">
               Esta página está en preparación
             </h1>
-            <p className="text-gray-500 font-serif mb-4">
+            <p className="text-gray-600 font-serif mb-4">
               Estamos trabajando en este contenido.
             </p>
             {this.state.errorMsg && (
@@ -44,7 +44,7 @@ export class ErrorBoundary extends Component {
                 href={`https://api.whatsapp.com/send?phone=${WHATSAPP}&text=Hola%2C%20me%20interesa%20cotizar%20un%20servicio`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#25D366] text-white font-bold font-serif px-6 py-3 rounded-xl hover:bg-green-500 transition-colors"
+                className="flex items-center justify-center gap-2 bg-[#0d6849] text-white font-bold font-serif px-6 py-3 rounded-xl hover:bg-[#0a5740] transition-colors"
               >
                 Cotizar por WhatsApp
               </a>

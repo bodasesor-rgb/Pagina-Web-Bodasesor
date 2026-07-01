@@ -206,28 +206,41 @@ function ProductGalleryCarousel({ slug }: { slug: string }) {
             </svg>
           </div>
           <button
+            type="button"
             onClick={e => { e.stopPropagation(); prev(); }}
-            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-[#162040] p-2.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Ver foto anterior"
+            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-[#162040] min-w-11 min-h-11 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-5 h-5" aria-hidden="true" />
           </button>
           <button
+            type="button"
             onClick={e => { e.stopPropagation(); next(); }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-[#162040] p-2.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Ver foto siguiente"
+            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-[#162040] min-w-11 min-h-11 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-5 h-5" aria-hidden="true" />
           </button>
           <div className="absolute bottom-3 right-3 bg-[#162040]/70 text-white text-xs font-serif px-2 py-1 rounded-full pointer-events-none">
             {idx + 1} / {images.length}
           </div>
         </div>
-        <div className="flex justify-center gap-1.5 py-3 bg-white">
+        <div className="flex justify-center gap-1 py-3 bg-white" role="tablist" aria-label="Miniaturas de galería">
           {images.map((_, i) => (
             <button
+              type="button"
               key={i}
+              role="tab"
+              aria-label={`Ver foto ${i + 1} de ${images.length}`}
+              aria-selected={i === idx}
               onClick={() => setIdx(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-6 bg-[#162040]' : 'w-2 bg-gray-300 hover:bg-[#162040]/50'}`}
-            />
+              className="inline-flex min-w-11 min-h-11 items-center justify-center"
+            >
+              <span
+                aria-hidden="true"
+                className={`block h-2 rounded-full transition-all duration-300 ${i === idx ? 'w-6 bg-[#162040]' : 'w-2 bg-gray-300 hover:bg-[#162040]/50'}`}
+              />
+            </button>
           ))}
         </div>
       </div>
@@ -364,7 +377,7 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-3">Catálogo de Sillas</h2>
-          <p className="text-gray-500 font-serif mb-10">Todas las sillas disponibles — haz clic en cualquiera para ver detalles</p>
+          <p className="text-gray-600 font-serif mb-10">Todas las sillas disponibles — haz clic en cualquiera para ver detalles</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {SILLAS_CATALOG.map(s => (
               <Link key={s.href} href={s.href} className="group block bg-[#f5efe8] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.03] border border-[#162040]/5">
@@ -388,7 +401,7 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
       <section className="py-16 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-3">Catálogo de Mesas</h2>
-          <p className="text-gray-500 font-serif mb-10">Todos los tipos de mesas disponibles — haz clic para ver variedades y detalles</p>
+          <p className="text-gray-600 font-serif mb-10">Todos los tipos de mesas disponibles — haz clic para ver variedades y detalles</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {MESAS_CATALOG.map(m => (
               <Link key={m.href} href={m.href} className="group block bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.03] border border-[#162040]/5">
@@ -408,7 +421,7 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-3">Catálogo de Combinaciones</h2>
-          <p className="text-gray-500 font-serif mb-10">Mesas y sillas en las combinaciones más elegantes del catálogo — cotiza la que más te guste</p>
+          <p className="text-gray-600 font-serif mb-10">Mesas y sillas en las combinaciones más elegantes del catálogo — cotiza la que más te guste</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {COMBINACIONES_CATALOG.map((c, i) => (
               <div key={i} className="group bg-[#f5efe8] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-[#162040]/5">
@@ -424,7 +437,7 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
                   <a
                     href={waUrl}
                     target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-[#25D366] font-serif font-bold hover:underline"
+                    className="flex items-center gap-1.5 text-xs text-[#0d6849] font-serif font-bold hover:underline"
                   >
                     <WaSvg /> Cotizar esta combinación
                   </a>
@@ -472,7 +485,7 @@ export default function ServicePage({ params }: ServicePageProps) {
         <a
           href={WA_MSG("información de servicios")}
           target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-xl font-bold font-serif hover:bg-green-600 transition-colors"
+          className="flex items-center gap-2 bg-[#0d6849] text-white px-6 py-3 rounded-xl font-bold font-serif hover:bg-[#0a5740] transition-colors"
         >
           <WaSvg /> Cotizar por WhatsApp
         </a>
@@ -513,7 +526,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a href={waUrl} target="_blank" rel="noopener noreferrer"
-                     className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                     className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <WaSvg /> Cotizar por WhatsApp
                   </a>
                   <a href="tel:5215540080373"
@@ -559,7 +572,7 @@ export default function ServicePage({ params }: ServicePageProps) {
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
-                 className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                 className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <WaSvg /> Cotizar por WhatsApp
               </a>
               <a href="tel:5215540080373"
@@ -615,7 +628,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 )}
               </div>
               <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
-                <p className="text-sm text-gray-500 font-serif italic">
+                <p className="text-sm text-gray-600 font-serif italic">
                   {city ? `${product.seoDescription} Disponible en ${city.name}.` : product.seoDescription}
                 </p>
               </div>
@@ -672,7 +685,7 @@ export default function ServicePage({ params }: ServicePageProps) {
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
               ¿Qué incluye nuestro servicio?
             </h2>
-            <p className="text-gray-500 mt-3 font-serif">Todo lo que necesitas para un evento impecable, en un solo paquete</p>
+            <p className="text-gray-600 mt-3 font-serif">Todo lo que necesitas para un evento impecable, en un solo paquete</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {product.included.map((item, i) => (
@@ -683,7 +696,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 {item.title ? (
                   <>
                     <h3 className="font-serif font-bold text-[#162040] text-lg mb-2">{item.title}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed font-serif">{item.desc ?? item.text ?? ''}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed font-serif">{item.desc ?? item.text ?? ''}</p>
                   </>
                 ) : (
                   <p className="text-[#162040] text-sm leading-relaxed font-serif">{item.text}</p>
@@ -703,7 +716,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
                 Variedades y opciones
               </h2>
-              <p className="text-gray-500 mt-3 font-serif">Elige la que mejor se adapte a tu evento y tus invitados</p>
+              <p className="text-gray-600 mt-3 font-serif">Elige la que mejor se adapte a tu evento y tus invitados</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {product.varieties.map((v, i) => {
@@ -714,7 +727,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-serif font-bold text-[#162040] text-lg mb-1">{v.name}</h3>
-                      <p className="text-gray-500 text-sm leading-relaxed font-serif">{v.desc}</p>
+                      <p className="text-gray-600 text-sm leading-relaxed font-serif">{v.desc}</p>
                       {v.href && (
                         <span className="inline-block mt-2 text-[#162040] text-sm font-serif font-semibold underline underline-offset-2">
                           Ver menú completo →
@@ -739,7 +752,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               <a
                 href={waUrl}
                 target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-3 rounded-xl font-bold font-serif transition-colors"
+                className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-3 rounded-xl font-bold font-serif transition-colors"
               >
                 <WaSvg /> Consultar disponibilidad
               </a>
@@ -754,7 +767,7 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">Ejemplo de menú</h2>
-              <p className="text-gray-500 mt-3 font-serif">Propuesta referencial — adaptamos el menú a tus gustos y preferencias</p>
+              <p className="text-gray-600 mt-3 font-serif">Propuesta referencial — adaptamos el menú a tus gustos y preferencias</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {product.menuExample.map((item, i) => {
@@ -780,11 +793,11 @@ export default function ServicePage({ params }: ServicePageProps) {
               })}
             </div>
             <div className="mt-10 text-center">
-              <p className="text-gray-500 text-sm font-serif mb-4">¿Quieres un menú diferente? Diseñamos el tuyo desde cero.</p>
+              <p className="text-gray-600 text-sm font-serif mb-4">¿Quieres un menú diferente? Diseñamos el tuyo desde cero.</p>
               <a
                 href={waUrl}
                 target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-3 rounded-xl font-bold font-serif transition-colors"
+                className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-3 rounded-xl font-bold font-serif transition-colors"
               >
                 <WaSvg /> Personalizar mi menú
               </a>
@@ -801,7 +814,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
                 Niveles de Servicio Incluidos
               </h2>
-              <p className="text-gray-500 mt-3 font-serif">Elige el nivel que mejor se adapte a tu evento</p>
+              <p className="text-gray-600 mt-3 font-serif">Elige el nivel que mejor se adapte a tu evento</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
               {product.serviceTiers.map((tier, i) => (
@@ -837,7 +850,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                     <a
                       href={waUrl}
                       target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-bold font-serif text-sm transition-colors bg-[#25D366] hover:bg-green-500 text-white"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-bold font-serif text-sm transition-colors bg-[#0d6849] hover:bg-[#0a5740] text-white"
                     >
                       <WaSvg /> Cotizar nivel {tier.name}
                     </a>
@@ -857,7 +870,7 @@ export default function ServicePage({ params }: ServicePageProps) {
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
               ¿Por qué elegir Bodasesor?
             </h2>
-            <p className="text-gray-500 mt-3 font-serif">Más de 1,000 eventos nos respaldan</p>
+            <p className="text-gray-600 mt-3 font-serif">Más de 1,000 eventos nos respaldan</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {product.whyUs.map((item, i) => (
@@ -866,7 +879,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                   <IconFromEmoji emoji={item.icon} className="w-7 h-7" />
                 </div>
                 <h3 className="font-serif font-bold text-[#162040] text-xl mb-3">{item.title}</h3>
-                <p className="text-gray-500 leading-relaxed font-serif">{item.desc}</p>
+                <p className="text-gray-600 leading-relaxed font-serif">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -880,7 +893,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               ].map((s, i) => (
                 <div key={i} className="text-center p-4 bg-[#f5efe8] rounded-2xl">
                   <p className="text-2xl font-serif font-bold text-[#162040]">{s.num}</p>
-                  <p className="text-xs text-gray-500 font-serif mt-1">{s.label}</p>
+                  <p className="text-xs text-gray-600 font-serif mt-1">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -903,7 +916,7 @@ export default function ServicePage({ params }: ServicePageProps) {
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
               Servicios integrales
             </h2>
-            <p className="text-gray-500 mt-3 font-serif">Combina {product.title} con estos servicios para un evento completo</p>
+            <p className="text-gray-600 mt-3 font-serif">Combina {product.title} con estos servicios para un evento completo</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {product.integralServices.map(s => (
@@ -967,7 +980,7 @@ export default function ServicePage({ params }: ServicePageProps) {
 
       {/* SEO text — para motores de búsqueda */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <p className="text-xs text-gray-300 font-serif leading-relaxed">{product.seoDescription}</p>
+        <p className="text-xs text-gray-600 font-serif leading-relaxed">{product.seoDescription}</p>
       </div>
 
       {/* ── CATÁLOGO COMPLETO DE MESAS Y SILLAS ── */}

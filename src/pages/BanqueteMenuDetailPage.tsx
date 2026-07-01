@@ -58,7 +58,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
       <section className="bg-[#162040]">
         <div className="max-w-7xl mx-auto px-4 py-10 lg:py-0 grid lg:grid-cols-5 min-h-[380px] items-center">
           <div className="lg:col-span-3 py-8 lg:py-14 lg:pr-8">
-            <nav className="flex items-center gap-2 text-xs text-white/50 mb-5 font-serif flex-wrap">
+            <nav className="flex items-center gap-2 text-xs text-[#8a9bb5] mb-5 font-serif flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
               <Link href="/banquetes-catering" className="hover:text-white transition-colors">Banquetes y Catering</Link>
@@ -76,7 +76,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
             <p className="text-white/75 font-serif leading-relaxed mb-6">{menu.headline}</p>
             <div className="flex flex-wrap gap-3">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all hover:scale-105">
+                className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all hover:scale-105">
                 <WaSvg /> Cotizar por WhatsApp
               </a>
               <Link href={parent.href}
@@ -106,7 +106,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-serif font-bold text-[#162040]">Menú de ejemplo</h2>
-            <p className="text-gray-500 mt-2 font-serif">Propuesta referencial — personalizamos cada menú a tu gusto</p>
+            <p className="text-gray-600 mt-2 font-serif">Propuesta referencial — personalizamos cada menú a tu gusto</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {menu.menuExample.map((item, i) => {
@@ -133,7 +133,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
           </div>
           <div className="mt-8 text-center">
             <a href={waUrl} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-3 rounded-xl font-bold font-serif transition-colors">
+              className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-3 rounded-xl font-bold font-serif transition-colors">
               <WaSvg /> Personalizar mi menú
             </a>
           </div>
@@ -147,7 +147,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
           <div className="grid sm:grid-cols-2 gap-4">
             {menu.included.map((item, i) => (
               <div key={i} className="flex items-start gap-3 p-4 bg-[#f5efe8]/50 rounded-xl border border-[#162040]/10">
-                <span className="text-[#162040]/40 font-serif mt-0.5">◎</span>
+                <span className="text-[#162040]/75 font-serif mt-0.5">◎</span>
                 <p className="font-serif text-gray-600 text-sm">{item}</p>
               </div>
             ))}
@@ -160,7 +160,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-serif font-bold text-[#162040]">Niveles de servicio</h2>
-            <p className="text-gray-500 mt-2 font-serif">Elige el paquete que mejor se adapte a tu evento</p>
+            <p className="text-gray-600 mt-2 font-serif">Elige el paquete que mejor se adapte a tu evento</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             {menu.serviceTiers.map((tier, i) => (
@@ -177,7 +177,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                 <ul className="space-y-2">
                   {tier.items.map((item, j) => (
                     <li key={j} className="flex items-start gap-2 text-sm font-serif text-gray-600">
-                      <span className="text-[#162040]/40 mt-0.5">✓</span>{item}
+                      <span className="text-[#162040]/75 mt-0.5">✓</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -193,7 +193,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
           <h2 className="text-2xl font-serif font-bold text-[#162040] mb-2 text-center">
             Otros formatos de {parent.shortName}
           </h2>
-          <p className="text-gray-500 font-serif text-center mb-8">Explora todas las opciones de menú disponibles</p>
+          <p className="text-gray-600 font-serif text-center mb-8">Explora todas las opciones de menú disponibles</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {siblings.map((s) => (
               <Link key={s.slug}
@@ -221,7 +221,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
           <h2 className="text-2xl font-serif font-bold text-white mb-3">¿Listo para cotizar tu banquete?</h2>
           <p className="text-white/70 font-serif mb-6">Recibe una propuesta personalizada sin compromiso</p>
           <a href={waUrl} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-3 rounded-xl font-bold font-serif transition-all hover:scale-105">
+            className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-3 rounded-xl font-bold font-serif transition-all hover:scale-105">
             <WaSvg /> Cotizar {menu.label}
           </a>
         </div>

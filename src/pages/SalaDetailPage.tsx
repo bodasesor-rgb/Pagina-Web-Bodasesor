@@ -52,7 +52,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
         <div className="max-w-7xl mx-auto px-4 py-10 lg:py-0 grid lg:grid-cols-5 min-h-[420px] items-center">
           {/* Left: text */}
           <div className="lg:col-span-2 py-10 lg:py-14 lg:pr-8">
-            <nav className="flex items-center gap-2 text-xs text-white/50 mb-6 font-serif flex-wrap">
+            <nav className="flex items-center gap-2 text-xs text-[#8a9bb5] mb-6 font-serif flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
               <Link href="/salas-periqueras" className="hover:text-white transition-colors">Salas y Periqueras</Link>
@@ -99,7 +99,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
 
             <div className="flex flex-wrap gap-3 mb-5">
               <a href={waMsg} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+                className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
                 <WaSvg /> Cotizar por WhatsApp
               </a>
               <a href="tel:5215540080373"
@@ -108,7 +108,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
               </a>
             </div>
             <Link href="/salas-periqueras"
-              className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm font-serif transition-colors">
+              className="inline-flex items-center gap-2 text-[#8a9bb5] hover:text-white text-sm font-serif transition-colors">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
@@ -161,7 +161,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
             </Link>
           ) : <div />}
           <Link href="/salas-periqueras"
-            className="text-xs font-serif font-semibold text-[#162040]/50 hover:text-[#162040] uppercase tracking-wide">
+            className="text-xs font-serif font-semibold text-[#162040]/75 hover:text-[#162040] uppercase tracking-wide">
             Ver catálogo
           </Link>
           {next ? (

@@ -44,6 +44,8 @@
   --navy-deep:   #0d1630;   /* footer / deeper navy */
   --navy-muted:  #8a9bb5;   /* secondary text on dark */
   --cream:       #f5efe8;   /* warm body background */
+  --whatsapp:    #0d6849;   /* WCAG AA contrast with white text */
+  --whatsapp-hover: #0a5740;
 
   /* Tailwind CSS variable tokens */
   --background: 36 20% 96%;        /* #f5efe8 cream */
@@ -145,19 +147,19 @@
   z-index: 9999;
   width: 60px;
   height: 60px;
-  background-color: #25D366;
+  background-color: var(--whatsapp);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+  box-shadow: 0 4px 20px rgba(18, 140, 126, 0.45);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   text-decoration: none;
 }
 .whatsapp-float:hover {
   transform: scale(1.08);
-  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.65);
+  box-shadow: 0 6px 28px rgba(18, 140, 126, 0.55);
 }
 
 /* Gold divider */

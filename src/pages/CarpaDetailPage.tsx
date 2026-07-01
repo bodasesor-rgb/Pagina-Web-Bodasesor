@@ -51,7 +51,7 @@ export default function CarpaDetailPage({ slug }: Props) {
 
           {/* Left: text */}
           <div className="lg:col-span-2 py-10 lg:py-14 lg:pr-8">
-            <nav className="flex items-center gap-2 text-xs text-white/50 mb-6 font-serif flex-wrap">
+            <nav className="flex items-center gap-2 text-xs text-[#8a9bb5] mb-6 font-serif flex-wrap">
               <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
               <span>/</span>
               <Link href="/carpas" className="hover:text-white transition-colors">Carpas para Eventos</Link>
@@ -71,7 +71,7 @@ export default function CarpaDetailPage({ slug }: Props) {
 
             <div className="flex flex-col sm:flex-row gap-3 mt-6">
               <a href={waMsg} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+                className="flex items-center justify-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
                 <WaSvg />
                 Cotizar esta carpa
               </a>
@@ -167,7 +167,7 @@ export default function CarpaDetailPage({ slug }: Props) {
                 Dinos el tamaño de tu espacio y la fecha de tu evento y te enviamos una cotización sin compromiso.
               </p>
               <a href={waMsg} target="_blank" rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-green-500 text-white py-3 px-6 rounded-xl font-bold font-serif transition-colors mb-3">
+                className="w-full flex items-center justify-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white py-3 px-6 rounded-xl font-bold font-serif transition-colors mb-3">
                 <WaSvg />
                 Cotizar por WhatsApp
               </a>
@@ -190,7 +190,7 @@ export default function CarpaDetailPage({ slug }: Props) {
                 <Link key={o.slug} href={`/carpas/${o.slug}`}
                   className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md border border-gray-100 transition-all hover:-translate-y-0.5 block">
                   <p className="font-serif font-bold text-[#162040] text-sm mb-1">{o.name}</p>
-                  <p className="text-gray-500 font-serif text-xs leading-snug">{o.tagline}</p>
+                  <p className="text-gray-600 font-serif text-xs leading-snug">{o.tagline}</p>
                 </Link>
               ))}
             </div>

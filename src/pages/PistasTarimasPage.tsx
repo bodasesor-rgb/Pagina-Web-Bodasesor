@@ -39,7 +39,7 @@ export default function PistasTarimasPage() {
       {/* Hero */}
       <section className="bg-[#162040] py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <nav className="flex items-center justify-center gap-2 text-sm text-white/50 mb-6 font-serif flex-wrap">
+          <nav className="flex items-center justify-center gap-2 text-sm text-[#8a9bb5] mb-6 font-serif flex-wrap">
             <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
             <span>/</span>
             <span className="text-white/80">Pistas y Tarimas</span>
@@ -52,7 +52,7 @@ export default function PistasTarimasPage() {
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+              className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
               <WaSvg size={4} /> Cotizar por WhatsApp
             </a>
           </div>
@@ -121,7 +121,7 @@ export default function PistasTarimasPage() {
                 <span className="text-3xl">{cat.icon}</span>
                 <div>
                   <h2 className="text-2xl font-serif font-bold text-[#162040]">{cat.label}</h2>
-                  <p className="text-gray-500 font-serif text-sm">{cat.desc}</p>
+                  <p className="text-gray-600 font-serif text-sm">{cat.desc}</p>
                 </div>
               </div>
 
@@ -145,7 +145,7 @@ export default function PistasTarimasPage() {
                       </Link>
 
                       <div className="p-5">
-                        <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40 mb-1 block">
+                        <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-1 block">
                           {cat.label}
                         </span>
                         <Link href={`/pistas-tarimas/${product.slug}`}>
@@ -153,7 +153,7 @@ export default function PistasTarimasPage() {
                             {product.name}
                           </h3>
                         </Link>
-                        <p className="text-gray-500 text-sm font-serif leading-relaxed mb-4 line-clamp-2">
+                        <p className="text-gray-600 text-sm font-serif leading-relaxed mb-4 line-clamp-2">
                           {product.short}
                         </p>
                         <div className="flex gap-2">
@@ -162,7 +162,7 @@ export default function PistasTarimasPage() {
                             Ver detalle
                           </Link>
                           <a href={waMsg} target="_blank" rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-green-500 text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200">
+                            className="flex-1 flex items-center justify-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200">
                             <WaSvg size={3} /> Cotizar
                           </a>
                         </div>

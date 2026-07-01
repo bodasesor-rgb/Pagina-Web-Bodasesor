@@ -47,7 +47,7 @@ export default function CatalogoPistasTarimasPage() {
             <a
               href={waMsg}
               target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-4 py-2 rounded-lg font-serif text-sm font-bold transition-colors"
+              className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-4 py-2 rounded-lg font-serif text-sm font-bold transition-colors"
             >
               <WaSvg /> Cotizar por WhatsApp
             </a>
@@ -83,7 +83,7 @@ export default function CatalogoPistasTarimasPage() {
               Llamar ahora
             </a>
             <a href={waMsg} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-4 py-2 rounded-lg font-serif text-sm font-bold transition-colors">
+              className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-4 py-2 rounded-lg font-serif text-sm font-bold transition-colors">
               <WaSvg /> Cotizar
             </a>
             <Link href="/pistas-tarimas"

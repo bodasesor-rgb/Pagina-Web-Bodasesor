@@ -32,7 +32,7 @@ export default function CatalogoColgantesPage() {
             Ver catálogo interactivo
           </button>
           <a href={WA_MSG} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 bg-[#25D366] hover:bg-green-500 text-white text-xs font-serif px-4 py-2 rounded-lg transition-colors font-bold">
+            className="flex items-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white text-xs font-serif px-4 py-2 rounded-lg transition-colors font-bold">
             Cotizar por WhatsApp
           </a>
         </div>

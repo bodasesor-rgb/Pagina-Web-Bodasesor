@@ -48,7 +48,7 @@ export default function SearchPage() {
           </div>
         ) : (
           <>
-            <p className="text-sm text-gray-500 font-serif mb-6">
+            <p className="text-sm text-gray-600 font-serif mb-6">
               {results.length} resultado{results.length !== 1 ? 's' : ''} para &ldquo;{query}&rdquo;
             </p>
             <ul className="space-y-2">
@@ -60,7 +60,7 @@ export default function SearchPage() {
                   >
                     <span className="font-serif font-bold text-[#162040]">{item.name}</span>
                     {item.category && (
-                      <span className="block text-xs text-gray-400 font-serif mt-1">{item.category}</span>
+                      <span className="block text-xs text-gray-600 font-serif mt-1">{item.category}</span>
                     )}
                   </Link>
                 </li>

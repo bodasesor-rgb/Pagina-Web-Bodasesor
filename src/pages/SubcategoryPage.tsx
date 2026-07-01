@@ -128,7 +128,7 @@ export default function SubcategoryPage() {
             href={`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(`Hola, quiero cotizar: ${sub.name}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#25D366] text-white text-sm font-semibold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-md"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#0d6849] text-white text-sm font-semibold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-md"
           >
             <MessageCircle size={16} />
             Cotizar ahora
@@ -215,7 +215,7 @@ export default function SubcategoryPage() {
           target="_blank"
           rel="noopener noreferrer"
           data-testid="btn-cta-subcategory"
-          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-xl"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0d6849] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-xl"
         >
           <MessageCircle size={18} />
           Cotizar por WhatsApp

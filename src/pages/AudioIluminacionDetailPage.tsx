@@ -34,7 +34,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10 py-3 px-4">
-        <div className="max-w-7xl mx-auto flex items-center gap-2 font-serif text-xs text-[#162040]/50">
+        <div className="max-w-7xl mx-auto flex items-center gap-2 font-serif text-xs text-[#162040]/75">
           <Link href="/" className="hover:text-[#162040]">Inicio</Link>
           <span>/</span>
           <Link href="/audio-iluminacion-video" className="hover:text-[#162040]">Audio, Iluminación y Video</Link>
@@ -60,7 +60,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
 
           {/* Info */}
           <div>
-            <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40 mb-2">
+            <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-2">
               {catLabel}
             </p>
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-2">
@@ -75,7 +75,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
                 <ul className="space-y-2">
                   {(product.incluye ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/40 mt-0.5 flex-shrink-0">◎</span>{item}
+                      <span className="text-[#162040]/75 mt-0.5 flex-shrink-0">◎</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -85,7 +85,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
                 <ul className="space-y-2">
                   {(product.idealPara ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/40 mt-0.5 flex-shrink-0">✦</span>{item}
+                      <span className="text-[#162040]/75 mt-0.5 flex-shrink-0">✦</span>{item}
                     </li>
                   ))}
                 </ul>
@@ -93,7 +93,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
             </div>
 
             <a href={waMsg} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-4 rounded-xl font-bold font-serif text-lg w-full justify-center transition-all duration-300 hover:scale-105">
+              className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-4 rounded-xl font-bold font-serif text-lg w-full justify-center transition-all duration-300 hover:scale-105">
               <WaSvg /> Cotizar {product.name}
             </a>
           </div>
@@ -116,7 +116,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
                   </div>
                   <div className="p-4">
                     <h3 className="font-serif font-bold text-[#162040] text-sm mb-1">{p.name}</h3>
-                    <p className="font-serif text-gray-400 text-xs italic">{p.tagline}</p>
+                    <p className="font-serif text-gray-600 text-xs italic">{p.tagline}</p>
                   </div>
                 </Link>
               ))}

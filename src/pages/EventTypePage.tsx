@@ -842,7 +842,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
             <a
               href={waUrl}
               target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               <WaSvg /> Cotizar por WhatsApp
             </a>
@@ -943,7 +943,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
                 Servicios disponibles para {shortName}
               </h2>
-              <p className="text-gray-500 mt-3 font-serif max-w-2xl mx-auto">
+              <p className="text-gray-600 mt-3 font-serif max-w-2xl mx-auto">
                 Un solo proveedor para coordinar todos los servicios de tu evento. Sin estrés, sin intermediarios.
               </p>
             </div>
@@ -970,7 +970,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                           </div>
                           <h4 className="font-serif font-bold text-[#162040] leading-tight">{svc.title}</h4>
                         </div>
-                        <p className="text-sm text-gray-500 font-serif leading-relaxed flex-1 mb-4">{svc.desc}</p>
+                        <p className="text-sm text-gray-600 font-serif leading-relaxed flex-1 mb-4">{svc.desc}</p>
                         <div className="flex gap-2 mt-auto">
                           <Link
                             href={svc.href}
@@ -981,7 +981,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                           <a
                             href={WA_MSG(svc.title)}
                             target="_blank" rel="noopener noreferrer"
-                            className="flex items-center gap-1 bg-[#25D366] hover:bg-green-500 text-white text-xs font-bold font-serif px-3 py-2 rounded-lg transition-all duration-300 hover:scale-110"
+                            className="flex items-center gap-1 bg-[#0d6849] hover:bg-[#0a5740] text-white text-xs font-bold font-serif px-3 py-2 rounded-lg transition-all duration-300 hover:scale-110"
                           >
                             <WaSvg />
                           </a>
@@ -1001,7 +1001,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">¿Por qué elegir Bodasesor?</h2>
-            <p className="text-gray-500 mt-3 font-serif">Más de 15 años coordinando eventos en toda la república mexicana</p>
+            <p className="text-gray-600 mt-3 font-serif">Más de 15 años coordinando eventos en toda la república mexicana</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -1015,7 +1015,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                   <item.Icon className="w-6 h-6 text-white" />
                 </div>
                 <h4 className="font-serif font-bold text-[#162040] mb-2">{item.title}</h4>
-                <p className="text-sm text-gray-500 font-serif">{item.desc}</p>
+                <p className="text-sm text-gray-600 font-serif">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -1049,7 +1049,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
               55 4008 0373
             </a>
           </div>
-          <p className="mt-6 text-sm text-white/50 font-serif flex items-center justify-center gap-2">
+          <p className="mt-6 text-sm text-[#8a9bb5] font-serif flex items-center justify-center gap-2">
             <ExternalLink className="w-4 h-4" />
             También puedes explorar todos nuestros servicios desde el menú superior
           </p>

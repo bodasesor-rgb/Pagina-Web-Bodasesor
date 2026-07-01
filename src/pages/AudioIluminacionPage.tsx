@@ -35,15 +35,15 @@ function ProductCard({ product }: { product: AudioIluminacionProduct }) {
       </Link>
       <div className="p-5">
         <h3 className="font-serif font-bold text-[#162040] text-base mb-1">{product.name}</h3>
-        <p className="font-serif text-gray-500 text-xs mb-3 italic">{product.tagline}</p>
-        <p className="font-serif text-gray-400 text-xs mb-4 leading-relaxed line-clamp-2">{product.short}</p>
+        <p className="font-serif text-gray-600 text-xs mb-3 italic">{product.tagline}</p>
+        <p className="font-serif text-gray-600 text-xs mb-4 leading-relaxed line-clamp-2">{product.short}</p>
         <div className="flex gap-2">
           <Link href={`/audio-iluminacion-video/${product.slug}`}
             className="flex-1 text-center text-xs font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2 rounded-lg hover:bg-[#f5efe8] transition-colors">
             Ver detalle
           </Link>
           <a href={waMsg} target="_blank" rel="noopener noreferrer"
-            className="flex-1 text-center text-xs font-serif font-semibold text-white bg-[#25D366] hover:bg-green-500 py-2 rounded-lg transition-colors">
+            className="flex-1 text-center text-xs font-serif font-semibold text-white bg-[#0d6849] hover:bg-[#0a5740] py-2 rounded-lg transition-colors">
             Cotizar
           </a>
         </div>
@@ -62,18 +62,18 @@ export default function AudioIluminacionPage() {
       <section className="bg-[#162040] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
-            <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-white/40 mb-3">Bodasesor Eventos</p>
+            <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#8a9bb5] mb-3">Bodasesor Eventos</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
               Audio, Iluminación y Video{city ? ` en ${city.name}` : ''}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
               Transformamos cada celebración en una experiencia sensorial inolvidable con tecnología de punta y equipo profesional.
             </p>
-            <p className="text-white/50 font-serif text-sm mb-8">
+            <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               {AUDIO_ILUMINACION.length} servicios disponibles. Técnicos especializados con experiencia en bodas, corporativos y eventos de gran formato.
             </p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
+              className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
               <WaSvg /> Cotizar producción audiovisual
             </a>
           </div>
@@ -88,7 +88,7 @@ export default function AudioIluminacionPage() {
         </div>
         {/* Sub-badges */}
         <div className="border-t border-white/10 py-4">
-          <div className="max-w-7xl mx-auto px-4 flex gap-6 text-white/40 font-serif text-xs">
+          <div className="max-w-7xl mx-auto px-4 flex gap-6 text-[#8a9bb5] font-serif text-xs">
             <span>Audio profesional</span><span>•</span>
             <span>Iluminación de impacto</span><span>•</span>
             <span>Video y pantallas 4K</span><span>•</span>
@@ -137,11 +137,11 @@ export default function AudioIluminacionPage() {
               <div className="flex items-center gap-3 mb-10">
                 <span className="text-2xl text-[#162040]/30 font-serif">{meta.icon}</span>
                 <div>
-                  <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40">
+                  <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">
                     Producción Audiovisual
                   </p>
                   <h2 className="text-2xl font-serif font-bold text-[#162040]">{meta.label}</h2>
-                  <p className="font-serif text-gray-500 text-sm mt-1">{meta.desc}</p>
+                  <p className="font-serif text-gray-600 text-sm mt-1">{meta.desc}</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -156,7 +156,7 @@ export default function AudioIluminacionPage() {
       <section className="bg-[#f5efe8] py-14 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
-            <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/40 mb-2">Todo en Uno</p>
+            <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-2">Todo en Uno</p>
             <h2 className="text-3xl font-serif font-bold text-[#162040]">Paquetes según tu Evento</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -182,7 +182,7 @@ export default function AudioIluminacionPage() {
               </div>
             ))}
           </div>
-          <p className="text-center font-serif text-sm text-[#162040]/50 mt-8">
+          <p className="text-center font-serif text-sm text-[#162040]/75 mt-8">
             En cada servicio incluimos: transporte del equipo al venue · montaje y pruebas antes del evento · operación técnica durante todo el evento · desmontaje al finalizar
           </p>
         </div>
@@ -196,7 +196,7 @@ export default function AudioIluminacionPage() {
             Te asesoramos sin costo para armar el paquete ideal según tu evento, espacio y visión.
           </p>
           <a href={waGeneral} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-8 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105">
+            className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105">
             <WaSvg /> Solicitar cotización personalizada
           </a>
         </div>

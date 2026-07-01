@@ -179,7 +179,7 @@ const sortItems = (arr) => [...arr].sort(byName);
 
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const ddLink = "block px-4 py-1.5 text-sm font-bold font-serif text-gray-700 hover:text-[#162040] hover:bg-[#f5efe8] transition-colors rounded";
-const ddHeading = "px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-gray-400 font-serif";
+const ddHeading = "px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-gray-600 font-serif";
 
 // ─── City badge (own component so it always reads fresh context) ──────────────
 function CityBadge() {
@@ -305,7 +305,7 @@ function FlyoutDropdown({ groups, align = "left", overviewHref }) {
       <div className="w-52 py-2">
         {active?.href && (
           <>
-            <Link href={active.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-[#162040]`}>
+            <Link href={active.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-[#162040]`}>
               Ver {active.heading} →
             </Link>
             <div className="border-t border-gray-100 my-1" />
@@ -344,7 +344,7 @@ function MobiliarioDropdown() {
             </Link>
             {/* L4 Sillas */}
             <div className="absolute left-full top-0 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/sillas-menu:opacity-100 group-hover/sillas-menu:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/mesas-sillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todas las sillas</Link>
+              <Link href="/mesas-sillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todas las sillas</Link>
               <div className="border-t border-gray-100 my-1" />
               {sortItems(sillasNavItems).map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -391,7 +391,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/salas-flyout:opacity-100 group-hover/salas-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/salas-periqueras" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todas las salas</Link>
+              <Link href="/salas-periqueras" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todas las salas</Link>
               <div className="border-t border-gray-100 my-1" />
               {salasNavItems.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -406,7 +406,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/periqueras-flyout:opacity-100 group-hover/periqueras-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/salas-periqueras" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todas las periqueras</Link>
+              <Link href="/salas-periqueras" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todas las periqueras</Link>
               <div className="border-t border-gray-100 my-1" />
               {periquerasNavItems.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -434,7 +434,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/tarimas-flyout:opacity-100 group-hover/tarimas-flyout:visible transition-all duration-150">
-              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo</Link>
+              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo</Link>
               <div className="border-t border-gray-100 my-1" />
               {pistasTarimasNavItems.tarimas.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -449,7 +449,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/baile-flyout:opacity-100 group-hover/baile-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo</Link>
+              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo</Link>
               <div className="border-t border-gray-100 my-1" />
               {pistasTarimasNavItems.pistas.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -464,7 +464,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/escenarios-flyout:opacity-100 group-hover/escenarios-flyout:visible transition-all duration-150">
-              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo</Link>
+              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo</Link>
               <div className="border-t border-gray-100 my-1" />
               {pistasTarimasNavItems.escenarios.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -479,7 +479,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/sets-flyout:opacity-100 group-hover/sets-flyout:visible transition-all duration-150">
-              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo</Link>
+              <Link href="/pistas-tarimas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo</Link>
               <div className="border-t border-gray-100 my-1" />
               {pistasTarimasNavItems.sets.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -506,7 +506,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/lozas-flyout:opacity-100 group-hover/lozas-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todas las lozas</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todas las lozas</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.lozas.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -521,7 +521,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/ceramica-flyout:opacity-100 group-hover/ceramica-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todas las cerámicas</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todas las cerámicas</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.ceramica.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -536,7 +536,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/mauve-flyout:opacity-100 group-hover/mauve-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver línea Mauve</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver línea Mauve</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.mauve.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -551,7 +551,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/rustica-flyout:opacity-100 group-hover/rustica-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver colecciones rústicas</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver colecciones rústicas</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.rustica.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -566,7 +566,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/especial-flyout:opacity-100 group-hover/especial-flyout:visible transition-all duration-150">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver colecciones especiales</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver colecciones especiales</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.especial.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -581,7 +581,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/platos-flyout:opacity-100 group-hover/platos-flyout:visible transition-all duration-150">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver platos base</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver platos base</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.platos.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -603,7 +603,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/cristal-flyout:opacity-100 group-hover/cristal-flyout:visible transition-all duration-150">
-              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver cristalería</Link>
+              <Link href="/vajillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver cristalería</Link>
               <div className="border-t border-gray-100 my-1" />
               {vajillasNavItems.cristaleria.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -620,7 +620,7 @@ function MobiliarioDropdown() {
           <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
         </Link>
         <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[60] opacity-0 invisible group-hover/entelados-menu:opacity-100 group-hover/entelados-menu:visible transition-all duration-150">
-          <Link href="/entelados" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todos los estilos</Link>
+          <Link href="/entelados" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todos los estilos</Link>
           <div className="border-t border-gray-100 my-1" />
           {enteladosNavItems.map(item => (
             <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -645,7 +645,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/col-floral-flyout:opacity-100 group-hover/col-floral-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todos los florales</Link>
+              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todos los florales</Link>
               <div className="border-t border-gray-100 my-1" />
               {colgantesNavItems.floral.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -660,7 +660,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/col-follaje-flyout:opacity-100 group-hover/col-follaje-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver follaje y pampas</Link>
+              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver follaje y pampas</Link>
               <div className="border-t border-gray-100 my-1" />
               {colgantesNavItems.follaje.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -675,7 +675,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/col-luminoso-flyout:opacity-100 group-hover/col-luminoso-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver luminosos y disco</Link>
+              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver luminosos y disco</Link>
               <div className="border-t border-gray-100 my-1" />
               {colgantesNavItems.luminoso.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -690,7 +690,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/col-estructura-flyout:opacity-100 group-hover/col-estructura-flyout:visible transition-all duration-150">
-              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver estructuras especiales</Link>
+              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver estructuras especiales</Link>
               <div className="border-t border-gray-100 my-1" />
               {colgantesNavItems.estructura.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -713,7 +713,7 @@ function MobiliarioDropdown() {
           <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
         </Link>
         <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[60] opacity-0 invisible group-hover/carpas-menu:opacity-100 group-hover/carpas-menu:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-          <Link href="/carpas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver todas las carpas</Link>
+          <Link href="/carpas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todas las carpas</Link>
           <div className="border-t border-gray-100 my-1" />
           {carpasNavItems.map(item => (
             <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -825,11 +825,11 @@ function InlineGroupsFlyout({
           onMouseLeave={hide}
         >
           <div ref={scrollRef} className="overflow-y-auto py-2 flex-1" onScroll={checkScroll}>
-            <Link href={href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+            <Link href={href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
             {groups.map(group => (
               <div key={group.heading}>
                 <div className="border-t border-gray-100 my-1" />
-                <Link href={group.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-[#162040]/50 hover:text-[#162040]`}>{group.heading}</Link>
+                <Link href={group.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-[#162040]/75 hover:text-[#162040]`}>{group.heading}</Link>
                 {group.items.map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
               </div>
             ))}
@@ -837,7 +837,7 @@ function InlineGroupsFlyout({
           {canScrollDown && (
             <button
               onMouseDown={scrollDown}
-              className="w-full flex items-center justify-center py-1.5 border-t border-gray-100 text-gray-400 hover:text-[#162040] hover:bg-gray-50 rounded-b-xl transition-colors flex-shrink-0"
+              className="w-full flex items-center justify-center py-1.5 border-t border-gray-100 text-gray-600 hover:text-[#162040] hover:bg-gray-50 rounded-b-xl transition-colors flex-shrink-0"
             >
               <ChevronDown className="w-4 h-4" />
             </button>
@@ -863,48 +863,48 @@ function ServiciosDropdown() {
       <div className="border-t border-gray-100 my-1" />
 
       <SmartFlyout href="/audio-iluminacion-video" label={lbl('Audio, Iluminación y Video')} panelWidth="w-60">
-        <Link href="/audio-iluminacion-video" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/audio-iluminacion-video" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         {audioIluminacionNavGroups.map(group => (
           <div key={group.heading}>
             <div className="border-t border-gray-100 my-1" />
-            <Link href={group.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-[#162040]/50 hover:text-[#162040]`}>{group.heading}</Link>
+            <Link href={group.href} className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-[#162040]/75 hover:text-[#162040]`}>{group.heading}</Link>
             {group.items.map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
           </div>
         ))}
       </SmartFlyout>
 
       <SmartFlyout href="/espacios-eventos" label={lbl('Espacios para Eventos')}>
-        <Link href="/espacios-eventos" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/espacios-eventos" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         <div className="border-t border-gray-100 my-1" />
         {sortItems(espaciosNavItems).map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
       </SmartFlyout>
 
       <SmartFlyout href="/reposteria" label={lbl('Repostería')}>
-        <Link href="/reposteria" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/reposteria" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         <div className="border-t border-gray-100 my-1" />
         {sortItems(reposteriaNavItems).map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
       </SmartFlyout>
 
       <SmartFlyout href="/wedding-planner" label={lbl('Wedding Planner')}>
-        <Link href="/wedding-planner" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/wedding-planner" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         <div className="border-t border-gray-100 my-1" />
         {sortItems(weddingNavItems).map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
       </SmartFlyout>
 
       <SmartFlyout href="/musica" label={lbl('Música')}>
-        <Link href="/musica" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/musica" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         <div className="border-t border-gray-100 my-1" />
         {sortItems(musicaNavItems).map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
       </SmartFlyout>
 
       <SmartFlyout href="/fotografia" label={lbl('Fotografía y Video')}>
-        <Link href="/fotografia" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/fotografia" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         <div className="border-t border-gray-100 my-1" />
         {sortItems(fotografiaNavItems).map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
       </SmartFlyout>
 
       <SmartFlyout href="/alimentos-empresas" label={lbl('Alimentos para Empresas')}>
-        <Link href="/alimentos-empresas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-600`}>Ver catálogo completo</Link>
+        <Link href="/alimentos-empresas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver catálogo completo</Link>
         <div className="border-t border-gray-100 my-1" />
         {sortItems(empresasNavItems).map(item => <NavItemLink key={item.href} href={item.href} name={item.name} />)}
       </SmartFlyout>
@@ -997,7 +997,7 @@ export default function Navbar() {
               <a
                 href={`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}`}
                 target="_blank" rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-green-600 px-4 py-2 rounded-lg font-bold transition-colors font-serif flex items-center gap-2"
+                className="bg-[#0d6849] hover:bg-[#0a5740] px-4 py-2 rounded-lg font-bold transition-colors font-serif flex items-center gap-2"
                 data-testid="link-whatsapp-top"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1009,8 +1009,15 @@ export default function Navbar() {
 
             {/* Mobile hamburger */}
             <div className="md:hidden">
-              <button className="text-white hover:text-white/80" onClick={() => setMobileOpen(!mobileOpen)} data-testid="button-mobile-menu">
-                {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <button
+                type="button"
+                className="text-white hover:text-white/80 min-w-11 min-h-11 flex items-center justify-center"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+                aria-expanded={mobileOpen}
+                data-testid="button-mobile-menu"
+              >
+                {mobileOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
               </button>
             </div>
           </div>
@@ -1026,8 +1033,8 @@ export default function Navbar() {
 
             {/* Ciudad */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-ciudad">
-                Ciudad<ChevronDown className="w-3.5 h-3.5 ml-1" />
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-ciudad" aria-haspopup="true" aria-label="Seleccionar ciudad">
+                Ciudad<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <div className="absolute left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 max-h-80 overflow-y-auto">
                 {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
@@ -1068,24 +1075,24 @@ export default function Navbar() {
 
             {/* Mobiliario */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-mobiliario">
-                Mobiliario y Decoración<ChevronDown className="w-3.5 h-3.5 ml-1" />
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-mobiliario" aria-haspopup="true" aria-label="Mobiliario y decoración">
+                Mobiliario y Decoración<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <MobiliarioDropdown />
             </div>
 
             {/* Servicios */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-servicios">
-                Servicios<ChevronDown className="w-3.5 h-3.5 ml-1" />
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-servicios" aria-haspopup="true" aria-label="Servicios">
+                Servicios<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <ServiciosDropdown />
             </div>
 
             {/* Tipo de Evento */}
             <div className="relative group">
-              <button className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-tipo-evento">
-                Tipo de Evento<ChevronDown className="w-3.5 h-3.5 ml-1" />
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-tipo-evento" aria-haspopup="true" aria-label="Tipo de evento">
+                Tipo de Evento<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <SimpleDropdown items={eventoItems} align="right" width="w-52" />
             </div>
@@ -1099,8 +1106,14 @@ export default function Navbar() {
 
           {/* Mobile hamburger (on white row) */}
           <div className="md:hidden">
-            <button className="text-gray-700 hover:text-[#162040]" onClick={() => setMobileOpen(!mobileOpen)}>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button
+              type="button"
+              className="text-gray-700 hover:text-[#162040] min-w-11 min-h-11 flex items-center justify-center"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+              aria-expanded={mobileOpen}
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
               </svg>
             </button>
@@ -1151,7 +1164,7 @@ export default function Navbar() {
                     <Link href={group.href} className="block py-1 text-xs font-bold text-[#162040] font-serif">Ver {group.heading} →</Link>
                   )}
                   {group.items.map(item => (
-                    <Link key={item.href} href={item.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{item.name}</Link>
+                    <Link key={item.href} href={item.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{item.name}</Link>
                   ))}
                 </MobileSubSection>
               ))}
@@ -1172,58 +1185,58 @@ export default function Navbar() {
             <MobileSection title="Mobiliario y Decoración" id="mobiliario" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
               <Link href="/mesas-sillas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Mesas y Sillas</Link>
               <MobileSubSection title="Sillas" id="mob-sillas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(sillasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(sillasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Mesas" id="mob-mesas-tipos" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(mesasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(mesasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/salas-periqueras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Salas y Periqueras</Link>
               <MobileSubSection title="Salas" id="mob-salas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {salasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {salasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Periqueras" id="mob-periqueras" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {periquerasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {periquerasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/pistas-tarimas" className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">Pistas y Tarimas</Link>
               <Link href="/vajillas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Vajillas y Estilo</Link>
               <MobileSubSection title="Lozas" id="mob-lozas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {vajillasNavItems.lozas.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {vajillasNavItems.lozas.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Cerámicas" id="mob-ceramica" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {vajillasNavItems.ceramica.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {vajillasNavItems.ceramica.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Línea Mauve" id="mob-mauve" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {vajillasNavItems.mauve.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {vajillasNavItems.mauve.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Colecciones Rústicas" id="mob-rustica" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {vajillasNavItems.rustica.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {vajillasNavItems.rustica.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Colecciones Especiales" id="mob-especial" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {vajillasNavItems.especial.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {vajillasNavItems.especial.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Platos Base" id="mob-platos" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {vajillasNavItems.platos.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {vajillasNavItems.platos.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Cubiertos y Cristalería" id="mob-cristal" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {[...vajillasNavItems.cubiertos, ...vajillasNavItems.cristaleria].map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {[...vajillasNavItems.cubiertos, ...vajillasNavItems.cristaleria].map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/colgantes" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Colgantes Premium</Link>
               <MobileSubSection title="Colgantes Florales" id="mob-col-floral" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {colgantesNavItems.floral.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {colgantesNavItems.floral.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Follaje y Pampas" id="mob-col-follaje" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {colgantesNavItems.follaje.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {colgantesNavItems.follaje.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Luminosos y Disco" id="mob-col-luminoso" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {colgantesNavItems.luminoso.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {colgantesNavItems.luminoso.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Estructuras Especiales" id="mob-col-estructura" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {colgantesNavItems.estructura.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {colgantesNavItems.estructura.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/entelados" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Entelados para Techo</Link>
-              {enteladosNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+              {enteladosNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               <Link href="/carpas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Carpas para Eventos</Link>
-              {carpasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+              {carpasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
             </MobileSection>
 
             <MobileSection title="Servicios" id="servicios" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
@@ -1233,55 +1246,55 @@ export default function Navbar() {
               <Link href="/audio-iluminacion-video" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Audio, Iluminación y Video</Link>
               {audioIluminacionNavGroups.map(group => (
                 <MobileSubSection key={group.heading} title={group.heading} id={`mob-audio-${group.heading.toLowerCase()}`} expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                  {group.items.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                  {group.items.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
                 </MobileSubSection>
               ))}
               <Link href="/espacios-eventos" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Espacios</Link>
               <MobileSubSection title="Tipos de venue" id="mob-esp" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(espaciosNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(espaciosNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/reposteria" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Repostería</Link>
               <MobileSubSection title="Especialidades" id="mob-repo" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(reposteriaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(reposteriaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/wedding-planner" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Wedding Planner</Link>
               <MobileSubSection title="Servicios" id="mob-wed" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(weddingNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(weddingNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/musica" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Música</Link>
               <MobileSubSection title="Opciones musicales" id="mob-mus" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(musicaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(musicaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/fotografia" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Fotografía y Video</Link>
               <MobileSubSection title="Servicios foto/video" id="mob-foto" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(fotografiaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(fotografiaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/alimentos-empresas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Alimentos para Empresas</Link>
               <MobileSubSection title="Servicios empresariales" id="mob-emp" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {sortItems(empresasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {sortItems(empresasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/shows" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Shows</Link>
               <MobileSubSection title="Percusión" id="mob-shows-perc" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {showsNavItems.percusion.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {showsNavItems.percusion.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Show y Danza" id="mob-shows-danza" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {showsNavItems.danza.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {showsNavItems.danza.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Tecnología y Luz" id="mob-shows-tec" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {showsNavItems.tecnologia.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {showsNavItems.tecnologia.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Circo" id="mob-shows-circo" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {showsNavItems.circo.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {showsNavItems.circo.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/floreria" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Florería y Decoración</Link>
               <MobileSubSection title="Floral" id="mob-svc-floral" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {floreriaNavItems.floral.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {floreriaNavItems.floral.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Globos" id="mob-svc-globos" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {floreriaNavItems.globos.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {floreriaNavItems.globos.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <MobileSubSection title="Decoración" id="mob-svc-deco" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
-                {floreriaNavItems.decoracion.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-500 font-serif hover:text-[#162040]">{i.name}</Link>)}
+                {floreriaNavItems.decoracion.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
             </MobileSection>
 
@@ -1299,7 +1312,7 @@ export default function Navbar() {
               <a
                 href={`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}`}
                 target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#25D366] text-white font-serif font-bold text-sm"
+                className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#0d6849] text-white font-serif font-bold text-sm"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                 WhatsApp
@@ -1323,7 +1336,7 @@ function MobileSection({ title, id, expanded, setExpanded, children }) {
         onClick={() => setExpanded(open ? null : id)}
       >
         <span className="text-sm">{title}</span>
-        <ChevronDown size={15} className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown size={15} className={`text-gray-600 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && <div className="pl-4 border-l-2 border-[#162040]/20 my-2">{children}</div>}
     </div>
@@ -1335,11 +1348,11 @@ function MobileSubSection({ title, id, expanded, setExpanded, children }) {
   return (
     <div>
       <button
-        className="w-full flex items-center justify-between py-2 text-left text-sm font-medium text-gray-500 hover:text-[#162040] font-serif"
+        className="w-full flex items-center justify-between py-2 text-left text-sm font-medium text-gray-600 hover:text-[#162040] font-serif"
         onClick={() => setExpanded(open ? null : id)}
       >
         {title}
-        <ChevronDown size={13} className={`text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown size={13} className={`text-gray-600 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && <div className="pl-4 border-l border-gray-200 mb-2">{children}</div>}
     </div>

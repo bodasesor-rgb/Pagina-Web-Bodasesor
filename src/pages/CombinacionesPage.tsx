@@ -30,7 +30,7 @@ export default function CombinacionesPage() {
       {/* Hero */}
       <section className="bg-[#162040] py-14 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <nav className="flex items-center justify-center gap-2 text-sm text-white/50 mb-6 font-serif flex-wrap">
+          <nav className="flex items-center justify-center gap-2 text-sm text-[#8a9bb5] mb-6 font-serif flex-wrap">
             <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
             <span>/</span>
             <Link href="/mesas-sillas" className="hover:text-white transition-colors">Mesas y Sillas</Link>
@@ -47,7 +47,7 @@ export default function CombinacionesPage() {
             <a
               href={waGeneral}
               target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-green-500 text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               <WaSvg /> Cotizar por WhatsApp
             </a>
@@ -101,7 +101,7 @@ export default function CombinacionesPage() {
                         {c.label}
                       </h2>
                     </Link>
-                    <p className="text-gray-500 text-sm font-serif leading-relaxed mb-4">
+                    <p className="text-gray-600 text-sm font-serif leading-relaxed mb-4">
                       {c.desc}
                     </p>
                     <div className="flex gap-2">
@@ -112,7 +112,7 @@ export default function CombinacionesPage() {
                       <a
                         href={waMsg}
                         target="_blank" rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-green-500 text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200"
+                        className="flex-1 flex items-center justify-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200"
                       >
                         <WaSvg /> Cotizar
                       </a>
