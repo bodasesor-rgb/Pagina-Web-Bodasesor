@@ -31,7 +31,7 @@
           var cities = ',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';
           if (cities.indexOf(',' + segments[0] + ',') >= 0) return;
         }
-        document.documentElement.classList.add('no-lcp-shell');
+        document.documentElement.classList.add('no-lcp-hero');
       })();
     </script>
     <style>
@@ -49,6 +49,7 @@
       #static-nav-shell{position:fixed;top:0;left:0;right:0;z-index:50;pointer-events:none}
       #static-nav-shell .nav-top{height:4rem;background:#162040}
       #static-nav-shell .nav-sub{height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}
+      html.no-lcp-hero #static-hero-copy,html.no-lcp-hero #lcp-hero-wrap{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       html.no-lcp-shell #static-hero-copy,html.no-lcp-shell #lcp-hero-wrap,html.no-lcp-shell #static-nav-shell{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy{top:8rem}#static-hero-copy h1{font-size:4.5rem}#static-hero-copy .hero-sub{font-size:1.25rem}}

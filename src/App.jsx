@@ -5,7 +5,7 @@ import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
-import { hideStaticLcpShell, isHomePath } from './utils/static-lcp-shell'
+import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath } from './utils/static-lcp-shell'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
 
@@ -163,7 +163,7 @@ function StaticLcpCleanup() {
   const [location] = useLocation()
   useLayoutEffect(() => {
     if (!isHomePath(location)) {
-      hideStaticLcpShell()
+      hideStaticHeroOnly()
     }
   }, [location])
   return null

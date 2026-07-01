@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, lazy, Suspense } from "react";
 import { useLocation } from "wouter";
 import CityLink from "./CityLink";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
@@ -21,6 +21,8 @@ import { empresasNavItems } from "../data/empresas-products";
 import { espaciosNavItems } from "../data/espacios-products";
 import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
 import { banquetesNavGroups } from "../data/banquetes-menus";
+
+import { hideStaticLcpShell } from "../utils/static-lcp-shell";
 
 const SearchBar = lazy(() => import("./SearchBar"));
 
@@ -945,9 +947,10 @@ export default function Navbar() {
   const [location, setLocation] = useLocation();
   const { city } = useCity();
 
-  useEffect(() => {
-    document.getElementById('static-nav-shell')?.remove();
-  }, []);
+  useLayoutEffect(() => {
+    hideStaticLcpShell()
+    document.getElementById('static-nav-shell')?.remove()
+  }, [])
 
   const selectCity = (citySlug) => {
     if (!CITY_MAP[citySlug]) return;
