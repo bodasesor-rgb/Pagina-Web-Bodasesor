@@ -10,7 +10,7 @@ const JSON_LD = {
       url: 'https://bodasesor.com/',
       logo: 'https://bodasesor.com/favicon.svg',
       description:
-        'Banquetes, catering gourmet, mobiliario y servicios integrales para bodas, quinceañeras y eventos corporativos en México.',
+        'Productora de eventos integrales: banquetes, catering, mobiliario y coordinación completa para bodas, quinceañeras y eventos corporativos en México.',
       telephone: '+52-55-4008-0373',
       sameAs: [
         'https://www.facebook.com/bodasesor',
@@ -39,7 +39,7 @@ const JSON_LD = {
       priceRange: '$$',
       areaServed: { '@type': 'Country', name: 'México' },
       description:
-        'Proveedor de banquetes, catering, mobiliario, música, fotografía y wedding planner para eventos en México.',
+        'Productora de eventos con banquetes, catering, mobiliario y producción integral para celebraciones en México.',
     },
   ],
 }

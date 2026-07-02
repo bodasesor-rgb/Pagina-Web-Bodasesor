@@ -159,11 +159,11 @@ export default function Home() {
         </div>
       </section>
 
-      <HomeSeoContent />
-
       <Suspense fallback={null}>
         <HomeBelowFold />
       </Suspense>
+
+      <HomeSeoContent />
     </div>
   );
 }
