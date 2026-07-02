@@ -3,7 +3,7 @@ import { useLocation } from 'wouter'
 import { useCity } from '../context/CityContext'
 
 const SEO_MAP = {
-  '/':                     { title: 'Bodasesor Eventos',           desc: 'Banquetes, catering, mobiliario y servicios premium para bodas, quinceañeras y eventos corporativos en México.' },
+  '/':                     { title: 'Banquetes y Catering para Eventos en México', desc: 'Contrata banquetes, catering gourmet, mobiliario, música, fotografía y wedding planner para bodas, XV años y eventos corporativos en CDMX, Guadalajara, Monterrey y todo México.' },
   '/galeria':              { title: 'Galería de Eventos',          desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor en México.' },
   '/banquetes-catering':   { title: 'Banquetes y Catering',        desc: 'Catálogo completo de banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas para eventos.' },
   '/barras-de-bebidas':    { title: 'Barras de Bebidas',           desc: 'Barras de bebidas con y sin alcohol para eventos: mocteles, mixología, café premium y carritos de helado.' },
@@ -31,8 +31,8 @@ export default function GlobalSEO() {
     if (!seo) return
 
     document.title = city
-      ? `${seo.title} ${city.short || city.name} | Bodasesor Eventos`
-      : `${seo.title} | Bodasesor Eventos`
+      ? `${seo.title} en ${city.short || city.name} | Bodasesor`
+      : `${seo.title} | Bodasesor`
 
     let meta = document.querySelector('meta[name="description"]')
     if (!meta) {
@@ -41,6 +41,17 @@ export default function GlobalSEO() {
       document.head.appendChild(meta)
     }
     meta.setAttribute('content', city ? `${seo.desc} Disponible en ${city.name}.` : seo.desc)
+
+    const canonicalHref = city && path === '/'
+      ? `https://bodasesor.com/${city.slug}`
+      : `https://bodasesor.com${path === '/' ? '' : path}`
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', canonicalHref)
   }, [location, city])
 
   return null

@@ -5,6 +5,8 @@ import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
 import { withCityPath, stripCityFromPath } from "../utils/city-url";
 import { hideStaticLcpShell } from "../utils/static-lcp-shell";
+import HomeSeoContent from "../components/HomeSeoContent";
+import HomeJsonLd from "../components/HomeJsonLd";
 
 const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
 
@@ -94,6 +96,7 @@ export default function Home() {
 
   return (
     <div>
+      <HomeJsonLd />
       <section className="relative min-h-[420px] flex items-center overflow-hidden" data-testid="section-hero">
         <picture className="absolute inset-0 -z-10" aria-hidden="true">
           <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
@@ -118,9 +121,9 @@ export default function Home() {
             className="text-4xl md:text-7xl font-serif font-bold text-white mb-8 leading-tight"
           >
             {city ? (
-              <>Encuentra todo para tu evento<br />en {city.name}</>
+              <>Banquetes y catering para eventos<br />en {city.name}</>
             ) : (
-              <>Encuentra todo para tu evento<br />en un solo lugar</>
+              <>Banquetes, catering y servicios<br />para eventos en México</>
             )}
           </h1>
           <p className="text-xl md:text-2xl text-[#f5efe8] mb-12 max-w-4xl mx-auto font-serif">
@@ -155,6 +158,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <HomeSeoContent />
 
       <Suspense fallback={null}>
         <HomeBelowFold />

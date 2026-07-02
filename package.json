@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "generate:redirects": "node scripts/generate-redirects.mjs",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "guard:redirects": "node scripts/guard-redirects.mjs",
     "check:redirects": "node scripts/check-production-redirects.mjs",
-    "build": "node scripts/guard-redirects.mjs && npm run generate:redirects && vite build && node scripts/verify-dist-assets.mjs && node scripts/verify-redirects-deploy.mjs",
+    "build": "node scripts/guard-redirects.mjs && npm run generate:redirects && npm run generate:sitemap && vite build && node scripts/verify-dist-assets.mjs && node scripts/verify-redirects-deploy.mjs",
     "build:netlify": "node scripts/netlify-build.mjs",
     "deploy:netlify": "node scripts/deploy-netlify.mjs",
     "build:safe": "node scripts/safe-build.mjs",
