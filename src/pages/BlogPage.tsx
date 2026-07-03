@@ -131,6 +131,17 @@ export default function BlogPage() {
               </Link>
             ))}
           </div>
+          <div className="mt-14 text-center">
+            <a
+              href="/blog/articulos/"
+              className="inline-flex items-center gap-2 border-2 border-[#162040] text-[#162040] hover:bg-[#162040] hover:text-white px-10 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105"
+            >
+              Ver más blogs
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
         </>
