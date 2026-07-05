@@ -63,7 +63,7 @@ export default function CombinacionesPage() {
 
       {/* Stats bar */}
       <section className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap gap-6 justify-center text-sm font-serif text-[#162040]/70">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap gap-6 justify-center text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">{COMBINACIONES.length}</strong> combinaciones disponibles</span>
           <span>•</span>
           <span>Entrega, armado y retiro incluidos</span>

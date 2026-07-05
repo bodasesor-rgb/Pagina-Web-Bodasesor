@@ -52,7 +52,7 @@ export default function EnteladosPage() {
 
       {/* Stats bar */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">4</strong> estilos disponibles</span>
           <span>•</span>
           <span>Cotizado por m²</span>

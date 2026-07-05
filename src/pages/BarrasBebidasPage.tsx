@@ -86,7 +86,7 @@ export default function BarrasBebidasPage() {
 
       {/* Stats */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">{ITEMS.length}</strong> opciones de barras</span>
           <span>•</span>
           <span>Con y sin alcohol</span>
@@ -130,6 +130,7 @@ export default function BarrasBebidasPage() {
       {/* Cards */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
+          <h2 className="sr-only">Catálogo de barras de bebidas</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {ITEMS.map(item => (
               <BebidaCard key={item.href} {...item} city={city?.name} />
@@ -167,7 +168,7 @@ function BebidaCard({ name, href, tag, icon, img, city }: {
     <div id={href.slice(1)} className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300 flex flex-col">
       <Link href={href}>
         <div className="h-52 overflow-hidden bg-[#f5efe8] relative">
-          <img src={img} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           <span className="absolute bottom-3 left-3 text-3xl">{icon}</span>

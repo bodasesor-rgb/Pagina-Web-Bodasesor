@@ -26,7 +26,7 @@ export default function Footer() {
 
           {/* Lo Más Buscado */}
           <div>
-            <h3 className="text-xl font-bold mb-6 font-serif">Lo Más Buscado</h3>
+            <p className="text-xl font-bold mb-6 font-serif">Lo Más Buscado</p>
             <ul className="space-y-3">
               {[
                 { name: 'Banquetes para Bodas', href: '/banquetes' },
@@ -45,7 +45,7 @@ export default function Footer() {
 
           {/* Bodasesor */}
           <div>
-            <h3 className="text-xl font-bold mb-6 font-serif">Bodasesor</h3>
+            <p className="text-xl font-bold mb-6 font-serif">Bodasesor</p>
             <ul className="space-y-3">
               {[
                 { name: 'Banquetes & Catering', href: '/banquetes-catering' },
@@ -65,7 +65,7 @@ export default function Footer() {
 
           {/* Ciudades */}
           <div>
-            <h3 className="text-xl font-bold mb-6 font-serif">Ciudades</h3>
+            <p className="text-xl font-bold mb-6 font-serif">Ciudades</p>
             <ul className="space-y-3">
               {CITIES.map(item => (
                 <li key={item.href}>
@@ -85,7 +85,7 @@ export default function Footer() {
 
           {/* Contacto */}
           <div>
-            <h3 className="text-xl font-bold mb-6 font-serif">Contacto</h3>
+            <p className="text-xl font-bold mb-6 font-serif">Contacto</p>
             <ul className="space-y-4">
               <li>
                 <a href={`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}`}

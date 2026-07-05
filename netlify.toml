@@ -42,12 +42,12 @@
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/*.webp"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/legacy-redirect-boot.js"

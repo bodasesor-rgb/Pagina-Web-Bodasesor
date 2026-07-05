@@ -113,7 +113,7 @@ export default function BanquetesCateringPage() {
 
       {/* Stats */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">{total}</strong> servicios disponibles</span>
           <span>•</span>
           <span>Banquetes, catering y estaciones</span>

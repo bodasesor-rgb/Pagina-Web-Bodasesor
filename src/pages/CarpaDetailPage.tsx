@@ -159,7 +159,7 @@ export default function CarpaDetailPage({ slug }: Props) {
                 ¿Te interesa esta carpa?
               </h3>
               {city && (
-                <p className="text-sm text-[#162040]/70 font-serif mb-4">
+                <p className="text-sm text-gray-600 font-serif mb-4">
                   Servicio disponible en <strong>{city.name}</strong>
                 </p>
               )}

@@ -12,7 +12,7 @@ export default function EventosLegacyRedirect({ slug }) {
   }, [slug, navigate])
 
   return (
-    <div className="min-h-[40vh] flex items-center justify-center font-serif text-[#162040]/60">
+    <div className="min-h-[40vh] flex items-center justify-center font-serif text-gray-700">
       Redirigiendo…
     </div>
   )

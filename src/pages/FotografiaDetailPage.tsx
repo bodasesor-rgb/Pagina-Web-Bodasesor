@@ -30,7 +30,7 @@ export default function FotografiaDetailPage({ slug }: { slug?: string }) {
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-2">Fotografía y Video</p>
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-2">{product.name}{city ? ` en ${city.name}` : ''}</h1>
-            <p className="font-serif text-[#162040]/60 italic mb-6">{product.tagline}</p>
+            <p className="font-serif text-gray-700 italic mb-6">{product.tagline}</p>
             <p className="font-serif text-gray-600 leading-relaxed mb-8">{product.desc}</p>
             <div className="grid sm:grid-cols-2 gap-6 mb-8">
               <div>

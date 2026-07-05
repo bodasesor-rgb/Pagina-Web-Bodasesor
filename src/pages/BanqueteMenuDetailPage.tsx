@@ -120,7 +120,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                   <div>
                     {content ? (
                       <>
-                        <span className="text-[#162040]/60 text-xs font-bold uppercase tracking-wide font-serif">{label}</span>
+                        <span className="text-gray-700 text-xs font-bold uppercase tracking-wide font-serif">{label}</span>
                         <p className="text-[#162040] font-serif mt-0.5">{content}</p>
                       </>
                     ) : (
@@ -206,9 +206,9 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                 <div className={`text-2xl mb-2 ${s.slug === menu.slug ? "text-white" : "text-[#162040]"}`}>
                   {s.slug === "buffet" ? "🍽️" : s.slug === "4-tiempos" ? "4️⃣" : s.slug === "3-tiempos" ? "3️⃣" : "2️⃣"}
                 </div>
-                <h3 className={`font-serif font-bold text-sm ${s.slug === menu.slug ? "text-white" : "text-[#162040]"}`}>
+                <p className={`font-serif font-bold text-sm ${s.slug === menu.slug ? "text-white" : "text-[#162040]"}`}>
                   {s.label}
-                </h3>
+                </p>
               </Link>
             ))}
           </div>

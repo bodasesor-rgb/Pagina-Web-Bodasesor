@@ -19,7 +19,7 @@ function ProductCard({ name, img, href, waMsg }: { name: string; img: string; hr
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={href}>
         <div className="aspect-[4/3] overflow-hidden bg-[#f5efe8]">
-          <img src={img} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="p-4 pb-2">
           <h3 className="font-serif font-bold text-[#162040] text-sm leading-snug">{name}</h3>
@@ -74,7 +74,7 @@ export default function SalasPeriquerasPage() {
 
       {/* Stats bar */}
       <section className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap gap-6 justify-center text-sm font-serif text-[#162040]/70">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap gap-6 justify-center text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">{SALAS_CATALOG.length}</strong> modelos de salas</span>
           <span>•</span>
           <span><strong className="text-[#162040]">{PERIQUERAS_CATALOG.length}</strong> modelos de periqueras</span>

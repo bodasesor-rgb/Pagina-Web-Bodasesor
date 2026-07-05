@@ -66,7 +66,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-2">
               {product.name}{city ? ` en ${city.name}` : ''}
             </h1>
-            <p className="font-serif text-[#162040]/60 italic mb-6">{product.tagline}</p>
+            <p className="font-serif text-gray-700 italic mb-6">{product.tagline}</p>
             <p className="font-serif text-gray-600 leading-relaxed mb-8">{product.desc}</p>
 
             <div className="grid sm:grid-cols-2 gap-6 mb-8">
@@ -127,7 +127,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
         {/* Back link */}
         <div className="mt-12 text-center">
           <Link href="/audio-iluminacion-video"
-            className="inline-flex items-center gap-2 font-serif text-sm text-[#162040]/60 hover:text-[#162040] transition-colors">
+            className="inline-flex items-center gap-2 font-serif text-sm text-gray-700 hover:text-[#162040] transition-colors">
             ← Ver catálogo completo de Audio, Iluminación y Video
           </Link>
         </div>

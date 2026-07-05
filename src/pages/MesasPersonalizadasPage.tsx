@@ -91,7 +91,7 @@ export default function MesasPersonalizadasPage() {
 
       {/* Stats */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">{ITEMS.length}</strong> tipos de mesas</span>
           <span>•</span>
           <span>Diseño personalizado</span>
@@ -178,7 +178,7 @@ function MesaCard({ name, href, tag, icon, img, highlight, city }: {
       )}
       <Link href={href}>
         <div className="h-52 overflow-hidden bg-[#f5efe8] relative">
-          <img src={img} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          <img src={img} alt="" width={400} height={208} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           <span className="absolute bottom-3 left-3 text-3xl">{icon}</span>

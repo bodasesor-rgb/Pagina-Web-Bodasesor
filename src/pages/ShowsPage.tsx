@@ -56,7 +56,7 @@ export default function ShowsPage() {
 
       {/* Stats bar */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">13</strong> shows disponibles</span>
           <span>•</span>
           <span>Percusión, danza y tecnología</span>
@@ -196,7 +196,7 @@ function ShowCard({ product }: { product: ShowsProduct }) {
       <div className="p-5">
         <div className="flex items-center justify-between mb-1">
           <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">{product.categoryLabel}</p>
-          <p className="text-[10px] font-serif text-[#162040]/30">{product.duracion}</p>
+          <p className="text-[10px] font-serif text-gray-600">{product.duracion}</p>
         </div>
         <h3 className="font-serif font-bold text-[#162040] text-base mb-1">{product.name}</h3>
         <p className="font-serif text-gray-600 text-xs mb-3 italic">{product.tagline}</p>

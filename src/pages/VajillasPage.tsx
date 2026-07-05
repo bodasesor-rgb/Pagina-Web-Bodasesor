@@ -48,7 +48,7 @@ export default function VajillasPage() {
 
       {/* Stats bar */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">+40</strong> colecciones disponibles</span>
           <span>•</span>
           <span><strong className="text-[#162040]">8</strong> categorías de producto</span>
@@ -115,10 +115,10 @@ export default function VajillasPage() {
                       <p className="text-gray-600 font-serif text-xs mb-3 leading-relaxed line-clamp-2">{product.short}</p>
                       <div className="flex flex-wrap gap-1 mb-4">
                         {product.piezas.slice(0, 3).map(p => (
-                          <span key={p} className="text-[10px] font-serif bg-[#f5efe8] text-[#162040]/60 px-2 py-0.5 rounded-full">{p}</span>
+                          <span key={p} className="text-[10px] font-serif bg-[#f5efe8] text-gray-700 px-2 py-0.5 rounded-full">{p}</span>
                         ))}
                         {product.piezas.length > 3 && (
-                          <span className="text-[10px] font-serif bg-[#f5efe8] text-[#162040]/60 px-2 py-0.5 rounded-full">+{product.piezas.length - 3} más</span>
+                          <span className="text-[10px] font-serif bg-[#f5efe8] text-gray-700 px-2 py-0.5 rounded-full">+{product.piezas.length - 3} más</span>
                         )}
                       </div>
                       <div className="flex gap-2">

@@ -44,7 +44,7 @@ export default function ColgantesPage() {
 
       {/* Stats bar */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">16</strong> diseños exclusivos</span>
           <span>•</span>
           <span><strong className="text-[#162040]">4</strong> estilos de instalación</span>
@@ -108,7 +108,7 @@ export default function ColgantesPage() {
                         <span className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">
                           {product.catLabel}
                         </span>
-                        <span className="text-[10px] font-serif bg-[#f5efe8] text-[#162040]/60 px-2 py-0.5 rounded-full">
+                        <span className="text-[10px] font-serif bg-[#f5efe8] text-gray-700 px-2 py-0.5 rounded-full">
                           {product.dimensiones}
                         </span>
                       </div>
@@ -116,10 +116,10 @@ export default function ColgantesPage() {
                       <p className="text-gray-600 font-serif text-xs mb-3 leading-relaxed line-clamp-2">{product.short}</p>
                       <div className="flex flex-wrap gap-1 mb-4">
                         {product.elementos.slice(0, 3).map(e => (
-                          <span key={e} className="text-[10px] font-serif bg-[#f5efe8] text-[#162040]/60 px-2 py-0.5 rounded-full">{e}</span>
+                          <span key={e} className="text-[10px] font-serif bg-[#f5efe8] text-gray-700 px-2 py-0.5 rounded-full">{e}</span>
                         ))}
                         {product.elementos.length > 3 && (
-                          <span className="text-[10px] font-serif bg-[#f5efe8] text-[#162040]/60 px-2 py-0.5 rounded-full">+{product.elementos.length - 3}</span>
+                          <span className="text-[10px] font-serif bg-[#f5efe8] text-gray-700 px-2 py-0.5 rounded-full">+{product.elementos.length - 3}</span>
                         )}
                       </div>
                       <div className="flex gap-2">

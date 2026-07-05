@@ -75,6 +75,8 @@ function EventGalleryCarousel({ slug }: { slug: string }) {
           key={imagePaths[active]}
           src={imagePaths[active]}
           alt="Evento realizado por Bodasesor"
+          width={800}
+          height={600}
           className="w-full h-full object-contain bg-[#f5efe8]"
           onError={e => { (e.target as HTMLImageElement).src = '/images/galeria/g1.jpg'; }}
         />
@@ -821,6 +823,8 @@ export default function EventTypePage({ product }: EventTypePageProps) {
           aria-hidden="true"
           fetchPriority="high"
           decoding="async"
+          width={1200}
+          height={675}
           className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-[#162040]/55" />
@@ -981,9 +985,10 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                           <a
                             href={WA_MSG(svc.title)}
                             target="_blank" rel="noopener noreferrer"
+                            aria-label={`Cotizar ${svc.title} por WhatsApp`}
                             className="flex items-center gap-1 bg-[#0d6849] hover:bg-[#0a5740] text-white text-xs font-bold font-serif px-3 py-2 rounded-lg transition-all duration-300 hover:scale-110"
                           >
-                            <WaSvg />
+                            <WaSvg aria-hidden="true" />
                           </a>
                         </div>
                       </div>
@@ -1014,7 +1019,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                 <div className="w-12 h-12 rounded-xl bg-[#162040] flex items-center justify-center mx-auto mb-4">
                   <item.Icon className="w-6 h-6 text-white" />
                 </div>
-                <h4 className="font-serif font-bold text-[#162040] mb-2">{item.title}</h4>
+                <h3 className="font-serif font-bold text-[#162040] mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-600 font-serif">{item.desc}</p>
               </div>
             ))}

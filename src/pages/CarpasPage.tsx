@@ -59,7 +59,7 @@ export default function CarpasPage() {
 
       {/* Stats bar */}
       <div className="bg-[#f5efe8] border-b border-[#162040]/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-[#162040]/70">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-6 text-sm font-serif text-gray-600">
           <span><strong className="text-[#162040]">{CARPAS.length}</strong> estilos disponibles</span>
           <span>•</span>
           <span>Cotizado por m²</span>
@@ -110,7 +110,7 @@ export default function CarpasPage() {
                     <h3 className="text-xl font-serif font-bold text-[#162040] mb-1">
                       {carpa.name}{city ? ` ${city.short}` : ''}
                     </h3>
-                    <p className="text-sm text-[#162040]/60 font-serif italic mb-3">{carpa.tagline}</p>
+                    <p className="text-sm text-gray-700 font-serif italic mb-3">{carpa.tagline}</p>
                     <p className="text-gray-600 font-serif text-sm leading-relaxed mb-4">{carpa.short}</p>
 
                     <div className="mb-4">
@@ -130,8 +130,9 @@ export default function CarpasPage() {
                         Ver detalles
                       </Link>
                       <a href={wa} target="_blank" rel="noopener noreferrer"
+                        aria-label={`Cotizar ${carpa.name} por WhatsApp`}
                         className="flex items-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white text-sm font-bold font-serif py-2.5 px-3 rounded-xl transition-colors">
-                        <WaSvg />
+                        <WaSvg aria-hidden="true" />
                       </a>
                     </div>
                   </div>

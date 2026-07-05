@@ -199,9 +199,8 @@ function CityBadge() {
       }}
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
       title="Quitar ciudad"
-      aria-label={`Quitar filtro de ${city.name}`}
     >
-      📍 {city.short}
+      <span aria-hidden="true">📍</span> {city.short}
       <X className="w-2.5 h-2.5 opacity-60 ml-0.5" />
     </button>
   );
@@ -701,7 +700,7 @@ function MobiliarioDropdown() {
           </div>
 
           <div className="border-t border-gray-100 my-1" />
-          <Link href="/colgantes" className={`${ddLink} text-[#162040]/60`}>Ver catálogo completo</Link>
+          <Link href="/colgantes" className={`${ddLink} text-gray-700`}>Ver catálogo completo</Link>
 
         </div>
       </div>
@@ -1036,7 +1035,7 @@ export default function Navbar() {
 
             {/* Ciudad */}
             <div className="relative group">
-              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-ciudad" aria-haspopup="true" aria-label="Seleccionar ciudad">
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-ciudad" aria-haspopup="true">
                 Ciudad<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <div className="absolute left-0 mt-1 w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 max-h-80 overflow-y-auto">
@@ -1078,7 +1077,7 @@ export default function Navbar() {
 
             {/* Mobiliario */}
             <div className="relative group">
-              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-mobiliario" aria-haspopup="true" aria-label="Mobiliario y decoración">
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-mobiliario" aria-haspopup="true">
                 Mobiliario y Decoración<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <MobiliarioDropdown />
@@ -1086,7 +1085,7 @@ export default function Navbar() {
 
             {/* Servicios */}
             <div className="relative group">
-              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-servicios" aria-haspopup="true" aria-label="Servicios">
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-servicios" aria-haspopup="true">
                 Servicios<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <ServiciosDropdown />
@@ -1094,7 +1093,7 @@ export default function Navbar() {
 
             {/* Tipo de Evento */}
             <div className="relative group">
-              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-tipo-evento" aria-haspopup="true" aria-label="Tipo de evento">
+              <button type="button" className="text-gray-700 hover:text-[#162040] font-serif text-sm font-bold transition-colors flex items-center px-3 py-2" data-testid="nav-tipo-evento" aria-haspopup="true">
                 Tipo de Evento<ChevronDown className="w-3.5 h-3.5 ml-1" aria-hidden="true" />
               </button>
               <SimpleDropdown items={eventoItems} align="right" width="w-52" />

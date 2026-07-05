@@ -781,7 +781,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                     <div>
                       {content ? (
                         <>
-                          <span className="text-[#162040]/60 text-xs font-bold uppercase tracking-wide font-serif">{label}</span>
+                          <span className="text-gray-700 text-xs font-bold uppercase tracking-wide font-serif">{label}</span>
                           <p className="text-[#162040] font-serif mt-0.5">{content}</p>
                         </>
                       ) : (
