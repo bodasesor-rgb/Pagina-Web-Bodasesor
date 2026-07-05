@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
+import OptimizedImage from "../components/OptimizedImage";
 import type { ProductData } from "../data/products";
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -817,12 +818,11 @@ export default function EventTypePage({ product }: EventTypePageProps) {
 
       {/* ── 1. HERO ── */}
       <section className="relative overflow-hidden bg-[#162040]" style={{ minHeight: '280px' }}>
-        <img
+        <OptimizedImage
           src={EVENT_HERO_IMAGES[product.slug] ?? '/images/galeria/g3.jpg'}
           alt=""
           aria-hidden="true"
-          fetchPriority="high"
-          decoding="async"
+          priority
           width={1200}
           height={675}
           className="absolute inset-0 w-full h-full object-cover opacity-60"

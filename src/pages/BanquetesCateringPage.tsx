@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import OptimizedImage from "../components/OptimizedImage";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar un servicio de banquetes o catering para mi evento. ¿Me pueden dar información?");
@@ -158,7 +159,7 @@ export default function BanquetesCateringPage() {
 
       {/* Secciones por categoría */}
       {CATEGORIES.map((cat, ci) => (
-        <section key={cat.id} id={cat.id} className={`py-12 px-4 ${cat.bg}`}>
+        <section key={cat.id} id={cat.id} className={`py-12 px-4 cv-auto ${cat.bg}`}>
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
               <span className="text-3xl">{cat.icon}</span>
@@ -169,8 +170,8 @@ export default function BanquetesCateringPage() {
               </div>
             </div>
             <div className={`grid grid-cols-1 sm:grid-cols-2 ${cat.items.length >= 6 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6`}>
-              {cat.items.map(item => (
-                <ServiceCard key={item.href} name={item.name} href={item.href} tag={item.tag} img={item.img} city={city?.name} />
+              {cat.items.map((item, idx) => (
+                <ServiceCard key={item.href} name={item.name} href={item.href} tag={item.tag} img={item.img} city={city?.name} priority={ci === 0 && idx === 0} />
               ))}
             </div>
           </div>
@@ -196,13 +197,13 @@ export default function BanquetesCateringPage() {
   );
 }
 
-function ServiceCard({ name, href, tag, img, city }: { name: string; href: string; tag: string; img: string; city?: string }) {
+function ServiceCard({ name, href, tag, img, city, priority = false }: { name: string; href: string; tag: string; img: string; city?: string; priority?: boolean }) {
   const waMsg = WA + encodeURIComponent(`Hola, me interesa cotizar "${name}"${city ? ` en ${city}` : ''} para mi evento.`);
   return (
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
-      <Link href={href}>
+      <Link href={href} aria-label={`Ver ${name}`}>
         <div className="h-44 overflow-hidden bg-[#f5efe8]">
-          <img src={img} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          <OptimizedImage src={img} alt="" width={400} height={176} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
         </div>
       </Link>

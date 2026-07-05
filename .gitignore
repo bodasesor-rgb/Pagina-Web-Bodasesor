@@ -8,3 +8,6 @@ dist
 live-bundle.js
 private/credentials/
 nexus-ia-power*.json
+audit-pagespeed-results.json
+public/sitemap.xml
+public/images/**/*.webp

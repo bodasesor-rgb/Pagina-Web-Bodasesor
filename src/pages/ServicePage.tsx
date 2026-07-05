@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { Lightbox } from "../components/Lightbox";
-import { getProductBySlug } from "../data/products";
+import OptimizedImage from "../components/OptimizedImage";
+import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
-import EventTypePage from "./EventTypePage";
+const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
   Camera, Truck, Car, Package, Building2, Landmark, Castle, Factory, Flame,
@@ -463,11 +464,24 @@ export default function ServicePage({ params }: ServicePageProps) {
     : params.slug;
 
   const slug = stripCityFromSlug(rawSlug);
-  const product = getProductBySlug(rawSlug) ?? getProductBySlug(slug);
+  const [product, setProduct] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoaded(false);
+    (async () => {
+      const p = (await getProductBySlugAsync(rawSlug)) ?? (await getProductBySlugAsync(slug));
+      if (cancelled) return;
+      setProduct(p);
+      setLoaded(true);
+    })();
+    return () => { cancelled = true; };
+  }, [rawSlug, slug]);
 
   const { city } = useCity();
   useEffect(() => {
@@ -476,6 +490,14 @@ export default function ServicePage({ params }: ServicePageProps) {
       ? `${product.seoTitle} ${city.short} | Bodasesor Eventos`
       : `${product.seoTitle} | Bodasesor Eventos`;
   }, [product?.seoTitle, city]);
+
+  if (!loaded) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center font-serif text-gray-600">
+        Cargando…
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -495,7 +517,15 @@ export default function ServicePage({ params }: ServicePageProps) {
   }
 
   if (product.category === 'eventos') {
-    return <EventTypePage product={product} />;
+    return (
+      <Suspense fallback={
+        <div className="min-h-[50vh] flex items-center justify-center font-serif text-gray-600">
+          Cargando…
+        </div>
+      }>
+        <EventTypePage product={product} />
+      </Suspense>
+    );
   }
 
   const waUrl = WA_MSG(product.title);

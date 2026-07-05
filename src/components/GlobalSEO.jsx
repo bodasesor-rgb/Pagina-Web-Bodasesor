@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { useCity } from '../context/CityContext'
+import { syncLcpPreload } from '../utils/lcp-preload'
 
 const SEO_MAP = {
   '/':                     { title: 'Banquetes y Catering para Eventos en México', desc: 'Contrata banquetes, catering gourmet, mobiliario, música, fotografía y wedding planner para bodas, XV años y eventos corporativos en CDMX, Guadalajara, Monterrey y todo México.' },
@@ -67,6 +68,7 @@ export default function GlobalSEO() {
       ? `https://bodasesor.com/${city.slug}`
       : `https://bodasesor.com${path === '/' ? '' : path}`
     setCanonical(canonicalHref)
+    syncLcpPreload(path)
 
     const seo = SEO_MAP[path]
     if (!seo) return

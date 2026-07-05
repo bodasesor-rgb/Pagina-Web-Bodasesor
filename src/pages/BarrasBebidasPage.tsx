@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import OptimizedImage from "../components/OptimizedImage";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar una barra de bebidas para mi evento. ¿Me pueden dar información?");
@@ -76,7 +77,7 @@ export default function BarrasBebidasPage() {
           <div className="hidden lg:grid grid-cols-2 gap-3 h-64">
             {ITEMS.slice(0, 4).map((item, i) => (
               <div key={i} className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover opacity-80"
+                <OptimizedImage src={item.img} alt="" width={300} height={128} priority={i === 0} className="w-full h-full object-cover opacity-80"
                   onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
               </div>
             ))}
@@ -132,8 +133,8 @@ export default function BarrasBebidasPage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="sr-only">Catálogo de barras de bebidas</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {ITEMS.map(item => (
-              <BebidaCard key={item.href} {...item} city={city?.name} />
+            {ITEMS.map((item, idx) => (
+              <BebidaCard key={item.href} {...item} city={city?.name} priority={idx === 0} />
             ))}
           </div>
         </div>
@@ -160,15 +161,15 @@ export default function BarrasBebidasPage() {
   );
 }
 
-function BebidaCard({ name, href, tag, icon, img, city }: {
-  name: string; href: string; tag: string; icon: string; img: string; city?: string;
+function BebidaCard({ name, href, tag, icon, img, city, priority = false }: {
+  name: string; href: string; tag: string; icon: string; img: string; city?: string; priority?: boolean;
 }) {
   const waMsg = WA + encodeURIComponent(`Hola, me interesa cotizar "${name}"${city ? ` en ${city}` : ''} para mi evento.`);
   return (
     <div id={href.slice(1)} className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300 flex flex-col">
-      <Link href={href}>
+      <Link href={href} aria-label={`Ver ${name}`}>
         <div className="h-52 overflow-hidden bg-[#f5efe8] relative">
-          <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          <OptimizedImage src={img} alt="" width={400} height={208} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           <span className="absolute bottom-3 left-3 text-3xl">{icon}</span>

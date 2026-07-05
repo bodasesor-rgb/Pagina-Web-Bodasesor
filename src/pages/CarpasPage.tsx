@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { CARPAS } from "../data/carpas-products";
 import { useCity } from "../context/CityContext";
+import OptimizedImage from "../components/OptimizedImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar una carpa para mi evento. ¿Me pueden dar información y disponibilidad?");
@@ -103,7 +104,7 @@ export default function CarpasPage() {
               return (
                 <div key={carpa.slug} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1 group">
                   <div className="bg-[#162040] h-48 overflow-hidden relative">
-                    <img src={carpa.img} alt={carpa.name} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" />
+                    <OptimizedImage src={carpa.img} alt="" width={400} height={192} priority={carpa.slug === CARPAS[0].slug} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#162040]/60 to-transparent" />
                   </div>
                   <div className="p-6">

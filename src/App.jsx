@@ -1,5 +1,5 @@
 import { Switch, Route, Router as WouterRouter } from "wouter"
-import { useEffect, useLayoutEffect, lazy, Suspense } from "react"
+import { useEffect, useLayoutEffect, lazy, Suspense, useState } from "react"
 import { useLocation } from "wouter"
 import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
@@ -173,6 +173,26 @@ function ScrollToTop() {
   const [location] = useLocation()
   useEffect(() => { window.scrollTo(0, 0) }, [location])
   return null
+}
+
+function DeferredBelowFold() {
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const reveal = () => setShow(true)
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(reveal, { timeout: 2500 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const t = setTimeout(reveal, 1500)
+    return () => clearTimeout(t)
+  }, [])
+  if (!show) return null
+  return (
+    <Suspense fallback={null}>
+      <Footer />
+      <WhatsAppFab />
+    </Suspense>
+  )
 }
 
 function Router() {
@@ -372,10 +392,7 @@ function Router() {
         </Suspense>
         </ErrorBoundary>
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-        <WhatsAppFab />
-      </Suspense>
+      <DeferredBelowFold />
     </>
   )
 }

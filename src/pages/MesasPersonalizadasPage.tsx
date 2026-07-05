@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import OptimizedImage from "../components/OptimizedImage";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar una mesa personalizada o decoración de alimentos para mi evento. ¿Me pueden dar información?");
@@ -81,7 +82,7 @@ export default function MesasPersonalizadasPage() {
           <div className="hidden lg:grid grid-cols-2 gap-3 h-64">
             {ITEMS.slice(0, 4).map((item, i) => (
               <div key={i} className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src={item.img} alt={item.name} className="w-full h-full object-cover opacity-80"
+                <OptimizedImage src={item.img} alt="" width={300} height={128} priority={i === 0} className="w-full h-full object-cover opacity-80"
                   onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
               </div>
             ))}
@@ -115,8 +116,8 @@ export default function MesasPersonalizadasPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {ITEMS.map(item => (
-              <MesaCard key={item.href} {...item} city={city?.name} />
+            {ITEMS.map((item, idx) => (
+              <MesaCard key={item.href} {...item} city={city?.name} priority={idx === 0} />
             ))}
           </div>
         </div>
@@ -165,8 +166,8 @@ export default function MesasPersonalizadasPage() {
   );
 }
 
-function MesaCard({ name, href, tag, icon, img, highlight, city }: {
-  name: string; href: string; tag: string; icon: string; img: string; highlight: string | null; city?: string;
+function MesaCard({ name, href, tag, icon, img, highlight, city, priority = false }: {
+  name: string; href: string; tag: string; icon: string; img: string; highlight: string | null; city?: string; priority?: boolean;
 }) {
   const waMsg = WA + encodeURIComponent(`Hola, me interesa cotizar "${name}"${city ? ` en ${city}` : ''} para mi evento.`);
   return (
@@ -176,9 +177,9 @@ function MesaCard({ name, href, tag, icon, img, highlight, city }: {
           {highlight}
         </div>
       )}
-      <Link href={href}>
+      <Link href={href} aria-label={`Ver ${name}`}>
         <div className="h-52 overflow-hidden bg-[#f5efe8] relative">
-          <img src={img} alt="" width={400} height={208} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          <OptimizedImage src={img} alt="" width={400} height={208} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           <span className="absolute bottom-3 left-3 text-3xl">{icon}</span>

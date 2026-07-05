@@ -17,9 +17,9 @@ function WaSvg() {
 function ProductCard({ name, img, href, waMsg }: { name: string; img: string; href: string; waMsg: string }) {
   return (
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
-      <Link href={href}>
+      <Link href={href} aria-label={`Ver ${name}`}>
         <div className="aspect-[4/3] overflow-hidden bg-[#f5efe8]">
-          <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img src={img} alt="" width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="p-4 pb-2">
           <h3 className="font-serif font-bold text-[#162040] text-sm leading-snug">{name}</h3>

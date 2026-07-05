@@ -110,6 +110,18 @@ export default defineConfig({
               name: 'icons',
               test: /node_modules[\\/]lucide-react[\\/]/,
             },
+            {
+              name: 'products',
+              test: /src[\\/]data[\\/]products\.js$/,
+            },
+            {
+              name: 'blog-data',
+              test: /src[\\/]data[\\/]blog-data/,
+            },
+            {
+              name: 'search-index',
+              test: /src[\\/]data[\\/]search-index/,
+            },
           ],
         },
       },
