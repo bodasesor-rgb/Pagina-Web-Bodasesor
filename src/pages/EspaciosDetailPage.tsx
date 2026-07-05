@@ -1,5 +1,6 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { BulletCheck, BulletStar, PlaceholderIcon } from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { ESPACIOS } from "../data/espacios-products";
 
@@ -29,7 +30,7 @@ export default function EspaciosDetailPage({ slug }: { slug?: string }) {
             {product.img ? (
               <img src={product.img} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-8xl">⬡</div>
+              <div className="w-full h-full flex items-center justify-center"><PlaceholderIcon symbol="⬡" className="w-16 h-16 text-[#162040]/20" /></div>
             )}
           </div>
           <div>
@@ -44,7 +45,7 @@ export default function EspaciosDetailPage({ slug }: { slug?: string }) {
                 <ul className="space-y-2">
                   {(product.incluye ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/75 mt-0.5">◎</span>{item}
+                      <BulletCheck />{item}
                     </li>
                   ))}
                 </ul>
@@ -54,7 +55,7 @@ export default function EspaciosDetailPage({ slug }: { slug?: string }) {
                 <ul className="space-y-2">
                   {(product.idealPara ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/75 mt-0.5">✦</span>{item}
+                      <BulletStar />{item}
                     </li>
                   ))}
                 </ul>

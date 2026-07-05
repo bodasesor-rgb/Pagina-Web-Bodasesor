@@ -1,5 +1,6 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { BulletCheck, BulletStar, PlaceholderIcon } from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { EMPRESAS } from "../data/empresas-products";
 
@@ -25,7 +26,7 @@ export default function EmpresasDetailPage({ slug }: { slug?: string }) {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           <div className="rounded-2xl overflow-hidden bg-[#f5efe8] h-80 lg:h-auto">
-            {product.img ? <img src={product.img} alt={product.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-8xl">◎</div>}
+            {product.img ? <img src={product.img} alt={product.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><PlaceholderIcon symbol="◎" className="w-16 h-16 text-[#162040]/20" /></div>}
           </div>
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-2">Alimentos para Empresas</p>
@@ -35,11 +36,11 @@ export default function EmpresasDetailPage({ slug }: { slug?: string }) {
             <div className="grid sm:grid-cols-2 gap-6 mb-8">
               <div>
                 <h3 className="font-serif font-bold text-[#162040] text-sm mb-3 uppercase tracking-wide">¿Qué incluye?</h3>
-                <ul className="space-y-2">{(product.incluye ?? []).map((item, i) => <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600"><span className="text-[#162040]/75 mt-0.5">◎</span>{item}</li>)}</ul>
+                <ul className="space-y-2">{(product.incluye ?? []).map((item, i) => <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600"><BulletCheck />{item}</li>)}</ul>
               </div>
               <div>
                 <h3 className="font-serif font-bold text-[#162040] text-sm mb-3 uppercase tracking-wide">Ideal para</h3>
-                <ul className="space-y-2">{(product.idealPara ?? []).map((item, i) => <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600"><span className="text-[#162040]/75 mt-0.5">✦</span>{item}</li>)}</ul>
+                <ul className="space-y-2">{(product.idealPara ?? []).map((item, i) => <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600"><BulletStar />{item}</li>)}</ul>
               </div>
             </div>
             <a href={waMsg} target="_blank" rel="noopener noreferrer"

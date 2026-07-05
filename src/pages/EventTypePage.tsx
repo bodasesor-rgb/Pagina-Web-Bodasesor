@@ -2,37 +2,14 @@ import { useState, useEffect } from "react";
 import { Lightbox } from "../components/Lightbox";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import IconFromEmoji from "../components/IconFromEmoji";
 import {
   Phone, CheckCircle2, ArrowRight, ExternalLink,
-  Utensils, Wine, Cake, Flower2, Camera, Music, Armchair, Crown,
-  Theater, ChefHat, Flame, Package, Fish, Coffee, Droplets, Candy,
-  Wheat, Building2, Salad, PartyPopper, GraduationCap, Heart, Gift,
-  IceCream, Landmark, Star, Shield, MessageCircle, Layers, Mic,
-  Sofa, Baby, Handshake, BarChart3, Laptop, Ribbon,
-  type LucideIcon,
+  Star, Shield, MessageCircle,
 } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
 import type { ProductData } from "../data/products";
-
-const ICON_MAP: Record<string, LucideIcon> = {
-  '🍽️': Utensils, '🥂': Wine, '🍹': Wine, '🍸': Wine, '🧃': Droplets,
-  '🍰': Cake, '🎂': Cake, '🧁': Cake, '🍭': Candy, '🧀': Layers,
-  '💐': Flower2, '📸': Camera, '🎵': Music, '🎭': Theater,
-  '🪑': Armchair, '👰': Crown, '🎪': PartyPopper, '🎉': PartyPopper, '🎊': PartyPopper, '🎈': PartyPopper,
-  '🥘': ChefHat, '🌮': Utensils, '🥩': Flame, '🫙': Package, '🍣': Fish,
-  '☕': Coffee, '🥐': Wheat, '🥪': Salad, '🍲': ChefHat, '🍦': IceCream,
-  '🏛️': Landmark, '🏢': Building2, '🏠': Building2,
-  '🥗': Salad, '🎓': GraduationCap, '🎁': Gift, '👶': Baby, '🎤': Mic,
-  '🛒': Gift, '💡': Star, '📊': BarChart3, '💼': Laptop, '🤝': Handshake,
-  '🎀': Ribbon, '💃': Music, '🎠': PartyPopper, '🎡': PartyPopper,
-  '💒': Heart, '🌸': Flower2, '🍜': ChefHat, '🍾': Wine,
-};
-function ServiceIcon({ emoji, className }: { emoji: string; className?: string }) {
-  const Icon = ICON_MAP[emoji];
-  if (Icon) return <Icon className={className} />;
-  return <Utensils className={className} />;
-}
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_MSG = (title: string) =>
@@ -957,7 +934,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                 <div key={gi}>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-9 h-9 rounded-xl bg-[#162040] flex items-center justify-center flex-shrink-0">
-                      <ServiceIcon emoji={group.categoryIcon} className="w-5 h-5 text-white" />
+                      <IconFromEmoji emoji={group.categoryIcon} className="w-5 h-5 text-white" />
                     </div>
                     <h3 className="text-xl font-serif font-bold text-[#162040]">{group.category}</h3>
                     <div className="flex-1 h-px bg-[#162040]/15 ml-2" />
@@ -970,7 +947,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                       >
                         <div className="flex items-start gap-3 mb-3">
                           <div className="w-9 h-9 rounded-xl bg-[#162040]/8 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <ServiceIcon emoji={svc.icon} className="w-5 h-5 text-[#162040]" />
+                            <IconFromEmoji emoji={svc.icon} className="w-5 h-5 text-[#162040]" />
                           </div>
                           <h4 className="font-serif font-bold text-[#162040] leading-tight">{svc.title}</h4>
                         </div>

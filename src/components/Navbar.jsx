@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef, lazy, Suspense } from "react";
 import { useLocation } from "wouter";
 import CityLink from "./CityLink";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, MapPin, Check } from "lucide-react";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
 import { withCityPath, stripCityFromPath } from "../utils/city-url";
@@ -200,7 +200,7 @@ function CityBadge() {
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
       title="Quitar ciudad"
     >
-      <span aria-hidden="true">📍</span> {city.short}
+      <MapPin className="w-3 h-3" aria-hidden="true" /> {city.short}
       <X className="w-2.5 h-2.5 opacity-60 ml-0.5" />
     </button>
   );
@@ -1045,7 +1045,9 @@ export default function Navbar() {
                     onClick={() => selectCity(c.href.slice(1))}
                     className={`w-full text-left block px-4 py-1.5 text-sm font-bold font-serif transition-colors rounded hover:bg-[#f5efe8] ${c.featured ? 'text-[#162040]' : 'text-gray-700 hover:text-[#162040]'}`}
                   >
-                    {city?.slug === c.href.slice(1) ? `✓ ${c.name}` : c.name}
+                    {city?.slug === c.href.slice(1) ? (
+                      <span className="inline-flex items-center gap-1.5"><Check className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />{c.name}</span>
+                    ) : c.name}
                   </button>
                 ))}
               </div>
@@ -1144,15 +1146,17 @@ export default function Navbar() {
                   onClick={() => { selectCity(c.href.slice(1)); setMobileOpen(false); }}
                   className={`w-full text-left block py-2 text-sm font-bold font-serif ${c.featured ? 'text-[#162040]' : 'text-gray-600'} ${city?.slug === c.href.slice(1) ? 'text-[#162040]' : ''}`}
                 >
-                  {city?.slug === c.href.slice(1) ? `✓ ${c.name}` : c.name}
+                  {city?.slug === c.href.slice(1) ? (
+                    <span className="inline-flex items-center gap-1.5"><Check className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />{c.name}</span>
+                  ) : c.name}
                 </button>
               ))}
               {city && (
                 <button
                   onClick={() => { clearCity(); setMobileOpen(false); }}
-                  className="block py-2 text-xs text-red-500 font-serif hover:text-red-700"
+                  className="flex items-center gap-1.5 py-2 text-xs text-red-500 font-serif hover:text-red-700"
                 >
-                  ✕ Quitar ciudad seleccionada
+                  <X className="w-3 h-3 flex-shrink-0" aria-hidden="true" /> Quitar ciudad seleccionada
                 </button>
               )}
             </MobileSection>

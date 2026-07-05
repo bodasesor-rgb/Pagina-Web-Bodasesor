@@ -1,5 +1,6 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { BulletCheck, BulletStar } from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { AUDIO_ILUMINACION } from "../data/audio-iluminacion-products";
 
@@ -75,7 +76,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
                 <ul className="space-y-2">
                   {(product.incluye ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/75 mt-0.5 flex-shrink-0">◎</span>{item}
+                      <BulletCheck />{item}
                     </li>
                   ))}
                 </ul>
@@ -85,7 +86,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
                 <ul className="space-y-2">
                   {(product.idealPara ?? []).map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/75 mt-0.5 flex-shrink-0">✦</span>{item}
+                      <BulletStar />{item}
                     </li>
                   ))}
                 </ul>
