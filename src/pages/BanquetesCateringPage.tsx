@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import OptimizedImage from "../components/OptimizedImage";
+import IconFromEmoji from "../components/IconFromEmoji";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar un servicio de banquetes o catering para mi evento. ¿Me pueden dar información?");
@@ -147,7 +148,7 @@ export default function BanquetesCateringPage() {
             {CATEGORIES.map(cat => (
               <a key={cat.id} href={`#${cat.id}`}
                 className="bg-[#f5efe8] rounded-2xl p-5 hover:shadow-md transition-all border border-[#162040]/5 hover:border-[#162040]/20 text-center">
-                <p className="text-3xl mb-2">{cat.icon}</p>
+                <IconFromEmoji emoji={cat.icon} className="w-8 h-8 text-[#162040] mx-auto mb-2" />
                 <p className="font-serif font-bold text-[#162040] mb-1 text-sm">{cat.label}</p>
                 <p className="font-serif text-xs text-gray-600 mb-2 hidden sm:block line-clamp-2">{cat.desc}</p>
                 <p className="font-serif text-xs text-[#162040]/75 font-semibold">{cat.items.length} servicios →</p>
@@ -162,7 +163,7 @@ export default function BanquetesCateringPage() {
         <section key={cat.id} id={cat.id} className={`py-12 px-4 cv-auto ${cat.bg}`}>
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
-              <span className="text-3xl">{cat.icon}</span>
+              <IconFromEmoji emoji={cat.icon} className="w-8 h-8 text-[#162040]" />
               <div>
                 <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">Categoría</p>
                 <h2 className="text-2xl font-serif font-bold text-[#162040]">{cat.label}</h2>

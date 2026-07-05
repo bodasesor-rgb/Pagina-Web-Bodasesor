@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { CARPAS, CarpaSlug } from "../data/carpas-products";
+import { BulletCheck } from "../components/IconFromEmoji";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -35,12 +36,6 @@ export default function CarpaDetailPage({ slug }: Props) {
   const prev = idx > 0 ? CARPAS[idx - 1] : null;
   const next = idx < CARPAS.length - 1 ? CARPAS[idx + 1] : null;
   const others = CARPAS.filter(c => c.slug !== carpa.slug);
-
-  const emoji =
-    carpa.slug === 'domo' ? '🔵' :
-    carpa.slug === 'arabe' ? '🕌' :
-    carpa.slug === 'transparente' ? '💎' :
-    carpa.slug === 'versalles' ? '👑' : '⛺';
 
   return (
     <div className="min-h-screen bg-white">
@@ -120,7 +115,7 @@ export default function CarpaDetailPage({ slug }: Props) {
               <ul className="space-y-2">
                 {(carpa.incluye ?? []).map(item => (
                   <li key={item} className="flex items-start gap-2 text-gray-600 font-serif text-sm">
-                    <span className="text-[#162040] font-bold mt-0.5">✓</span>
+                    <BulletCheck className="w-4 h-4 text-[#162040] mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
                 ))}

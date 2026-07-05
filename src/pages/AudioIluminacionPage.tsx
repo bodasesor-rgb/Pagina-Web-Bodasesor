@@ -3,6 +3,7 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { AUDIO_ILUMINACION } from "../data/audio-iluminacion-products";
 import type { AudioIluminacionProduct, AudioIluminacionCategory } from "../data/audio-iluminacion-products";
+import IconFromEmoji, { BulletCheck } from "../components/IconFromEmoji";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar audio, iluminación o video para mi evento. ¿Me pueden dar información?");
@@ -120,7 +121,7 @@ export default function AudioIluminacionPage() {
             return (
               <a key={cat} href={`#${meta.id}`}
                 className="flex items-center gap-2 bg-white text-[#162040] px-4 py-2 rounded-lg font-serif text-sm font-bold border border-[#162040]/10 hover:border-[#162040]/30 hover:shadow-sm transition-all">
-                <span>{meta.icon}</span>{meta.label}
+                <IconFromEmoji emoji={meta.icon} className="w-5 h-5 inline-block" />{meta.label}
               </a>
             );
           })}
@@ -135,7 +136,7 @@ export default function AudioIluminacionPage() {
           <section key={cat} id={meta.id} className="py-14 px-4 scroll-mt-20">
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center gap-3 mb-10">
-                <span className="text-2xl text-[#162040]/30 font-serif">{meta.icon}</span>
+                <IconFromEmoji emoji={meta.icon} className="w-8 h-8 text-[#162040]/30" />
                 <div>
                   <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">
                     Producción Audiovisual
@@ -166,12 +167,12 @@ export default function AudioIluminacionPage() {
               { title: 'Corporativo', icon: '🏢', items: ['Audio profesional con consola', 'Pantalla LED o proyector', 'Iluminación arquitectónica', 'Transmisión en vivo', 'Soporte técnico integral'] },
             ].map(pkg => (
               <div key={pkg.title} className="bg-white rounded-2xl p-7 border border-[#162040]/8 hover:shadow-lg transition-shadow">
-                <div className="text-3xl mb-3">{pkg.icon}</div>
+                <IconFromEmoji emoji={pkg.icon} className="w-8 h-8 text-[#162040] mb-3" />
                 <h3 className="font-serif font-bold text-[#162040] text-lg mb-4">{pkg.title}</h3>
                 <ul className="space-y-2 mb-6">
                   {pkg.items.map((item, i) => (
                     <li key={i} className="flex items-start gap-2 font-serif text-sm text-gray-600">
-                      <span className="text-[#162040]/30 mt-0.5 flex-shrink-0">◎</span>{item}
+                      <BulletCheck className="w-4 h-4 text-[#162040]/30 mt-0.5 flex-shrink-0" />{item}
                     </li>
                   ))}
                 </ul>

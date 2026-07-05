@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import OptimizedImage from "../components/OptimizedImage";
+import IconFromEmoji from "../components/IconFromEmoji";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar una mesa personalizada o decoración de alimentos para mi evento. ¿Me pueden dar información?");
@@ -137,7 +138,7 @@ export default function MesasPersonalizadasPage() {
             { icon: '📸', title: 'Fotografiable', desc: 'Diseñadas para ser el punto focal y mejor foto del evento' },
           ].map(f => (
             <div key={f.title} className="text-center">
-              <span className="text-3xl">{f.icon}</span>
+              <IconFromEmoji emoji={f.icon} className="w-8 h-8 text-[#162040] mx-auto" />
               <h3 className="font-serif font-bold text-[#162040] text-sm mt-2 mb-1">{f.title}</h3>
               <p className="font-serif text-xs text-gray-600">{f.desc}</p>
             </div>
@@ -182,7 +183,7 @@ function MesaCard({ name, href, tag, icon, img, highlight, city, priority = fals
           <OptimizedImage src={img} alt="" width={400} height={208} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-          <span className="absolute bottom-3 left-3 text-3xl">{icon}</span>
+          <IconFromEmoji emoji={icon} className="absolute bottom-3 left-3 w-8 h-8 text-white" />
         </div>
       </Link>
       <div className="p-5 flex-1 flex flex-col">

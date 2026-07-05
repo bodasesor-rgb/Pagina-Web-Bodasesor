@@ -3,6 +3,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 import { useCity } from "../context/CityContext";
+import IconFromEmoji from "../components/IconFromEmoji";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -101,7 +102,7 @@ export default function PistasTarimasPage() {
               { icon: '🚚', t: 'Logística coordinada', d: 'Entrega, armado y retiro coordinados para que no te preocupes de nada.' },
             ].map(item => (
               <div key={item.t} className="bg-[#f5efe8] rounded-xl p-5">
-                <div className="text-2xl mb-3">{item.icon}</div>
+                <IconFromEmoji emoji={item.icon} className="w-7 h-7 text-[#162040] mb-3" />
                 <h3 className="font-serif font-bold text-[#162040] mb-1 text-sm">{item.t}</h3>
                 <p className="text-gray-600 text-xs font-serif leading-relaxed">{item.d}</p>
               </div>
@@ -118,7 +119,7 @@ export default function PistasTarimasPage() {
             <div className="max-w-7xl mx-auto">
               {/* Category header */}
               <div className="flex items-center gap-3 mb-8">
-                <span className="text-3xl">{cat.icon}</span>
+                <IconFromEmoji emoji={cat.icon} className="w-8 h-8 text-[#162040]" />
                 <div>
                   <h2 className="text-2xl font-serif font-bold text-[#162040]">{cat.label}</h2>
                   <p className="text-gray-600 font-serif text-sm">{cat.desc}</p>
