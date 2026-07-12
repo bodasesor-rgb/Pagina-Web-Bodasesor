@@ -7,6 +7,7 @@ import { Lightbox } from "../components/Lightbox";
 import OptimizedImage from "../components/OptimizedImage";
 import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
+import { buildSeoTitle } from "../utils/seo-title";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
@@ -486,9 +487,7 @@ export default function ServicePage({ params }: ServicePageProps) {
   const { city } = useCity();
   useEffect(() => {
     if (!product) return;
-    document.title = city
-      ? `${product.seoTitle} ${city.short} | Bodasesor Eventos`
-      : `${product.seoTitle} | Bodasesor Eventos`;
+    document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
   }, [product?.seoTitle, city]);
 
   if (!loaded) {

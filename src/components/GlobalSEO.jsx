@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { useCity } from '../context/CityContext'
 import { syncLcpPreload } from '../utils/lcp-preload'
+import { buildSeoTitle } from '../utils/seo-title'
 
 const SEO_MAP = {
   '/':                     { title: 'Banquetes y Catering para Eventos en México', desc: 'Contrata banquetes, catering gourmet, mobiliario, música, fotografía y wedding planner para bodas, XV años y eventos corporativos en CDMX, Guadalajara, Monterrey y todo México.' },
@@ -73,9 +74,7 @@ export default function GlobalSEO() {
     const seo = SEO_MAP[path]
     if (!seo) return
 
-    document.title = city
-      ? `${seo.title} en ${city.short || city.name} | Bodasesor`
-      : `${seo.title} | Bodasesor`
+    document.title = buildSeoTitle(seo.title, city ? (city.short || city.name) : null)
 
     setMeta('description', city ? `${seo.desc} Disponible en ${city.name}.` : seo.desc)
   }, [location, city])

@@ -1,4 +1,23 @@
 User-agent: *
 Allow: /
 
+# Block aggressive scrapers that inflate bandwidth without search value
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
 Sitemap: https://bodasesor.com/sitemap.xml

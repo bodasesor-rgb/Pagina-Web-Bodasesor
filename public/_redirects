@@ -4226,6 +4226,10 @@
 /products/zaz-photography-fotografos-cdmx  /fotografia/fotografo/ciudad-de-mexico  301
 /products/zaz-photography-fotografos-cdmx/  /fotografia/fotografo/ciudad-de-mexico  301
 
+# Banquet menu subpages — Nexus has parent HTML but not menu subdirs; serve SPA
+/banquete-kosher/:menu  /index.html  200
+/banquete-mexicano/:menu  /index.html  200
+
 # Fallback for unknown legacy pages
 /pages/:slug  /  301!
 

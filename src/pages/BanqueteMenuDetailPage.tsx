@@ -7,6 +7,7 @@ import {
   getMenusForParent,
   getBanquetParent,
 } from "../data/banquetes-menus";
+import { buildSeoTitle } from "../utils/seo-title";
 
 const WHATSAPP = "5215540080373";
 const WA = (title: string) =>
@@ -33,9 +34,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
 
   useEffect(() => {
     if (menu) {
-      document.title = city
-        ? `${menu.seoTitle} ${city.short} | Bodasesor Eventos`
-        : `${menu.seoTitle} | Bodasesor Eventos`;
+      document.title = buildSeoTitle(menu.seoTitle, city?.short ?? null);
     }
   }, [menu?.seoTitle, city]);
 

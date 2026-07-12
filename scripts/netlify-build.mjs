@@ -39,7 +39,8 @@ if (hasNetlifyCreds) {
 run('2/3 Build SPA + redirects', 'npm', ['run', 'build'])
 
 if (existsSync(join(ROOT, '.netlify-live'))) {
-  run('3/3 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
+  run('3/4 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
+  run('4/4 Parchear SEO Nexus (titles ≤60, lazy imgs)', 'node', ['scripts/patch-nexus-seo.mjs'])
   run('Verificar redirects tras merge', 'node', ['scripts/verify-redirects-deploy.mjs'])
 } else if (hasNetlifyCreds) {
   console.warn('⚠ .netlify-live/ vacío — merge omitido')

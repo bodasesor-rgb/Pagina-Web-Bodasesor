@@ -58,6 +58,14 @@ export function guardRedirectsFile(filePath, label, minRules = MIN_RULES) {
     fail(`${label} missing SPA fallback at end (/* /index.html 200)`)
   }
 
+  if (!text.includes('/banquete-kosher/:menu  /index.html  200')) {
+    fail(`${label} missing SPA rewrite for /banquete-kosher/:menu`)
+  }
+
+  if (!text.includes('/banquete-mexicano/:menu  /index.html  200')) {
+    fail(`${label} missing SPA rewrite for /banquete-mexicano/:menu`)
+  }
+
   if (!text.includes('/products/:slug')) {
     fail(`${label} missing /products/:slug fallback rule`)
   }

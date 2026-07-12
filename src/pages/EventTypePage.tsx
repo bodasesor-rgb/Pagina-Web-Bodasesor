@@ -14,6 +14,7 @@ import {
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
 import type { ProductData } from "../data/products";
+import { buildSeoTitle } from "../utils/seo-title";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   '🍽️': Utensils, '🥂': Wine, '🍹': Wine, '🍸': Wine, '🧃': Droplets,
@@ -810,7 +811,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
   const shortName = product.title.replace(/^Servicios para\s+/i, '');
 
   useEffect(() => {
-    document.title = product.seoTitle;
+    document.title = buildSeoTitle(product.seoTitle);
   }, [product.seoTitle]);
 
   return (
