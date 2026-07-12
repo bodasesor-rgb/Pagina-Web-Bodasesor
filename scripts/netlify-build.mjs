@@ -22,6 +22,15 @@ const hasNetlifyCreds =
   Boolean(process.env.NETLIFY_AUTH_TOKEN) &&
   Boolean(process.env.NETLIFY_SITE_ID || process.env.SITE_ID)
 
+const onNetlify = process.env.NETLIFY === 'true'
+
+if (onNetlify && !hasNetlifyCreds) {
+  console.error('\n❌ NETLIFY_AUTH_TOKEN y NETLIFY_SITE_ID son obligatorios en Netlify env vars.')
+  console.error('   Sin ellos el build publica solo el SPA y borra ~1.700 páginas Nexus SEO.')
+  console.error('   Netlify → Site configuration → Environment variables\n')
+  process.exit(1)
+}
+
 if (hasNetlifyCreds) {
   const siteRef = process.env.NETLIFY_SITE_ID || process.env.SITE_ID
   console.log(`Netlify merge activo (site ${String(siteRef).slice(0, 8)}…)`)
@@ -39,13 +48,18 @@ if (hasNetlifyCreds) {
 run('2/3 Build SPA + redirects', 'npm', ['run', 'build'])
 
 if (existsSync(join(ROOT, '.netlify-live'))) {
-  run('3/4 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
-  run('4/4 Parchear SEO Nexus (titles ≤60, lazy imgs)', 'node', ['scripts/patch-nexus-seo.mjs'])
+  run('3/5 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
+  run('4/5 Parchear SEO Nexus (titles ≤60, lazy imgs)', 'node', ['scripts/patch-nexus-seo.mjs'])
+  run('5/5 Verificar Nexus + redirects tras merge', 'node', ['scripts/guard-nexus-dist.mjs'])
   run('Verificar redirects tras merge', 'node', ['scripts/verify-redirects-deploy.mjs'])
 } else if (hasNetlifyCreds) {
   console.warn('⚠ .netlify-live/ vacío — merge omitido')
 } else {
   console.warn('⚠ Sin snapshot de producción — merge omitido')
+  if (process.env.CI === 'true') {
+    console.error('❌ CI build requires NETLIFY_AUTH_TOKEN to preserve Nexus SEO pages')
+    process.exit(1)
+  }
 }
 
 console.log('\n✓ Netlify build listo')

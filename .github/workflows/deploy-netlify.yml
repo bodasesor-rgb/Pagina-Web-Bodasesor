@@ -34,5 +34,7 @@ jobs:
         env:
           SITE_BASE: https://bodasesor.com
 
-      # Netlify Git integration deploys on push — do NOT also deploy dist here
-      # (double deploy caused incomplete asset uploads and blank page)
+      - name: Deploy merged dist to Netlify production
+        run: npx netlify-cli deploy --prod --dir=dist --site="${{ secrets.NETLIFY_SITE_ID }}" --message="Restore Nexus SEO + SEO fixes"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

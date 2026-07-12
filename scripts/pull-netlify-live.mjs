@@ -65,7 +65,9 @@ async function deployHasNexusPages(deployId) {
     return (
       p.startsWith('eventos/') ||
       p.startsWith('nexus-output-pages/') ||
-      p.startsWith('private/nexus-output-pages/')
+      p.startsWith('private/nexus-output-pages/') ||
+      /-a-domicilio-[a-z0-9-]+\/index\.html$/i.test(p) ||
+      /\/index\.html$/.test(p) && /-(cdmx|ciudad-de-mexico|guadalajara|monterrey|aguascalientes)\/?$/i.test(p.replace(/\/index\.html$/, ''))
     )
   })
 }
