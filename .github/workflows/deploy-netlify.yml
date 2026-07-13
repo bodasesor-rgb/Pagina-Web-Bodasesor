@@ -34,7 +34,9 @@ jobs:
         run: npm run build:netlify
         env:
           SITE_BASE: https://bodasesor.com
+          NEXUS_URL: https://white-ferret-567834.hostingersite.com
           SKIP_NETLIFY_ZIP: "1"
+          SEO_SYNC_CONCURRENCY: "3"
 
       - name: Deploy merged dist to Netlify production
         run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO pages"
