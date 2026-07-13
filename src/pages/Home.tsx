@@ -1,10 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { useLocation } from "wouter";
-import CityLink from "../components/CityLink";
 import { useCity } from "../context/CityContext";
-import { CITY_MAP } from "../data/city-data";
-import { withCityPath, stripCityFromPath } from "../utils/city-url";
-import { hideStaticLcpShell } from "../utils/static-lcp-shell";
 import HomeSeoContent from "../components/HomeSeoContent";
 import HomeJsonLd from "../components/HomeJsonLd";
 
@@ -39,10 +34,22 @@ const heroReviews = [
 function RotatingReviewCard() {
   const [idx, setIdx] = useState(0);
   const [key, setKey] = useState(0);
+  const [ready, setReady] = useState(false);
   useEffect(() => {
+    const start = () => setReady(true);
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(start, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = setTimeout(start, 1500);
+    return () => clearTimeout(t);
+  }, []);
+  useEffect(() => {
+    if (!ready) return;
     const t = setInterval(() => { setIdx(i => (i + 1) % heroReviews.length); setKey(k => k + 1); }, 4500);
     return () => clearInterval(t);
-  }, []);
+  }, [ready]);
+  if (!ready) return null;
   const r = heroReviews[idx];
   return (
     <div key={key} className="review-card-enter fixed bottom-24 left-4 sm:left-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 w-72 z-40 border border-white/50">
@@ -73,30 +80,22 @@ function RotatingReviewCard() {
 
 export default function Home() {
   const { city } = useCity();
-  const [location, setLocation] = useLocation();
-
-  useEffect(() => {
-    const hideStatic = () => hideStaticLcpShell();
-    // Keep static hero visible until React hero has painted (Speed Index)
-    requestAnimationFrame(() => requestAnimationFrame(hideStatic));
-    return () => hideStatic();
-  }, []);
 
   return (
     <div>
       <HomeJsonLd />
-      <section className="relative min-h-[420px] flex items-center overflow-hidden" data-testid="section-hero">
+      <section className="relative min-h-[420px] md:min-h-[480px] flex items-center overflow-hidden aspect-[768/419] md:aspect-[1408/768]" data-testid="section-hero">
         <picture className="absolute inset-0 -z-10" aria-hidden="true">
           <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
           <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
           <img
-            src="/images/hero-bg-new-mobile.webp"
+            src="/images/hero-bg-new.webp"
             alt=""
             className="w-full h-full object-cover object-center"
             fetchPriority="high"
             decoding="async"
-            width={768}
-            height={419}
+            width={1408}
+            height={768}
           />
         </picture>
         <div className="absolute inset-0 bg-[#162040]/60 pointer-events-none" aria-hidden="true" />

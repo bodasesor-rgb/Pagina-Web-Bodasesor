@@ -566,9 +566,11 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </div>
               </div>
               <div className="lg:col-span-2 flex items-center justify-center bg-[#f5efe8] min-h-[260px] py-8 px-8">
-                <img
+                <OptimizedImage
                   src={HERO_IMAGES[slug]!}
                   alt={product.title}
+                  width={400}
+                  height={288}
                   className="max-h-72 w-full object-contain drop-shadow-xl"
                 />
               </div>
@@ -578,9 +580,12 @@ export default function ServicePage({ params }: ServicePageProps) {
       ) : (
         /* Hero estándar con imagen de fondo */
         <section className="relative overflow-hidden bg-[#162040]" style={{ minHeight: '280px' }}>
-          <img
+          <OptimizedImage
             src={HERO_IMAGES[slug] ?? '/images/galeria/g3.jpg'}
             alt=""
+            width={1200}
+            height={675}
+            priority
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-contain opacity-60"
           />

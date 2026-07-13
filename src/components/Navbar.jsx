@@ -947,8 +947,12 @@ export default function Navbar() {
   const { city } = useCity();
 
   useLayoutEffect(() => {
-    hideStaticLcpShell()
-    document.getElementById('static-nav-shell')?.remove()
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        hideStaticLcpShell()
+        document.getElementById('static-nav-shell')?.remove()
+      })
+    })
   }, [])
 
   const selectCity = (citySlug) => {

@@ -40,7 +40,8 @@
     </script>
     <style>
       body{margin:0;font-family:Georgia,'Times New Roman',serif}
-      #lcp-hero-wrap{position:fixed;inset:0;z-index:0;margin:0;pointer-events:none}
+      #lcp-hero-wrap{position:fixed;inset:0;z-index:0;margin:0;pointer-events:none;aspect-ratio:768/419;min-height:420px}
+      @media (min-width:769px){#lcp-hero-wrap{aspect-ratio:1408/768;min-height:480px}}
       #lcp-hero-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
       #lcp-hero-wrap::after{content:"";position:absolute;inset:0;background:#16204099}
       #root{position:relative;z-index:1;min-height:100vh}
@@ -70,10 +71,10 @@
       <source srcset="/images/hero-bg-new.webp" type="image/webp" />
       <img
         id="lcp-hero"
-        src="/images/hero-bg-new-mobile.webp"
+        src="/images/hero-bg-new.webp"
         alt=""
-        width="768"
-        height="419"
+        width="1408"
+        height="768"
         fetchpriority="high"
         decoding="async"
       />
