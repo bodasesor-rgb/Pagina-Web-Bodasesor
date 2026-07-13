@@ -10,7 +10,8 @@
  * Usage: node scripts/sync-seo-from-live.mjs
  * Env: SITE_BASE / NEXUS_URL (default https://bodasesor.com)
  */
-import { mkdir, writeFile, rm } from 'node:fs/promises'
+import { mkdir, writeFile, rm, readFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -72,17 +73,39 @@ async function mapPool(items, limit, fn) {
   return results
 }
 
+async function loadInventoryUrls() {
+  const path = join(__dirname, 'seo-landing-slugs.json')
+  if (!existsSync(path)) return []
+  const data = JSON.parse(await readFile(path, 'utf8'))
+  const slugs = Array.isArray(data.slugs) ? data.slugs : []
+  return slugs.map((s) => `${BASE}/${String(s).replace(/^\/+|\/+$/g, '')}/`)
+}
+
 async function loadSitemapUrls() {
   const xml = await fetchText(`${BASE}/sitemap.xml`)
-  if (!xml) throw new Error(`No se pudo leer ${BASE}/sitemap.xml`)
+  if (!xml || xml.includes('Access denied')) return []
   const urls = [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)].map((m) => m[1].trim())
   return [...new Set(urls)].filter((u) => {
     const slug = slugFromUrl(u)
     if (!slug) return false
     if (slug.startsWith('blog')) return false
-    if (slug.includes('/')) return false // only root-level service×city landings
+    if (slug.includes('/')) return false
+    // SPA city pins etc. — keep only plausible Nexus service×city slugs
+    if (slug.split('-').length < 3 && !slug.includes('banquete') && !slug.includes('catering')) {
+      return false
+    }
     return true
   })
+}
+
+async function loadCandidateUrls() {
+  const fromInventory = await loadInventoryUrls()
+  const fromSitemap = await loadSitemapUrls()
+  const merged = [...new Set([...fromInventory, ...fromSitemap])]
+  console.log(
+    `  fuentes: inventory=${fromInventory.length}, sitemap=${fromSitemap.length}, unique=${merged.length}`,
+  )
+  return merged
 }
 
 function assetUrlsFromHtml(html, pageUrl) {
@@ -135,8 +158,11 @@ async function saveLanding(url, html) {
 
 async function main() {
   console.log(`Sync SEO desde ${BASE} → ${OUT_DIR}`)
-  const urls = await loadSitemapUrls()
-  console.log(`  candidatos root-level en sitemap: ${urls.length}`)
+  const urls = await loadCandidateUrls()
+  console.log(`  candidatos: ${urls.length}`)
+  if (!urls.length) {
+    throw new Error('Sin candidatos SEO (inventory + sitemap vacíos)')
+  }
 
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
