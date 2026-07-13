@@ -38,27 +38,41 @@ function isSpaShell(html) {
   return false
 }
 
-async function fetchText(url) {
-  try {
-    const res = await fetch(url, {
-      headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
-      redirect: 'follow',
-    })
-    if (!res.ok) return null
-    return await res.text()
-  } catch {
-    return null
+async function fetchText(url, { retries = 5 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
+        redirect: 'follow',
+      })
+      if (res.status === 429 || res.status >= 500) {
+        await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
+        continue
+      }
+      if (!res.ok) return null
+      return await res.text()
+    } catch {
+      await new Promise((r) => setTimeout(r, 500 * 2 ** attempt))
+    }
   }
+  return null
 }
 
-async function fetchBuffer(url) {
-  try {
-    const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' })
-    if (!res.ok) return null
-    return Buffer.from(await res.arrayBuffer())
-  } catch {
-    return null
+async function fetchBuffer(url, { retries = 4 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' })
+      if (res.status === 429 || res.status >= 500) {
+        await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
+        continue
+      }
+      if (!res.ok) return null
+      return Buffer.from(await res.arrayBuffer())
+    } catch {
+      await new Promise((r) => setTimeout(r, 500 * 2 ** attempt))
+    }
   }
+  return null
 }
 
 async function mapPool(items, limit, fn) {
