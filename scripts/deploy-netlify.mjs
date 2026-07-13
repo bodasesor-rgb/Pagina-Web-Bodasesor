@@ -46,9 +46,9 @@ async function main() {
   console.log('Verificando Nexus en dist/ antes de publicar…')
   execSync('node scripts/guard-nexus-dist.mjs', { cwd: ROOT, stdio: 'inherit' })
 
-  console.log(`Deploying dist/ → ${siteId}…`)
+  console.log(`Deploying dist/ → ${siteId} (no rebuild)…`)
   execSync(
-    `npx netlify-cli deploy --prod --dir="${DIST}" --site="${siteId}" --message="Deploy redirects fix"`,
+    `npx netlify-cli deploy --prod --dir="${DIST}" --no-build --site="${siteId}" --message="Deploy SPA + Nexus SEO"`,
     { cwd: ROOT, stdio: 'inherit', env: { ...process.env, NETLIFY_AUTH_TOKEN: token } },
   )
 
