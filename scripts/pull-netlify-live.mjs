@@ -16,7 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const OUT_DIR = join(ROOT, '.netlify-live')
 const ZIP_PATH = join(ROOT, '.netlify-live.zip')
-const MIN_NEXUS_FILES = 50
+const MIN_NEXUS_LANDINGS = 50
 
 async function loadEnvFile() {
   for (const name of ['.env.local', '.env']) {
@@ -60,8 +60,8 @@ function resolveSiteId() {
 }
 
 function isNexusLandingPath(p) {
-  const path = p.replace(/^\//, '')
-  if (!path.endsWith('/index.html')) return false
+  const path = p.replace(/^\//, '').replace(/\\/g, '/')
+  if (!path.endsWith('/index.html') && !path.endsWith('\\index.html')) return false
 
   if (
     path.startsWith('eventos/') ||
@@ -71,7 +71,7 @@ function isNexusLandingPath(p) {
     return true
   }
 
-  const dir = path.slice(0, -'/index.html'.length)
+  const dir = path.replace(/\/index\.html$/i, '')
   if (!dir || dir.includes('/')) return false
 
   return (
@@ -80,25 +80,22 @@ function isNexusLandingPath(p) {
   )
 }
 
-async function countNexusFiles(deployId) {
-  let page = 1
-  let count = 0
-  while (page <= 30) {
-    const res = await netlifyFetch(
-      `/deploys/${deployId}/files?page=${page}&per_page=1000`,
-      { allow404: true },
-    )
-    if (!res) return 0
-    const files = await res.json()
-    const list = Array.isArray(files) ? files : files?.files ?? []
-    if (!list.length) break
-    for (const f of list) {
-      if (isNexusLandingPath(f.path || f.name || '')) count++
-    }
-    if (list.length < 1000) break
-    page++
+function countNexusInZip(zipPath) {
+  try {
+    const listing = execSync(`unzip -Z1 "${zipPath}"`, { encoding: 'utf8', maxBuffer: 50 * 1024 * 1024 })
+    return listing.split('\n').filter((line) => isNexusLandingPath(line)).length
+  } catch {
+    return 0
   }
-  return count
+}
+
+async function tryDownloadZip(deployId) {
+  const res = await netlifyFetch(`/deploys/${deployId}/zip`, { allow404: true })
+  if (!res) return 0
+  const buffer = Buffer.from(await res.arrayBuffer())
+  if (buffer.length < 1000) return 0
+  await writeFile(ZIP_PATH, buffer)
+  return countNexusInZip(ZIP_PATH)
 }
 
 async function getPublishedDeploy(siteId) {
@@ -107,22 +104,14 @@ async function getPublishedDeploy(siteId) {
   return site.published_deploy || null
 }
 
-async function tryDownloadZip(deployId) {
-  const res = await netlifyFetch(`/deploys/${deployId}/zip`, { allow404: true })
-  if (!res) return false
-  const buffer = Buffer.from(await res.arrayBuffer())
-  if (buffer.length < 1000) return false
-  await writeFile(ZIP_PATH, buffer)
-  return true
-}
-
 async function pickDeployWithNexus(siteId) {
   const forcedId = process.env.NETLIFY_RESTORE_DEPLOY_ID
   if (forcedId) {
-    const count = await countNexusFiles(forcedId)
-    if (count < MIN_NEXUS_FILES) {
+    console.log(`  forced deploy: ${forcedId.slice(0, 8)}…`)
+    const count = await tryDownloadZip(forcedId)
+    if (count < MIN_NEXUS_LANDINGS) {
       throw new Error(
-        `NETLIFY_RESTORE_DEPLOY_ID=${forcedId} solo tiene ${count} landings Nexus (need ≥${MIN_NEXUS_FILES})`,
+        `NETLIFY_RESTORE_DEPLOY_ID=${forcedId} solo tiene ${count} landings Nexus (need ≥${MIN_NEXUS_LANDINGS})`,
       )
     }
     return { id: forcedId, title: 'forced restore', published_at: null }
@@ -144,25 +133,22 @@ async function pickDeployWithNexus(siteId) {
   for (const deploy of ordered) {
     if (deploy.state !== 'ready') continue
     try {
-      const count = await countNexusFiles(deploy.id)
-      if (count < MIN_NEXUS_FILES) {
-        console.log(`  skip ${deploy.id.slice(0, 8)}… — ${count} Nexus files`)
-        continue
-      }
-      console.log(`  candidate ${deploy.id.slice(0, 8)}… — ${count} Nexus files`)
-      if (await tryDownloadZip(deploy.id)) {
+      console.log(`  checking zip ${deploy.id.slice(0, 8)}… (${deploy.published_at || deploy.created_at || ''})`)
+      const count = await tryDownloadZip(deploy.id)
+      if (count >= MIN_NEXUS_LANDINGS) {
+        console.log(`  ✓ ${count} Nexus landings in zip`)
         return deploy
       }
-      console.log(`  zip unavailable for ${deploy.id.slice(0, 8)}…, trying older deploy`)
+      console.log(`  skip ${deploy.id.slice(0, 8)}… — ${count} Nexus landings in zip`)
     } catch (err) {
-      console.warn(`  error checking ${deploy.id?.slice(0, 8)}…: ${err.message}`)
+      console.warn(`  error on ${deploy.id?.slice(0, 8)}…: ${err.message}`)
     }
   }
 
   throw new Error(
-    `No se encontró deploy descargable con ≥${MIN_NEXUS_FILES} páginas Nexus. ` +
-      'En Netlify → Deploys, publica manualmente un deploy anterior al 12 jul 2026 ~20:19 UTC, ' +
-      'copia su Deploy ID y configura NETLIFY_RESTORE_DEPLOY_ID en GitHub Secrets.',
+    `No se encontró deploy descargable con ≥${MIN_NEXUS_LANDINGS} páginas Nexus en los últimos 100 deploys.\n` +
+      'Solución rápida: Netlify → Deploys → publica un deploy anterior al 12 jul 2026 ~20:19 UTC.\n' +
+      'Luego vuelve a lanzar Actions, o añade NETLIFY_RESTORE_DEPLOY_ID con el Deploy ID de ese deploy.',
   )
 }
 
@@ -172,7 +158,7 @@ async function main() {
   const hasToken = Boolean(process.env.NETLIFY_AUTH_TOKEN)
   console.log(`Site ID: ${siteId.slice(0, 8)}… (token: ${hasToken ? 'sí' : 'no'})`)
 
-  console.log('Buscando deploy con páginas Nexus/SEO…')
+  console.log('Buscando deploy con páginas Nexus/SEO (verificación por ZIP)…')
   const deploy = await pickDeployWithNexus(siteId)
   if (!deploy?.id) {
     throw new Error('No hay deploy publicado en este sitio.')
@@ -182,11 +168,7 @@ async function main() {
   console.log(`Fecha: ${deploy.published_at || deploy.created_at}`)
 
   if (!existsSync(ZIP_PATH)) {
-    console.log('Descargando ZIP del deploy…')
-    const ok = await tryDownloadZip(deploy.id)
-    if (!ok) throw new Error(`No se pudo descargar ZIP del deploy ${deploy.id}`)
-  } else {
-    console.log('Usando ZIP ya descargado')
+    throw new Error(`ZIP no disponible para deploy ${deploy.id}`)
   }
 
   await rm(OUT_DIR, { recursive: true, force: true })
