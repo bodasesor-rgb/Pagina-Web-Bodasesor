@@ -1,75 +1,36 @@
 ---
 alwaysApply: true
 ---
-# Bodasesor SPA + Nexus SEO — NUNCA borrar landings en deploy
+# Pagina-Web-Bodasesor + landings SEO Nexus
 
-## Dos sistemas, un dominio (bodasesor.com)
+## Contexto
+- Este repo es la **SPA** de https://bodasesor.com (Netlify site ID `b3e5d4b5-9b66-4322-b2d7-12252f3625ac`).
+- Las landings SEO (~1400) NO viven en este repo: las genera **Nexus SEO** (Hostinger preview: https://white-ferret-567834.hostingersite.com) y se publican en Netlify como `/nexus-output-pages/{slug}/` + reglas en `_redirects`.
+- Un deploy Git normal (`vite build` → `dist/`) **borra** las landings SEO si no se fusionan en el build.
 
-| Repo | Qué es | Deploy |
-|------|--------|--------|
-| **Pagina-Web-Bodasesor** (este repo) | SPA React/Vite + redirects + edge | GitHub Actions → `netlify-cli deploy --prod --dir=dist` |
-| **Nexus SEO** (Seo-Nexus-2.0, Hostinger) | ~1.700 landings programáticas (servicio × ciudad) | GitHub Actions propio → **mismo** Netlify site ID |
+## Reglas CRÍTICAS
+1. **NUNCA** cambies el Netlify Build command a solo `npm run build` o `vite build`.
+2. El build de producción **DEBE** preservar SEO:
+   - Preferido: `netlify-build-nexus.mjs` (sync SEO desde Nexus + Vite + merge en `dist/` + verificación `_redirects`) cuando ese script exista.
+   - Actual en repo: `node scripts/netlify-build.mjs` (merge desde Netlify live / snapshot + guards).
+3. Variables Netlify obligatorias en el sitio:
+   - `NETLIFY_AUTH_TOKEN`
+   - `NETLIFY_SITE_ID` (o `SITE_ID`)
+   - `NEXUS_URL=https://white-ferret-567834.hostingersite.com` (para sync directo cuando esté cableado)
+4. **NO** borres, ignores ni reescribas:
+   - scripts de sync SEO (`sync-seo-from-nexus.mjs`, `pull-netlify-live.mjs`, `merge-live-into-dist.mjs`, `guard-redirects.mjs`, `guard-nexus-dist.mjs`, `seo-deploy-paths.mjs`, `netlify-build.mjs`, `netlify-build-nexus.mjs`)
+   - reglas SEO/blog en `_redirects` / generación de redirects
+5. Después de cada deploy a producción, verifica al menos 1 landing:
+   - `https://bodasesor.com/banquete-de-lujo-estado-de-mexico/`
+   - Debe mostrar HTML SEO (`seo-service-hero`), **NO** React SPA ni “Servicio no encontrado”.
+6. Si las landings desaparecen, **NO** las regeneres aquí: avisa y se reparan desde Nexus (republicar en lotes de 300). Este repo solo debe **preservarlas** en el build.
+7. Ediciones quirúrgicas. No reescribas `netlify.toml`, build scripts o redirects enteros sin confirmar.
 
-**Este repo NO es Nexus. NUNCA confundir site IDs.**
+## Flujo seguro al trabajar
+- Rama nueva → cambios de UI/SPA → merge a main.
+- Deploy Netlify debe correr build con preservar Nexus (SPA + SEO).
+- Confirmar home OK + 1–2 landings SEO OK antes de dar por cerrado.
+- Comandos: `npm run verify:nexus` · `npm run guard:nexus` · `npm run check:redirects`
 
-## REGLA CRÍTICA — el deploy SPA borra Nexus si no se cuida
-
-`netlify-cli deploy --prod --dir=dist` **reemplaza todo el sitio**. Si `dist/` solo tiene el SPA (~70 archivos), **se borran las ~1.700 HTML de Nexus** que el generador subió antes.
-
-Esto ya pasó en producción. **Antes de cada deploy a producción:**
-
-1. Verificar que `dist/` contiene landings Nexus (`node scripts/guard-nexus-dist.mjs`), **o**
-2. Aceptar que Nexus debe **re-desplegar inmediatamente después** del SPA, **o**
-3. Usar `npm run build:safe` con merge desde producción (requiere `NETLIFY_AUTH_TOKEN` + páginas Nexus ya live).
-
-**Escape hatch (solo coordinado):** `ALLOW_SPA_ONLY_DEPLOY=1` omite el guard pre-deploy. Úsalo solo si vas a re-desplegar Nexus inmediatamente después.
-
-## Orden de deploy seguro
-
-```
-Opción A (recomendada si solo cambias SPA):
-  1. Deploy Pagina-Web-Bodasesor (SPA)
-  2. INMEDIATAMENTE re-ejecutar deploy de Nexus SEO en su repo
-  3. node scripts/verify-nexus-production.mjs  ← debe pasar
-
-Opción B (merge antes de publicar):
-  1. Nexus ya publicó landings en bodasesor.com
-  2. npm run sync:netlify && npm run build:safe
-  3. guard-nexus-dist + verify-redirects
-  4. deploy
-  5. verify-nexus-production.mjs
-```
-
-## Verificación obligatoria post-deploy
-
-```bash
-node scripts/verify-nexus-production.mjs
-```
-
-Comprueba que una landing Nexus real (no el SPA genérico) responde en producción.
-
-Señales de **deploy que borró Nexus**:
-- `/banquete-3-tiempos-a-domicilio-aguascalientes/` → title genérico SPA (~7 KB)
-- Debe ser HTML Nexus con title tipo `Banquete 3 Tiempos…` (>15 KB)
-
-## Edición en este repo
-
-- Ediciones **quirúrgicas**; no reescribir archivos enteros.
-- **No tocar** paths `nexus-*`, `eventos/`, lógica de merge sin aprobación.
-- **No** añadir `[[redirects]] /* → /index.html` en `netlify.toml`.
-- Redirects legacy (~4230 reglas) en `public/_redirects` — no romper.
-
-## Nexus SEO (repo separado)
-
-- Cambios en templates afectan **miles** de páginas → proponer y esperar aprobación.
-- Site ID de Nexus ≠ site ID de pruebas del SPA (no desplegar Nexus al ID del SPA por error).
-
-## Scripts clave
-
-| Comando | Uso |
-|---------|-----|
-| `npm run sync:netlify` | Descargar producción a `.netlify-live/` |
-| `npm run build:safe` | sync + build + merge Nexus |
-| `node scripts/guard-nexus-dist.mjs` | ¿dist/ tiene landings Nexus? |
-| `node scripts/verify-nexus-production.mjs` | ¿Producción tiene landings Nexus? |
-| `node scripts/check-production-redirects.mjs` | ¿Redirects legacy OK? |
+## Escape hatch
+Solo con coordinación: `ALLOW_SPA_ONLY_DEPLOY=1` (luego re-deploy Nexus inmediato).

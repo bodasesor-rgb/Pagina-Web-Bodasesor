@@ -14,19 +14,22 @@ const SPA_HOME_TITLE = 'Banquetes y Catering para Eventos en México | Bodasesor
 /** Known Nexus landings — service × city paths published by Seo-Nexus-2.0 */
 const PROBES = [
   {
+    url: 'https://bodasesor.com/banquete-de-lujo-estado-de-mexico/',
+    minBytes: 12_000,
+    titleMustInclude: ['Banquete', 'México'],
+    mustInclude: ['seo-service-hero'],
+  },
+  {
     url: 'https://bodasesor.com/banquete-3-tiempos-a-domicilio-aguascalientes/',
     minBytes: 12_000,
     titleMustInclude: ['Banquete', 'Aguascalientes'],
+    mustInclude: ['seo-service-hero'],
   },
   {
-    url: 'https://bodasesor.com/banquete-buffet-a-domicilio-guadalajara/',
+    url: 'https://bodasesor.com/banquete-kosher-ciudad-de-mexico/',
     minBytes: 12_000,
-    titleMustInclude: ['Buffet', 'Guadalajara'],
-  },
-  {
-    url: 'https://bodasesor.com/catering-corporativo-a-domicilio-monterrey/',
-    minBytes: 12_000,
-    titleMustInclude: ['Monterrey'],
+    titleMustInclude: ['Kosher', 'México'],
+    mustInclude: ['seo-service-hero'],
   },
 ]
 
@@ -65,6 +68,11 @@ async function checkProbe(probe) {
   for (const needle of probe.titleMustInclude) {
     if (!title.includes(needle) && !html.includes(needle)) {
       issues.push(`missing "${needle}" in title/content`)
+    }
+  }
+  for (const needle of probe.mustInclude || []) {
+    if (!html.includes(needle)) {
+      issues.push(`missing "${needle}" (not SEO HTML)`)
     }
   }
 
