@@ -41,12 +41,14 @@ const hasNetlifyCreds =
   Boolean(process.env.NETLIFY_AUTH_TOKEN) &&
   Boolean(process.env.NETLIFY_SITE_ID || process.env.SITE_ID)
 
-if (hasNetlifyCreds) {
+if (hasNetlifyCreds && process.env.SKIP_NETLIFY_ZIP !== '1') {
   const siteRef = process.env.NETLIFY_SITE_ID || process.env.SITE_ID
   console.log(`Netlify ZIP snapshot opcional (site ${String(siteRef).slice(0, 8)}…)`)
   run('1a Descargar ZIP Netlify (opcional)', 'node', ['scripts/pull-netlify-live.mjs'], {
     optional: true,
   })
+} else {
+  console.log('ZIP Netlify omitido (SKIP_NETLIFY_ZIP o sin creds) — sync HTTP')
 }
 
 // Always try HTTP sync from live production / NEXUS_URL — this is what preserves
