@@ -32,5 +32,10 @@ alwaysApply: true
 - Confirmar home OK + 1–2 landings SEO OK antes de dar por cerrado.
 - Comandos: `npm run verify:nexus` · `npm run guard:nexus` · `npm run check:redirects`
 
-## Escape hatch
-Solo con coordinación: `ALLOW_SPA_ONLY_DEPLOY=1` (luego re-deploy Nexus inmediato).
+## Sync SEO (actual)
+1. Preferido en build: `scripts/sync-seo-from-live.mjs` (sitemap HTTP → `.netlify-live/` con `seo-service-hero`)
+2. Opcional: ZIP Netlify (`pull-netlify-live.mjs`) — a menudo 0 landings aunque estén live
+3. Merge → `guard-nexus-dist` → deploy
+4. Verificar: `npm run verify:nexus`
+
+Variables: `SITE_BASE` / `NEXUS_URL=https://white-ferret-567834.hostingersite.com` (si Hostinger es accesible sin auth HTML).
