@@ -11,7 +11,6 @@
  * Env: SITE_BASE / NEXUS_URL (default https://bodasesor.com)
  */
 import { mkdir, writeFile, rm } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -23,7 +22,7 @@ const BASE = (process.env.NEXUS_URL || process.env.SITE_BASE || 'https://bodases
   '',
 )
 const UA =
-  'Mozilla/5.0 (compatible; BodasesorSeoSync/1.0; +https://bodasesor.com)'
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 16)
 const MIN_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 50)
 
@@ -139,11 +138,8 @@ async function main() {
   const urls = await loadSitemapUrls()
   console.log(`  candidatos root-level en sitemap: ${urls.length}`)
 
-  if (existsSync(OUT_DIR)) {
-    // Keep partial zip snapshot if any; replace SEO dirs cleanly by rewriting landings.
-  } else {
-    await mkdir(OUT_DIR, { recursive: true })
-  }
+  await rm(OUT_DIR, { recursive: true, force: true })
+  await mkdir(OUT_DIR, { recursive: true })
 
   let ok = 0
   let spa = 0

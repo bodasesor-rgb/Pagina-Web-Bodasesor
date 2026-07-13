@@ -36,7 +36,7 @@ jobs:
           SITE_BASE: https://bodasesor.com
 
       - name: Deploy merged dist to Netlify production
-        run: npx netlify-cli deploy --prod --dir=dist --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO pages"
+        run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO pages"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
