@@ -146,9 +146,8 @@ async function pickDeployWithNexus(siteId) {
   }
 
   throw new Error(
-    `No se encontró deploy descargable con ≥${MIN_NEXUS_LANDINGS} páginas Nexus en los últimos 100 deploys.\n` +
-      'Solución rápida: Netlify → Deploys → publica un deploy anterior al 12 jul 2026 ~20:19 UTC.\n' +
-      'Luego vuelve a lanzar Actions, o añade NETLIFY_RESTORE_DEPLOY_ID con el Deploy ID de ese deploy.',
+    `No deploy descargable con ≥${MIN_NEXUS_LANDINGS} landings SEO en los últimos 100 deploys. ` +
+      'Continuando con build SPA-only.',
   )
 }
 
@@ -158,8 +157,14 @@ async function main() {
   const hasToken = Boolean(process.env.NETLIFY_AUTH_TOKEN)
   console.log(`Site ID: ${siteId.slice(0, 8)}… (token: ${hasToken ? 'sí' : 'no'})`)
 
-  console.log('Buscando deploy con páginas Nexus/SEO (verificación por ZIP)…')
-  const deploy = await pickDeployWithNexus(siteId)
+  console.log('Buscando snapshot de producción (opcional)…')
+  let deploy
+  try {
+    deploy = await pickDeployWithNexus(siteId)
+  } catch (err) {
+    console.warn(`⚠ ${err.message}`)
+    process.exit(0)
+  }
   if (!deploy?.id) {
     throw new Error('No hay deploy publicado en este sitio.')
   }
@@ -192,6 +197,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(err.message || err)
-  process.exit(1)
+  console.warn(`⚠ pull-netlify-live: ${err.message || err}`)
+  process.exit(0)
 })

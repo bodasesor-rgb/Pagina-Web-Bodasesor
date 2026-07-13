@@ -29,12 +29,12 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Build (SPA + merge Nexus/SEO pages)
+      - name: Build SPA + redirects
         run: npm run build:netlify
         env:
           SITE_BASE: https://bodasesor.com
 
-      - name: Deploy merged dist to Netlify production
-        run: npx netlify-cli deploy --prod --dir=dist --site="${{ secrets.NETLIFY_SITE_ID }}" --message="Restore Nexus SEO + SEO fixes"
+      - name: Deploy to Netlify production
+        run: npx netlify-cli deploy --prod --dir=dist --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SEO fixes: redirects, titles, WebP, cache"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
