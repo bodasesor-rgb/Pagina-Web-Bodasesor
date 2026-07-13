@@ -1,59 +1,75 @@
-# Bodasesor web + Nexus SEO — convivencia
+---
+alwaysApply: true
+---
+# Bodasesor SPA + Nexus SEO — NUNCA borrar landings en deploy
 
-## Dos apps separadas
+## Dos sistemas, un dominio (bodasesor.com)
 
-- **Este repo** → bodasesor.com (Netlify) — SPA React/Vite
-- **Nexus SEO** (Seo-Nexus-2.0) → Hostinger — landings SEO masivas
+| Repo | Qué es | Deploy |
+|------|--------|--------|
+| **Pagina-Web-Bodasesor** (este repo) | SPA React/Vite + redirects + edge | GitHub Actions → `netlify-cli deploy --prod --dir=dist` |
+| **Nexus SEO** (Seo-Nexus-2.0, Hostinger) | ~1.700 landings programáticas (servicio × ciudad) | GitHub Actions propio → **mismo** Netlify site ID |
 
-No sincronizar repos. No borrar `/public/images/`. No tocar paths `nexus-*`.
+**Este repo NO es Nexus. NUNCA confundir site IDs.**
 
-## Antes de cambiar y publicar
+## REGLA CRÍTICA — el deploy SPA borra Nexus si no se cuida
 
-1. `npm run sync:netlify` — descarga producción actual a `.netlify-live/`
-2. Revisa qué hay en `.netlify-live/` (páginas Nexus/SEO)
-3. Haz tus cambios en el SPA
-4. `npm run build:safe` — build + fusiona lo de Netlify que no debe borrarse
-5. Revisa `dist/.merge-report.json`
-6. Publica solo cuando el usuario lo pida (Netlify manual o push a main)
+`netlify-cli deploy --prod --dir=dist` **reemplaza todo el sitio**. Si `dist/` solo tiene el SPA (~70 archivos), **se borran las ~1.700 HTML de Nexus** que el generador subió antes.
 
-## Scripts
+Esto ya pasó en producción. **Antes de cada deploy a producción:**
 
-| Comando | Qué hace |
-|---------|----------|
-| `npm run sync:netlify` | Descarga deploy publicado de Netlify |
-| `npm run build:safe` | sync + build + merge Nexus/SEO |
-| `npm run merge:netlify` | Solo merge (tras build normal) |
+1. Verificar que `dist/` contiene landings Nexus (`node scripts/guard-nexus-dist.mjs`), **o**
+2. Aceptar que Nexus debe **re-desplegar inmediatamente después** del SPA, **o**
+3. Usar `npm run build:safe` con merge desde producción (requiere `NETLIFY_AUTH_TOKEN` + páginas Nexus ya live).
 
-Requiere `.env.local` con `NETLIFY_AUTH_TOKEN` y `NETLIFY_SITE_ID`.
+**Escape hatch (solo coordinado):** `ALLOW_SPA_ONLY_DEPLOY=1` omite el guard pre-deploy. Úsalo solo si vas a re-desplegar Nexus inmediatamente después.
 
-Rutas preservadas: `scripts/netlify-preserve.json`
+## Orden de deploy seguro
 
-## Redirects legacy (Netlify) — NO romper
+```
+Opción A (recomendada si solo cambias SPA):
+  1. Deploy Pagina-Web-Bodasesor (SPA)
+  2. INMEDIATAMENTE re-ejecutar deploy de Nexus SEO en su repo
+  3. node scripts/verify-nexus-production.mjs  ← debe pasar
 
-Las ~4215 URLs `/products/`, `/collections/`, `/blogs/`, `/pages/` deben devolver **301**, no 200 HTML.
+Opción B (merge antes de publicar):
+  1. Nexus ya publicó landings en bodasesor.com
+  2. npm run sync:netlify && npm run build:safe
+  3. guard-nexus-dist + verify-redirects
+  4. deploy
+  5. verify-nexus-production.mjs
+```
 
-| Artefacto | Rol |
-|-----------|-----|
-| `public/_redirects` | Reglas en deploy (`dist/_redirects`) |
-| `public/redirects-map.json` | Mapa JSON (backup) |
-| `netlify/edge-functions/legacy-redirect.ts` | Edge 301 backup (fetch a redirects-map.json) |
-| `public/redirects-map.json` | Mapa JSON servido como archivo estático |
+## Verificación obligatoria post-deploy
 
-**Reglas:**
-- `npm run build` regenera redirects y falla si faltan (`verify-redirects-deploy.mjs`)
-- **No** añadir `[[redirects]] /* → /index.html` en `netlify.toml` — pisa `_redirects`
-- El fallback SPA va al **final** de `_redirects`: `/*  /index.html  200`
-- `build:safe` / merge **nunca** copia `_redirects` ni `redirects-map.json` desde producción
+```bash
+node scripts/verify-nexus-production.mjs
+```
 
-## Por qué se rompen al hacer otros trabajos
+Comprueba que una landing Nexus real (no el SPA genérico) responde en producción.
 
-| Causa | Qué pasa | Protección en código |
-|-------|----------|----------------------|
-| `[[redirects]] /* → index.html` en netlify.toml | Pisa las 4216 reglas de `_redirects` | `guard-redirects.mjs` falla el build |
-| Deploy manual Nexus/Replit sin `_redirects` | Producción queda con ~215 reglas viejas | `build:safe` verifica tras merge; no publicar sin verify |
-| Build Netlify falla (edge JSON gigante, etc.) | Producción no se actualiza, queda deploy viejo | CI `verify-redirects.yml` en cada PR |
-| `vite build` sin `generate:redirects` | `dist/_redirects` incompleto | `npm run build` siempre regenera + verifica |
-| Google Sheet caído en build | Antes fallaba el build | Usa CSV local (`scripts/paginas-bodasesor.csv`) por defecto |
+Señales de **deploy que borró Nexus**:
+- `/banquete-3-tiempos-a-domicilio-aguascalientes/` → title genérico SPA (~7 KB)
+- Debe ser HTML Nexus con title tipo `Banquete 3 Tiempos…` (>15 KB)
 
-**Siempre publicar con:** `npm run build` (Netlify) o `npm run build:safe` (con Nexus).
-**Verificar producción:** `node scripts/check-production-redirects.mjs`
+## Edición en este repo
+
+- Ediciones **quirúrgicas**; no reescribir archivos enteros.
+- **No tocar** paths `nexus-*`, `eventos/`, lógica de merge sin aprobación.
+- **No** añadir `[[redirects]] /* → /index.html` en `netlify.toml`.
+- Redirects legacy (~4230 reglas) en `public/_redirects` — no romper.
+
+## Nexus SEO (repo separado)
+
+- Cambios en templates afectan **miles** de páginas → proponer y esperar aprobación.
+- Site ID de Nexus ≠ site ID de pruebas del SPA (no desplegar Nexus al ID del SPA por error).
+
+## Scripts clave
+
+| Comando | Uso |
+|---------|-----|
+| `npm run sync:netlify` | Descargar producción a `.netlify-live/` |
+| `npm run build:safe` | sync + build + merge Nexus |
+| `node scripts/guard-nexus-dist.mjs` | ¿dist/ tiene landings Nexus? |
+| `node scripts/verify-nexus-production.mjs` | ¿Producción tiene landings Nexus? |
+| `node scripts/check-production-redirects.mjs` | ¿Redirects legacy OK? |

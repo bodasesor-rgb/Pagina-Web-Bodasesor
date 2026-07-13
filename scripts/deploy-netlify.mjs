@@ -40,8 +40,11 @@ async function main() {
 
   if (!existsSync(DIST)) {
     console.log('Building…')
-    execSync('npm run build', { cwd: ROOT, stdio: 'inherit' })
+    execSync('npm run build:netlify', { cwd: ROOT, stdio: 'inherit' })
   }
+
+  console.log('Verificando Nexus en dist/ antes de publicar…')
+  execSync('node scripts/guard-nexus-dist.mjs', { cwd: ROOT, stdio: 'inherit' })
 
   console.log(`Deploying dist/ → ${siteId}…`)
   execSync(

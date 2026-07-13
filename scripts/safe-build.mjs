@@ -18,6 +18,7 @@ function run(label, cmd, args) {
 
 run('1/3 Descargar producción Netlify', 'node', ['scripts/pull-netlify-live.mjs'])
 run('2/3 Build SPA (Vite)', 'npm', ['run', 'build'])
-run('3/3 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
+run('3/4 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
+run('4/4 Verificar Nexus en dist', 'node', ['scripts/guard-nexus-dist.mjs'])
 
 console.log('\n✓ build:safe listo. Revisa dist/.merge-report.json antes de publicar.')
