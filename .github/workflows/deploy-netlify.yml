@@ -35,6 +35,6 @@ jobs:
           SITE_BASE: https://bodasesor.com
 
       - name: Deploy to Netlify production
-        run: npx netlify-cli deploy --prod --dir=dist --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SEO fixes: redirects, titles, WebP, cache"
+        run: npx netlify-cli deploy --prod --dir=dist --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SEO fixes redirects titles WebP cache"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
