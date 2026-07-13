@@ -9,26 +9,26 @@ const WHATSAPP_NUMBER = "5215540080373";
 const WHATSAPP_BASE = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
 
 const heroReviews = [
-  { name: "Héctor Jiménez",       city: "Monterrey",        text: "Servicio impecable, el banquete superó todas las expectativas de mis invitados.", time: "Hace 1 día" },
-  { name: "Ximena Hernández",     city: "CDMX",             text: "La comida estuvo exquisita, todo el equipo fue de primera desde el primer momento.", time: "Hace 3 semanas" },
-  { name: "Cinthya Rodríguez",    city: "Guadalajara",      text: "Todo muy bien coordinado, los meseros fueron muy atentos y puntuales.", time: "Hace 2 meses" },
-  { name: "Adolfo Núñez",         city: "Puebla",           text: "Gran acompañamiento de Alejandro, total confianza para futuros eventos.", time: "Hace 8 meses" },
-  { name: "Sandra Toledano",      city: "Querétaro",        text: "Los volvería a contratar sin duda, excelente servicio y atención.", time: "Hace 1 semana" },
-  { name: "Fernanda Castillo",    city: "Estado de México", text: "Mis invitados no paraban de felicitarme por la comida y la decoración.", time: "Hace 4 meses" },
-  { name: "Roberto Méndez",       city: "Monterrey",        text: "Banquete de boda espectacular, todo salió mejor de lo que esperábamos.", time: "Hace 1 año" },
-  { name: "Lucía Morales",        city: "CDMX",             text: "Catering gourmet de primer nivel, presentación increíble y sabor delicioso.", time: "Hace 2 semanas" },
-  { name: "Carlos Espinoza",      city: "Cancún",           text: "Profesionales de verdad, coordinaron todo a la perfección el día del evento.", time: "Hace 6 meses" },
-  { name: "Valeria Gutiérrez",    city: "Guadalajara",      text: "La barra de sushi fue un éxito total, a todos les encantó la presentación.", time: "Hace 3 días" },
-  { name: "Miguel Ángel Torres",  city: "Puebla",           text: "Organización impecable, el personal fue muy amable y siempre al pendiente.", time: "Hace 1 año y medio" },
-  { name: "Paola Reyes",          city: "León",             text: "Quince años inolvidables, todo el montaje y la comida estuvieron perfectos.", time: "Hace 5 meses" },
-  { name: "Andrés Villalobos",    city: "Querétaro",        text: "Servicio corporativo muy profesional, los coffee breaks fueron excelentes.", time: "Hace 2 años" },
-  { name: "Rosa Isabel Castro",   city: "Mérida",           text: "Cuidan cada detalle, la comida estuvo deliciosa y la decoración increíble.", time: "Hace 1 mes" },
-  { name: "Diego Fuentes",        city: "Toluca",           text: "La paella estuvo exquisita, el chef llegó puntual y el montaje fue rápido.", time: "Hace 3 meses" },
-  { name: "Selene Carrillo",      city: "CDMX",             text: "Meseros muy amables, la puntualidad y organización fueron sobresalientes.", time: "Hace 10 meses" },
-  { name: "Alejandra Domínguez",  city: "Monterrey",        text: "Recomendados al 100%, la mesa de postres fue la sensación de la noche.", time: "Hace 3 años" },
-  { name: "Juan Pablo Herrera",   city: "Veracruz",         text: "Muy buena relación calidad-precio, todo a tiempo y sin ningún contratiempo.", time: "Hace 7 meses" },
-  { name: "Mariana Sánchez",      city: "San Luis Potosí",  text: "El taquiza de guisados fue un hit entre los invitados, lo pediremos de nuevo.", time: "Hace 2 semanas" },
-  { name: "Esteban Ramírez",      city: "Oaxaca",           text: "Excelente atención desde la cotización hasta el último detalle del evento.", time: "Hace 11 meses" },
+  { name: "Héctor Jiménez",       city: "Monterrey",        text: "Servicio impecable, el banquete superó todas las expectativas de mis invitados.", time: "Hace 1 día",       photo: "/images/reviews/avatar-12.jpg" },
+  { name: "Ximena Hernández",     city: "CDMX",             text: "La comida estuvo exquisita, todo el equipo fue de primera desde el primer momento.", time: "Hace 3 semanas",  photo: "/images/reviews/avatar-5.jpg" },
+  { name: "Cinthya Rodríguez",    city: "Guadalajara",      text: "Todo muy bien coordinado, los meseros fueron muy atentos y puntuales.", time: "Hace 2 meses",    photo: "/images/reviews/avatar-9.jpg" },
+  { name: "Adolfo Núñez",         city: "Puebla",           text: "Gran acompañamiento de Alejandro, total confianza para futuros eventos.", time: "Hace 8 meses",    photo: "/images/reviews/avatar-15.jpg" },
+  { name: "Sandra Toledano",      city: "Querétaro",        text: "Los volvería a contratar sin duda, excelente servicio y atención.", time: "Hace 1 semana",   photo: "/images/reviews/avatar-20.jpg" },
+  { name: "Fernanda Castillo",    city: "Estado de México", text: "Mis invitados no paraban de felicitarme por la comida y la decoración.", time: "Hace 4 meses",    photo: "/images/reviews/avatar-25.jpg" },
+  { name: "Roberto Méndez",       city: "Monterrey",        text: "Banquete de boda espectacular, todo salió mejor de lo que esperábamos.", time: "Hace 1 año",       photo: "/images/reviews/avatar-33.jpg" },
+  { name: "Lucía Morales",        city: "CDMX",             text: "Catering gourmet de primer nivel, presentación increíble y sabor delicioso.", time: "Hace 2 semanas",  photo: "/images/reviews/avatar-47.jpg" },
+  { name: "Carlos Espinoza",      city: "Cancún",           text: "Profesionales de verdad, coordinaron todo a la perfección el día del evento.", time: "Hace 6 meses",    photo: "/images/reviews/avatar-51.jpg" },
+  { name: "Valeria Gutiérrez",    city: "Guadalajara",      text: "La barra de sushi fue un éxito total, a todos les encantó la presentación.", time: "Hace 3 días",      photo: "/images/reviews/avatar-44.jpg" },
+  { name: "Miguel Ángel Torres",  city: "Puebla",           text: "Organización impecable, el personal fue muy amable y siempre al pendiente.", time: "Hace 1 año y medio", photo: "/images/reviews/avatar-57.jpg" },
+  { name: "Paola Reyes",          city: "León",             text: "Quince años inolvidables, todo el montaje y la comida estuvieron perfectos.", time: "Hace 5 meses",    photo: "/images/reviews/avatar-38.jpg" },
+  { name: "Andrés Villalobos",    city: "Querétaro",        text: "Servicio corporativo muy profesional, los coffee breaks fueron excelentes.", time: "Hace 2 años",      photo: "/images/reviews/avatar-61.jpg" },
+  { name: "Rosa Isabel Castro",   city: "Mérida",           text: "Cuidan cada detalle, la comida estuvo deliciosa y la decoración increíble.", time: "Hace 1 mes",       photo: "/images/reviews/avatar-32.jpg" },
+  { name: "Diego Fuentes",        city: "Toluca",           text: "La paella estuvo exquisita, el chef llegó puntual y el montaje fue rápido.", time: "Hace 3 meses",    photo: "/images/reviews/avatar-67.jpg" },
+  { name: "Selene Carrillo",      city: "CDMX",             text: "Meseros muy amables, la puntualidad y organización fueron sobresalientes.", time: "Hace 10 meses",   photo: "/images/reviews/avatar-49.jpg" },
+  { name: "Alejandra Domínguez",  city: "Monterrey",        text: "Recomendados al 100%, la mesa de postres fue la sensación de la noche.", time: "Hace 3 años",      photo: "/images/reviews/avatar-16.jpg" },
+  { name: "Juan Pablo Herrera",   city: "Veracruz",         text: "Muy buena relación calidad-precio, todo a tiempo y sin ningún contratiempo.", time: "Hace 7 meses",    photo: "/images/reviews/avatar-70.jpg" },
+  { name: "Mariana Sánchez",      city: "San Luis Potosí",  text: "El taquiza de guisados fue un hit entre los invitados, lo pediremos de nuevo.", time: "Hace 2 semanas",  photo: "/images/reviews/avatar-29.jpg" },
+  { name: "Esteban Ramírez",      city: "Oaxaca",           text: "Excelente atención desde la cotización hasta el último detalle del evento.", time: "Hace 11 meses",   photo: "/images/reviews/avatar-53.jpg" },
 ];
 
 function RotatingReviewCard() {
@@ -54,7 +54,21 @@ function RotatingReviewCard() {
   return (
     <div key={key} className="review-card-enter fixed bottom-24 left-4 sm:left-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 w-72 z-40 border border-white/50">
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#162040] flex items-center justify-center text-white font-bold text-sm flex-shrink-0" aria-hidden="true">
+        <img
+          src={r.photo}
+          alt=""
+          width={40}
+          height={40}
+          className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 border-[#f5efe8]"
+          loading="lazy"
+          decoding="async"
+          onError={e => {
+            const el = e.target as HTMLImageElement;
+            el.style.display = 'none';
+            if (el.nextElementSibling) (el.nextElementSibling as HTMLElement).style.display = 'flex';
+          }}
+        />
+        <div className="w-10 h-10 rounded-full bg-[#162040] items-center justify-center text-white font-bold text-sm flex-shrink-0 hidden" aria-hidden="true">
           {r.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
         </div>
         <div className="flex-1 min-w-0">

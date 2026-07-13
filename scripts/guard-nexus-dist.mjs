@@ -55,10 +55,19 @@ async function main() {
     return
   }
 
+  if (process.env.ALLOW_SPA_ONLY_DEPLOY === '1') {
+    console.warn(
+      `\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 — publishing SPA-only (${nexus.length} Nexus landings in dist/).`,
+    )
+    console.warn('  Re-deploy Nexus SEO immediately after this publish.')
+    return
+  }
+
   console.error(
     `\n❌ Nexus guard failed: only ${nexus.length} SEO landings (need ≥${MIN_NEXUS_LANDINGS}).`,
   )
-  console.error('  Run npm run sync:netlify before build, or set NETLIFY_AUTH_TOKEN in Netlify env.')
+  console.error('  Run: npm run sync:netlify && npm run build:safe')
+  console.error('  Or re-deploy Nexus SEO first, then merge before SPA publish.')
   console.error('  Publishing now would wipe ~1,700 SEO pages from bodasesor.com.')
   process.exit(1)
 }

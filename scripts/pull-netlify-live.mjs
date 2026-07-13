@@ -146,9 +146,21 @@ async function pickDeployWithNexus(siteId) {
   }
 
   throw new Error(
-    `No deploy descargable con ≥${MIN_NEXUS_LANDINGS} landings SEO en los últimos 100 deploys. ` +
-      'Continuando con build SPA-only.',
+    `No deploy descargable con ≥${MIN_NEXUS_LANDINGS} landings SEO en los últimos 100 deploys.`,
   )
+}
+
+function failOrWarn(message) {
+  if (process.env.ALLOW_SPA_ONLY_DEPLOY === '1') {
+    console.warn(`⚠ ${message}`)
+    process.exit(0)
+  }
+  if (process.env.CI === 'true' || process.env.NEXUS_PULL_REQUIRED === '1') {
+    console.error(`❌ ${message}`)
+    process.exit(1)
+  }
+  console.warn(`⚠ ${message}`)
+  process.exit(0)
 }
 
 async function main() {
@@ -157,13 +169,12 @@ async function main() {
   const hasToken = Boolean(process.env.NETLIFY_AUTH_TOKEN)
   console.log(`Site ID: ${siteId.slice(0, 8)}… (token: ${hasToken ? 'sí' : 'no'})`)
 
-  console.log('Buscando snapshot de producción (opcional)…')
+  console.log('Buscando deploy con páginas Nexus/SEO…')
   let deploy
   try {
     deploy = await pickDeployWithNexus(siteId)
   } catch (err) {
-    console.warn(`⚠ ${err.message}`)
-    process.exit(0)
+    failOrWarn(err.message)
   }
   if (!deploy?.id) {
     throw new Error('No hay deploy publicado en este sitio.')
@@ -197,6 +208,5 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.warn(`⚠ pull-netlify-live: ${err.message || err}`)
-  process.exit(0)
+  failOrWarn(`pull-netlify-live: ${err.message || err}`)
 })
