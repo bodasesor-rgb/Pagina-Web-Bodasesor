@@ -98,7 +98,7 @@ export default function Home() {
   return (
     <div>
       <HomeJsonLd />
-      <section className="relative min-h-[420px] md:min-h-[480px] flex items-center overflow-hidden aspect-[768/419] md:aspect-[1408/768]" data-testid="section-hero">
+      <section className="relative min-h-[520px] md:min-h-[480px] flex items-center overflow-x-hidden md:overflow-hidden md:aspect-[1408/768]" data-testid="section-hero">
         <picture className="absolute inset-0 -z-10" aria-hidden="true">
           <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
           <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
@@ -116,10 +116,10 @@ export default function Home() {
         <div className="hidden md:block">
           <RotatingReviewCard />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center z-10 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-24 text-center z-10 w-full">
           <h1
             key={city?.slug ?? 'default'}
-            className="text-4xl md:text-7xl font-serif font-bold text-white mb-8 leading-tight"
+            className="text-3xl sm:text-4xl md:text-7xl font-serif font-bold text-white mb-5 md:mb-8 leading-tight"
           >
             {city ? (
               <>Banquetes y catering para eventos<br />en {city.name}</>
@@ -127,33 +127,33 @@ export default function Home() {
               <>Banquetes, catering y servicios<br />para eventos en México</>
             )}
           </h1>
-          <p className="text-xl md:text-2xl text-[#f5efe8] mb-12 max-w-4xl mx-auto font-serif">
+          <p className="text-base sm:text-xl md:text-2xl text-[#f5efe8] mb-8 md:mb-12 max-w-4xl mx-auto font-serif">
             {city
               ? `Banquetes, catering gourmet y mobiliario elegante para eventos en ${city.name}. Cotiza sin compromiso.`
               : 'Banquetes premium, catering gourmet y mobiliario elegante para eventos corporativos, bodas y celebraciones en todo México'
             }
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
             <a
               href={`${WHATSAPP_BASE}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`}
               target="_blank" rel="noopener noreferrer"
               data-testid="btn-cotizar-hero"
-              className="bg-[#0d6849] hover:bg-[#0a5740] text-white px-10 py-5 rounded-lg text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center gap-3 font-serif"
+              className="bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 md:px-10 py-4 md:py-5 rounded-lg text-lg md:text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center gap-3 font-serif"
             >
-              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
               </svg>
               Cotiza por WhatsApp
             </a>
             <a
               href="#servicios"
-              className="bg-white hover:bg-[#f5efe8] text-[#162040] px-10 py-5 rounded-lg text-xl font-bold transition-all duration-300 border-2 border-white font-serif hover:scale-105 hover:shadow-xl"
+              className="bg-white hover:bg-[#f5efe8] text-[#162040] px-8 md:px-10 py-4 md:py-5 rounded-lg text-lg md:text-xl font-bold transition-all duration-300 border-2 border-white font-serif hover:scale-105 hover:shadow-xl"
             >
               Ver servicios
             </a>
           </div>
-          <div className="mt-20">
-            <svg className="w-10 h-10 mx-auto text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <div className="mt-10 md:mt-20">
+            <svg className="w-8 h-8 md:w-10 md:h-10 mx-auto text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </div>

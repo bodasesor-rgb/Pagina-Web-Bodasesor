@@ -947,12 +947,9 @@ export default function Navbar() {
   const { city } = useCity();
 
   useLayoutEffect(() => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        hideStaticLcpShell()
-        document.getElementById('static-nav-shell')?.remove()
-      })
-    })
+    // Hide static shell immediately so mobile never shows double nav bars
+    hideStaticLcpShell()
+    document.getElementById('static-nav-shell')?.remove()
   }, [])
 
   const selectCity = (citySlug) => {
@@ -1030,12 +1027,12 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── Category nav row (white) ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Category nav row (white, desktop only — avoids second mobile menu bar) ── */}
+      <div className="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-12">
 
           {/* Desktop nav items */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="flex items-center space-x-1">
 
             {/* Ciudad */}
             <div className="relative group">
@@ -1108,21 +1105,6 @@ export default function Navbar() {
               Galería
             </Link>
 
-          </div>
-
-          {/* Mobile hamburger (on white row) */}
-          <div className="md:hidden">
-            <button
-              type="button"
-              className="text-gray-700 hover:text-[#162040] min-w-11 min-h-11 flex items-center justify-center"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={mobileOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
-              aria-expanded={mobileOpen}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
-              </svg>
-            </button>
           </div>
 
         </div>

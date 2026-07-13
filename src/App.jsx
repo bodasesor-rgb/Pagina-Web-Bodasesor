@@ -206,7 +206,7 @@ function Router() {
       <Suspense fallback={
         <div className="sticky top-0 z-50 shadow-lg" aria-hidden="true">
           <div className="h-16 bg-[#162040]" />
-          <div className="h-12 bg-white" />
+          <div className="hidden md:block h-12 bg-white" />
         </div>
       }>
         <Navbar />
