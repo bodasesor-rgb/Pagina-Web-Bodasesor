@@ -30,10 +30,7 @@ Disallow: /
 User-agent: AhrefsBot
 Disallow: /
 
-User-agent: SemrushBot
-Disallow: /
-
-# Resto: permitido
+# Resto: permitido (incluye SemrushBot / Ubersuggest)
 User-agent: *
 Allow: /
 

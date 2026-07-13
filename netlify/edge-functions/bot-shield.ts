@@ -52,7 +52,7 @@ const BLOCK = [
   /PetalBot/i,
   /DuckAssistBot/i,
   /AhrefsBot/i,
-  /SemrushBot/i,
+  // SemrushBot — permitido (Ubersuggest audita con este user-agent)
   /DotBot/i,
   /MJ12bot/i,
   /DataForSeoBot/i,
