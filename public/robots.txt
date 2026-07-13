@@ -1,23 +1,40 @@
-User-agent: *
+# Buscadores: acceso total (tu SEO los necesita)
+User-agent: Googlebot
 Allow: /
 
-# Block aggressive scrapers that inflate bandwidth without search value
+User-agent: Bingbot
+Allow: /
+
+# Crawlers de IA: fuera
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
 User-agent: Bytespider
 Disallow: /
 
-User-agent: PetalBot
+User-agent: Amazonbot
 Disallow: /
 
-User-agent: MJ12bot
+User-agent: AhrefsBot
 Disallow: /
 
-User-agent: DotBot
+User-agent: SemrushBot
 Disallow: /
 
-User-agent: BLEXBot
-Disallow: /
-
-User-agent: DataForSeoBot
-Disallow: /
+# Resto: permitido
+User-agent: *
+Allow: /
 
 Sitemap: https://bodasesor.com/sitemap.xml
