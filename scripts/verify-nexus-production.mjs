@@ -14,12 +14,6 @@ const SPA_HOME_TITLE = 'Banquetes y Catering para Eventos en México | Bodasesor
 /** Known Nexus landings — service × city paths published by Seo-Nexus-2.0 */
 const PROBES = [
   {
-    url: 'https://bodasesor.com/banquete-de-lujo-estado-de-mexico/',
-    minBytes: 12_000,
-    titleMustInclude: ['Banquete', 'México'],
-    mustInclude: ['seo-service-hero'],
-  },
-  {
     url: 'https://bodasesor.com/banquete-3-tiempos-a-domicilio-aguascalientes/',
     minBytes: 12_000,
     titleMustInclude: ['Banquete', 'Aguascalientes'],
@@ -29,6 +23,12 @@ const PROBES = [
     url: 'https://bodasesor.com/banquete-kosher-ciudad-de-mexico/',
     minBytes: 12_000,
     titleMustInclude: ['Kosher', 'México'],
+    mustInclude: ['seo-service-hero'],
+  },
+  {
+    url: 'https://bodasesor.com/banquete-de-lujo-estado-de-mexico/',
+    minBytes: 12_000,
+    titleMustInclude: ['Banquete', 'México'],
     mustInclude: ['seo-service-hero'],
   },
 ]

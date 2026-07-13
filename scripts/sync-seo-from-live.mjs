@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 /**
- * Sync live Nexus SEO landings from production (or NEXUS_URL) into .netlify-live/
- * so SPA deploys can merge them into dist/ and not wipe SEO pages.
+ * Sync Nexus SEO landings into .netlify-live/ for merge before SPA deploy.
  *
- * Netlify deploy ZIPs often contain 0 landing files even when they are live
- * (Nexus publishes outside the SPA deploy history). This script crawls the
- * sitemap and keeps only HTML that contains seo-service-hero.
+ * Prefers NEXUS_URL (Hostinger preview) because production SPA deploys can wipe
+ * landings and the production sitemap is often SPA-only.
  *
  * Usage: node scripts/sync-seo-from-live.mjs
- * Env: SITE_BASE / NEXUS_URL (default https://bodasesor.com)
+ * Env:
+ *   NEXUS_URL=https://white-ferret-567834.hostingersite.com
+ *   SITE_BASE=https://bodasesor.com
+ *   SEO_SYNC_CONCURRENCY=8
  */
 import { mkdir, writeFile, rm, readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
@@ -18,46 +19,46 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const OUT_DIR = join(ROOT, '.netlify-live')
-const BASE = (process.env.NEXUS_URL || process.env.SITE_BASE || 'https://bodasesor.com').replace(
+const PROD = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
+const NEXUS = (process.env.NEXUS_URL || 'https://white-ferret-567834.hostingersite.com').replace(
   /\/$/,
   '',
 )
+const FETCH_ORIGINS = [...new Set([NEXUS, PROD].filter(Boolean))]
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 16)
+const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
 const MIN_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 50)
 
-function slugFromUrl(url) {
-  try {
-    const u = new URL(url)
-    return u.pathname.replace(/^\/+|\/+$/g, '')
-  } catch {
-    return ''
-  }
-}
-
 function isSpaShell(html) {
+  if (!html) return true
   if (!html.includes('seo-service-hero')) return true
   if (html.includes('id="root"') && html.includes('/assets/index-')) return true
+  if (html.includes('Access denied')) return true
   return false
 }
 
 async function fetchText(url) {
-  const res = await fetch(url, {
-    headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
-    redirect: 'follow',
-  })
-  if (!res.ok) return null
-  return await res.text()
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
+      redirect: 'follow',
+    })
+    if (!res.ok) return null
+    return await res.text()
+  } catch {
+    return null
+  }
 }
 
 async function fetchBuffer(url) {
-  const res = await fetch(url, {
-    headers: { 'User-Agent': UA },
-    redirect: 'follow',
-  })
-  if (!res.ok) return null
-  return Buffer.from(await res.arrayBuffer())
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' })
+    if (!res.ok) return null
+    return Buffer.from(await res.arrayBuffer())
+  } catch {
+    return null
+  }
 }
 
 async function mapPool(items, limit, fn) {
@@ -73,54 +74,33 @@ async function mapPool(items, limit, fn) {
   return results
 }
 
-async function loadInventoryUrls() {
+async function loadSlugs() {
   const path = join(__dirname, 'seo-landing-slugs.json')
-  if (!existsSync(path)) return []
+  if (!existsSync(path)) throw new Error(`Falta ${path}`)
   const data = JSON.parse(await readFile(path, 'utf8'))
-  const slugs = Array.isArray(data.slugs) ? data.slugs : []
-  return slugs.map((s) => `${BASE}/${String(s).replace(/^\/+|\/+$/g, '')}/`)
+  return (data.slugs || []).map((s) => String(s).replace(/^\/+|\/+$/g, '')).filter(Boolean)
 }
 
-async function loadSitemapUrls() {
-  const xml = await fetchText(`${BASE}/sitemap.xml`)
-  if (!xml || xml.includes('Access denied')) return []
-  const urls = [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)].map((m) => m[1].trim())
-  return [...new Set(urls)].filter((u) => {
-    const slug = slugFromUrl(u)
-    if (!slug) return false
-    if (slug.startsWith('blog')) return false
-    if (slug.includes('/')) return false
-    // SPA city pins etc. — keep only plausible Nexus service×city slugs
-    if (slug.split('-').length < 3 && !slug.includes('banquete') && !slug.includes('catering')) {
-      return false
-    }
-    return true
-  })
+async function fetchLanding(slug) {
+  for (const origin of FETCH_ORIGINS) {
+    const url = `${origin}/${slug}/`
+    const html = await fetchText(url)
+    if (!isSpaShell(html)) return { html, origin, url }
+  }
+  return null
 }
 
-async function loadCandidateUrls() {
-  const fromInventory = await loadInventoryUrls()
-  const fromSitemap = await loadSitemapUrls()
-  const merged = [...new Set([...fromInventory, ...fromSitemap])]
-  console.log(
-    `  fuentes: inventory=${fromInventory.length}, sitemap=${fromSitemap.length}, unique=${merged.length}`,
-  )
-  return merged
-}
-
-function assetUrlsFromHtml(html, pageUrl) {
-  const page = new URL(pageUrl)
+function assetUrlsFromHtml(html, origin, slug) {
   const assets = new Set()
-  for (const m of html.matchAll(/(?:src|href|content)="([^"]+\.(?:webp|jpg|jpeg|png|svg|css|js))"/gi)) {
+  for (const m of html.matchAll(/(?:src|href|content)="([^"]+\.(?:webp|jpg|jpeg|png))"/gi)) {
     try {
-      const abs = new URL(m[1], page)
-      if (abs.origin !== page.origin) continue
-      // same folder as page, or nexus-output-pages
+      const abs = new URL(m[1], `${origin}/`)
       if (
-        abs.pathname.startsWith(`/${slugFromUrl(pageUrl)}/`) ||
+        abs.pathname.startsWith(`/${slug}/`) ||
         abs.pathname.startsWith('/nexus-output-pages/')
       ) {
-        assets.add(abs.href)
+        // Prefer Hostinger/Nexus origin for binary assets
+        assets.add(`${origin}${abs.pathname}`)
       }
     } catch {
       /* skip */
@@ -129,11 +109,7 @@ function assetUrlsFromHtml(html, pageUrl) {
   return [...assets]
 }
 
-async function saveLanding(url, html) {
-  const slug = slugFromUrl(url)
-  if (!slug) return []
-
-  const written = []
+async function saveLanding(slug, html, origin) {
   const targets = [
     join(OUT_DIR, slug, 'index.html'),
     join(OUT_DIR, 'nexus-output-pages', slug, 'index.html'),
@@ -141,28 +117,23 @@ async function saveLanding(url, html) {
   for (const dest of targets) {
     await mkdir(dirname(dest), { recursive: true })
     await writeFile(dest, html)
-    written.push(dest)
   }
 
-  for (const assetUrl of assetUrlsFromHtml(html, url)) {
+  for (const assetUrl of assetUrlsFromHtml(html, origin, slug)) {
     const buf = await fetchBuffer(assetUrl)
     if (!buf || buf.length < 50) continue
     const path = new URL(assetUrl).pathname.replace(/^\//, '')
     const dest = join(OUT_DIR, path)
     await mkdir(dirname(dest), { recursive: true })
     await writeFile(dest, buf)
-    written.push(dest)
   }
-  return written
 }
 
 async function main() {
-  console.log(`Sync SEO desde ${BASE} → ${OUT_DIR}`)
-  const urls = await loadCandidateUrls()
-  console.log(`  candidatos: ${urls.length}`)
-  if (!urls.length) {
-    throw new Error('Sin candidatos SEO (inventory + sitemap vacíos)')
-  }
+  console.log(`Sync SEO → ${OUT_DIR}`)
+  console.log(`  fetch origins: ${FETCH_ORIGINS.join(' → ')}`)
+  const slugs = await loadSlugs()
+  console.log(`  inventory slugs: ${slugs.length}`)
 
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
@@ -171,38 +142,34 @@ async function main() {
   let spa = 0
   let fail = 0
 
-  await mapPool(urls, CONCURRENCY, async (url) => {
+  await mapPool(slugs, CONCURRENCY, async (slug) => {
     try {
-      const html = await fetchText(url)
-      if (!html) {
-        fail++
-        return
-      }
-      if (isSpaShell(html)) {
+      const hit = await fetchLanding(slug)
+      if (!hit) {
         spa++
         return
       }
-      await saveLanding(url, html)
+      await saveLanding(slug, hit.html, hit.origin)
       ok++
-      if (ok % 50 === 0) console.log(`  … ${ok} landings SEO guardadas`)
+      if (ok % 100 === 0) console.log(`  … ${ok} landings SEO guardadas`)
     } catch (err) {
       fail++
-      console.warn(`  skip ${url}: ${err.message}`)
+      console.warn(`  skip ${slug}: ${err.message}`)
     }
   })
 
   const manifest = {
     pulledAt: new Date().toISOString(),
-    source: BASE,
-    method: 'sitemap-http-seo-service-hero',
-    candidates: urls.length,
+    origins: FETCH_ORIGINS,
+    method: 'inventory+nexus-url-seo-service-hero',
+    candidates: slugs.length,
     landingsSaved: ok,
     spaSkipped: spa,
     failed: fail,
   }
   await writeFile(join(OUT_DIR, '.manifest.json'), JSON.stringify(manifest, null, 2))
 
-  console.log(`\n✓ Sync SEO: ${ok} landings (spa=${spa}, fail=${fail})`)
+  console.log(`\n✓ Sync SEO: ${ok} landings (spa/miss=${spa}, fail=${fail})`)
 
   if (ok < MIN_LANDINGS) {
     const msg = `Solo ${ok} landings SEO (need ≥${MIN_LANDINGS}).`
