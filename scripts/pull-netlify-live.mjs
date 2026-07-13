@@ -4,6 +4,7 @@
  * Requiere: NETLIFY_AUTH_TOKEN y NETLIFY_SITE_ID (env o .env.local)
  *
  * Uso: node scripts/pull-netlify-live.mjs
+ * Opcional: NETLIFY_RESTORE_DEPLOY_ID=<id> para forzar un deploy con Nexus
  */
 import { mkdir, writeFile, rm, readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
@@ -15,6 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const OUT_DIR = join(ROOT, '.netlify-live')
 const ZIP_PATH = join(ROOT, '.netlify-live.zip')
+const MIN_NEXUS_FILES = 50
 
 async function loadEnvFile() {
   for (const name of ['.env.local', '.env']) {
@@ -29,7 +31,7 @@ async function loadEnvFile() {
   }
 }
 
-async function netlifyFetch(path) {
+async function netlifyFetch(path, { allow404 = false } = {}) {
   const token = process.env.NETLIFY_AUTH_TOKEN
   if (!token) {
     throw new Error(
@@ -39,6 +41,7 @@ async function netlifyFetch(path) {
   const res = await fetch(`https://api.netlify.com/api/v1${path}`, {
     headers: { Authorization: `Bearer ${token}` },
   })
+  if (res.status === 404 && allow404) return null
   if (!res.ok) {
     const body = await res.text()
     throw new Error(`Netlify API ${path} → ${res.status}: ${body}`)
@@ -56,26 +59,46 @@ function resolveSiteId() {
   return id
 }
 
-async function deployHasNexusPages(deployId) {
+function isNexusLandingPath(p) {
+  const path = p.replace(/^\//, '')
+  return (
+    path.startsWith('eventos/') ||
+    path.startsWith('nexus-output-pages/') ||
+    path.startsWith('private/nexus-output-pages/') ||
+    /-a-domicilio-[a-z0-9-]+\/index\.html$/i.test(path)
+  )
+}
+
+async function countNexusFiles(deployId) {
   const res = await netlifyFetch(`/deploys/${deployId}/files?per_page=1000`)
+  if (!res) return 0
   const files = await res.json()
   const list = Array.isArray(files) ? files : files?.files ?? []
-  return list.some((f) => {
-    const p = (f.path || f.name || '').replace(/^\//, '')
-    return (
-      p.startsWith('eventos/') ||
-      p.startsWith('nexus-output-pages/') ||
-      p.startsWith('private/nexus-output-pages/') ||
-      /-a-domicilio-[a-z0-9-]+\/index\.html$/i.test(p) ||
-      /\/index\.html$/.test(p) && /-(cdmx|ciudad-de-mexico|guadalajara|monterrey|aguascalientes)\/?$/i.test(p.replace(/\/index\.html$/, ''))
-    )
-  })
+  return list.filter((f) => isNexusLandingPath(f.path || f.name || '')).length
+}
+
+async function tryDownloadZip(deployId) {
+  const res = await netlifyFetch(`/deploys/${deployId}/zip`, { allow404: true })
+  if (!res) return false
+  const buffer = Buffer.from(await res.arrayBuffer())
+  if (buffer.length < 1000) return false
+  await writeFile(ZIP_PATH, buffer)
+  return true
 }
 
 async function pickDeployWithNexus(siteId) {
-  const deploysRes = await netlifyFetch(
-    `/sites/${siteId}/deploys?per_page=40`,
-  )
+  const forcedId = process.env.NETLIFY_RESTORE_DEPLOY_ID
+  if (forcedId) {
+    const count = await countNexusFiles(forcedId)
+    if (count < MIN_NEXUS_FILES) {
+      throw new Error(
+        `NETLIFY_RESTORE_DEPLOY_ID=${forcedId} solo tiene ${count} landings Nexus (need ≥${MIN_NEXUS_FILES})`,
+      )
+    }
+    return { id: forcedId, title: 'forced restore', published_at: null }
+  }
+
+  const deploysRes = await netlifyFetch(`/sites/${siteId}/deploys?per_page=100`)
   const deploys = await deploysRes.json()
   if (!deploys?.length) {
     throw new Error('No hay deploys en este sitio.')
@@ -84,15 +107,26 @@ async function pickDeployWithNexus(siteId) {
   for (const deploy of deploys) {
     if (deploy.state !== 'ready') continue
     try {
-      if (await deployHasNexusPages(deploy.id)) {
+      const count = await countNexusFiles(deploy.id)
+      if (count < MIN_NEXUS_FILES) {
+        console.log(`  skip ${deploy.id.slice(0, 8)}… — ${count} Nexus files`)
+        continue
+      }
+      console.log(`  candidate ${deploy.id.slice(0, 8)}… — ${count} Nexus files`)
+      if (await tryDownloadZip(deploy.id)) {
         return deploy
       }
-    } catch {
-      // try next deploy
+      console.log(`  zip unavailable for ${deploy.id.slice(0, 8)}…, trying older deploy`)
+    } catch (err) {
+      console.warn(`  error checking ${deploy.id?.slice(0, 8)}…: ${err.message}`)
     }
   }
 
-  return deploys.find((d) => d.state === 'ready') ?? deploys[0]
+  throw new Error(
+    `No se encontró deploy descargable con ≥${MIN_NEXUS_FILES} páginas Nexus. ` +
+      'En Netlify → Deploys, publica manualmente un deploy anterior al 12 jul 2026 ~20:19 UTC, ' +
+      'copia su Deploy ID y configura NETLIFY_RESTORE_DEPLOY_ID en GitHub Secrets.',
+  )
 }
 
 async function main() {
@@ -110,10 +144,13 @@ async function main() {
   console.log(`Deploy: ${deploy.id} (${deploy.title || deploy.context || 'production'})`)
   console.log(`Fecha: ${deploy.published_at || deploy.created_at}`)
 
-  console.log('Descargando ZIP del deploy…')
-  const zipRes = await netlifyFetch(`/deploys/${deploy.id}/zip`)
-  const buffer = Buffer.from(await zipRes.arrayBuffer())
-  await writeFile(ZIP_PATH, buffer)
+  if (!existsSync(ZIP_PATH)) {
+    console.log('Descargando ZIP del deploy…')
+    const ok = await tryDownloadZip(deploy.id)
+    if (!ok) throw new Error(`No se pudo descargar ZIP del deploy ${deploy.id}`)
+  } else {
+    console.log('Usando ZIP ya descargado')
+  }
 
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
