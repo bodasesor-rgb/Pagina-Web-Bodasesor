@@ -61,20 +61,50 @@ function resolveSiteId() {
 
 function isNexusLandingPath(p) {
   const path = p.replace(/^\//, '')
-  return (
+  if (!path.endsWith('/index.html')) return false
+
+  if (
     path.startsWith('eventos/') ||
     path.startsWith('nexus-output-pages/') ||
-    path.startsWith('private/nexus-output-pages/') ||
-    /-a-domicilio-[a-z0-9-]+\/index\.html$/i.test(path)
+    path.startsWith('private/nexus-output-pages/')
+  ) {
+    return true
+  }
+
+  const dir = path.slice(0, -'/index.html'.length)
+  if (!dir || dir.includes('/')) return false
+
+  return (
+    dir.includes('-a-domicilio-') ||
+    /-(ciudad-de-mexico|guadalajara|monterrey|aguascalientes|cdmx)$/i.test(dir)
   )
 }
 
 async function countNexusFiles(deployId) {
-  const res = await netlifyFetch(`/deploys/${deployId}/files?per_page=1000`)
-  if (!res) return 0
-  const files = await res.json()
-  const list = Array.isArray(files) ? files : files?.files ?? []
-  return list.filter((f) => isNexusLandingPath(f.path || f.name || '')).length
+  let page = 1
+  let count = 0
+  while (page <= 30) {
+    const res = await netlifyFetch(
+      `/deploys/${deployId}/files?page=${page}&per_page=1000`,
+      { allow404: true },
+    )
+    if (!res) return 0
+    const files = await res.json()
+    const list = Array.isArray(files) ? files : files?.files ?? []
+    if (!list.length) break
+    for (const f of list) {
+      if (isNexusLandingPath(f.path || f.name || '')) count++
+    }
+    if (list.length < 1000) break
+    page++
+  }
+  return count
+}
+
+async function getPublishedDeploy(siteId) {
+  const res = await netlifyFetch(`/sites/${siteId}`)
+  const site = await res.json()
+  return site.published_deploy || null
 }
 
 async function tryDownloadZip(deployId) {
@@ -104,7 +134,14 @@ async function pickDeployWithNexus(siteId) {
     throw new Error('No hay deploys en este sitio.')
   }
 
-  for (const deploy of deploys) {
+  const published = await getPublishedDeploy(siteId)
+  const ordered = [...deploys]
+  if (published?.id) {
+    ordered.sort((a, b) => (a.id === published.id ? -1 : b.id === published.id ? 1 : 0))
+    console.log(`  published deploy: ${published.id.slice(0, 8)}…`)
+  }
+
+  for (const deploy of ordered) {
     if (deploy.state !== 'ready') continue
     try {
       const count = await countNexusFiles(deploy.id)
