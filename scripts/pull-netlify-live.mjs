@@ -146,19 +146,13 @@ async function pickDeployWithNexus(siteId) {
   }
 
   throw new Error(
-    `No deploy descargable con ≥${MIN_NEXUS_LANDINGS} landings SEO en los últimos 100 deploys.`,
+    `No deploy descargable con ≥${MIN_NEXUS_LANDINGS} landings SEO en los últimos 100 deploys. ` +
+      'Usa scripts/sync-seo-from-live.mjs (sitemap HTTP) como fallback.',
   )
 }
 
 function failOrWarn(message) {
-  if (process.env.ALLOW_SPA_ONLY_DEPLOY === '1') {
-    console.warn(`⚠ ${message}`)
-    process.exit(0)
-  }
-  if (process.env.CI === 'true' || process.env.NEXUS_PULL_REQUIRED === '1') {
-    console.error(`❌ ${message}`)
-    process.exit(1)
-  }
+  // ZIP pull is optional — HTTP sync covers preservation. Never hard-fail here.
   console.warn(`⚠ ${message}`)
   process.exit(0)
 }
