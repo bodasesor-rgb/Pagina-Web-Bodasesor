@@ -99,6 +99,10 @@ export function resolveBasePath(basePath) {
 
   const segs = basePath.split('/').filter(Boolean)
 
+  if (segs.length === 2 && segs[0] === 'catalogos') {
+    return { kind: 'catalogo', slug: segs[1] }
+  }
+
   if (segs.length === 2 && BANQUET_PARENT_SLUGS.has(segs[0])) {
     return { kind: 'banquete-menu', parentSlug: segs[0], menuSlug: segs[1] }
   }
@@ -109,14 +113,15 @@ export function resolveBasePath(basePath) {
 
   if (segs.length === 2) {
     const [parent, child] = segs
-    if (STANDALONE_PATHS.has(`/${parent}`)) {
-      return { kind: 'standalone', path: `/${parent}` }
-    }
     if (DETAIL_CATALOGS.has(parent)) {
       return { kind: 'detail', catalog: parent, slug: child }
     }
     if (BANQUET_PARENT_SLUGS.has(parent)) {
       return { kind: 'banquete-menu', parentSlug: parent, menuSlug: child }
+    }
+    // Standalone hub has its own child pages (e.g. /blog/:slug) — do not collapse to hub
+    if (STANDALONE_PATHS.has(`/${parent}`) && parent !== 'blog' && parent !== 'catalogos') {
+      return { kind: 'standalone', path: `/${parent}` }
     }
     return { kind: 'service', slug: child }
   }

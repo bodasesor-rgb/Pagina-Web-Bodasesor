@@ -1,52 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CityLink from "../components/CityLink";
-import { CATALOGO_CATEGORIES, CATALOGOS } from "../data/catalogos-embeds";
+import CatalogEmbed from "../components/CatalogEmbed";
+import {
+  CATALOGO_CATEGORIES,
+  CATALOGOS,
+  getCatalogoPagePath,
+} from "../data/catalogos-embeds";
 
 const Link = CityLink;
 const WA =
   "https://api.whatsapp.com/send/?phone=5215540080373&text=" +
   encodeURIComponent("Hola, me interesa cotizar a partir de sus catálogos 2026.");
 
-function CatalogEmbed({ catalog }: { catalog: (typeof CATALOGOS)[number] }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "200px 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className="w-full bg-[#f5efe8] rounded-xl overflow-hidden border border-[#162040]/10">
-      {visible ? (
-        <iframe
-          src={catalog.embedSrc}
-          title={catalog.title}
-          className="w-full border-0"
-          style={{ height: catalog.provider === "canva" ? 560 : 480 }}
-          allow="fullscreen"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      ) : (
-        <div className="h-[280px] flex items-center justify-center text-[#162040]/50 font-serif text-sm">
-          Cargando catálogo…
-        </div>
-      )}
-    </div>
-  );
-}
+const btnPrimary =
+  "px-4 py-2.5 rounded-lg bg-[#162040] hover:bg-[#1a2a52] text-white text-sm font-bold font-serif transition-colors";
+const btnSecondary =
+  "px-4 py-2.5 rounded-lg border border-[#162040]/20 text-[#162040] text-sm font-serif hover:bg-[#f5efe8] transition-colors";
 
 export default function CatalogosPage() {
   const [category, setCategory] = useState("todos");
@@ -143,6 +112,7 @@ export default function CatalogosPage() {
       <div className="max-w-5xl mx-auto px-4 py-10 space-y-5">
         {filtered.map((catalog) => {
           const isOpen = openSlug === catalog.slug;
+          const pagePath = getCatalogoPagePath(catalog.slug);
           return (
             <article
               key={catalog.id}
@@ -168,26 +138,21 @@ export default function CatalogosPage() {
                         history.replaceState(null, "", `#${catalog.slug}`);
                       }
                     }}
-                    className="px-4 py-2.5 rounded-lg bg-[#162040] hover:bg-[#1a2a52] text-white text-sm font-bold font-serif transition-colors"
+                    className={btnPrimary}
                   >
                     {isOpen ? "Ocultar catálogo" : "Ver catálogo"}
                   </button>
                   <a
-                    href={catalog.viewUrl}
+                    href={pagePath}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2.5 rounded-lg border border-[#162040]/20 text-[#162040] text-sm font-serif hover:bg-[#f5efe8] transition-colors"
+                    className={btnSecondary}
                   >
                     Abrir en nueva pestaña
                   </a>
-                  {catalog.relatedHref && (
-                    <Link
-                      href={catalog.relatedHref}
-                      className="px-4 py-2.5 rounded-lg border border-[#162040]/20 text-[#162040] text-sm font-serif hover:bg-[#f5efe8] transition-colors"
-                    >
-                      Ver servicio
-                    </Link>
-                  )}
+                  <Link href={catalog.relatedHref} className={btnSecondary}>
+                    Ver servicio
+                  </Link>
                 </div>
               </div>
               {isOpen && (
