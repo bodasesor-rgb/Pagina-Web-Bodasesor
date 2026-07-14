@@ -38,8 +38,9 @@ jobs:
         env:
           SITE_BASE: https://bodasesor.com
           NEXUS_URL: https://white-ferret-567834.hostingersite.com
-          SKIP_NETLIFY_ZIP: "1"
-          SEO_SYNC_CONCURRENCY: "3"
+          # Prefer Netlify ZIP seed when creds exist (HTTP sync still required after).
+          # Do not set SKIP_NETLIFY_ZIP — Hostinger alone often rate-limits below MIN.
+          SEO_SYNC_CONCURRENCY: "2"
           MIN_NEXUS_LANDINGS: "1200"
           # Force preview context so logs show preview=true; sync is still mandatory.
           CONTEXT: deploy-preview
