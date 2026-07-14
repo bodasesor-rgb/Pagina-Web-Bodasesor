@@ -58,19 +58,64 @@ jobs:
             exit 1
           fi
           ALIAS="nexus-pr-${{ github.event.pull_request.number }}"
+          # Prefer JSON output; fall back to log text. Never use `rg` (not on runners).
+          set +e
           npx netlify-cli deploy \
             --dir=dist \
             --no-build \
             --site="${NETLIFY_SITE_ID}" \
             --alias="${ALIAS}" \
             --message="PR #${{ github.event.pull_request.number }} SPA+Nexus preview (NOT prod)" \
-            | tee /tmp/netlify-preview.log
-          # Prefer alias URL if printed; else draft URL
-          URL=$(rg -o 'https://[a-zA-Z0-9.-]+\.netlify\.app' /tmp/netlify-preview.log | head -1 || true)
+            --json \
+            > /tmp/netlify-preview.json \
+            2> /tmp/netlify-preview.err
+          DEPLOY_EXIT=$?
+          set -e
+          if [ "$DEPLOY_EXIT" -ne 0 ]; then
+            echo "netlify deploy failed (exit ${DEPLOY_EXIT})"
+            cat /tmp/netlify-preview.err || true
+            cat /tmp/netlify-preview.json || true
+            exit "$DEPLOY_EXIT"
+          fi
+          cat /tmp/netlify-preview.err || true
+          URL=$(node -e '
+            const fs = require("fs");
+            const raw = fs.readFileSync("/tmp/netlify-preview.json", "utf8").trim();
+            let url = "";
+            try {
+              const j = JSON.parse(raw);
+              url = j.deploy_url || j.url || j.deployUrl || "";
+              if (!url && j.site_id && j.name) {
+                /* ignore */
+              }
+            } catch (_) {
+              /* not pure JSON — try text patterns below */
+            }
+            if (!url) {
+              const text = raw + "\n" + (fs.existsSync("/tmp/netlify-preview.err")
+                ? fs.readFileSync("/tmp/netlify-preview.err", "utf8") : "");
+              const m =
+                text.match(/Draft URL:\s*<?(https:\/\/[a-zA-Z0-9._-]+\.netlify\.app)>?/i) ||
+                text.match(/Website Draft URL:\s*<?(https:\/\/[a-zA-Z0-9._-]+\.netlify\.app)>?/i) ||
+                text.match(/Unique deploy URL:\s*<?(https:\/\/[a-zA-Z0-9._-]+\.netlify\.app)>?/i) ||
+                text.match(/<?(https:\/\/[a-zA-Z0-9._-]+--[a-zA-Z0-9._-]+\.netlify\.app)>?/);
+              url = m ? m[1] : "";
+            }
+            process.stdout.write(url);
+          ')
+          if [ -z "${URL}" ]; then
+            # Last resort: grep/sed (handles "Draft URL: <https://…>")
+            URL=$(grep -Eo 'https://[a-zA-Z0-9._-]+\.netlify\.app' /tmp/netlify-preview.json /tmp/netlify-preview.err 2>/dev/null \
+              | head -n 1 || true)
+          fi
           echo "preview_url=${URL}" >> "$GITHUB_OUTPUT"
           echo "Preview URL: ${URL}"
           if [ -z "${URL}" ]; then
             echo "Could not parse preview URL from netlify CLI output"
+            echo "----- stdout -----"
+            cat /tmp/netlify-preview.json || true
+            echo "----- stderr -----"
+            cat /tmp/netlify-preview.err || true
             exit 1
           fi
         env:
