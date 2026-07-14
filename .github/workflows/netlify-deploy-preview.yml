@@ -1,0 +1,133 @@
+# Netlify deploy PREVIEW for PRs — SPA + Nexus SEO (never --prod)
+#
+# Runs build:nexus (sync + merge) and Gate A, then publishes a draft/alias
+# preview so humans can run Gate B before merging to main.
+name: Netlify Deploy Preview (SPA + Nexus)
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: netlify-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      CI: true
+      MIN_NEXUS_LANDINGS: "1200"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build (SPA + merge Nexus) — Gate A inside build:nexus
+        run: npm run build:nexus
+        env:
+          SITE_BASE: https://bodasesor.com
+          NEXUS_URL: https://white-ferret-567834.hostingersite.com
+          SKIP_NETLIFY_ZIP: "1"
+          SEO_SYNC_CONCURRENCY: "3"
+          MIN_NEXUS_LANDINGS: "1200"
+          # Force preview context so logs show preview=true; sync is still mandatory.
+          CONTEXT: deploy-preview
+
+      - name: Gate A (explicit re-check)
+        run: npm run verify:dist-bundle
+        env:
+          MIN_NEXUS_LANDINGS: "1200"
+
+      - name: Deploy Netlify preview (NOT production)
+        id: deploy
+        run: |
+          set -euo pipefail
+          if [ -z "${NETLIFY_AUTH_TOKEN:-}" ] || [ -z "${NETLIFY_SITE_ID:-}" ]; then
+            echo "Missing NETLIFY_AUTH_TOKEN or NETLIFY_SITE_ID — cannot create preview."
+            exit 1
+          fi
+          ALIAS="nexus-pr-${{ github.event.pull_request.number }}"
+          # Prefer JSON output; fall back to log text. Never use `rg` (not on runners).
+          set +e
+          npx netlify-cli deploy \
+            --dir=dist \
+            --no-build \
+            --site="${NETLIFY_SITE_ID}" \
+            --alias="${ALIAS}" \
+            --message="PR #${{ github.event.pull_request.number }} SPA+Nexus preview (NOT prod)" \
+            --json \
+            > /tmp/netlify-preview.json \
+            2> /tmp/netlify-preview.err
+          DEPLOY_EXIT=$?
+          set -e
+          if [ "$DEPLOY_EXIT" -ne 0 ]; then
+            echo "netlify deploy failed (exit ${DEPLOY_EXIT})"
+            cat /tmp/netlify-preview.err || true
+            cat /tmp/netlify-preview.json || true
+            exit "$DEPLOY_EXIT"
+          fi
+          cat /tmp/netlify-preview.err || true
+          URL=$(node -e '
+            const fs = require("fs");
+            const raw = fs.readFileSync("/tmp/netlify-preview.json", "utf8").trim();
+            let url = "";
+            try {
+              const j = JSON.parse(raw);
+              url = j.deploy_url || j.url || j.deployUrl || "";
+              if (!url && j.site_id && j.name) {
+                /* ignore */
+              }
+            } catch (_) {
+              /* not pure JSON — try text patterns below */
+            }
+            if (!url) {
+              const text = raw + "\n" + (fs.existsSync("/tmp/netlify-preview.err")
+                ? fs.readFileSync("/tmp/netlify-preview.err", "utf8") : "");
+              const m =
+                text.match(/Draft URL:\s*<?(https:\/\/[a-zA-Z0-9._-]+\.netlify\.app)>?/i) ||
+                text.match(/Website Draft URL:\s*<?(https:\/\/[a-zA-Z0-9._-]+\.netlify\.app)>?/i) ||
+                text.match(/Unique deploy URL:\s*<?(https:\/\/[a-zA-Z0-9._-]+\.netlify\.app)>?/i) ||
+                text.match(/<?(https:\/\/[a-zA-Z0-9._-]+--[a-zA-Z0-9._-]+\.netlify\.app)>?/);
+              url = m ? m[1] : "";
+            }
+            process.stdout.write(url);
+          ')
+          if [ -z "${URL}" ]; then
+            # Last resort: grep/sed (handles "Draft URL: <https://…>")
+            URL=$(grep -Eo 'https://[a-zA-Z0-9._-]+\.netlify\.app' /tmp/netlify-preview.json /tmp/netlify-preview.err 2>/dev/null \
+              | head -n 1 || true)
+          fi
+          echo "preview_url=${URL}" >> "$GITHUB_OUTPUT"
+          echo "Preview URL: ${URL}"
+          if [ -z "${URL}" ]; then
+            echo "Could not parse preview URL from netlify CLI output"
+            echo "----- stdout -----"
+            cat /tmp/netlify-preview.json || true
+            echo "----- stderr -----"
+            cat /tmp/netlify-preview.err || true
+            exit 1
+          fi
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: Gate B (HTTP checks on preview URL)
+        run: node scripts/verify-preview-spa-and-nexus.mjs "${{ steps.deploy.outputs.preview_url }}"
+
+      - name: Summary
+        run: |
+          echo "### Netlify preview (SPA + Nexus)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Preview: ${{ steps.deploy.outputs.preview_url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Gate A: verify-dist-spa-and-nexus (passed)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Gate B: HTTP SPA home + 3 SEO smokes (passed)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Not** deployed to production." >> "$GITHUB_STEP_SUMMARY"

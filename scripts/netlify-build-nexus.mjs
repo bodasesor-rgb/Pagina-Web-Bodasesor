@@ -1,21 +1,22 @@
 #!/usr/bin/env node
 /**
- * CANONICAL production / Netlify build for Pagina-Web-Bodasesor.
+ * CANONICAL production / preview build for Pagina-Web-Bodasesor.
  *
  * ALWAYS use this (or `npm run build:nexus` / `npm run build:netlify`) before
- * publishing to bodasesor.com. Plain `npm run build` / `vite build` is
- * SPA-only and WILL wipe Nexus SEO landings on Netlify.
+ * publishing to bodasesor.com OR a Netlify deploy preview. Plain `npm run build`
+ * / `vite build` is SPA-only and WILL wipe Nexus SEO landings on Netlify.
  *
  * Order:
  * 1) Optional Netlify ZIP snapshot
- * 2) Sync SEO landings from NEXUS_URL / production (seo-service-hero)
+ * 2) Sync SEO landings from NEXUS_URL / production (seo-service-hero) — REQUIRED
  * 3) Build SPA
- * 4) Merge SEO into dist/ + guard (≥50 landings) + verify redirects
+ * 4) Merge SEO into dist/ + guard + verify-dist-spa-and-nexus (Gate A)
  *
  * Env:
  *   NEXUS_URL=https://white-ferret-567834.hostingersite.com
  *   SITE_BASE=https://bodasesor.com
- *   ALLOW_SPA_ONLY_DEPLOY=1  — emergency only (never for production)
+ *   MIN_NEXUS_LANDINGS=1200  (default; Phase-1 inventory = 1402)
+ *   ALLOW_SPA_ONLY_DEPLOY=1  — emergency only (Gate A still fails unless you skip it)
  */
 import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
@@ -50,7 +51,15 @@ function liveLandingCount() {
 
 console.log('══════════════════════════════════════════════════')
 console.log(' netlify-build-nexus — SPA + preserve Nexus SEO')
+console.log(` CONTEXT=${process.env.CONTEXT || '(none)'} preview=${isPreview} CI=${inCi}`)
+console.log(` MIN_NEXUS_LANDINGS=${process.env.MIN_NEXUS_LANDINGS || 1200}`)
 console.log('══════════════════════════════════════════════════')
+
+if (allowSpaOnly) {
+  console.warn(
+    '\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 set — sync may be optional, but Gate A (verify-dist-spa-and-nexus) still requires SPA+SEO unless you remove that step.',
+  )
+}
 
 const hasNetlifyCreds =
   Boolean(process.env.NETLIFY_AUTH_TOKEN) &&
@@ -66,11 +75,12 @@ if (hasNetlifyCreds && process.env.SKIP_NETLIFY_ZIP !== '1') {
   console.log('ZIP Netlify omitido (SKIP_NETLIFY_ZIP o sin creds) — sync HTTP')
 }
 
+// Sync is REQUIRED for production AND deploy-preview (Phase 1: no SPA-only preview).
 run(
-  '1b Sync landings SEO desde NEXUS_URL / producción',
+  '1b Sync landings SEO desde NEXUS_URL / producción (obligatorio)',
   'node',
   ['scripts/sync-seo-from-live.mjs'],
-  { optional: allowSpaOnly || isPreview },
+  { optional: allowSpaOnly },
 )
 
 run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
@@ -80,18 +90,23 @@ if (existsSync(LIVE) && liveLandingCount() > 0) {
   run('4a Parchear SEO Nexus (titles ≤60, lazy imgs)', 'node', ['scripts/patch-nexus-seo.mjs'], {
     optional: true,
   })
-  run('4b Verificar Nexus en dist', 'node', ['scripts/guard-nexus-dist.mjs'])
-} else if (!allowSpaOnly && inCi && !isPreview) {
-  console.error('\n❌ Sin landings SEO en .netlify-live/ — abortando para no borrar Nexus.')
+  run('4b Verificar Nexus en dist (guard)', 'node', ['scripts/guard-nexus-dist.mjs'])
+} else if (!allowSpaOnly) {
+  console.error('\n❌ Sin landings SEO en .netlify-live/ — abortando para no publicar SPA-only.')
   console.error('   Revisa NEXUS_URL / SITE_BASE o republica lotes desde Nexus.')
-  console.error('   NUNCA publiques SPA-only a producción.')
+  console.error('   Preview y producción EXIGEN SPA + SEO (Phase 1).')
   process.exit(1)
-} else if (allowSpaOnly) {
-  console.warn('\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 — build SPA-only (re-deploy Nexus after publish).')
-} else if (isPreview) {
-  console.warn('\n⚠ Preview sin landings SEO — SPA-only (producción SÍ fusiona Nexus).')
+} else {
+  console.warn('\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 — continuing without SEO merge (unsafe).')
 }
+
+// Gate A — absolute: fail if SPA OR Nexus landings missing
+run(
+  '4c Gate A: verify-dist-spa-and-nexus (SPA + SEO)',
+  'node',
+  ['scripts/verify-dist-spa-and-nexus.mjs'],
+)
 
 run('Verificar redirects en dist', 'node', ['scripts/verify-redirects-deploy.mjs'])
 
-console.log('\n✓ netlify-build-nexus listo (SPA + Nexus SEO preservado)')
+console.log('\n✓ netlify-build-nexus listo (SPA + Nexus SEO preservado, Gate A OK)')

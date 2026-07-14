@@ -28,7 +28,7 @@ const FETCH_ORIGINS = [...new Set([NEXUS, PROD].filter(Boolean))]
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
-const MIN_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 50)
+const MIN_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 1200)
 
 function isSpaShell(html) {
   if (!html) return true
@@ -177,6 +177,8 @@ async function main() {
     origins: FETCH_ORIGINS,
     method: 'inventory+nexus-url-seo-service-hero',
     candidates: slugs.length,
+    expectedCanonical: slugs.length,
+    minRequired: MIN_LANDINGS,
     landingsSaved: ok,
     spaSkipped: spa,
     failed: fail,

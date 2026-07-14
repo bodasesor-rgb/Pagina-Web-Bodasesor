@@ -11,6 +11,7 @@
     "guard:redirects": "node scripts/guard-redirects.mjs",
     "check:redirects": "node scripts/check-production-redirects.mjs",
     "verify:nexus": "node scripts/verify-nexus-production.mjs",
+    "verify:dist-bundle": "node scripts/verify-dist-spa-and-nexus.mjs",
     "guard:nexus": "node scripts/guard-nexus-dist.mjs",
     "build": "node scripts/guard-redirects.mjs && npm run generate:redirects && npm run generate:sitemap && npm run generate:webp && vite build && node scripts/verify-dist-assets.mjs && node scripts/verify-redirects-deploy.mjs",
     "build:netlify": "node scripts/netlify-build-nexus.mjs",
