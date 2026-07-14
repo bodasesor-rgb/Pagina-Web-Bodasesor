@@ -49,6 +49,7 @@ export default function Footer() {
             <p className="text-xl font-bold mb-6 font-serif">Bodasesor</p>
             <ul className="space-y-3">
               {[
+                { name: 'Catálogos 2026', href: '/catalogos' },
                 { name: 'Banquetes & Catering', href: '/banquetes-catering' },
                 { name: 'Barras de Bebidas', href: '/barras-de-bebidas' },
                 { name: 'Mesas Personalizadas', href: '/mesas-personalizadas' },

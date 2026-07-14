@@ -178,9 +178,9 @@ function ScrollToTop() {
 }
 
 function DeferredBelowFold() {
-  const [show, setShow] = useState(false)
+  const [showFab, setShowFab] = useState(false)
   useEffect(() => {
-    const reveal = () => setShow(true)
+    const reveal = () => setShowFab(true)
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(reveal, { timeout: 2500 })
       return () => window.cancelIdleCallback(id)
@@ -188,11 +188,11 @@ function DeferredBelowFold() {
     const t = setTimeout(reveal, 1500)
     return () => clearTimeout(t)
   }, [])
-  if (!show) return null
   return (
     <Suspense fallback={null}>
+      {/* Footer (Lo Más Buscado / Catálogos) must load with the page — not after idle */}
       <Footer />
-      <WhatsAppFab />
+      {showFab ? <WhatsAppFab /> : null}
     </Suspense>
   )
 }
