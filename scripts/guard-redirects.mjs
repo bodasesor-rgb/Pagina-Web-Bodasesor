@@ -39,8 +39,12 @@ export function guardNetlifyToml(root = ROOT) {
     console.warn('⚠ netlify.toml references edge_functions — ensure edge handlers do not fetch redirects-map.json at runtime')
   }
 
-  if (!toml.includes('npm run build') && !toml.includes('netlify-build.mjs')) {
-    fail('netlify.toml build must run npm run build or scripts/netlify-build.mjs (generates _redirects)')
+  if (!toml.includes('npm run build') && !toml.includes('netlify-build.mjs') && !toml.includes('netlify-build-nexus.mjs')) {
+    fail('netlify.toml build must run netlify-build-nexus.mjs (or npm run build) — plain Vite wipes Nexus SEO')
+  }
+
+  if (toml.includes('command') && /command\s*=\s*"(npm run build|vite build)"/.test(toml)) {
+    fail('netlify.toml must NOT use bare npm run build / vite build — use node scripts/netlify-build-nexus.mjs')
   }
 }
 

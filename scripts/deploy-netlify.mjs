@@ -38,10 +38,9 @@ async function main() {
     process.exit(1)
   }
 
-  if (!existsSync(DIST)) {
-    console.log('Building…')
-    execSync('npm run build:netlify', { cwd: ROOT, stdio: 'inherit' })
-  }
+  // Always rebuild with Nexus merge — never publish a stale SPA-only dist/
+  console.log('Building with Nexus SEO preserve (build:nexus)…')
+  execSync('npm run build:nexus', { cwd: ROOT, stdio: 'inherit' })
 
   console.log('Verificando Nexus en dist/ antes de publicar…')
   execSync('node scripts/guard-nexus-dist.mjs', { cwd: ROOT, stdio: 'inherit' })

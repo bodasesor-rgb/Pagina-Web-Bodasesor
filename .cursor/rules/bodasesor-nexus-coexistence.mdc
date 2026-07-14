@@ -5,37 +5,48 @@ alwaysApply: true
 
 ## Contexto
 - Este repo es la **SPA** de https://bodasesor.com (Netlify site ID `b3e5d4b5-9b66-4322-b2d7-12252f3625ac`).
-- Las landings SEO (~1400) NO viven en este repo: las genera **Nexus SEO** (Hostinger preview: https://white-ferret-567834.hostingersite.com) y se publican en Netlify como `/nexus-output-pages/{slug}/` + reglas en `_redirects`.
-- Un deploy Git normal (`vite build` → `dist/`) **borra** las landings SEO si no se fusionan en el build.
+- Las landings SEO (~1400) NO viven en este repo: las genera **Nexus SEO** (Hostinger: https://white-ferret-567834.hostingersite.com).
+- Un deploy SPA-only (`npm run build` / `vite build` → `dist/` → Netlify) **BORRA** las landings SEO.
 
-## Reglas CRÍTICAS
-1. **NUNCA** cambies el Netlify Build command a solo `npm run build` o `vite build`.
-2. El build de producción **DEBE** preservar SEO:
-   - Preferido: `netlify-build-nexus.mjs` (sync SEO desde Nexus + Vite + merge en `dist/` + verificación `_redirects`) cuando ese script exista.
-   - Actual en repo: `node scripts/netlify-build.mjs` (merge desde Netlify live / snapshot + guards).
-3. Variables Netlify obligatorias en el sitio:
-   - `NETLIFY_AUTH_TOKEN`
-   - `NETLIFY_SITE_ID` (o `SITE_ID`)
-   - `NEXUS_URL=https://white-ferret-567834.hostingersite.com` (para sync directo cuando esté cableado)
-4. **NO** borres, ignores ni reescribas:
-   - scripts de sync SEO (`sync-seo-from-nexus.mjs`, `pull-netlify-live.mjs`, `merge-live-into-dist.mjs`, `guard-redirects.mjs`, `guard-nexus-dist.mjs`, `seo-deploy-paths.mjs`, `netlify-build.mjs`, `netlify-build-nexus.mjs`)
-   - reglas SEO/blog en `_redirects` / generación de redirects
-5. Después de cada deploy a producción, verifica al menos 1 landing:
-   - `https://bodasesor.com/banquete-de-lujo-estado-de-mexico/`
-   - Debe mostrar HTML SEO (`seo-service-hero`), **NO** React SPA ni “Servicio no encontrado”.
-6. Si las landings desaparecen, **NO** las regeneres aquí: avisa y se reparan desde Nexus (republicar en lotes de 300). Este repo solo debe **preservarlas** en el build.
-7. Ediciones quirúrgicas. No reescribas `netlify.toml`, build scripts o redirects enteros sin confirmar.
+## Regla CRÍTICA (no negociable)
+**TODO deploy a producción DEBE usar el build Nexus:**
 
-## Flujo seguro al trabajar
-- Rama nueva → cambios de UI/SPA → merge a main.
-- Deploy Netlify debe correr build con preservar Nexus (SPA + SEO).
-- Confirmar home OK + 1–2 landings SEO OK antes de dar por cerrado.
-- Comandos: `npm run verify:nexus` · `npm run guard:nexus` · `npm run check:redirects`
+```bash
+npm run build:nexus
+# alias equivalentes:
+npm run build:netlify
+node scripts/netlify-build-nexus.mjs
+```
 
-## Sync SEO (actual)
-1. Preferido en build: `scripts/sync-seo-from-live.mjs` (sitemap HTTP → `.netlify-live/` con `seo-service-hero`)
-2. Opcional: ZIP Netlify (`pull-netlify-live.mjs`) — a menudo 0 landings aunque estén live
-3. Merge → `guard-nexus-dist` → deploy
-4. Verificar: `npm run verify:nexus`
+Eso hace: sync SEO (NEXUS_URL) → build SPA → merge en `dist/` → `guard-nexus-dist` (≥50 landings).
 
-Variables: `SITE_BASE` / `NEXUS_URL=https://white-ferret-567834.hostingersite.com` (si Hostinger es accesible sin auth HTML).
+### Prohibido en producción
+- `npm run build` solo y luego `netlify deploy --prod`
+- `vite build` + publish a Netlify
+- Cambiar `netlify.toml` `command` a `npm run build` / `vite build`
+- Quitar `ignore = "exit 0"` (evita auto-builds Netlify que pisan el merge de Actions)
+- `ALLOW_SPA_ONLY_DEPLOY=1` en producción
+
+### Flujo oficial
+1. GitHub Actions `Deploy to Netlify` en `main` corre `npm run build:nexus`
+2. Publica con `netlify deploy --prod --dir=dist --no-build`
+3. Verifica `npm run verify:nexus`
+
+## Scripts que NO borrar
+- `scripts/netlify-build-nexus.mjs` (canónico)
+- `scripts/netlify-build.mjs` (shim → nexus)
+- `scripts/sync-seo-from-live.mjs`, `merge-live-into-dist.mjs`, `guard-nexus-dist.mjs`, `verify-nexus-production.mjs`, `pull-netlify-live.mjs`
+
+## Variables
+- `NEXUS_URL=https://white-ferret-567834.hostingersite.com`
+- `SITE_BASE=https://bodasesor.com`
+- `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID` (en GitHub Secrets / Actions)
+
+## Verificación post-deploy
+- `https://bodasesor.com/banquete-de-lujo-estado-de-mexico/` debe tener `seo-service-hero`
+- NO el shell SPA (`id="root"` + ~7 KB)
+
+Si las landings desaparecen: **NO** las regeneres en este repo. Re-publica desde Nexus a Hostinger y vuelve a correr el deploy Actions (`build:nexus`).
+
+## Por qué se “borran”
+Netlify reemplaza **todo** `dist/` en cada publish. Si el `dist/` no trae las landings fusionadas, las SEO se van. Por eso el build canónico siempre sync+merge antes de publicar.
