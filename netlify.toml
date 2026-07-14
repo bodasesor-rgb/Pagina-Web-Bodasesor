@@ -2,6 +2,9 @@
   # MUST run npm run build — generates dist/_redirects (4215+ rules) + edge map
   command = "node scripts/netlify-build.mjs"
   publish = "dist"
+  # Skip Netlify UI/auto builds — production is published only by GitHub Actions
+  # (npm run build:netlify + deploy --no-build) so a racing SPA-only publish cannot wipe Nexus SEO.
+  ignore = "exit 0"
 
 [build.environment]
   NODE_VERSION = "20"
