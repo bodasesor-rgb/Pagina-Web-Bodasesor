@@ -17,6 +17,7 @@ import Home from './pages/Home.tsx'
 
 const GaleriaPage = lazy(() => import('./pages/GaleriaPage.tsx'))
 const CatalogosPage = lazy(() => import('./pages/CatalogosPage.tsx'))
+const CatalogoDetailPage = lazy(() => import('./pages/CatalogoDetailPage.tsx'))
 const BanquetesCateringPage = lazy(() => import('./pages/BanquetesCateringPage.tsx'))
 const BarrasBebidasPage = lazy(() => import('./pages/BarrasBebidasPage.tsx'))
 const MesasPersonalizadasPage = lazy(() => import('./pages/MesasPersonalizadasPage.tsx'))
@@ -139,6 +140,10 @@ function RenderResolvedRoute({ basePath }) {
     return <RenderDetailPage catalog={resolved.catalog} slug={resolved.slug} />
   }
 
+  if (resolved.kind === 'catalogo') {
+    return <CatalogoDetailPage slug={resolved.slug} />
+  }
+
   if (resolved.kind === 'banquete-menu') {
     return (
       <BanqueteMenuDetailPage
@@ -220,6 +225,9 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
           <Route path="/catalogos" component={CatalogosPage} />
+          <Route path="/catalogos/:slug">
+            {(params) => <CatalogoDetailPage slug={stripCityFromSlug(params.slug)} />}
+          </Route>
 
           {/* Nexus legacy SEO paths → canonical SPA routes */}
           <Route path="/eventos/:slug">

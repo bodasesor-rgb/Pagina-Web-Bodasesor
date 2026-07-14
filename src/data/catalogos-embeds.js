@@ -1,3 +1,14 @@
+/** @typedef {{
+  id: string,
+  provider: 'gamma' | 'canva',
+  title: string,
+  category: string,
+  relatedHref: string,
+  embedSrc: string,
+  slug: string,
+  services: string[],
+}} Catalogo */
+
 /** Auto-built from Bodasesor catalogs spreadsheet — one entry per unique Gamma/Canva catalog. */
 export const CATALOGO_CATEGORIES = [
   { id: 'banquetes', label: 'Banquetes' },
@@ -18,7 +29,6 @@ export const CATALOGOS =
     "category": "banquetes",
     "relatedHref": "/banquetes",
     "embedSrc": "https://gamma.app/embed/mtvyjwjzr9f2ztl",
-    "viewUrl": "https://gamma.app/docs/Banquete-Formal-Bodasesor-2026-mtvyjwjzr9f2ztl",
     "slug": "banquete-formal",
     "services": [
       "Banquete 3 tiempos",
@@ -32,7 +42,6 @@ export const CATALOGOS =
     "category": "banquetes",
     "relatedHref": "/banquete-kosher",
     "embedSrc": "https://gamma.app/embed/pk7ukfdzk55qmwv",
-    "viewUrl": "https://gamma.app/docs/Banquetes-Bodasesor-Kosher-2026-pk7ukfdzk55qmwv",
     "slug": "banquete-kosher",
     "services": [
       "Banquete Kosher 3 tiempos",
@@ -47,7 +56,6 @@ export const CATALOGOS =
     "category": "banquetes",
     "relatedHref": "/banquete-mexicano",
     "embedSrc": "https://gamma.app/embed/mdxr4clinu89lhc",
-    "viewUrl": "https://gamma.app/docs/Banquete-Mexicano-Bodasesor-2026-mdxr4clinu89lhc",
     "slug": "banquete-mexicano",
     "services": [
       "Banquete Mexicano 3 tiempos",
@@ -61,7 +69,6 @@ export const CATALOGOS =
     "category": "banquetes",
     "relatedHref": "/banquete-navideno",
     "embedSrc": "https://gamma.app/embed/rwspw9yutm1wxqb",
-    "viewUrl": "https://gamma.app/docs/Banquete-Navideno-Bodasesor-2025-rwspw9yutm1wxqb",
     "slug": "banquete-navideno",
     "services": [
       "Banquete Navideños 3 tiempos",
@@ -73,9 +80,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra Americana",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-americana",
     "embedSrc": "https://gamma.app/embed/18jhyxtgrtsipz6",
-    "viewUrl": "https://gamma.app/docs/Barra-Americana-bodasesor-2026-18jhyxtgrtsipz6",
     "slug": "barra-americana",
     "services": [
       "Barra Americana"
@@ -86,9 +92,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra Yucateca",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-yucateca",
     "embedSrc": "https://gamma.app/embed/6uny5ng5cjorf5k",
-    "viewUrl": "https://gamma.app/docs/Barra-Yucateca-2026-6uny5ng5cjorf5k",
     "slug": "barra-yucateca",
     "services": [
       "Barra Yucateca"
@@ -101,7 +106,6 @@ export const CATALOGOS =
     "category": "barras",
     "relatedHref": "/barra-bebidas",
     "embedSrc": "https://gamma.app/embed/m30do486cwn6vr5",
-    "viewUrl": "https://gamma.app/docs/Barra-de-bebidas-bodasesor-2026-m30do486cwn6vr5",
     "slug": "barra-de-bebidas",
     "services": [
       "Barra de bebidas",
@@ -115,7 +119,6 @@ export const CATALOGOS =
     "category": "barras",
     "relatedHref": "/barra-cafe-premium",
     "embedSrc": "https://gamma.app/embed/2br197aw6yxx76i",
-    "viewUrl": "https://gamma.app/docs/Barra-de-Cafe-bodasesor-2026-2br197aw6yxx76i",
     "slug": "barra-de-cafe",
     "services": [
       "Barra de Café"
@@ -126,9 +129,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra de Crepas",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-crepas",
     "embedSrc": "https://gamma.app/embed/dspl12wj36tyg1l",
-    "viewUrl": "https://gamma.app/docs/Barra-de-Crepas-bodaseor-2026-dspl12wj36tyg1l",
     "slug": "barra-de-crepas",
     "services": [
       "Barra de Crepas"
@@ -139,9 +141,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra de Mariscos",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-mariscos",
     "embedSrc": "https://gamma.app/embed/malebob041soctf",
-    "viewUrl": "https://gamma.app/docs/Barra-de-mariscos-Bodasesor-2026-malebob041soctf",
     "slug": "barra-de-mariscos",
     "services": [
       "Barra de mariscos"
@@ -152,9 +153,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra de Paninis",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-paninis",
     "embedSrc": "https://gamma.app/embed/mjpgz9sp0yl23wa",
-    "viewUrl": "https://gamma.app/docs/Barra-de-paninis-bodasesor-2026-mjpgz9sp0yl23wa",
     "slug": "barra-de-paninis",
     "services": [
       "Barra de paninis"
@@ -165,9 +165,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra de Pastas y Ensaladas",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-pastas",
     "embedSrc": "https://gamma.app/embed/hqg4e68bdbyo03n",
-    "viewUrl": "https://gamma.app/docs/Bodasesor-Barra-de-pastas-y-ensaladas-2026-hqg4e68bdbyo03n",
     "slug": "barra-de-pastas-y-ensaladas",
     "services": [
       "Barra de pastas y ensaladas"
@@ -178,9 +177,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra de Pizzas",
     "category": "barras",
-    "relatedHref": null,
+    "relatedHref": "/barra-pizzas",
     "embedSrc": "https://gamma.app/embed/dyuyiiwbgsn9f5t",
-    "viewUrl": "https://gamma.app/docs/Barra-de-pizzas-Bodasesor-2026-dyuyiiwbgsn9f5t",
     "slug": "barra-de-pizzas",
     "services": [
       "Barra de pizzas"
@@ -193,7 +191,6 @@ export const CATALOGOS =
     "category": "barras",
     "relatedHref": "/barra-sushi",
     "embedSrc": "https://gamma.app/embed/9kpwbfeb0drpds6",
-    "viewUrl": "https://gamma.app/docs/Barra-de-Sushi-y-Poke-Bow-2026-9kpwbfeb0drpds6",
     "slug": "barra-de-sushi",
     "services": [
       "Barra de sushi"
@@ -206,7 +203,6 @@ export const CATALOGOS =
     "category": "barras",
     "relatedHref": "/cocteles-mixologia",
     "embedSrc": "https://gamma.app/embed/xik1kuzcc35kpgm",
-    "viewUrl": "https://gamma.app/docs/Cocteles-y-Mixologia-Bodasesor-IA-xik1kuzcc35kpgm",
     "slug": "cocteleria-y-mixologia",
     "services": [
       "Coctelería y mixología"
@@ -219,7 +215,6 @@ export const CATALOGOS =
     "category": "barras",
     "relatedHref": "/barra-mocteles",
     "embedSrc": "https://gamma.app/embed/nn6q5mxt92hyv5s",
-    "viewUrl": "https://gamma.app/docs/Barra-de-Mocteles-Bodasesor-2026-nn6q5mxt92hyv5s",
     "slug": "mocteles",
     "services": [
       "Mocteles"
@@ -230,9 +225,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Bocadillos",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/bocadillos",
     "embedSrc": "https://gamma.app/embed/fj2k4uuluormliq",
-    "viewUrl": "https://gamma.app/docs/Bocadillos-Bodasesor-2026-fj2k4uuluormliq",
     "slug": "bocadillos",
     "services": [
       "Bocadillos"
@@ -243,9 +237,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Canapés",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/canapes-premium",
     "embedSrc": "https://gamma.app/embed/vogec0g5v30ozrn",
-    "viewUrl": "https://gamma.app/docs/Canapes-bodasesor-2026-vogec0g5v30ozrn",
     "slug": "canapes",
     "services": [
       "Canapés"
@@ -258,7 +251,6 @@ export const CATALOGOS =
     "category": "gastronomia",
     "relatedHref": "/cupcakes-gourmet",
     "embedSrc": "https://gamma.app/embed/z6vzp1hfaiii92g",
-    "viewUrl": "https://gamma.app/docs/Cupcakes-bodasesor-2026-z6vzp1hfaiii92g",
     "slug": "cupcakes-y-betun",
     "services": [
       "Betún Clásico",
@@ -271,9 +263,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Paella",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/paella",
     "embedSrc": "https://gamma.app/embed/huu3a7tmytrqmap",
-    "viewUrl": "https://gamma.app/docs/Paella-Bodasesor-2026-huu3a7tmytrqmap",
     "slug": "paella",
     "services": [
       "Paella"
@@ -286,7 +277,6 @@ export const CATALOGOS =
     "category": "gastronomia",
     "relatedHref": "/paletas-helados",
     "embedSrc": "https://www.canva.com/design/DAGnpfkTCGs/WLmqEF4WFbdRvgp3Y6OEXQ/view?embed",
-    "viewUrl": "https://canva.link/h4qf484lnguofm7",
     "slug": "paletas-de-hielo-y-helados",
     "services": [
       "Paletas de hielo y Helados"
@@ -297,9 +287,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Parrillada Argentina",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/parrillada-argentina",
     "embedSrc": "https://gamma.app/embed/sygi1v8h677r5lj",
-    "viewUrl": "https://gamma.app/docs/Parillada-Argentina-2026-sygi1v8h677r5lj",
     "slug": "parrillada-argentina",
     "services": [
       "Parrillada Argentina"
@@ -310,9 +299,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Parrillada Tacos",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/parrillada-tradicional",
     "embedSrc": "https://gamma.app/embed/dss29u2e1rynhsg",
-    "viewUrl": "https://gamma.app/docs/Bodasesor-Parrillada-Tacos-dss29u2e1rynhsg",
     "slug": "parrillada-tacos",
     "services": [
       "Parrillada Tacos"
@@ -323,9 +311,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Pozole y Tostadas",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/pozole-tostadas",
     "embedSrc": "https://gamma.app/embed/fpcxbbllnpm1zmf",
-    "viewUrl": "https://gamma.app/docs/Bodasesor-Pozole-y-Tostadas-2026-fpcxbbllnpm1zmf",
     "slug": "pozole-y-tostadas",
     "services": [
       "Pozole y Tostadas"
@@ -336,9 +323,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Puestos de Comida",
     "category": "gastronomia",
-    "relatedHref": null,
+    "relatedHref": "/puestos-antojitos",
     "embedSrc": "https://gamma.app/embed/p0q9yz8ff3hzaqh",
-    "viewUrl": "https://gamma.app/docs/Puestos-de-comida-Antojitos-Bodasesor-p0q9yz8ff3hzaqh",
     "slug": "puestos-de-comida",
     "services": [
       "Puestos de comida"
@@ -351,7 +337,6 @@ export const CATALOGOS =
     "category": "gastronomia",
     "relatedHref": "/taquiza-guisados",
     "embedSrc": "https://gamma.app/embed/f2w93bmmzm4uyb0",
-    "viewUrl": "https://gamma.app/docs/Taquiza-bodaseor-2026-f2w93bmmzm4uyb0",
     "slug": "taquiza",
     "services": [
       "Taquiza"
@@ -364,7 +349,6 @@ export const CATALOGOS =
     "category": "mesas",
     "relatedHref": "/carrito-snacks",
     "embedSrc": "https://gamma.app/embed/omu9swvnwg9rpgf",
-    "viewUrl": "https://gamma.app/docs/Carrito-de-snaks-Bodasesor-2026-omu9swvnwg9rpgf",
     "slug": "carrito-de-snacks",
     "services": [
       "Carrito de snaks"
@@ -377,7 +361,6 @@ export const CATALOGOS =
     "category": "mesas",
     "relatedHref": "/mesa-dulces",
     "embedSrc": "https://gamma.app/embed/qe082yb4hylz532",
-    "viewUrl": "https://gamma.app/docs/Mesa-de-dulces-2026-qe082yb4hylz532",
     "slug": "mesa-de-dulces",
     "services": [
       "Mesa de dulces"
@@ -390,7 +373,6 @@ export const CATALOGOS =
     "category": "mesas",
     "relatedHref": "/mesa-postres",
     "embedSrc": "https://gamma.app/embed/rvpasgeholj0abk",
-    "viewUrl": "https://gamma.app/docs/Mesa-de-postres-Bodasesor-2026-rvpasgeholj0abk",
     "slug": "mesa-de-postres",
     "services": [
       "Mesa de Postres"
@@ -403,7 +385,6 @@ export const CATALOGOS =
     "category": "mesas",
     "relatedHref": "/mesa-quesos",
     "embedSrc": "https://gamma.app/embed/yx0yjgezabg1gl3",
-    "viewUrl": "https://gamma.app/docs/Mesa-de-quesos-Bodasesor-2026-yx0yjgezabg1gl3",
     "slug": "mesa-de-quesos",
     "services": [
       "Mesa de quesos"
@@ -416,7 +397,6 @@ export const CATALOGOS =
     "category": "mobiliario",
     "relatedHref": "/entelados",
     "embedSrc": "https://gamma.app/embed/dbqdqv08j5bv9o7",
-    "viewUrl": "https://gamma.app/docs/Entelados-para-Techo-bodasesor-2026-dbqdqv08j5bv9o7",
     "slug": "entelados-para-techo",
     "services": [
       "Entelado"
@@ -429,7 +409,6 @@ export const CATALOGOS =
     "category": "mobiliario",
     "relatedHref": "/mesas-sillas",
     "embedSrc": "https://gamma.app/embed/gn7u5c1wix5gai6",
-    "viewUrl": "https://gamma.app/docs/Mesas-y-Sillas-Bodasesor-2026--gn7u5c1wix5gai6",
     "slug": "mesas-y-sillas",
     "services": [
       "Barras",
@@ -445,7 +424,6 @@ export const CATALOGOS =
     "category": "mobiliario",
     "relatedHref": "/salas-periqueras",
     "embedSrc": "https://gamma.app/embed/74snkxawzs9pzoy",
-    "viewUrl": "https://gamma.app/docs/Salas-y-Periqueras-Bodasesor-2026-74snkxawzs9pzoy",
     "slug": "salas-y-periqueras",
     "services": [
       "BANCOS PARA PERIQUERAS (precio unitario)",
@@ -465,7 +443,6 @@ export const CATALOGOS =
     "category": "mobiliario",
     "relatedHref": "/pistas-tarimas",
     "embedSrc": "https://gamma.app/embed/nghm8x7m033zusx",
-    "viewUrl": "https://gamma.app/docs/Pistas-y-Tarimas-2026-nghm8x7m033zusx",
     "slug": "tarimas-y-pistas",
     "services": [
       "Tarima & Pista"
@@ -478,7 +455,6 @@ export const CATALOGOS =
     "category": "produccion",
     "relatedHref": "/audio-iluminacion-video",
     "embedSrc": "https://gamma.app/embed/pcvozy1lcatkjwc",
-    "viewUrl": "https://gamma.app/docs/Audio-iluminacion-y-Video-pcvozy1lcatkjwc",
     "slug": "audio-iluminacion-y-video",
     "services": [
       "AUDIO",
@@ -494,7 +470,6 @@ export const CATALOGOS =
     "category": "empresas",
     "relatedHref": "/coffee-break",
     "embedSrc": "https://gamma.app/embed/jjwg8u7lvp3hfs9",
-    "viewUrl": "https://gamma.app/docs/Coffee-Break-Bodasesor-2026-jjwg8u7lvp3hfs9",
     "slug": "coffee-break",
     "services": [
       "Coffee Break"
@@ -505,9 +480,8 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Comida Corrida",
     "category": "empresas",
-    "relatedHref": null,
+    "relatedHref": "/comida-corrida",
     "embedSrc": "https://gamma.app/embed/stlkh9sdnivzkd8",
-    "viewUrl": "https://gamma.app/docs/Comida-Corrida-2026-stlkh9sdnivzkd8",
     "slug": "comida-corrida",
     "services": [
       "Comida Corrida"
@@ -520,7 +494,6 @@ export const CATALOGOS =
     "category": "empresas",
     "relatedHref": "/desayuno-brunch",
     "embedSrc": "https://gamma.app/embed/ay6vsr9744n627c",
-    "viewUrl": "https://gamma.app/docs/Desayuno-bodasesor-2026-ay6vsr9744n627c",
     "slug": "desayuno-o-brunch",
     "services": [
       "Desayuno o Brunch"
@@ -530,4 +503,9 @@ export const CATALOGOS =
 
 export function getCatalogoBySlug(slug) {
   return CATALOGOS.find((c) => c.slug === slug) || null
+}
+
+/** Bodasesor page for a catalog — never expose Gamma/Canva edit URLs. */
+export function getCatalogoPagePath(slug) {
+  return `/catalogos/${slug}`
 }
