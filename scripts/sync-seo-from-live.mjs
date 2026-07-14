@@ -106,6 +106,7 @@ async function fetchLanding(slug) {
 
 function assetUrlsFromHtml(html, origin, slug) {
   const assets = new Set()
+  // Per-landing images under /{slug}/ or /nexus-output-pages/
   for (const m of html.matchAll(/(?:src|href|content)="([^"]+\.(?:webp|jpg|jpeg|png))"/gi)) {
     try {
       const abs = new URL(m[1], `${origin}/`)
@@ -113,7 +114,21 @@ function assetUrlsFromHtml(html, origin, slug) {
         abs.pathname.startsWith(`/${slug}/`) ||
         abs.pathname.startsWith('/nexus-output-pages/')
       ) {
-        // Prefer Hostinger/Nexus origin for binary assets
+        assets.add(`${origin}${abs.pathname}`)
+      }
+    } catch {
+      /* skip */
+    }
+  }
+  // Global styles/fonts/scripts referenced by landings (site root, not under slug)
+  for (const m of html.matchAll(/(?:href|src)="(\/[^"]+\.(?:css|woff2?|ttf|otf|js))"/gi)) {
+    try {
+      const abs = new URL(m[1], `${origin}/`)
+      if (
+        abs.pathname.startsWith('/css/') ||
+        abs.pathname.startsWith('/fonts/') ||
+        abs.pathname.startsWith('/js/')
+      ) {
         assets.add(`${origin}${abs.pathname}`)
       }
     } catch {
@@ -121,6 +136,50 @@ function assetUrlsFromHtml(html, origin, slug) {
     }
   }
   return [...assets]
+}
+
+/** Shared Hostinger assets all Nexus landings need (not covered by Vite public/). */
+const GLOBAL_SEO_ASSETS = [
+  '/css/seo-landing.css',
+  // Referenced by landings; also present in SPA public/ — sync keeps Nexus copy as backup
+  '/images/sello-garantia-transparent.png',
+]
+
+function looksLikeCss(buf) {
+  if (!buf || buf.length < 200) return false
+  const head = buf.subarray(0, 200).toString('utf8').trimStart()
+  if (head.startsWith('<!DOCTYPE') || head.startsWith('<html')) return false
+  return /:root|--navy|\.seo-service-hero|font-family/.test(head) || head.includes('{')
+}
+
+async function saveGlobalSeoAssets() {
+  let saved = 0
+  for (const pathname of GLOBAL_SEO_ASSETS) {
+    let buf = null
+    let from = null
+    for (const origin of FETCH_ORIGINS) {
+      const url = `${origin}${pathname}`
+      const got = await fetchBuffer(url)
+      if (!got || got.length < 50) continue
+      // Reject SPA soft-404 HTML
+      const head = got.subarray(0, 80).toString('utf8')
+      if (head.includes('<!DOCTYPE') || head.includes('<html')) continue
+      if (pathname.endsWith('.css') && !looksLikeCss(got)) continue
+      buf = got
+      from = origin
+      break
+    }
+    if (!buf) {
+      console.warn(`  ⚠ global asset missing: ${pathname}`)
+      continue
+    }
+    const dest = join(OUT_DIR, pathname.replace(/^\//, ''))
+    await mkdir(dirname(dest), { recursive: true })
+    await writeFile(dest, buf)
+    saved++
+    console.log(`  ✓ global ${pathname} (${buf.length}B from ${from})`)
+  }
+  return saved
 }
 
 async function saveLanding(slug, html, origin) {
@@ -136,6 +195,8 @@ async function saveLanding(slug, html, origin) {
   for (const assetUrl of assetUrlsFromHtml(html, origin, slug)) {
     const buf = await fetchBuffer(assetUrl)
     if (!buf || buf.length < 50) continue
+    const head = buf.subarray(0, 80).toString('utf8')
+    if (head.includes('<!DOCTYPE') || head.includes('<html')) continue
     const path = new URL(assetUrl).pathname.replace(/^\//, '')
     const dest = join(OUT_DIR, path)
     await mkdir(dirname(dest), { recursive: true })
@@ -172,6 +233,19 @@ async function main() {
     }
   })
 
+  console.log('\n▶ Sync global SEO assets (/css, shared images)…')
+  const globalSaved = await saveGlobalSeoAssets()
+  const cssPath = join(OUT_DIR, 'css', 'seo-landing.css')
+  if (!existsSync(cssPath) || !looksLikeCss(await readFile(cssPath))) {
+    const msg = 'Falta css/seo-landing.css válido tras sync (landings se verían sin estilos).'
+    if (process.env.ALLOW_SPA_ONLY_DEPLOY === '1') {
+      console.warn(`⚠ ${msg}`)
+    } else {
+      console.error(`❌ ${msg}`)
+      process.exit(1)
+    }
+  }
+
   const manifest = {
     pulledAt: new Date().toISOString(),
     origins: FETCH_ORIGINS,
@@ -182,6 +256,7 @@ async function main() {
     landingsSaved: ok,
     spaSkipped: spa,
     failed: fail,
+    globalAssetsSaved: globalSaved,
   }
   await writeFile(join(OUT_DIR, '.manifest.json'), JSON.stringify(manifest, null, 2))
 

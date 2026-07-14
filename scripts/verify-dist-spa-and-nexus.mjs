@@ -124,6 +124,29 @@ async function verifySmoke(dist, issues) {
   }
 }
 
+function looksLikeCssText(text) {
+  const head = String(text || '').trimStart().slice(0, 400)
+  if (!head || head.startsWith('<!DOCTYPE') || head.startsWith('<html')) return false
+  return /:root|--navy|\.seo-service-hero|font-family/.test(head) || head.includes('{')
+}
+
+async function verifySeoLandingCss(dist, issues) {
+  const cssPath = join(dist, 'css', 'seo-landing.css')
+  if (!existsSync(cssPath)) {
+    issues.push('SEO CSS missing: dist/css/seo-landing.css (landings would render unstyled)')
+    return
+  }
+  const css = await readFile(cssPath, 'utf8')
+  const bytes = Buffer.byteLength(css, 'utf8')
+  console.log(`SEO CSS: dist/css/seo-landing.css (${bytes}B)`)
+  if (bytes < 10_000) {
+    issues.push(`SEO CSS too small (${bytes}B < 10000) — likely SPA HTML soft-404`)
+  }
+  if (!looksLikeCssText(css)) {
+    issues.push('SEO CSS does not look like CSS (DOCTYPE/html or missing :root/.seo-service-hero)')
+  }
+}
+
 async function main() {
   console.log('══════════════════════════════════════════════════')
   console.log(' verify-dist-spa-and-nexus (Gate A)')
@@ -161,6 +184,7 @@ async function main() {
   }
 
   await verifySmoke(DIST, issues)
+  await verifySeoLandingCss(DIST, issues)
 
   // SPA must still win at root
   if (existsSync(join(DIST, 'index.html'))) {
@@ -180,9 +204,8 @@ async function main() {
     process.exit(1)
   }
 
-  console.log(`✓ Gate A OK — SPA present + ${count} Nexus SEO landings (≥${MIN_NEXUS_LANDINGS})`)
+  console.log(`✓ Gate A OK — SPA present + ${count} Nexus SEO landings (≥${MIN_NEXUS_LANDINGS}) + seo-landing.css`)
   console.log(`  Smokes: ${SMOKE_SLUGS.join(', ')}`)
-  // keep seen referenced for future debug
   void seen
 }
 
