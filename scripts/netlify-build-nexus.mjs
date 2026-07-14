@@ -42,6 +42,7 @@ function liveLandingCount() {
   if (!existsSync(join(LIVE, '.manifest.json'))) return 0
   try {
     const m = JSON.parse(readFileSync(join(LIVE, '.manifest.json'), 'utf8'))
+    if (typeof m.landingsOnDisk === 'number') return m.landingsOnDisk
     if (typeof m.landingsSaved === 'number') return m.landingsSaved
   } catch {
     /* fall through */
