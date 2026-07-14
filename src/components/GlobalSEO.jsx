@@ -7,6 +7,7 @@ import { buildSeoTitle } from '../utils/seo-title'
 const SEO_MAP = {
   '/':                     { title: 'Banquetes y Catering para Eventos en México', desc: 'Contrata banquetes, catering gourmet, mobiliario, música, fotografía y wedding planner para bodas, XV años y eventos corporativos en CDMX, Guadalajara, Monterrey y todo México.' },
   '/galeria':              { title: 'Galería de Eventos',          desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor en México.' },
+  '/catalogos':            { title: 'Catálogos 2026',              desc: 'Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más. Cotiza por WhatsApp.' },
   '/banquetes-catering':   { title: 'Banquetes y Catering',        desc: 'Catálogo completo de banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas para eventos.' },
   '/barras-de-bebidas':    { title: 'Barras de Bebidas',           desc: 'Barras de bebidas con y sin alcohol para eventos: mocteles, mixología, café premium y carritos de helado.' },
   '/mesas-personalizadas': { title: 'Mesas Personalizadas',        desc: 'Mesas temáticas para eventos: dulces, botanas, sushi, charcutería, frutas y más. Diseño personalizado con montaje incluido.' },

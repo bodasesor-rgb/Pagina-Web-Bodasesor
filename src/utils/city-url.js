@@ -42,6 +42,7 @@ export const STANDALONE_PAGE_ROUTES = {
   '/carpas': null,
   '/audio-iluminacion-video': null,
   '/galeria': null,
+  '/catalogos': null,
   '/quienes-somos': null,
   '/blog': null,
 }

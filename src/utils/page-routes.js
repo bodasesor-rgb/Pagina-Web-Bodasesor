@@ -21,6 +21,7 @@ export const STANDALONE_PATHS = new Set([
   '/carpas',
   '/audio-iluminacion-video',
   '/galeria',
+  '/catalogos',
   '/quienes-somos',
   '/blog',
   '/buscar',

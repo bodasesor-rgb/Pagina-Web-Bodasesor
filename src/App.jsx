@@ -16,6 +16,7 @@ const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
 import Home from './pages/Home.tsx'
 
 const GaleriaPage = lazy(() => import('./pages/GaleriaPage.tsx'))
+const CatalogosPage = lazy(() => import('./pages/CatalogosPage.tsx'))
 const BanquetesCateringPage = lazy(() => import('./pages/BanquetesCateringPage.tsx'))
 const BarrasBebidasPage = lazy(() => import('./pages/BarrasBebidasPage.tsx'))
 const MesasPersonalizadasPage = lazy(() => import('./pages/MesasPersonalizadasPage.tsx'))
@@ -97,6 +98,7 @@ const STANDALONE_PAGES = {
   '/carpas': CarpasPage,
   '/audio-iluminacion-video': AudioIluminacionPage,
   '/galeria': GaleriaPage,
+  '/catalogos': CatalogosPage,
   '/quienes-somos': QuienesSomosPage,
   '/blog': BlogPage,
   '/buscar': SearchPage,
@@ -176,9 +178,9 @@ function ScrollToTop() {
 }
 
 function DeferredBelowFold() {
-  const [show, setShow] = useState(false)
+  const [showFab, setShowFab] = useState(false)
   useEffect(() => {
-    const reveal = () => setShow(true)
+    const reveal = () => setShowFab(true)
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(reveal, { timeout: 2500 })
       return () => window.cancelIdleCallback(id)
@@ -186,11 +188,11 @@ function DeferredBelowFold() {
     const t = setTimeout(reveal, 1500)
     return () => clearTimeout(t)
   }, [])
-  if (!show) return null
   return (
     <Suspense fallback={null}>
+      {/* Footer (Lo Más Buscado / Catálogos) must load with the page — not after idle */}
       <Footer />
-      <WhatsAppFab />
+      {showFab ? <WhatsAppFab /> : null}
     </Suspense>
   )
 }
@@ -217,6 +219,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
+          <Route path="/catalogos" component={CatalogosPage} />
 
           {/* Nexus legacy SEO paths → canonical SPA routes */}
           <Route path="/eventos/:slug">

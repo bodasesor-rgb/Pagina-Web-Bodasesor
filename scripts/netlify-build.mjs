@@ -18,6 +18,8 @@ const ROOT = join(__dirname, '..')
 const LIVE = join(ROOT, '.netlify-live')
 const allowSpaOnly = process.env.ALLOW_SPA_ONLY_DEPLOY === '1'
 const inCi = process.env.CI === 'true'
+const isPreview =
+  process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy'
 
 function run(label, cmd, args, { optional = false } = {}) {
   console.log(`\n▶ ${label}`)
