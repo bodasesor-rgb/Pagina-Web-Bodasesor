@@ -5,48 +5,43 @@ alwaysApply: true
 
 ## Contexto
 - Este repo es la **SPA** de https://bodasesor.com (Netlify site ID `b3e5d4b5-9b66-4322-b2d7-12252f3625ac`).
-- Las landings SEO (~1400) NO viven en este repo: las genera **Nexus SEO** (Hostinger: https://white-ferret-567834.hostingersite.com).
+- Las landings SEO las genera **Nexus SEO** (Hostinger: https://white-ferret-567834.hostingersite.com).
 - Un deploy SPA-only (`npm run build` / `vite build` → `dist/` → Netlify) **BORRA** las landings SEO.
 
+## Phase 1 (estable)
+- Inventario canónico: **1402** landings en `scripts/seo-landing-slugs.json`.
+- Los ~13k quedan para **Fase 2** (pendiente confirmación de conteo Hostinger por Nexus).
+- `MIN_NEXUS_LANDINGS` default **1200** (override por env).
+
 ## Regla CRÍTICA (no negociable)
-**TODO deploy a producción DEBE usar el build Nexus:**
+**TODO deploy (prod O preview) DEBE usar:**
 
 ```bash
 npm run build:nexus
-# alias equivalentes:
-npm run build:netlify
-node scripts/netlify-build-nexus.mjs
+# alias: npm run build:netlify → scripts/netlify-build-nexus.mjs
 ```
 
-Eso hace: sync SEO (NEXUS_URL) → build SPA → merge en `dist/` → `guard-nexus-dist` (≥50 landings).
+Sync + merge son **obligatorios también en deploy-preview**. Nunca SPA-only preview.
 
-### Prohibido en producción
-- `npm run build` solo y luego `netlify deploy --prod`
-- `vite build` + publish a Netlify
-- Cambiar `netlify.toml` `command` a `npm run build` / `vite build`
-- Quitar `ignore = "exit 0"` (evita auto-builds Netlify que pisan el merge de Actions)
-- `ALLOW_SPA_ONLY_DEPLOY=1` en producción
+### Gate A (build)
+`npm run verify:dist-bundle` → `scripts/verify-dist-spa-and-nexus.mjs`  
+Falla si falta la SPA **o** faltan landings (`seo-service-hero` < MIN).
 
-### Flujo oficial
-1. GitHub Actions `Deploy to Netlify` en `main` corre `npm run build:nexus`
-2. Publica con `netlify deploy --prod --dir=dist --no-build`
-3. Verifica `npm run verify:nexus`
+### Gate B (URL publicada preview/prod)
+`PREVIEW_URL=... node scripts/verify-preview-spa-and-nexus.mjs`
 
-## Scripts que NO borrar
-- `scripts/netlify-build-nexus.mjs` (canónico)
-- `scripts/netlify-build.mjs` (shim → nexus)
-- `scripts/sync-seo-from-live.mjs`, `merge-live-into-dist.mjs`, `guard-nexus-dist.mjs`, `verify-nexus-production.mjs`, `pull-netlify-live.mjs`
+### Prohibido
+- `npm run build` solo + `netlify deploy --prod`
+- Preview sin Nexus merge
+- Quitar `ignore = "exit 0"` en `netlify.toml`
+- Merge a main / `--prod` sin Gates A+B verdes en el PR
 
 ## Variables
 - `NEXUS_URL=https://white-ferret-567834.hostingersite.com`
 - `SITE_BASE=https://bodasesor.com`
-- `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID` (en GitHub Secrets / Actions)
+- `MIN_NEXUS_LANDINGS=1200`
+- `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID`
 
-## Verificación post-deploy
-- `https://bodasesor.com/banquete-de-lujo-estado-de-mexico/` debe tener `seo-service-hero`
-- NO el shell SPA (`id="root"` + ~7 KB)
-
-Si las landings desaparecen: **NO** las regeneres en este repo. Re-publica desde Nexus a Hostinger y vuelve a correr el deploy Actions (`build:nexus`).
-
-## Por qué se “borran”
-Netlify reemplaza **todo** `dist/` en cada publish. Si el `dist/` no trae las landings fusionadas, las SEO se van. Por eso el build canónico siempre sync+merge antes de publicar.
+## Verificación
+- Preview: workflow `Netlify Deploy Preview (SPA + Nexus)` en PRs
+- Prod smoke: `npm run verify:nexus`

@@ -1404,5 +1404,8 @@
     "salchichas-a-domicilio-cdmx",
     "salchichas-cdmx",
     "wedding-planner-bodas-cdmx-prueba-746c"
-  ]
+  ],
+  "phase1Canonical": true,
+  "phase1Note": "Phase-1 canonical set is 1402. ~13k Hostinger scale is Phase 2 pending Nexus confirmation. Do not treat this file as incomplete of 13k until Nexus delivers a full inventory.",
+  "minNexusLandingsDefault": 1200
 }

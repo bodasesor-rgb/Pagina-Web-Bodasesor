@@ -1,19 +1,24 @@
 # Deploy rules — Bodasesor SPA + Nexus SEO
 
-## Never wipe Nexus SEO landings
+## Phase 1
+- Canonical inventory: **1402** landings (`scripts/seo-landing-slugs.json`).
+- ~13k Hostinger scale = **Phase 2** (pending Nexus confirmation).
+- Default `MIN_NEXUS_LANDINGS=1200` (env override).
 
-Production publish **must** use:
+## Never wipe Nexus / never SPA-only
 
 ```bash
-npm run build:nexus
-# then
-npx netlify-cli deploy --prod --dir=dist --no-build
+npm run build:nexus          # sync + SPA + merge + Gate A
+npm run verify:dist-bundle   # Gate A explicit
 ```
 
-Do **not** publish with bare `npm run build` / `vite build`.
+Preview (PR) must include SEO the same as prod. Workflow:
+`.github/workflows/netlify-deploy-preview.yml` (draft/alias — **not** `--prod`).
 
-Canonical script: `scripts/netlify-build-nexus.mjs`  
-GitHub Actions workflow: `.github/workflows/deploy-netlify.yml`  
-Netlify auto-builds are skipped (`ignore = "exit 0"` in `netlify.toml`) so only Actions publishes.
+Gate B against a preview URL:
 
-After deploy: `npm run verify:nexus`
+```bash
+PREVIEW_URL=https://….netlify.app node scripts/verify-preview-spa-and-nexus.mjs
+```
+
+Do **not** merge to `main` / deploy `--prod` until Gates A+B pass.
