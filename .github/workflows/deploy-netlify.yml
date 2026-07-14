@@ -31,7 +31,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build (SPA + merge Nexus/SEO pages)
-        run: npm run build:netlify
+        run: npm run build:nexus
         env:
           SITE_BASE: https://bodasesor.com
           NEXUS_URL: https://white-ferret-567834.hostingersite.com
