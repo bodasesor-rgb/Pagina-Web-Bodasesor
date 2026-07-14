@@ -29,6 +29,7 @@ export default function Footer() {
             <p className="text-xl font-bold mb-6 font-serif">Lo Más Buscado</p>
             <ul className="space-y-3">
               {[
+                { name: 'Catálogos', href: '/catalogos' },
                 { name: 'Banquetes para Bodas', href: '/banquetes' },
                 { name: 'Taquiza de Guisados', href: '/taquiza-guisados' },
                 { name: 'Barra de Bebidas', href: '/barra-bebidas' },

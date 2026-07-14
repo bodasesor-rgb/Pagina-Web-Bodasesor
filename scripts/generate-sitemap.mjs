@@ -16,6 +16,7 @@ const STANDALONE = [
   '/floreria', '/shows', '/pistas-tarimas', '/salas-periqueras', '/reposteria',
   '/wedding-planner', '/musica', '/fotografia', '/alimentos-empresas',
   '/espacios-eventos', '/carpas', '/audio-iluminacion-video', '/galeria',
+  '/catalogos',
   '/quienes-somos', '/blog', '/buscar',
 ]
 

@@ -16,6 +16,7 @@ const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
 import Home from './pages/Home.tsx'
 
 const GaleriaPage = lazy(() => import('./pages/GaleriaPage.tsx'))
+const CatalogosPage = lazy(() => import('./pages/CatalogosPage.tsx'))
 const BanquetesCateringPage = lazy(() => import('./pages/BanquetesCateringPage.tsx'))
 const BarrasBebidasPage = lazy(() => import('./pages/BarrasBebidasPage.tsx'))
 const MesasPersonalizadasPage = lazy(() => import('./pages/MesasPersonalizadasPage.tsx'))
@@ -97,6 +98,7 @@ const STANDALONE_PAGES = {
   '/carpas': CarpasPage,
   '/audio-iluminacion-video': AudioIluminacionPage,
   '/galeria': GaleriaPage,
+  '/catalogos': CatalogosPage,
   '/quienes-somos': QuienesSomosPage,
   '/blog': BlogPage,
   '/buscar': SearchPage,
@@ -217,6 +219,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/galeria" component={GaleriaPage} />
+          <Route path="/catalogos" component={CatalogosPage} />
 
           {/* Nexus legacy SEO paths → canonical SPA routes */}
           <Route path="/eventos/:slug">
