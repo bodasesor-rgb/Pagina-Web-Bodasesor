@@ -250,6 +250,11 @@ function Router() {
             {(params) => <ServicePage params={{ slug: 'mesas', mesaSlug: stripCityFromSlug(params.mesaSlug) }} />}
           </Route>
 
+          {/* Barras de mobiliario (no confundir con barras de bebidas/alimentos) */}
+          <Route path="/barras/:barraSlug">
+            {(params) => <ServicePage params={{ slug: 'barras', barraSlug: stripCityFromSlug(params.barraSlug) }} />}
+          </Route>
+
           {/* Combinaciones */}
           <Route path="/combinaciones-mesas-sillas" component={CombinacionesPage} />
           <Route path="/combinaciones/:slug">

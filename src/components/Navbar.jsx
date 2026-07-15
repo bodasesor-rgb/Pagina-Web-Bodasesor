@@ -147,6 +147,13 @@ const mesasNavItems = [
   { name: 'Tablón Infantil', href: '/mesas/tablon-infantil' },
 ];
 
+const barrasMobiliarioNavItems = [
+  { name: 'Barra Clásica Blanca', href: '/barras/clasica-blanca' },
+  { name: 'Barra XL Clásica Negra', href: '/barras/xl-clasica-negra' },
+  { name: 'Barra Rústica', href: '/barras/rustica' },
+  { name: 'Barra Industrial', href: '/barras/industrial' },
+];
+
 const serviciosItems = [
   { name: 'Alimentos para Empresas', href: '/alimentos-empresas' },
   { name: 'Audio, Iluminación y Video', href: '/audio-iluminacion-video' },
@@ -362,6 +369,21 @@ function MobiliarioDropdown() {
             {/* L4 Mesas */}
             <div className="absolute left-full top-0 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/mesas-menu:opacity-100 group-hover/mesas-menu:visible transition-all duration-150">
               {sortItems(mesasNavItems).map(item => (
+                <NavItemLink key={item.href} href={item.href} name={item.name} />
+              ))}
+            </div>
+          </div>
+
+          {/* ── L3 item: "Barras ›" — mobiliario (no bebidas) ── */}
+          <div className="relative group/barras-mob-menu">
+            <Link href="/mesas-sillas" className={`${ddLink} flex items-center justify-between pr-3 font-bold text-[#162040]`}>
+              {lbl('Barras')}
+              <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
+            </Link>
+            <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/barras-mob-menu:opacity-100 group-hover/barras-mob-menu:visible transition-all duration-150">
+              <Link href="/mesas-sillas" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver en Mesas y Sillas</Link>
+              <div className="border-t border-gray-100 my-1" />
+              {sortItems(barrasMobiliarioNavItems).map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
               ))}
             </div>
@@ -1177,6 +1199,9 @@ export default function Navbar() {
               </MobileSubSection>
               <MobileSubSection title="Mesas" id="mob-mesas-tipos" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(mesasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
+              </MobileSubSection>
+              <MobileSubSection title="Barras" id="mob-barras" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
+                {sortItems(barrasMobiliarioNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/salas-periqueras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Salas y Periqueras</Link>
               <MobileSubSection title="Salas" id="mob-salas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>

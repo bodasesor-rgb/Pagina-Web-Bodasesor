@@ -6355,7 +6355,7 @@ const PRODUCTS = [
       seoDescription: "Renta de mesas y sillas para eventos, bodas, XV años y corporativos. Más de 20 modelos de sillas y mesas en múltiples estilos. Entrega, montaje y retiro incluidos.",
       description: [
         "La elección correcta de mesas y sillas puede transformar radicalmente la percepción de cualquier espacio. En Bodasesor contamos con el catálogo más amplio de mobiliario para eventos de México: desde la clásica silla Tiffany hasta diseños de autor que marcan tendencia.",
-        "Ofrecemos más de 20 modelos de sillas y 10 tipos de mesas para adaptarnos a cualquier estilo: bodas románticas, eventos corporativos modernos, fiestas temáticas o reuniones íntimas. Todo el mobiliario es mantenido en estado perfecto entre cada evento.",
+        "Ofrecemos más de 20 modelos de sillas, mesas en múltiples formatos y barras de servicio (Clásica Blanca, XL Negra, Rústica e Industrial) para estaciones de bebidas y recepción. Todo el mobiliario se mantiene en estado impecable entre cada evento.",
         "El servicio incluye traslado, armado, configuración según tu plano de mesa y retiro al finalizar. Nuestro equipo de instalación trabaja con rapidez y discreción para tener todo listo antes de que lleguen tus invitados."
       ],
       category: "mobiliario",
@@ -6363,24 +6363,28 @@ const PRODUCTS = [
       categoryHref: "/mesas-sillas",
       related: [
         {
-          name: "Mesas y Sillas",
-          href: "/mesas-sillas"
+          name: "Barra Clásica Blanca",
+          href: "/barras/clasica-blanca"
+        },
+        {
+          name: "Barra XL Clásica Negra",
+          href: "/barras/xl-clasica-negra"
+        },
+        {
+          name: "Barra Rústica",
+          href: "/barras/rustica"
+        },
+        {
+          name: "Barra Industrial",
+          href: "/barras/industrial"
         },
         {
           name: "Salas y Periqueras",
           href: "/salas-periqueras"
         },
         {
-          name: "Pistas y Tarimas",
-          href: "/pistas-tarimas"
-        },
-        {
-          name: "Vajillas y Estilo",
-          href: "/vajillas-estilo"
-        },
-        {
-          name: "Colgantes Premium",
-          href: "/colgantes-premium"
+          name: "Combinaciones",
+          href: "/combinaciones-mesas-sillas"
         }
       ],
       included: [
@@ -6425,8 +6429,8 @@ const PRODUCTS = [
           desc: "Sillas Crossback o Ghost con mesas de madera. Para eventos con personalidad."
         },
         {
-          name: "Paquete corporativo",
-          desc: "Sillas ergonómicas con mesas rectangulares. Funcional y profesional."
+          name: "Barras de servicio",
+          desc: "Barra Clásica Blanca, XL Negra, Rústica o Industrial para open bar y estaciones."
         },
         {
           name: "Paquete personalizado",
@@ -13341,6 +13345,186 @@ const PRODUCTS = [
           href: "/fotografia-video",
           icon: "📸"
         }
+      ]
+    },
+    {
+      slug: "barra-clasica-blanca",
+      title: "Barra Clásica Blanca",
+      headline: "Barra de servicio elegante en blanco para cócteles, brindis y estaciones",
+      seoTitle: "Barra Clásica Blanca para Eventos | Renta | Bodasesor",
+      seoDescription: "Renta de Barra Clásica Blanca en CDMX. Mobiliario de barra para bodas, XV años y eventos corporativos. Entrega e instalación incluidas.",
+      description: [
+        "La Barra Clásica Blanca es la pieza de mobiliario ideal para montar una estación de bebidas, cócteles o un punto de recepción elegante. Su acabado blanco limpio combina con ambientaciones modernas, románticas y corporativas.",
+        "Forma parte del catálogo de Mesas y Sillas de Bodasesor (sección Barras). Ideal junto a sillas Tiffany, Camila o Avant Garde, y como complemento de salas y periqueras en la zona lounge.",
+        "Incluimos entrega, armado y retiro. Cotiza por WhatsApp la cantidad de barras según aforo y tipo de servicio (cóctel, open bar o estación de bienvenida)."
+      ],
+      category: "mobiliario",
+      categoryLabel: "Mobiliario",
+      categoryHref: "/mesas-sillas",
+      related: [
+        { name: "Barra XL Clásica Negra", href: "/barras/xl-clasica-negra" },
+        { name: "Barra Rústica", href: "/barras/rustica" },
+        { name: "Barra Industrial", href: "/barras/industrial" },
+        { name: "Mesas y Sillas", href: "/mesas-sillas" },
+        { name: "Salas y Periqueras", href: "/salas-periqueras" }
+      ],
+      included: [
+        { icon: "🍸", title: "Uso ideal", desc: "Cócteles, open bar, estación de bienvenida o postres." },
+        { icon: "🤍", title: "Acabado blanco", desc: "Luminoso y versátil para bodas y corporativos." },
+        { icon: "✅", title: "Impecable", desc: "Revisada y limpia antes de cada evento." },
+        { icon: "🚚", title: "Entrega incluida", desc: "Montamos la barra en el venue acordado." }
+      ],
+      varieties: [
+        { name: "Barra Clásica Blanca", desc: "Formato estándar para estaciones de bebidas y recepción." }
+      ],
+      whyUs: [
+        { icon: "🎨", title: "Catálogo completo", desc: "Barras, mesas, sillas y combinaciones coordinadas en un solo proveedor." },
+        { icon: "✅", title: "Calidad garantizada", desc: "Mobiliario en perfectas condiciones, limpio y revisado." },
+        { icon: "🚚", title: "Entrega e instalación", desc: "Llevamos e instalamos para que tú solo disfrutes." },
+        { icon: "📋", title: "Asesoría", desc: "Te ayudamos a elegir barra según aforo y estilo del evento." }
+      ],
+      integralServices: [
+        { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
+        { name: "Banquete Formal", href: "/banquetes", icon: "🍽️" },
+        { name: "Barras de Bebidas", href: "/barra-bebidas", icon: "🍹" },
+        { name: "Florería y Decoración", href: "/floreria-decoracion", icon: "💐" },
+        { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
+        { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }
+      ]
+    },
+    {
+      slug: "barra-xl-clasica-negra",
+      title: "Barra XL Clásica Negra",
+      headline: "Barra XL en negro para open bar de alto impacto visual",
+      seoTitle: "Barra XL Clásica Negra para Eventos | Renta | Bodasesor",
+      seoDescription: "Renta de Barra XL Clásica Negra en CDMX. Formato amplio para open bar, galas y eventos corporativos. Entrega e instalación incluidas.",
+      description: [
+        "La Barra XL Clásica Negra ofrece mayor frente de servicio para open bar, galas y eventos con alto flujo de invitados. El acabado negro aporta contraste y sofisticación en salones y loft.",
+        "Está en el catálogo de Mesas y Sillas (Barras) junto a la versión clásica blanca. Combina especialmente con Mesa Black Shine, Silla Camila negra y ambientaciones evening.",
+        "Te ayudamos a dimensionar cuántas Barras XL necesitas según aforo y tipo de barra (cócteles, mezcal, champagne). Entrega, armado y retiro incluidos."
+      ],
+      category: "mobiliario",
+      categoryLabel: "Mobiliario",
+      categoryHref: "/mesas-sillas",
+      related: [
+        { name: "Barra Clásica Blanca", href: "/barras/clasica-blanca" },
+        { name: "Barra Industrial", href: "/barras/industrial" },
+        { name: "Barra Rústica", href: "/barras/rustica" },
+        { name: "Silla Camila", href: "/sillas/camila" },
+        { name: "Mesas y Sillas", href: "/mesas-sillas" }
+      ],
+      included: [
+        { icon: "⬛", title: "Formato XL", desc: "Mayor frente de atención para eventos grandes." },
+        { icon: "🖤", title: "Acabado negro", desc: "Sofisticado para galas, after parties y corporativos." },
+        { icon: "✅", title: "Impecable", desc: "Revisada y limpia antes de cada evento." },
+        { icon: "🚚", title: "Entrega incluida", desc: "Montaje profesional en tu venue." }
+      ],
+      varieties: [
+        { name: "Barra XL Clásica Negra", desc: "Versión amplia para open bar y estaciones premium." }
+      ],
+      whyUs: [
+        { icon: "🎨", title: "Catálogo completo", desc: "Barras, mesas, sillas y combinaciones coordinadas." },
+        { icon: "✅", title: "Calidad garantizada", desc: "Mobiliario limpio y revisado." },
+        { icon: "🚚", title: "Entrega e instalación", desc: "Montaje incluido." },
+        { icon: "📋", title: "Asesoría", desc: "Dimensionamos barras según aforo y servicio." }
+      ],
+      integralServices: [
+        { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
+        { name: "Banquete Formal", href: "/banquetes", icon: "🍽️" },
+        { name: "Cocteles y Mixología", href: "/cocteles-mixologia", icon: "🍸" },
+        { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
+        { name: "Audio e Iluminación", href: "/audio-iluminacion-video", icon: "💡" },
+        { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }
+      ]
+    },
+    {
+      slug: "barra-rustica",
+      title: "Barra Rústica",
+      headline: "Barra de madera para bodas en jardín, hacienda y estilo campestre",
+      seoTitle: "Barra Rústica para Eventos | Renta | Bodasesor",
+      seoDescription: "Renta de Barra Rústica en CDMX. Ideal para bodas en jardín, haciendas y eventos campestres. Entrega e instalación incluidas.",
+      description: [
+        "La Barra Rústica aporta calidez y textura de madera a la zona de bebidas. Es la favorita para bodas en jardín, haciendas, ranchos y celebraciones con estética natural.",
+        "Pertenece a la sección Barras del catálogo Mesas y Sillas. Combina muy bien con Tablón Caoba, Silla Crossback y ambientaciones boho o campestres.",
+        "Cotiza el set completo: barra + sillas altas o periqueras + iluminación. Entrega, armado y retiro incluidos en toda la cobertura Bodasesor."
+      ],
+      category: "mobiliario",
+      categoryLabel: "Mobiliario",
+      categoryHref: "/mesas-sillas",
+      related: [
+        { name: "Barra Industrial", href: "/barras/industrial" },
+        { name: "Barra Clásica Blanca", href: "/barras/clasica-blanca" },
+        { name: "Tablón", href: "/mesas/tablon" },
+        { name: "Silla Crossback", href: "/sillas/crossback" },
+        { name: "Mesas y Sillas", href: "/mesas-sillas" }
+      ],
+      included: [
+        { icon: "🪵", title: "Acabado madera", desc: "Look rústico-chic para exteriores e interiores." },
+        { icon: "🌿", title: "Ideal para", desc: "Jardines, haciendas, ranchos y bodas campestres." },
+        { icon: "✅", title: "Impecable", desc: "Lista y revisada para cada montaje." },
+        { icon: "🚚", title: "Entrega incluida", desc: "Instalamos en tu venue." }
+      ],
+      varieties: [
+        { name: "Barra Rústica", desc: "Diseño en madera para estaciones de bebidas con estilo natural." }
+      ],
+      whyUs: [
+        { icon: "🎨", title: "Catálogo completo", desc: "Barras coordinadas con mesas y sillas del mismo estilo." },
+        { icon: "✅", title: "Calidad garantizada", desc: "Mobiliario limpio y en buen estado." },
+        { icon: "🚚", title: "Entrega e instalación", desc: "Montaje profesional incluido." },
+        { icon: "📋", title: "Asesoría", desc: "Armamos el set rústico completo para tu evento." }
+      ],
+      integralServices: [
+        { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
+        { name: "Banquete Mexicano", href: "/banquete-mexicano", icon: "🌮" },
+        { name: "Florería y Decoración", href: "/floreria-decoracion", icon: "💐" },
+        { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
+        { name: "Entelados", href: "/entelados", icon: "✨" },
+        { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }
+      ]
+    },
+    {
+      slug: "barra-industrial",
+      title: "Barra Industrial",
+      headline: "Barra metal y madera para loft, after party y ambientaciones urbanas",
+      seoTitle: "Barra Industrial para Eventos | Renta | Bodasesor",
+      seoDescription: "Renta de Barra Industrial en CDMX. Estilo loft/urbano para after parties, brandings y bodas contemporáneas. Entrega e instalación incluidas.",
+      description: [
+        "La Barra Industrial combina estructura metálica y madera para un look loft contemporáneo. Perfecta para after parties, activaciones de marca, bodas urbanas y espacios con concreto o ladrillo a la vista.",
+        "Forma parte de las Barras del catálogo Mesas y Sillas. Combina con Silla Tolix, Silla Avant Garde y periqueras industriales del catálogo de salas.",
+        "Te asesoramos en iluminación puntual y recorrido de invitados para que la barra sea un punto de atracción. Entrega, armado y retiro incluidos."
+      ],
+      category: "mobiliario",
+      categoryLabel: "Mobiliario",
+      categoryHref: "/mesas-sillas",
+      related: [
+        { name: "Barra Rústica", href: "/barras/rustica" },
+        { name: "Barra XL Clásica Negra", href: "/barras/xl-clasica-negra" },
+        { name: "Silla Tolix", href: "/sillas/tolix" },
+        { name: "Silla Avant Garde", href: "/sillas/avant-garde" },
+        { name: "Mesas y Sillas", href: "/mesas-sillas" }
+      ],
+      included: [
+        { icon: "⚙️", title: "Estilo loft", desc: "Metal y madera para ambientaciones urbanas." },
+        { icon: "🏙️", title: "Ideal para", desc: "After parties, brandings y bodas contemporáneas." },
+        { icon: "✅", title: "Impecable", desc: "Revisada y lista para montaje." },
+        { icon: "🚚", title: "Entrega incluida", desc: "Instalación profesional en tu venue." }
+      ],
+      varieties: [
+        { name: "Barra Industrial", desc: "Diseño urbano para estaciones de bebidas de alto impacto." }
+      ],
+      whyUs: [
+        { icon: "🎨", title: "Catálogo completo", desc: "Coordinamos barra, sillas y lounge en el mismo estilo." },
+        { icon: "✅", title: "Calidad garantizada", desc: "Mobiliario limpio y revisado." },
+        { icon: "🚚", title: "Entrega e instalación", desc: "Montaje incluido." },
+        { icon: "📋", title: "Asesoría", desc: "Diseñamos la zona de barra con iluminación y flujo." }
+      ],
+      integralServices: [
+        { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
+        { name: "Audio e Iluminación", href: "/audio-iluminacion-video", icon: "💡" },
+        { name: "Cocteles y Mixología", href: "/cocteles-mixologia", icon: "🍸" },
+        { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
+        { name: "Shows", href: "/shows", icon: "🎭" },
+        { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }
       ]
     },
     {
