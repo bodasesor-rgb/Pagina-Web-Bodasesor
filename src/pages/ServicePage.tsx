@@ -360,13 +360,6 @@ const MESAS_CATALOG = [
   { name: 'Tablón Infantil', img: '/images/mesas/tablon-infantil.jpg', href: '/mesas/tablon-infantil' },
 ];
 
-const BARRAS_CATALOG = [
-  { name: 'Barra Clásica Blanca', img: '/images/barras/barra-clasica-blanca.svg', href: '/barras/clasica-blanca' },
-  { name: 'Barra XL Clásica Negra', img: '/images/barras/barra-xl-clasica-negra.svg', href: '/barras/xl-clasica-negra' },
-  { name: 'Barra Rústica', img: '/images/barras/barra-rustica.svg', href: '/barras/rustica' },
-  { name: 'Barra Industrial', img: '/images/barras/barra-industrial.svg', href: '/barras/industrial' },
-];
-
 const COMBINACIONES_CATALOG = [
   { label: 'Mesa Redonda + Silla Tiffany', img: '/images/mesas/conj-redonda-mantel-tiffany.jpg' },
   { label: 'Mesa Redonda + Silla Luis XV', img: '/images/mesas/conj-redonda-mantel-luis-xv.jpg' },
@@ -434,34 +427,8 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
         </div>
       </section>
 
-      {/* Catálogo de Barras (mobiliario) */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-3">Catálogo de Barras</h2>
-          <p className="text-gray-600 font-serif mb-10">
-            Barras de mobiliario del catálogo Mesas y Sillas — haz clic para ver detalle y cotizar
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {BARRAS_CATALOG.map((b) => (
-              <Link
-                key={b.href}
-                href={b.href}
-                className="group block bg-[#f5efe8] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.03] border border-[#162040]/5"
-              >
-                <div className="aspect-[3/4] bg-white flex items-center justify-center p-3">
-                  <img src={b.img} alt={b.name} className="h-full w-full object-contain" />
-                </div>
-                <div className="px-2 py-2.5 text-center">
-                  <p className="font-serif font-semibold text-[#162040] text-xs leading-tight">{b.name}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Catálogo de Combinaciones */}
-      <section className="py-16 bg-[#f5efe8]">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040] mb-3">Catálogo de Combinaciones</h2>
           <p className="text-gray-600 font-serif mb-10">Mesas y sillas en las combinaciones más elegantes del catálogo — cotiza la que más te guste</p>

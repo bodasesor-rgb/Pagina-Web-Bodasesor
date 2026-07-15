@@ -57,6 +57,7 @@ const routes = [
   '/banquetes',
   '/mesas-sillas',
   '/sillas/tiffany',
+  '/barras',
   '/barras/clasica-blanca',
   '/barras/xl-clasica-negra',
   '/barras/rustica',
