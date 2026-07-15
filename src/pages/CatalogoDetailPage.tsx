@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import CityLink from "../components/CityLink";
-import CatalogEmbed from "../components/CatalogEmbed";
+import CatalogEmbed, { ensureCatalogPreconnects } from "../components/CatalogEmbed";
 import { CATALOGO_CATEGORIES, getCatalogoBySlug } from "../data/catalogos-embeds";
 import NotFound from "./not-found";
 
@@ -14,6 +14,7 @@ export default function CatalogoDetailPage({ slug }: { slug: string }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    ensureCatalogPreconnects();
     if (!catalog) {
       document.title = "Catálogo no encontrado | Bodasesor";
       return;

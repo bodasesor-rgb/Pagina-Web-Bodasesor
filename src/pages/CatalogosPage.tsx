@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import CityLink from "../components/CityLink";
-import CatalogEmbed from "../components/CatalogEmbed";
+import CatalogEmbed, {
+  CatalogEmbedWarmer,
+  ensureCatalogPreconnects,
+} from "../components/CatalogEmbed";
 import {
   CATALOGO_CATEGORIES,
   CATALOGOS,
@@ -20,10 +23,12 @@ const btnSecondary =
 export default function CatalogosPage() {
   const [category, setCategory] = useState("todos");
   const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const [warmSrc, setWarmSrc] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Catálogos 2026 | Bodasesor";
+    ensureCatalogPreconnects();
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
@@ -52,8 +57,12 @@ export default function CatalogosPage() {
     return CATALOGOS.filter((c) => c.category === category);
   }, [category]);
 
+  const openCatalog = filtered.find((c) => c.slug === openSlug);
+  const warmerSrc = warmSrc && warmSrc !== openCatalog?.embedSrc ? warmSrc : null;
+
   return (
     <div className="min-h-screen bg-white">
+      <CatalogEmbedWarmer src={warmerSrc} />
       <section className="bg-[#162040] text-white py-14 md:py-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <nav className="flex items-center justify-center gap-2 text-xs text-white/60 font-serif mb-6">
@@ -118,6 +127,8 @@ export default function CatalogosPage() {
               key={catalog.id}
               id={catalog.slug}
               className="border border-[#162040]/10 rounded-2xl overflow-hidden scroll-mt-28"
+              onMouseEnter={() => setWarmSrc(catalog.embedSrc)}
+              onFocus={() => setWarmSrc(catalog.embedSrc)}
             >
               <div className="p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4 justify-between bg-white">
                 <div className="min-w-0">
@@ -132,6 +143,7 @@ export default function CatalogosPage() {
                 <div className="flex flex-wrap gap-2 shrink-0">
                   <button
                     type="button"
+                    onPointerEnter={() => setWarmSrc(catalog.embedSrc)}
                     onClick={() => {
                       setOpenSlug(isOpen ? null : catalog.slug);
                       if (!isOpen) {
@@ -147,6 +159,7 @@ export default function CatalogosPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={btnSecondary}
+                    onPointerEnter={() => setWarmSrc(catalog.embedSrc)}
                   >
                     Abrir en nueva pestaña
                   </a>
