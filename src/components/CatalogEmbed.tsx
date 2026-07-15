@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type CatalogoEmbedData = {
   title: string;
@@ -6,100 +6,94 @@ type CatalogoEmbedData = {
   embedSrc: string;
 };
 
+/** Origins used by catalog iframe providers — warm DNS/TLS early. */
+export const CATALOG_EMBED_ORIGINS = [
+  "https://gamma.app",
+  "https://www.canva.com",
+] as const;
+
+export function ensureCatalogPreconnects() {
+  if (typeof document === "undefined") return;
+  for (const href of CATALOG_EMBED_ORIGINS) {
+    if (!document.head.querySelector(`link[data-catalog-preconnect="${href}"]`)) {
+      const link = document.createElement("link");
+      link.rel = "preconnect";
+      link.href = href;
+      link.crossOrigin = "anonymous";
+      link.dataset.catalogPreconnect = href;
+      document.head.appendChild(link);
+    }
+    if (!document.head.querySelector(`link[data-catalog-dns="${href}"]`)) {
+      const dns = document.createElement("link");
+      dns.rel = "dns-prefetch";
+      dns.href = href;
+      dns.dataset.catalogDns = href;
+      document.head.appendChild(dns);
+    }
+  }
+}
+
 /**
- * Heavy Gamma/Canva iframes load only after the visitor clicks.
- * Facade keeps /catalogos light until someone actually opens a catalog.
+ * Off-screen warmer so hover / intent starts fetching before "Ver catálogo".
+ * Browser HTTP cache then makes the visible iframe much faster.
  */
+export function CatalogEmbedWarmer({ src }: { src: string | null }) {
+  if (!src) return null;
+  return (
+    <iframe
+      src={src}
+      title="Prefetch catálogo"
+      tabIndex={-1}
+      aria-hidden="true"
+      className="pointer-events-none fixed w-px h-px opacity-0 overflow-hidden -left-[9999px]"
+      loading="eager"
+      referrerPolicy="no-referrer"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
+    />
+  );
+}
+
+/** Visible catalog iframe — mounts immediately (no second click). */
 export default function CatalogEmbed({
   catalog,
-  /** If true, skip the click facade and load as soon as in viewport. */
-  autoLoad = false,
   minHeight,
 }: {
   catalog: CatalogoEmbedData;
-  autoLoad?: boolean;
   minHeight?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [activated, setActivated] = useState(false);
-  const [inView, setInView] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const height = minHeight ?? (catalog.provider === "canva" ? 560 : 480);
-  const shouldMountIframe = activated || (autoLoad && inView);
 
   useEffect(() => {
-    if (!autoLoad || activated) return;
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setInView(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "0px", threshold: 0.15 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [autoLoad, activated]);
-
-  useEffect(() => {
+    ensureCatalogPreconnects();
     setLoaded(false);
-  }, [catalog.embedSrc, shouldMountIframe]);
-
-  const providerLabel = catalog.provider === "canva" ? "Canva" : "Gamma";
+  }, [catalog.embedSrc]);
 
   return (
     <div
-      ref={ref}
       className="relative w-full bg-[#f5efe8] rounded-xl overflow-hidden border border-[#162040]/10"
-      style={{ minHeight: shouldMountIframe ? height : Math.min(height, 260) }}
+      style={{ minHeight: height }}
     >
-      {!shouldMountIframe && (
-        <button
-          type="button"
-          onClick={() => setActivated(true)}
-          className="w-full h-full min-h-[220px] md:min-h-[260px] flex flex-col items-center justify-center gap-3 px-6 py-10 text-center hover:bg-[#ebe3d8] transition-colors cursor-pointer"
-          aria-label={`Cargar catálogo ${catalog.title}`}
+      {!loaded && (
+        <div
+          className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-[#f5efe8] text-[#162040]/60 font-serif text-sm"
+          aria-live="polite"
         >
-          <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#162040] text-white">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M8 5v14l11-7L8 5z" />
-            </svg>
-          </span>
-          <span className="text-lg font-serif font-bold text-[#162040]">Cargar catálogo</span>
-          <span className="text-sm text-[#162040]/65 font-serif max-w-sm">
-            {catalog.title} · se carga al hacer clic ({providerLabel}) para no frenar la página
-          </span>
-        </button>
+          <span className="inline-block w-8 h-8 border-2 border-[#162040]/25 border-t-[#162040] rounded-full animate-spin" />
+          Cargando {catalog.title}…
+        </div>
       )}
-
-      {shouldMountIframe && (
-        <>
-          {!loaded && (
-            <div
-              className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-[#f5efe8] text-[#162040]/60 font-serif text-sm"
-              aria-live="polite"
-            >
-              <span className="inline-block w-8 h-8 border-2 border-[#162040]/25 border-t-[#162040] rounded-full animate-spin" />
-              Cargando {catalog.title}…
-            </div>
-          )}
-          <iframe
-            src={catalog.embedSrc}
-            title={`Catálogo ${catalog.title} | Bodasesor`}
-            className="w-full border-0"
-            style={{ height, opacity: loaded ? 1 : 0, transition: "opacity .25s ease" }}
-            allow="fullscreen"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            onLoad={() => setLoaded(true)}
-            // Keep interaction inside the embed; no top-level navigation to Gamma/Canva.
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
-          />
-        </>
-      )}
+      <iframe
+        src={catalog.embedSrc}
+        title={`Catálogo ${catalog.title} | Bodasesor`}
+        className="w-full border-0 bg-white"
+        style={{ height }}
+        allow="fullscreen"
+        loading="eager"
+        referrerPolicy="no-referrer"
+        onLoad={() => setLoaded(true)}
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
+      />
     </div>
   );
 }
