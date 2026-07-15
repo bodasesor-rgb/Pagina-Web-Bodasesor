@@ -380,19 +380,12 @@ function MobiliarioDropdown() {
         </div>
       </div>
 
-      {/* ── L2: Barras › (mobiliario, no bebidas) ── */}
-      <div className="relative group/barras-mob-menu">
-        <Link href="/barras" className={`${ddLink} flex items-center justify-between pr-3 font-bold text-[#162040]`}>
-          {lbl('Barras')}
-          <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
-        </Link>
-        <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[60] opacity-0 invisible group-hover/barras-mob-menu:opacity-100 group-hover/barras-mob-menu:visible transition-all duration-150">
-          {sortItems(barrasMobiliarioNavItems).map(item => (
-            <NavItemLink key={item.href} href={item.href} name={item.name} />
-          ))}
-        </div>
-      </div>
-
+      {/* ── L2: Barras — 4 opciones visibles (mobiliario, no bebidas) ── */}
+      <div className="border-t border-gray-100 my-1" />
+      <Link href="/barras" className={`${ddLink} font-bold text-[#162040]`}>{lbl('Barras')}</Link>
+      {sortItems(barrasMobiliarioNavItems).map(item => (
+        <NavItemLink key={item.href} href={item.href} name={item.name} />
+      ))}
       <div className="border-t border-gray-100 my-1" />
 
       {/* ── Salas y Periqueras ›  flyout ── */}
