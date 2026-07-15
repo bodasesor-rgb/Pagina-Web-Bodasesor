@@ -14,25 +14,25 @@ const BARRAS = [
   {
     name: 'Barra Clásica Blanca',
     href: '/barras/clasica-blanca',
-    img: '/images/barras/barra-clasica-blanca.svg',
+    img: '/images/barras/barra-clasica-blanca.jpg',
     desc: 'Acabado blanco versátil para cócteles, recepción y open bar.',
   },
   {
     name: 'Barra XL Clásica Negra',
     href: '/barras/xl-clasica-negra',
-    img: '/images/barras/barra-xl-clasica-negra.svg',
+    img: '/images/barras/barra-xl-clasica-negra.jpg',
     desc: 'Formato amplio en negro para galas y eventos de alto flujo.',
   },
   {
     name: 'Barra Rústica',
     href: '/barras/rustica',
-    img: '/images/barras/barra-rustica.svg',
+    img: '/images/barras/barra-rustica.jpg',
     desc: 'Madera natural para jardines, haciendas y bodas campestres.',
   },
   {
     name: 'Barra Industrial',
     href: '/barras/industrial',
-    img: '/images/barras/barra-industrial.svg',
+    img: '/images/barras/barra-industrial.jpg',
     desc: 'Metal y madera para loft, after parties y ambientaciones urbanas.',
   },
 ]
@@ -73,8 +73,8 @@ export default function BarrasMobiliarioPage() {
                 href={b.href}
                 className="group block bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border border-[#162040]/5"
               >
-                <div className="aspect-[3/4] bg-[#f5efe8] flex items-center justify-center p-4">
-                  <img src={b.img} alt={b.name} className="h-full w-full object-contain" />
+                <div className="aspect-[16/10] bg-white overflow-hidden">
+                  <img src={b.img} alt={b.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 </div>
                 <div className="px-4 py-4">
                   <h2 className="font-serif font-bold text-[#162040] text-lg mb-1">{b.name}</h2>
