@@ -18,6 +18,7 @@ export const CATALOGO_CATEGORIES = [
   { id: 'mobiliario', label: 'Mobiliario' },
   { id: 'produccion', label: 'Audio e iluminación' },
   { id: 'empresas', label: 'Empresas' },
+  { id: 'fiestas', label: 'Fiestas' },
 ]
 
 export const CATALOGOS = 
@@ -446,6 +447,43 @@ export const CATALOGOS =
     "slug": "tarimas-y-pistas",
     "services": [
       "Tarima & Pista"
+    ]
+  },
+  {
+    "id": "1ovz2ntlf1gq743",
+    "provider": "gamma",
+    "title": "Colgantes Premium",
+    "category": "mobiliario",
+    "relatedHref": "/colgantes",
+    "embedSrc": "https://gamma.app/embed/1ovz2ntlf1gq743",
+    "slug": "colgantes-premium",
+    "services": [
+      "Colgantes premium",
+      "Decoración aérea"
+    ]
+  },
+  {
+    "id": "DAGlkXwXOnc",
+    "provider": "canva",
+    "title": "Vajillas",
+    "category": "mobiliario",
+    "relatedHref": "/vajillas",
+    "embedSrc": "https://www.canva.com/design/DAGlkXwXOnc/tl-l4PkUkwUaL94woNdk6Q/view?embed",
+    "slug": "vajillas",
+    "services": [
+      "Vajillas"
+    ]
+  },
+  {
+    "id": "DAHBryLkt4o",
+    "provider": "canva",
+    "title": "Fiesta Infantil",
+    "category": "fiestas",
+    "relatedHref": "/cumpleanos",
+    "embedSrc": "https://www.canva.com/design/DAHBryLkt4o/pE8HPlKaLyT6VwMIUdvnnw/view?embed",
+    "slug": "fiesta-infantil",
+    "services": [
+      "Fiesta infantil"
     ]
   },
   {
