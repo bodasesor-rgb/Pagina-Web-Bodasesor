@@ -33,6 +33,7 @@ const VajillasPage = lazy(() => import('./pages/VajillasPage.tsx'))
 const VajillaDetailPage = lazy(() => import('./pages/VajillaDetailPage.tsx'))
 const CatalogoVajillasPage = lazy(() => import('./pages/CatalogoVajillasPage.tsx'))
 const ColgantesPage = lazy(() => import('./pages/ColgantesPage.tsx'))
+const BarrasMobiliarioPage = lazy(() => import('./pages/BarrasMobiliarioPage.tsx'))
 const ColganteDetailPage = lazy(() => import('./pages/ColganteDetailPage.tsx'))
 const CatalogoColgantesPage = lazy(() => import('./pages/CatalogoColgantesPage.tsx'))
 const EnteladosPage = lazy(() => import('./pages/EnteladosPage.tsx'))
@@ -85,6 +86,7 @@ const STANDALONE_PAGES = {
   '/combinaciones-mesas-sillas': CombinacionesPage,
   '/vajillas': VajillasPage,
   '/colgantes': ColgantesPage,
+  '/barras': BarrasMobiliarioPage,
   '/entelados': EnteladosPage,
   '/floreria': FloreriaPage,
   '/shows': ShowsPage,
@@ -110,6 +112,7 @@ function RenderDetailPage({ catalog, slug }) {
     case 'pistas-tarimas': return <PistaTarimaDetailPage slug={slug} />
     case 'vajillas': return <VajillaDetailPage slug={slug} />
     case 'colgantes': return <ColganteDetailPage slug={slug} />
+    case 'barras': return <ServicePage params={{ slug: 'barras', barraSlug: slug }} />
     case 'entelados': return <EnteladoDetailPage slug={slug} />
     case 'floreria': return <FloreriaDetailPage slug={slug} />
     case 'shows': return <ShowsDetailPage slug={slug} />
@@ -248,6 +251,12 @@ function Router() {
           {/* Mesas */}
           <Route path="/mesas/:mesaSlug">
             {(params) => <ServicePage params={{ slug: 'mesas', mesaSlug: stripCityFromSlug(params.mesaSlug) }} />}
+          </Route>
+
+          {/* Barras de mobiliario (no confundir con barras de bebidas/alimentos) */}
+          <Route path="/barras" component={BarrasMobiliarioPage} />
+          <Route path="/barras/:barraSlug">
+            {(params) => <ServicePage params={{ slug: 'barras', barraSlug: stripCityFromSlug(params.barraSlug) }} />}
           </Route>
 
           {/* Combinaciones */}

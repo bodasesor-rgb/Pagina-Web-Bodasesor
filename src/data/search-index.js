@@ -28,6 +28,14 @@ function normalizeText(text) {
 function productHref(slug) {
   if (slug.startsWith('silla-')) return `/sillas/${slug.slice(6)}`
   if (slug.startsWith('mesa-')) return `/mesas/${slug.slice(5)}`
+  // Furniture barras (not food/drink flat /barra-* pages)
+  const mobiliarioBarras = new Set([
+    'barra-clasica-blanca',
+    'barra-xl-clasica-negra',
+    'barra-rustica',
+    'barra-industrial',
+  ])
+  if (mobiliarioBarras.has(slug)) return `/barras/${slug.slice(6)}`
   return `/${slug}`
 }
 

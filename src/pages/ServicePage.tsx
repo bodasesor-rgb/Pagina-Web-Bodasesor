@@ -116,6 +116,10 @@ const HERO_IMAGES: Record<string, string> = {
   'mesa-serpentina':       '/images/mesas/mesa-serpentina.jpg',
   'mesa-picnic':           '/images/mesas/mesa-picnic.jpg',
   'mesa-tablon-infantil':  '/images/mesas/tablon-infantil.jpg',
+  'barra-clasica-blanca':  '/images/barras/barra-clasica-blanca.svg',
+  'barra-xl-clasica-negra':'/images/barras/barra-xl-clasica-negra.svg',
+  'barra-rustica':         '/images/barras/barra-rustica.svg',
+  'barra-industrial':      '/images/barras/barra-industrial.svg',
 };
 
 // ── Per-product gallery images (30 photos each, unique blocks per product) ────
@@ -177,6 +181,10 @@ const PRODUCT_GALLERY: Record<string, string[]> = {
   'mesa-serpentina': ['/images/mesas/mesa-serpentina.jpg','/images/instagram/ig150.jpg','/images/instagram/ig151.jpg','/images/instagram/ig152.jpg','/images/instagram/ig153.jpg','/images/instagram/ig154.jpg','/images/instagram/ig155.jpg','/images/instagram/ig156.jpg','/images/instagram/ig157.jpg','/images/instagram/ig158.jpg','/images/instagram/ig159.jpg','/images/instagram/ig160.jpg','/images/instagram/ig161.jpg','/images/instagram/ig162.jpg','/images/instagram/ig163.jpg','/images/instagram/ig164.jpg','/images/instagram/ig165.jpg','/images/instagram/ig166.jpg','/images/instagram/ig167.jpg','/images/instagram/ig168.jpg'],
   'mesa-picnic': ['/images/mesas/mesa-picnic.jpg','/images/mesas/tablon-picnic-caoba.jpg','/images/mesas/tablon-picnic-vintage.jpg','/images/instagram/ig169.jpg','/images/instagram/ig170.jpg','/images/instagram/ig171.jpg','/images/instagram/ig172.jpg','/images/instagram/ig173.jpg','/images/instagram/ig174.jpg','/images/instagram/ig175.jpg','/images/instagram/ig176.jpg','/images/instagram/ig177.jpg','/images/instagram/ig178.jpg','/images/instagram/ig179.jpg','/images/instagram/ig180.jpg','/images/instagram/ig181.jpg','/images/instagram/ig182.jpg','/images/instagram/ig183.jpg','/images/instagram/ig184.jpg','/images/instagram/ig185.jpg'],
   'mesa-tablon-infantil': ['/images/mesas/tablon-infantil.jpg','/images/instagram/ig186.jpg','/images/instagram/ig187.jpg','/images/instagram/ig188.jpg','/images/instagram/ig189.jpg','/images/instagram/ig190.jpg','/images/instagram/ig191.jpg','/images/instagram/ig192.jpg','/images/instagram/ig193.jpg','/images/instagram/ig194.jpg','/images/instagram/ig195.jpg','/images/instagram/ig196.jpg','/images/instagram/ig197.jpg','/images/instagram/ig198.jpg','/images/instagram/ig199.jpg','/images/instagram/ig200.jpg','/images/instagram/ig1.jpg','/images/instagram/ig2.jpg','/images/instagram/ig3.jpg','/images/instagram/ig4.jpg'],
+  'barra-clasica-blanca': ['/images/barras/barra-clasica-blanca.svg','/images/instagram/ig5.jpg','/images/instagram/ig6.jpg','/images/instagram/ig7.jpg','/images/instagram/ig8.jpg','/images/instagram/ig9.jpg','/images/instagram/ig10.jpg','/images/instagram/ig11.jpg','/images/instagram/ig12.jpg','/images/instagram/ig14.jpg','/images/instagram/ig15.jpg','/images/instagram/ig16.jpg','/images/instagram/ig17.jpg','/images/instagram/ig18.jpg','/images/instagram/ig19.jpg','/images/instagram/ig20.jpg','/images/instagram/ig21.jpg','/images/instagram/ig23.jpg','/images/instagram/ig24.jpg','/images/instagram/ig25.jpg','/images/instagram/ig26.jpg','/images/instagram/ig27.jpg','/images/instagram/ig28.jpg','/images/instagram/ig29.jpg','/images/instagram/ig30.jpg','/images/instagram/ig31.jpg','/images/instagram/ig32.jpg','/images/instagram/ig34.jpg','/images/instagram/ig37.jpg','/images/instagram/ig38.jpg'],
+  'barra-xl-clasica-negra': ['/images/barras/barra-xl-clasica-negra.svg','/images/instagram/ig39.jpg','/images/instagram/ig42.jpg','/images/instagram/ig43.jpg','/images/instagram/ig44.jpg','/images/instagram/ig45.jpg','/images/instagram/ig46.jpg','/images/instagram/ig47.jpg','/images/instagram/ig48.jpg','/images/instagram/ig49.jpg','/images/instagram/ig50.jpg','/images/instagram/ig51.jpg','/images/instagram/ig52.jpg','/images/instagram/ig53.jpg','/images/instagram/ig54.jpg','/images/instagram/ig57.jpg','/images/instagram/ig58.jpg','/images/instagram/ig60.jpg','/images/instagram/ig61.jpg','/images/instagram/ig63.jpg','/images/instagram/ig64.jpg','/images/instagram/ig65.jpg','/images/instagram/ig67.jpg','/images/instagram/ig69.jpg','/images/instagram/ig70.jpg','/images/instagram/ig71.jpg','/images/instagram/ig72.jpg','/images/instagram/ig73.jpg','/images/instagram/ig74.jpg','/images/instagram/ig77.jpg'],
+  'barra-rustica': ['/images/barras/barra-rustica.svg','/images/mesas/tablon-caoba-natural.jpg','/images/mesas/silla-crossback.jpg','/images/instagram/ig78.jpg','/images/instagram/ig79.jpg','/images/instagram/ig81.jpg','/images/instagram/ig82.jpg','/images/instagram/ig83.jpg','/images/instagram/ig85.jpg','/images/instagram/ig87.jpg','/images/instagram/ig88.jpg','/images/instagram/ig90.jpg','/images/instagram/ig91.jpg','/images/instagram/ig92.jpg','/images/instagram/ig95.jpg','/images/instagram/ig96.jpg','/images/instagram/ig97.jpg','/images/instagram/ig98.jpg','/images/instagram/ig100.jpg','/images/instagram/ig101.jpg','/images/instagram/ig103.jpg','/images/instagram/ig104.jpg','/images/instagram/ig105.jpg','/images/instagram/ig106.jpg','/images/instagram/ig107.jpg','/images/instagram/ig108.jpg','/images/instagram/ig109.jpg','/images/instagram/ig111.jpg','/images/instagram/ig113.jpg','/images/instagram/ig116.jpg'],
+  'barra-industrial': ['/images/barras/barra-industrial.svg','/images/mesas/silla-tolix.jpg','/images/mesas/silla-avant-garde.jpg','/images/instagram/ig118.jpg','/images/instagram/ig120.jpg','/images/instagram/ig122.jpg','/images/instagram/ig123.jpg','/images/instagram/ig124.jpg','/images/instagram/ig131.jpg','/images/instagram/ig132.jpg','/images/instagram/ig133.jpg','/images/instagram/ig134.jpg','/images/instagram/ig135.jpg','/images/instagram/ig138.jpg','/images/instagram/ig139.jpg','/images/instagram/ig140.jpg','/images/instagram/ig141.jpg','/images/instagram/ig142.jpg','/images/instagram/ig143.jpg','/images/instagram/ig144.jpg','/images/instagram/ig146.jpg','/images/instagram/ig147.jpg','/images/instagram/ig148.jpg','/images/instagram/ig149.jpg','/images/instagram/ig150.jpg','/images/instagram/ig151.jpg','/images/instagram/ig153.jpg','/images/instagram/ig154.jpg','/images/instagram/ig155.jpg','/images/instagram/ig158.jpg'],
 };
 const DEFAULT_GALLERY = ['/images/instagram/ig1.jpg','/images/instagram/ig2.jpg','/images/instagram/ig3.jpg','/images/instagram/ig4.jpg','/images/instagram/ig5.jpg','/images/instagram/ig6.jpg','/images/instagram/ig7.jpg','/images/instagram/ig8.jpg','/images/instagram/ig9.jpg','/images/instagram/ig10.jpg','/images/instagram/ig11.jpg','/images/instagram/ig12.jpg','/images/instagram/ig13.jpg','/images/instagram/ig14.jpg','/images/instagram/ig15.jpg','/images/instagram/ig16.jpg','/images/instagram/ig17.jpg','/images/instagram/ig18.jpg','/images/instagram/ig19.jpg','/images/instagram/ig20.jpg','/images/instagram/ig21.jpg','/images/instagram/ig22.jpg','/images/instagram/ig23.jpg','/images/instagram/ig24.jpg','/images/instagram/ig25.jpg','/images/instagram/ig26.jpg','/images/instagram/ig27.jpg','/images/instagram/ig28.jpg','/images/instagram/ig29.jpg','/images/instagram/ig30.jpg'];
 
@@ -454,7 +462,7 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
 }
 
 interface ServicePageProps {
-  params: { slug: string; chairSlug?: string; mesaSlug?: string };
+  params: { slug: string; chairSlug?: string; mesaSlug?: string; barraSlug?: string };
 }
 
 export default function ServicePage({ params }: ServicePageProps) {
@@ -462,6 +470,8 @@ export default function ServicePage({ params }: ServicePageProps) {
     ? `silla-${params.chairSlug}`
     : params.mesaSlug
     ? `mesa-${params.mesaSlug}`
+    : params.barraSlug
+    ? `barra-${params.barraSlug}`
     : params.slug;
 
   const slug = stripCityFromSlug(rawSlug);
@@ -528,7 +538,10 @@ export default function ServicePage({ params }: ServicePageProps) {
   }
 
   const waUrl = WA_MSG(product.title);
-  const hasCatalogImage = HERO_IMAGES[slug]?.startsWith('/images/mesas/') ?? false;
+  const hasCatalogImage =
+    HERO_IMAGES[slug]?.startsWith('/images/mesas/') ||
+    HERO_IMAGES[slug]?.startsWith('/images/barras/') ||
+    false;
 
   return (
     <div className="min-h-screen bg-white">

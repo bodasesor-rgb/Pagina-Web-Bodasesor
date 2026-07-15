@@ -54,21 +54,8 @@ function legacyRedirectBootPlugin() {
   }
 }
 
-function asyncCssPlugin() {
-  return {
-    name: 'async-css',
-    transformIndexHtml: {
-      order: 'post',
-      handler(html) {
-        return html.replace(
-          /<link rel="stylesheet" crossorigin href="(\/assets\/index-[^"]+\.css)">/,
-          '<link rel="preload" as="style" href="$1" onload="this.onload=null;this.rel=\'stylesheet\'">' +
-            '<noscript><link rel="stylesheet" href="$1"></noscript>',
-        )
-      },
-    },
-  }
-}
+// NOTE: Do not load main CSS async — it caused a ~1s FOUC (stacked/unstyled layout)
+// on every page while waiting for onload to promote preload → stylesheet.
 
 function deferNonCriticalPreloadsPlugin() {
   return {
@@ -94,7 +81,6 @@ export default defineConfig({
     tailwindcss(),
     imageBasePlugin(base),
     legacyRedirectBootPlugin(),
-    asyncCssPlugin(),
     deferNonCriticalPreloadsPlugin(),
   ],
   build: {

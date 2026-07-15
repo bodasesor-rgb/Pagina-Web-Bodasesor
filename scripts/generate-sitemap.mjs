@@ -12,7 +12,7 @@ const OUT = path.join(ROOT, 'public/sitemap.xml')
 
 const STANDALONE = [
   '/banquetes-catering', '/barras-de-bebidas', '/mesas-personalizadas',
-  '/combinaciones-mesas-sillas', '/vajillas', '/colgantes', '/entelados',
+  '/combinaciones-mesas-sillas', '/vajillas', '/colgantes', '/barras', '/entelados',
   '/floreria', '/shows', '/pistas-tarimas', '/salas-periqueras', '/reposteria',
   '/wedding-planner', '/musica', '/fotografia', '/alimentos-empresas',
   '/espacios-eventos', '/carpas', '/audio-iluminacion-video', '/galeria',

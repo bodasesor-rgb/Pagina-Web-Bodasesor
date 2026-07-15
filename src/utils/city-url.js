@@ -28,6 +28,7 @@ export const STANDALONE_PAGE_ROUTES = {
   '/combinaciones-mesas-sillas': null,
   '/vajillas': null,
   '/colgantes': null,
+  '/barras': null,
   '/entelados': null,
   '/floreria': null,
   '/shows': null,

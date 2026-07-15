@@ -147,6 +147,13 @@ const mesasNavItems = [
   { name: 'Tablón Infantil', href: '/mesas/tablon-infantil' },
 ];
 
+const barrasMobiliarioNavItems = [
+  { name: 'Barra Clásica Blanca', href: '/barras/clasica-blanca' },
+  { name: 'Barra XL Clásica Negra', href: '/barras/xl-clasica-negra' },
+  { name: 'Barra Rústica', href: '/barras/rustica' },
+  { name: 'Barra Industrial', href: '/barras/industrial' },
+];
+
 const serviciosItems = [
   { name: 'Alimentos para Empresas', href: '/alimentos-empresas' },
   { name: 'Audio, Iluminación y Video', href: '/audio-iluminacion-video' },
@@ -373,6 +380,12 @@ function MobiliarioDropdown() {
         </div>
       </div>
 
+      {/* ── L2: Barras — 4 opciones visibles (mobiliario, no bebidas) ── */}
+      <div className="border-t border-gray-100 my-1" />
+      <Link href="/barras" className={`${ddLink} font-bold text-[#162040]`}>{lbl('Barras')}</Link>
+      {sortItems(barrasMobiliarioNavItems).map(item => (
+        <NavItemLink key={item.href} href={item.href} name={item.name} />
+      ))}
       <div className="border-t border-gray-100 my-1" />
 
       {/* ── Salas y Periqueras ›  flyout ── */}
@@ -1177,6 +1190,11 @@ export default function Navbar() {
               </MobileSubSection>
               <MobileSubSection title="Mesas" id="mob-mesas-tipos" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(mesasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
+              </MobileSubSection>
+              <Link href="/combinaciones-mesas-sillas" className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">Combinaciones de Mesas y Sillas</Link>
+              <Link href="/barras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Barras</Link>
+              <MobileSubSection title="Barras" id="mob-barras" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
+                {sortItems(barrasMobiliarioNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/salas-periqueras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Salas y Periqueras</Link>
               <MobileSubSection title="Salas" id="mob-salas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
