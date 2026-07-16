@@ -14,6 +14,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const DIST = join(ROOT, 'dist')
 const MAX_TITLE = 60
+const GA_ID = 'G-6VGGKNB77P'
+const GA_SNIPPET = `<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${GA_ID}');
+</script>
+`
 
 function stripBrand(text) {
   return String(text ?? '')
@@ -49,9 +59,24 @@ async function walkHtml(dir, files = []) {
   return files
 }
 
+function ensureGtag(html) {
+  if (html.includes(GA_ID) || html.includes('googletagmanager.com/gtag/js')) {
+    return { html, changed: false }
+  }
+  if (!/<head[^>]*>/i.test(html)) return { html, changed: false }
+  return {
+    html: html.replace(/<head([^>]*)>/i, `<head$1>\n${GA_SNIPPET}`),
+    changed: true,
+  }
+}
+
 function patchHtml(html) {
   let changed = false
   let out = html
+
+  const ga = ensureGtag(out)
+  out = ga.html
+  if (ga.changed) changed = true
 
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {
     const next = shortenTitle(inner)

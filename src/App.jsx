@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, lazy, Suspense, useState } from "react"
 import { useLocation } from "wouter"
 import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
+import GoogleAnalytics from './components/GoogleAnalytics'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath } from './utils/static-lcp-shell'
@@ -211,6 +212,7 @@ function Router() {
     <>
       <CityUrlSync />
       <GlobalSEO />
+      <GoogleAnalytics />
       <StaticLcpCleanup />
       <ScrollToTop />
       <Suspense fallback={
