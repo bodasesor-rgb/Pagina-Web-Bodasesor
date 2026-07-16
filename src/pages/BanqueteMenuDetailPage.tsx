@@ -8,6 +8,8 @@ import {
   getBanquetParent,
 } from "../data/banquetes-menus";
 import { buildSeoTitle } from "../utils/seo-title";
+import { isCityLandingSlug } from "../utils/city-url";
+import ServicePage from "./ServicePage";
 
 const WHATSAPP = "5215540080373";
 const WA = (title: string) =>
@@ -28,7 +30,14 @@ type Props = {
 
 export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) {
   const { city } = useCity();
-  const menu = getBanquetMenu(parentSlug, menuSlug ?? "");
+  const resolvedMenuSlug = menuSlug ?? "";
+
+  // /banquete-kosher/cuernavaca without city-aware strip → city mistaken as menu
+  if (resolvedMenuSlug && isCityLandingSlug(resolvedMenuSlug)) {
+    return <ServicePage params={{ slug: parentSlug }} />;
+  }
+
+  const menu = getBanquetMenu(parentSlug, resolvedMenuSlug);
   const parent = getBanquetParent(parentSlug);
   const siblings = getMenusForParent(parentSlug);
 

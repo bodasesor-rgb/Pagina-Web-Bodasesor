@@ -12,6 +12,10 @@
     "_redirects",
     "redirects-map.json"
   ],
+  "neverCopyPrefixes": [
+    "banquete-kosher/",
+    "banquete-mexicano/"
+  ],
   "spaWinsPrefixes": [
     "assets/"
   ],

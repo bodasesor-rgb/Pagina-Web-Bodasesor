@@ -110,9 +110,17 @@ function buildRedirectsFile(map) {
   }
 
   lines.push('')
-  lines.push(`# Banquet menu subpages — Nexus has parent HTML but not menu subdirs; serve SPA`)
+  lines.push(`# SPA product hubs shadowed by Nexus SEO folders — force ServicePage`)
+  lines.push(`/banquete-kosher  /index.html  200!`)
+  lines.push(`/banquete-kosher/  /index.html  200!`)
+  lines.push(`/banquete-mexicano  /index.html  200!`)
+  lines.push(`/banquete-mexicano/  /index.html  200!`)
+  lines.push('')
+  lines.push(`# Banquet menu subpages — always SPA (Nexus has parent HTML but not menu subdirs)`)
+  lines.push(`/banquetes/:menu  /index.html  200`)
   lines.push(`/banquete-kosher/:menu  /index.html  200`)
   lines.push(`/banquete-mexicano/:menu  /index.html  200`)
+  lines.push(`/banquete-navideno/:menu  /index.html  200`)
   lines.push('')
   lines.push(`# Fallback for unknown legacy pages`)
   lines.push(`/pages/:slug  /  301!`)

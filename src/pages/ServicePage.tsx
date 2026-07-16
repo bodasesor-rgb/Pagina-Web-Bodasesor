@@ -486,10 +486,16 @@ export default function ServicePage({ params }: ServicePageProps) {
     let cancelled = false;
     setLoaded(false);
     (async () => {
-      const p = (await getProductBySlugAsync(rawSlug)) ?? (await getProductBySlugAsync(slug));
-      if (cancelled) return;
-      setProduct(p);
-      setLoaded(true);
+      try {
+        const p = (await getProductBySlugAsync(rawSlug)) ?? (await getProductBySlugAsync(slug));
+        if (cancelled) return;
+        setProduct(p);
+      } catch (err) {
+        console.error('Failed to load product', rawSlug, err);
+        if (!cancelled) setProduct(null);
+      } finally {
+        if (!cancelled) setLoaded(true);
+      }
     })();
     return () => { cancelled = true; };
   }, [rawSlug, slug]);

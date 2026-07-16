@@ -62,12 +62,18 @@ export function guardRedirectsFile(filePath, label, minRules = MIN_RULES) {
     fail(`${label} missing SPA fallback at end (/* /index.html 200)`)
   }
 
-  if (!text.includes('/banquete-kosher/:menu  /index.html  200')) {
-    fail(`${label} missing SPA rewrite for /banquete-kosher/:menu`)
+  if (!text.includes('/banquete-kosher  /index.html  200!')) {
+    fail(`${label} missing forced SPA rewrite for /banquete-kosher`)
   }
 
-  if (!text.includes('/banquete-mexicano/:menu  /index.html  200')) {
-    fail(`${label} missing SPA rewrite for /banquete-mexicano/:menu`)
+  if (!text.includes('/banquete-mexicano  /index.html  200!')) {
+    fail(`${label} missing forced SPA rewrite for /banquete-mexicano`)
+  }
+
+  for (const parent of ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']) {
+    if (!text.includes(`/${parent}/:menu  /index.html  200`)) {
+      fail(`${label} missing SPA rewrite for /${parent}/:menu`)
+    }
   }
 
   if (!text.includes('/products/:slug')) {
