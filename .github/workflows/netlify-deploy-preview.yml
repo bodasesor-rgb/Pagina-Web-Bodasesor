@@ -33,6 +33,17 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Seed .netlify-live from release (Hostinger rate-limits GHA)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p .netlify-live
+          gh release download netlify-live-seed -p 'netlify-live-seed.tgz' -O /tmp/netlify-live-seed.tgz
+          tar -xzf /tmp/netlify-live-seed.tgz -C .netlify-live
+          echo "Seeded landings:"
+          find .netlify-live -name index.html | wc -l
+
       - name: Build (SPA + merge Nexus) — Gate A inside build:nexus
         run: npm run build:nexus
         env:
@@ -44,6 +55,7 @@ jobs:
           MIN_NEXUS_LANDINGS: "1200"
           # Force preview context so logs show preview=true; sync is still mandatory.
           CONTEXT: deploy-preview
+          SKIP_NETLIFY_ZIP: "1"
 
       - name: Gate A (explicit re-check)
         run: npm run verify:dist-bundle
