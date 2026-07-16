@@ -246,9 +246,10 @@ function Router() {
             {(params) => <CatalogoDetailPage slug={stripCityFromSlug(params.slug)} />}
           </Route>
 
-          {/* Nexus legacy SEO paths → canonical SPA routes */}
+          {/* Nexus legacy SEO paths → canonical SPA routes.
+              Pass FULL slug (e.g. bodas-cdmx) so city is preserved by resolveEventosSlug. */}
           <Route path="/eventos/:slug">
-            {(params) => <EventosLegacyRedirect slug={stripCityFromSlug(params.slug)} />}
+            {(params) => <EventosLegacyRedirect slug={params.slug} />}
           </Route>
 
           {/* Legacy Shopify URLs — client fallback if Netlify redirect misses */}
