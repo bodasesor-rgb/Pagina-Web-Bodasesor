@@ -126,18 +126,35 @@ export function stripCityFromPath(path) {
  * Apply city to a path.
  * Home → /{citySlug}
  * Services → /{service}/{citySlug}  (e.g. /banquete-kosher/3-tiempos/cuernavaca)
+ * Preserves ?query and #hash (hash must stay after city: /path/city#section).
  */
 export function withCityPath(path, citySlug) {
-  if (!citySlug || !CITY_MAP[citySlug]) return stripCityFromPath(path)
-  if (isCityExemptPath(path)) return stripCityFromPath(path)
+  if (!citySlug || !CITY_MAP[citySlug]) return stripCityFromPath(path.split(/[?#]/)[0] || path)
 
-  const { basePath } = parseCityFromPath(path)
-
-  if (basePath === '/') {
-    return `/${citySlug}`
+  const qIdx = path.indexOf('?')
+  const hIdx = path.indexOf('#')
+  let suffix = ''
+  let pathOnly = path
+  if (qIdx >= 0 || hIdx >= 0) {
+    const cut = Math.min(
+      qIdx >= 0 ? qIdx : path.length,
+      hIdx >= 0 ? hIdx : path.length,
+    )
+    suffix = path.slice(cut)
+    pathOnly = path.slice(0, cut)
   }
 
-  return `${basePath}/${citySlug}`.replace(/\/+/g, '/')
+  if (isCityExemptPath(pathOnly)) {
+    return stripCityFromPath(pathOnly) + suffix
+  }
+
+  const { basePath } = parseCityFromPath(pathOnly)
+
+  if (basePath === '/') {
+    return `/${citySlug}${suffix}`
+  }
+
+  return `${basePath}/${citySlug}${suffix}`.replace(/([^:]\/)\/+/g, '$1')
 }
 
 /** Convert legacy concatenated city URLs to slash format */

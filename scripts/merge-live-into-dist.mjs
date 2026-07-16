@@ -42,6 +42,11 @@ function isNeverOverwriteFromLive(relPath, config) {
   return (config.neverOverwriteFromLive || []).includes(norm)
 }
 
+/** SPA product hubs — never copy Nexus HTML that would shadow ServicePage */
+function isNeverCopyFromLive(relPath, config) {
+  return matchesPrefix(relPath.replace(/\\/g, '/'), config.neverCopyPrefixes || [])
+}
+
 async function walkFiles(dir, base = dir) {
   const entries = await readdir(dir, { withFileTypes: true })
   const files = []
@@ -89,8 +94,15 @@ async function main() {
     const spaWins = shouldSpaWin(rel, config)
     const distHas = existsSync(distPath)
     const keepBuildRedirects = isNeverOverwriteFromLive(rel, config)
+    const blockNexusShadow = isNeverCopyFromLive(rel, config)
 
     if (keepBuildRedirects) {
+      skippedSpa++
+      continue
+    }
+
+    // Product hubs served by SPA ServicePage must not keep Nexus index.html
+    if (blockNexusShadow) {
       skippedSpa++
       continue
     }
