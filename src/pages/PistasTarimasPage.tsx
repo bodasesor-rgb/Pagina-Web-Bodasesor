@@ -128,7 +128,7 @@ export default function PistasTarimasPage() {
 
               {/* Products grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {products.map(product => {
+                {products.map((product, idx) => {
                   const waMsg = WA_BASE + encodeURIComponent(`Hola, me interesa cotizar: ${product.name} para mi evento.`);
                   return (
                     <div key={product.slug}
@@ -142,6 +142,8 @@ export default function PistasTarimasPage() {
                             alt={product.name}
                             width={400}
                             height={176}
+                            priority={cat.key === 'tarimas' && idx < 2}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         </div>
