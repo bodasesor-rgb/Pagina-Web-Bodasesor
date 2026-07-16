@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
+import OptimizedImage from "../components/OptimizedImage";
 const Link = CityLink;
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 
@@ -116,10 +117,13 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
 
           {/* Right: image */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
-            <div className="w-full max-w-xl h-[300px] lg:h-[420px] rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img
+            <div className="w-full max-w-xl h-[300px] lg:h-[420px] rounded-2xl product-media overflow-hidden bg-[#0d1630]">
+              <OptimizedImage
                 src={product.img}
                 alt={product.name}
+                width={800}
+                height={420}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>
@@ -199,8 +203,8 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
               {sameCat.map(p => (
                 <Link key={p.slug} href={`/pistas-tarimas/${p.slug}`}
                   className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
-                  <div className="h-24 overflow-hidden bg-gray-100">
-                    <img src={p.img} alt={p.name}
+                  <div className="h-24 product-media overflow-hidden bg-gray-100">
+                    <OptimizedImage src={p.img} alt={p.name} width={200} height={96}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-3">
@@ -222,8 +226,8 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
               {others.map(p => (
                 <Link key={p.slug} href={`/pistas-tarimas/${p.slug}`}
                   className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
-                  <div className="h-20 overflow-hidden bg-gray-100">
-                    <img src={p.img} alt={p.name}
+                  <div className="h-20 product-media overflow-hidden bg-gray-100">
+                    <OptimizedImage src={p.img} alt={p.name} width={200} height={80}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-2.5">

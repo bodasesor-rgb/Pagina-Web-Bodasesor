@@ -88,7 +88,7 @@ run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
 
 if (existsSync(LIVE) && liveLandingCount() > 0) {
   run('3/4 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
-  run('4a Parchear SEO Nexus (titles ≤60, lazy imgs, gtag)', 'node', ['scripts/patch-nexus-seo.mjs'], {
+  run('4a Parchear SEO Nexus (CSS blocking, titles, lazy imgs, gtag)', 'node', ['scripts/patch-nexus-seo.mjs'], {
     optional: true,
   })
   run('4b Verificar Nexus en dist (guard)', 'node', ['scripts/guard-nexus-dist.mjs'])

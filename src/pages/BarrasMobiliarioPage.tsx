@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useCity } from '../context/CityContext'
 import CityLink from '../components/CityLink'
+import OptimizedImage from '../components/OptimizedImage'
 import { buildSeoTitle } from '../utils/seo-title'
 
 const Link = CityLink
@@ -73,8 +74,14 @@ export default function BarrasMobiliarioPage() {
                 href={b.href}
                 className="group block bg-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border border-[#162040]/5"
               >
-                <div className="aspect-[16/10] bg-white overflow-hidden">
-                  <img src={b.img} alt={b.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <div className="aspect-[16/10] product-media bg-white overflow-hidden">
+                  <OptimizedImage
+                    src={b.img}
+                    alt={b.name}
+                    width={480}
+                    height={300}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
                 <div className="px-4 py-4">
                   <h2 className="font-serif font-bold text-[#162040] text-lg mb-1">{b.name}</h2>

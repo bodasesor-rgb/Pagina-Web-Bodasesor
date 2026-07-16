@@ -5,12 +5,13 @@ import { CityProvider, CityUrlSync } from './context/CityContext'
 import GlobalSEO from './components/GlobalSEO'
 import GoogleAnalytics from './components/GoogleAnalytics'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import Navbar from './components/Navbar'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath } from './utils/static-lcp-shell'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
+import { prefetchProducts } from './data/products-loader'
 
-const Navbar = lazy(() => import('./components/Navbar'))
 const Footer = lazy(() => import('./components/Footer'))
 const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
 
@@ -173,10 +174,28 @@ function CatchAllRoute({ slug }) {
 function StaticLcpCleanup() {
   const [location] = useLocation()
   useLayoutEffect(() => {
-    if (!isHomePath(location)) {
+    // Tear down fixed LCP shell as soon as React paints — avoids double nav / stacked hero.
+    if (isHomePath(location)) {
+      hideStaticLcpShell()
+      document.getElementById('static-nav-shell')?.remove()
+      document.getElementById('static-hero-copy')?.remove()
+      document.getElementById('lcp-hero-wrap')?.remove()
+    } else {
       hideStaticHeroOnly()
+      hideStaticLcpShell()
+      document.getElementById('static-nav-shell')?.remove()
     }
   }, [location])
+  useEffect(() => {
+    // Warm product catalog after first paint so detail pages don't flash "Cargando…"
+    const warm = () => prefetchProducts()
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(warm, { timeout: 2000 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const t = setTimeout(warm, 800)
+    return () => clearTimeout(t)
+  }, [])
   return null
 }
 
@@ -215,14 +234,7 @@ function Router() {
       <GoogleAnalytics />
       <StaticLcpCleanup />
       <ScrollToTop />
-      <Suspense fallback={
-        <div className="sticky top-0 z-50 shadow-lg" aria-hidden="true">
-          <div className="h-16 bg-[#162040]" />
-          <div className="hidden md:block h-12 bg-white" />
-        </div>
-      }>
-        <Navbar />
-      </Suspense>
+      <Navbar />
       <main>
         <ErrorBoundary resetKey={location}>
         <Suspense fallback={<PageLoader />}>
