@@ -124,6 +124,40 @@ async function verifySmoke(dist, issues) {
   }
 }
 
+/** SPA product shells must expose correct canonical (not home) for crawlers */
+async function verifySpaSeoShells(dist, issues) {
+  const probes = [
+    {
+      rel: 'pistas-tarimas/pista-pintada-mano/index.html',
+      mustInclude: ['pista-pintada-mano', 'Pista Pintada Mano'],
+      mustNotInclude: ['rel="canonical" href="https://bodasesor.com/"'],
+    },
+    {
+      rel: 'banquetes/3-tiempos/index.html',
+      mustInclude: ['banquetes/3-tiempos', '3 Tiempos'],
+      mustNotInclude: ['rel="canonical" href="https://bodasesor.com/"'],
+    },
+  ]
+  for (const probe of probes) {
+    const p = join(dist, probe.rel)
+    if (!existsSync(p)) {
+      issues.push(`SPA SEO shell missing: dist/${probe.rel}`)
+      continue
+    }
+    const html = await readFile(p, 'utf8')
+    if (!html.includes('id="root"')) {
+      issues.push(`SPA SEO shell is not SPA: dist/${probe.rel}`)
+      continue
+    }
+    for (const s of probe.mustInclude) {
+      if (!html.includes(s)) issues.push(`SPA SEO shell ${probe.rel} missing: ${s}`)
+    }
+    for (const s of probe.mustNotInclude) {
+      if (html.includes(s)) issues.push(`SPA SEO shell ${probe.rel} still has home meta: ${s}`)
+    }
+  }
+}
+
 function looksLikeCssText(text) {
   const head = String(text || '').trimStart().slice(0, 400)
   if (!head || head.startsWith('<!DOCTYPE') || head.startsWith('<html')) return false
@@ -184,6 +218,7 @@ async function main() {
   }
 
   await verifySmoke(DIST, issues)
+  await verifySpaSeoShells(DIST, issues)
   await verifySeoLandingCss(DIST, issues)
 
   // SPA must still win at root

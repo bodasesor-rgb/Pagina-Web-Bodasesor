@@ -88,7 +88,7 @@ run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
 
 if (existsSync(LIVE) && liveLandingCount() > 0) {
   run('3/4 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
-  run('4a Parchear SEO Nexus (titles ≤60, lazy imgs)', 'node', ['scripts/patch-nexus-seo.mjs'], {
+  run('4a Parchear SEO Nexus (titles ≤60, lazy imgs, gtag)', 'node', ['scripts/patch-nexus-seo.mjs'], {
     optional: true,
   })
   run('4b Verificar Nexus en dist (guard)', 'node', ['scripts/guard-nexus-dist.mjs'])
@@ -100,6 +100,13 @@ if (existsSync(LIVE) && liveLandingCount() > 0) {
 } else {
   console.warn('\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 — continuing without SEO merge (unsafe).')
 }
+
+// SPA product shells with correct title/canonical (after Nexus merge so we skip real landings)
+run(
+  '4c Prerender SPA SEO shells (meta + canonical por producto)',
+  'node',
+  ['scripts/prerender-spa-seo-shells.mjs'],
+)
 
 // Gate A — absolute: fail if SPA OR Nexus landings missing
 run(
