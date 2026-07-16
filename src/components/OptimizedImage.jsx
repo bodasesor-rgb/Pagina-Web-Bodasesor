@@ -8,12 +8,18 @@ export default function OptimizedImage({
   className = '',
   sizes,
   onError,
+  style,
   ...rest
 }) {
   if (!src) return null
 
   const webpSrc = src.replace(/\.(png|jpe?g)$/i, '.webp')
   const useWebp = webpSrc !== src
+
+  const aspectStyle =
+    width && height
+      ? { aspectRatio: `${width} / ${height}`, backgroundColor: '#f5efe8', ...style }
+      : { backgroundColor: '#f5efe8', ...style }
 
   const imgProps = {
     alt,
@@ -23,8 +29,18 @@ export default function OptimizedImage({
     loading: priority ? 'eager' : 'lazy',
     fetchPriority: priority ? 'high' : 'auto',
     className,
-    onError,
+    style: aspectStyle,
     ...rest,
+    onError: (e) => {
+      // If webp sibling 404s, fall back to original raster once.
+      const el = e.currentTarget
+      if (useWebp && el?.dataset?.fallback !== '1' && el.src?.includes('.webp')) {
+        el.dataset.fallback = '1'
+        el.src = src
+        return
+      }
+      onError?.(e)
+    },
   }
 
   if (!useWebp) {

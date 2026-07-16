@@ -63,10 +63,22 @@ function deferNonCriticalPreloadsPlugin() {
     transformIndexHtml: {
       order: 'post',
       handler(html) {
-        return html
+        let out = html
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/icons-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/vendor-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/rolldown-runtime-[^"]+">\n?/g, '')
+
+        // Move main stylesheet before module scripts so first paint isn't unstyled.
+        const cssLink = out.match(/<link\s+rel="stylesheet"[^>]*href="\/assets\/[^"]+\.css"[^>]*>/i)
+        if (cssLink) {
+          out = out.replace(cssLink[0], '')
+          if (/<\/title>/i.test(out)) {
+            out = out.replace(/<\/title>/i, `</title>\n    ${cssLink[0]}`)
+          } else {
+            out = out.replace(/<\/head>/i, `    ${cssLink[0]}\n  </head>`)
+          }
+        }
+        return out
       },
     },
   }

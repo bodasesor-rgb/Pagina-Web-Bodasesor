@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import CityLink from "../components/CityLink";
+import OptimizedImage from "../components/OptimizedImage";
 const Link = CityLink;
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 import { useCity } from "../context/CityContext";
@@ -135,10 +136,12 @@ export default function PistasTarimasPage() {
 
                       {/* Visual header */}
                       <Link href={`/pistas-tarimas/${product.slug}`}>
-                        <div className="h-44 overflow-hidden bg-gray-100">
-                          <img
+                        <div className="h-44 product-media overflow-hidden bg-gray-100">
+                          <OptimizedImage
                             src={product.img}
                             alt={product.name}
+                            width={400}
+                            height={176}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         </div>

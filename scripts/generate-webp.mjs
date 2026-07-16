@@ -11,7 +11,8 @@ import sharp from 'sharp'
 const ROOT = join(fileURLToPath(import.meta.url), '..', '..')
 const IMAGE_ROOT = join(ROOT, 'public', 'images')
 const EXT = new Set(['.png', '.jpg', '.jpeg'])
-const SKIP_DIRS = new Set(['instagram'])
+/** Instagram feed JPGs are gallery LCP-ish; convert them too (were skipped before). */
+const SKIP_DIRS = new Set()
 
 async function walk(dir, files = []) {
   const entries = await readdir(dir, { withFileTypes: true })

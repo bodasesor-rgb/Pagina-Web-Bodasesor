@@ -23,6 +23,7 @@ import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
 import { banquetesNavGroups } from "../data/banquetes-menus";
 
 import { hideStaticLcpShell } from "../utils/static-lcp-shell";
+import { prefetchProducts } from "../data/products-loader";
 
 const SearchBar = lazy(() => import("./SearchBar"));
 
@@ -974,6 +975,12 @@ export default function Navbar() {
     document.getElementById('static-nav-shell')?.remove()
   }, [])
 
+  useEffect(() => {
+    // Warm products chunk so catalog/detail pages show items without a blank flash
+    const t = setTimeout(() => prefetchProducts(), 400)
+    return () => clearTimeout(t)
+  }, [])
+
   const selectCity = (citySlug) => {
     if (!CITY_MAP[citySlug]) return;
     setLocation(withCityPath(stripCityFromPath(location), citySlug));
@@ -990,7 +997,11 @@ export default function Navbar() {
   }, [location]);
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <nav
+      className="bg-white shadow-lg sticky top-0 z-50"
+      onMouseEnter={() => prefetchProducts()}
+      onFocusCapture={() => prefetchProducts()}
+    >
 
       {/* ── Top bar (dark navy) ── */}
       <div className="bg-[#162040] text-white">

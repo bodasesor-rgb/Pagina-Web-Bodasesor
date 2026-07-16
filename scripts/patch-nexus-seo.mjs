@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 /**
  * Patch Nexus/SEO static HTML in dist/ after merge:
+ * - Force /css/seo-landing.css to load render-blocking (kills ~1s FOUC)
  * - Shorten <title> and og:title to ≤60 chars
  * - Add loading="lazy" to non-hero <img> missing it
  * - Add width/height to <img> when src maps to known hero dimensions
+ * - Prefer .webp on <img src> when a sibling .webp exists in dist/
  */
 import { readFile, writeFile, readdir, stat } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
@@ -70,13 +72,80 @@ function ensureGtag(html) {
   }
 }
 
+/**
+ * Async CSS (loadCSS + preload onload) leaves FAQ/trust/spec unstyled for ~1s.
+ * Replace with a single render-blocking stylesheet link.
+ */
+function forceBlockingSeoCss(html) {
+  if (!html.includes('seo-landing.css')) return { html, changed: false }
+
+  let out = html
+  let changed = false
+
+  const beforeLoadCss = out
+  out = out.replace(
+    /<script>\s*!function\(e\)\{"use strict";[\s\S]*?loadCSS[\s\S]*?<\/script>\s*/gi,
+    '',
+  )
+  if (out !== beforeLoadCss) changed = true
+
+  const beforeLinks = out
+  out = out.replace(/<noscript>\s*<link\b[^>]*seo-landing\.css[^>]*>\s*<\/noscript>\s*/gi, '')
+  out = out.replace(/<link\b[^>]*seo-landing\.css[^>]*>\s*/gi, '')
+  if (out !== beforeLinks) changed = true
+
+  const blocking = '<link rel="stylesheet" href="/css/seo-landing.css">'
+  if (!out.includes(blocking)) {
+    if (/<\/style>/i.test(out)) {
+      out = out.replace(/<\/style>/i, `</style>\n  ${blocking}`)
+      changed = true
+    } else if (/<\/head>/i.test(out)) {
+      out = out.replace(/<\/head>/i, `  ${blocking}\n</head>`)
+      changed = true
+    }
+  }
+
+  return { html: out, changed }
+}
+
+/** Rewrite local png/jpg src to webp only when the sibling file exists in dist/. */
+function preferWebpSrc(html) {
+  let changed = false
+  const out = html.replace(
+    /(<img\b[^>]*\bsrc=["'])([^"']+\.(?:png|jpe?g))(["'][^>]*>)/gi,
+    (match, pre, src, post) => {
+      let pathname = src
+      try {
+        if (src.startsWith('http')) pathname = new URL(src).pathname
+      } catch {
+        return match
+      }
+      if (!pathname.startsWith('/')) return match
+      const webpPath = pathname.replace(/\.(png|jpe?g)$/i, '.webp')
+      if (!existsSync(join(DIST, webpPath.replace(/^\//, '')))) return match
+      changed = true
+      const nextSrc = src.replace(/\.(png|jpe?g)$/i, '.webp')
+      return `${pre}${nextSrc}${post}`
+    },
+  )
+  return { html: out, changed }
+}
+
 function patchHtml(html) {
   let changed = false
   let out = html
 
+  const css = forceBlockingSeoCss(out)
+  out = css.html
+  if (css.changed) changed = true
+
   const ga = ensureGtag(out)
   out = ga.html
   if (ga.changed) changed = true
+
+  const webp = preferWebpSrc(out)
+  out = webp.html
+  if (webp.changed) changed = true
 
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {
     const next = shortenTitle(inner)
@@ -99,10 +168,24 @@ function patchHtml(html) {
   let imgIndex = 0
   out = out.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
     imgIndex++
-    if (imgIndex === 1) return match
-    if (/\bloading\s*=/.test(attrs)) return match
-    changed = true
-    return `<img loading="lazy"${attrs}>`
+    if (imgIndex === 1) {
+      if (!/\bdecoding\s*=/.test(attrs)) {
+        changed = true
+        return `<img decoding="async"${attrs}>`
+      }
+      return match
+    }
+    let next = attrs
+    if (!/\bloading\s*=/.test(next)) {
+      next = ` loading="lazy"${next}`
+      changed = true
+    }
+    if (!/\bdecoding\s*=/.test(next)) {
+      next = ` decoding="async"${next}`
+      changed = true
+    }
+    if (next === attrs) return match
+    return `<img${next}>`
   })
 
   // Add dimensions when missing on images that already declare one dimension

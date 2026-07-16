@@ -5,8 +5,27 @@
 @import "tw-animate-css";
 
 @utility cv-auto {
+  /* Larger estimate reduces section jumps when product grids paint in */
   content-visibility: auto;
-  contain-intrinsic-size: auto 500px;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* Prefer swap but keep metrics closer to webfonts to cut CLS */
+@font-face {
+  font-family: 'Lato Fallback';
+  src: local('Arial');
+  size-adjust: 97%;
+  ascent-override: 95%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Playfair Fallback';
+  src: local('Georgia');
+  size-adjust: 105%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -91,11 +110,21 @@
   * { @apply border-border; }
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    font-family: 'Lato', Georgia, 'Times New Roman', serif;
+    font-family: 'Lato', 'Lato Fallback', Georgia, 'Times New Roman', serif;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
-    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-family: 'Playfair Display', 'Playfair Fallback', Georgia, 'Times New Roman', serif;
+  }
+  /* Product / catalog media: reserve space + cream placeholder while bytes arrive */
+  .product-media {
+    background-color: #f5efe8;
+    overflow: hidden;
+  }
+  .product-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 

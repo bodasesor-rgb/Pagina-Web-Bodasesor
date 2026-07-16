@@ -105,7 +105,14 @@ export default function BanquetesCateringPage() {
           <div className="hidden lg:grid grid-cols-2 gap-3 h-64">
             {["/images/banquete-hero.png", "/images/banquete-mexicano-hero.png", "/images/instagram/ig1.jpg", "/images/instagram/ig18.jpg"].map((src, i) => (
               <div key={i} className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src={src} alt="" className="w-full h-full object-cover opacity-80" />
+                <OptimizedImage
+                  src={src}
+                  alt=""
+                  width={300}
+                  height={128}
+                  priority={i < 2}
+                  className="w-full h-full object-cover opacity-80"
+                />
               </div>
             ))}
           </div>
