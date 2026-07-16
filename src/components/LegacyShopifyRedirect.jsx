@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useBrowserLocation } from 'wouter/use-browser-location'
 import { resolveLegacyPathClient } from '../utils/legacy-redirect'
 
@@ -7,79 +7,47 @@ function normalizePath(path) {
   return decoded.replace(/\/+$/, '') || '/'
 }
 
+function toAbsolute(dest) {
+  if (!dest) return `${window.location.origin}/banquetes-catering`
+  if (dest.startsWith('http')) return dest
+  return `${window.location.origin}${dest.startsWith('/') ? dest : `/${dest}`}`
+}
+
 /**
  * Client-side redirect for legacy Shopify URLs.
- * Runs instantly via resolver logic; full map is fallback only.
+ * Always resolves immediately — never hangs on "Redirigiendo…".
  */
 export default function LegacyShopifyRedirect() {
   const [path] = useBrowserLocation()
-  const [status, setStatus] = useState('loading')
+  const lookup = normalizePath(path)
+  const resolved = useMemo(
+    () =>
+      resolveLegacyPathClient(
+        `${lookup}${typeof window !== 'undefined' ? window.location.search : ''}`,
+      ) || '/banquetes-catering',
+    [lookup],
+  )
 
   useEffect(() => {
-    let cancelled = false
-    const lookup = normalizePath(path)
-    const resolved = resolveLegacyPathClient(`${lookup}${window.location.search}`)
+    const target = toAbsolute(resolved)
+    window.location.replace(target)
 
-    if (resolved) {
-      window.location.replace(resolved)
-      return
-    }
+    // Hard fallback if navigation is blocked / soft-hangs
+    const t = setTimeout(() => {
+      if (window.location.pathname.replace(/\/+$/, '') === lookup) {
+        window.location.href = target
+      }
+    }, 1800)
 
-    const withSlash = `${lookup}/`
-    fetch('/redirects-map.json', { credentials: 'same-origin' })
-      .then((res) => {
-        if (!res.ok) throw new Error(`redirects-map ${res.status}`)
-        return res.json()
-      })
-      .then((data) => {
-        if (cancelled) return
-        const entries = data?.entries ?? data
-        const dest =
-          entries[lookup] ||
-          entries[withSlash] ||
-          entries[`${lookup}${window.location.search}`]
+    return () => clearTimeout(t)
+  }, [lookup, resolved])
 
-        if (dest) {
-          window.location.replace(
-            dest.startsWith('http')
-              ? dest
-              : `${window.location.origin}${dest.startsWith('/') ? dest : `/${dest}`}`,
-          )
-          return
-        }
-
-        const fallback = resolveLegacyPathClient(`${lookup}${window.location.search}`)
-        if (fallback) {
-          window.location.replace(
-            `${window.location.origin}${fallback.startsWith('/') ? fallback : `/${fallback}`}`,
-          )
-          return
-        }
-
-        setStatus('missing')
-      })
-      .catch(() => {
-        if (!cancelled) setStatus('error')
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [path])
-
-  useEffect(() => {
-    if (status === 'missing' || status === 'error') {
-      window.location.replace('/banquetes-catering')
-    }
-  }, [status])
-
-  if (status === 'loading' || status === 'missing' || status === 'error') {
-    return (
-      <div className="min-h-[50vh] flex items-center justify-center font-serif text-[#162040]">
-        Redirigiendo…
-      </div>
-    )
-  }
-
-  return null
+  return (
+    <div className="min-h-[50vh] flex flex-col items-center justify-center gap-3 font-serif text-[#162040] px-4 text-center">
+      <p>Redirigiendo…</p>
+      <a href={resolved} className="text-sm underline text-[#162040]/80">
+        Continuar a {resolved}
+      </a>
+    </div>
+  )
 }

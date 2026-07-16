@@ -131,20 +131,54 @@ export function resolveBasePath(basePath) {
   return { kind: 'service', slug: segs[segs.length - 1] }
 }
 
+const KNOWN_ONE_SEGMENT = new Set([
+  ...Object.keys(SERVICE_SLUG_ALIASES),
+  ...[...STANDALONE_PATHS].map((p) => p.replace(/^\//, '')),
+  'bodas',
+  'xv-anos',
+  'graduaciones',
+  'baby-shower',
+  'primera-comunion',
+  'cumpleanos',
+  'corporativos',
+  'inflables',
+  'cenas',
+  'mesas-sillas',
+  'banquetes-catering',
+])
+
+function isKnownServicePath(pathname) {
+  const base = pathname.replace(/\/+$/, '') || '/'
+  if (base === '/') return true
+  if (STANDALONE_PATHS.has(base)) return true
+  const segs = base.split('/').filter(Boolean)
+  if (segs.length === 1) return KNOWN_ONE_SEGMENT.has(segs[0])
+  if (segs.length >= 2 && DETAIL_CATALOGS.has(segs[0])) return true
+  if (segs.length >= 2 && BANQUET_PARENT_SLUGS.has(segs[0])) return true
+  return false
+}
+
 /** Resolve /eventos/{slug} Nexus legacy paths like bodas-cdmx */
 export function resolveEventosSlug(slug, citySlugs) {
   if (!slug) return '/banquetes-catering'
 
-  for (const citySlug of citySlugs) {
+  const cities = [...citySlugs].sort((a, b) => b.length - a.length)
+
+  for (const citySlug of cities) {
     if (slug.endsWith(`-${citySlug}`) && slug.length > citySlug.length + 1) {
       const service = slug.slice(0, -(citySlug.length + 1))
       const base = SERVICE_SLUG_ALIASES[service] || `/${service}`
-      return `${base}/${citySlug}`.replace(/\/+/g, '/')
+      const target = `${base}/${citySlug}`.replace(/\/+/g, '/')
+      // Unknown vendor/service slugs → hub, not a dead /{random}/city page
+      if (!isKnownServicePath(base)) return '/banquetes-catering'
+      return target
     }
   }
 
   const aliased = SERVICE_SLUG_ALIASES[slug]
   if (aliased) return aliased
 
-  return `/${slug}`.replace(/\/+/g, '/')
+  const fallback = `/${slug}`.replace(/\/+/g, '/')
+  if (!isKnownServicePath(fallback)) return '/banquetes-catering'
+  return fallback
 }
