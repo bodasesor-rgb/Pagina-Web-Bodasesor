@@ -761,6 +761,24 @@ export const blogPosts = [
       readTime: "5 min"
     },
     {
+      slug: "tipos-de-banquetes",
+      title: "Tipos de Banquetes: Guía para Elegir el Servicio Ideal",
+      date: "2026-02-02",
+      category: "Banquetes",
+      image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80",
+      excerpt: "Conoce los principales tipos de banquetes y catering para bodas, XV años y eventos corporativos en México.",
+      body: [
+        "Elegir entre los distintos <strong>tipos de banquetes</strong> es una de las decisiones que más impactan la experiencia de tus invitados. En México, las opciones más solicitadas van desde el banquete formal por tiempos hasta estaciones en vivo, buffet y catering gourmet.",
+        "El <strong>banquete por tiempos</strong> (2, 3 o 4 tiempos) es ideal para bodas y celebraciones formales: entrada, plato fuerte y postre se sirven en mesa con meseros. Ofrece protocolo, presentación cuidada y un ritmo elegante durante la cena.",
+        "El <strong>buffet</strong> funciona muy bien en eventos numerosos o con horarios flexibles. Los invitados eligen entre varias estaciones y el flujo es más dinámico. En Bodasesor lo combinamos con personal de apoyo para mantener calidad y presentación.",
+        "Las <strong>estaciones de comida</strong> —parrillada, taquiza, pasta, sushi o crepas— aportan espectáculo y personalización. Son perfectas como complemento de un banquete o como propuesta principal en eventos más informales.",
+        "El <strong>catering corporativo</strong> (coffee break, box lunch, comidas de trabajo) prioriza puntualidad, logística y menús prácticos sin sacrificar sabor. Es el formato más usado en oficinas, lanzamientos y convenciones.",
+        "Para bodas y XV años también destacan el <strong>banquete mexicano</strong>, el <strong>banquete kosher</strong> y los menús de temporada. La clave es alinear tipo de servicio, número de invitados, espacio y presupuesto.",
+        "En Bodasesor te ayudamos a comparar formatos y armar una propuesta clara. Cotiza por WhatsApp y recibe una recomendación de <strong>tipo de banquete</strong> adaptada a tu evento en Ciudad de México y todo el país."
+      ],
+      readTime: "6 min"
+    },
+    {
       slug: "banquetes-para-eventos-2024",
       title: "Banquetes para Eventos: Todo lo que Necesitas Saber",
       date: "2026-01-08",

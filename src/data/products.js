@@ -3713,6 +3713,46 @@ const PRODUCTS = [
       ]
     },
     {
+      slug: "parrillada",
+      title: "Parrillada para Eventos",
+      headline: "Asado en vivo: mexicana tradicional o argentina premium",
+      seoTitle: "Parrillada para Eventos y Bodas en México | Bodasesor",
+      seoDescription: "Servicio de parrillada para bodas y eventos en México. Elige parrillada tradicional mexicana o argentina con asador profesional, cortes premium y montaje completo.",
+      description: [
+        "La parrillada es una de las estaciones más pedidas en bodas, XV años y eventos corporativos. En Bodasesor ofrecemos dos estilos listos para montar: la parrillada tradicional mexicana y la parrillada argentina, ambas con asador profesional y servicio completo.",
+        "Puedes combinar cortes, guarniciones y estación en vivo según el número de invitados y el tipo de celebración. Incluimos equipo de parrilla, mise en place, montaje y retiro para que solo te preocupes por disfrutar.",
+        "Cotiza sin compromiso y te recomendamos la mejor opción —tradicional o argentina— según tu menú, espacio y presupuesto."
+      ],
+      category: "estaciones",
+      categoryLabel: "Estaciones de Comida",
+      categoryHref: "/parrillada",
+      related: [
+        { name: "Parrillada Tradicional", href: "/parrillada-tradicional" },
+        { name: "Parrillada Argentina", href: "/parrillada-argentina" },
+        { name: "Taquiza de Guisados", href: "/taquiza-guisados" },
+        { name: "Puestos de Antojitos", href: "/puestos-antojitos" },
+        { name: "Barra de Bebidas", href: "/barras-de-bebidas" },
+        { name: "Banquetes y Catering", href: "/banquetes-catering" }
+      ],
+      included: [
+        { icon: "🥩", title: "Dos estilos de parrillada", desc: "Tradicional mexicana o argentina premium, con cortes seleccionados." },
+        { icon: "🔥", title: "Asador profesional", desc: "Cocción en vivo con técnica y punto exacto para cada corte." },
+        { icon: "🍽️", title: "Servicio completo", desc: "Equipo, montaje, personal y retiro incluidos en la cotización." },
+        { icon: "📋", title: "Menú a medida", desc: "Adaptamos porciones y acompañamientos al número de invitados." }
+      ],
+      faqs: [
+        { q: "¿Qué tipos de parrillada ofrecen?", a: "Parrillada tradicional mexicana y parrillada argentina. Ambas con asador profesional." },
+        { q: "¿Cuál me conviene para mi evento?", a: "La mexicana es ideal para reuniones familiares y corporativos; la argentina destaca en bodas y eventos de mayor producción. Te asesoramos al cotizar." },
+        { q: "¿Incluye montaje?", a: "Sí: equipo de parrilla, mise en place, personal y retiro al finalizar." }
+      ],
+      services: [
+        { name: "Parrillada Tradicional", href: "/parrillada-tradicional", icon: "🌮" },
+        { name: "Parrillada Argentina", href: "/parrillada-argentina", icon: "🥩" },
+        { name: "Taquiza de Guisados", href: "/taquiza-guisados", icon: "🌮" },
+        { name: "Banquetes", href: "/banquetes-catering", icon: "🍽️" }
+      ]
+    },
+    {
       slug: "parrillada-argentina",
       title: "Parrillada Argentina para Eventos",
       headline: "Los mejores cortes del sur del continente en tu celebración",

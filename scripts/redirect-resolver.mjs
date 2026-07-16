@@ -73,6 +73,7 @@ const KEYWORD_RULES = [
   [/mixolog|cocteles?-mix|bartender/i, '/cocteles-mixologia'],
   [/paletas?(-helad|-para|-de)?/i, '/paletas-helados'],
   [/taquizas?|tacos?-de-guisado|tacos?-guisado|\btacos?\b/i, '/taquiza-guisados'],
+  [/parrillada-argentina|banquete-parrillada-argentina/i, '/parrillada-argentina'],
   [/tacos?-parrill|parrillada/i, '/parrillada'],
   [/paninis?/i, '/barra-paninis'],
   [/sushi/i, '/barra-sushi'],
@@ -139,6 +140,9 @@ const PRODUCT_ALIASES = {
   'taquiza': '/taquiza-guisados',
   'tacos-de-guisado': '/taquiza-guisados',
   'tacos-parrillada': '/parrillada',
+  parrillada: '/parrillada',
+  'banquete-parrillada': '/parrillada',
+  'banquete-parrillada-argentina': '/parrillada-argentina',
   'sala-luxor': '/salas/sala-luxor-negro',
   'sala-led': '/salas-periqueras',
   'menu-por-tiempos': '/banquetes/3-tiempos',
@@ -148,6 +152,7 @@ const PRODUCT_ALIASES = {
   'silla-phoenix': '/mesas-sillas',
   'silla-tiffany': '/sillas/tiffany',
   'periquera-parota': '/periqueras/periquera-parota-nogal',
+  'tipos-de-banquetes': '/blog/tipos-de-banquetes',
 }
 
 const SEO_TRAILING = [
@@ -280,7 +285,8 @@ function withCity(pathname, city) {
   if (!city) return pathname
   const normalized = normalizeCity(city)
   const base = pathname.replace(/\/+$/, '') || '/'
-  if (base === '/') return `/${normalized}`
+  // Never emit bare /{city} from home — that soft-404s for crawlers/users.
+  if (base === '/') return '/'
   if (base.startsWith('/buscar')) return base
   if (NO_CITY_PATHS.has(base)) return base
   return `${base}/${normalized}`.replace(/\/+/g, '/')
@@ -300,7 +306,10 @@ function matchCollectionBase(base) {
   return null
 }
 
-/** Prefer the longest meaningful catalog slug match. */
+/**
+ * Prefer longest meaningful catalog match.
+ * Avoid short substring traps (e.g. "rustica" inside mesa-rustica → /barras/rustica).
+ */
 function bestCatalogMatch(base) {
   if (!base || base.length < 4) return null
   let best = null
@@ -310,16 +319,17 @@ function bestCatalogMatch(base) {
     if (base === catSlug) return catPath
 
     let score = 0
-    if (base.includes(catSlug) && catSlug.length >= 6) {
+    if (base.startsWith(`${catSlug}-`) || catSlug.startsWith(`${base}-`)) {
+      score = Math.max(base.length, catSlug.length) + 40
+    } else if (base.includes(catSlug) && catSlug.length >= 12) {
       score = catSlug.length + 20
-    } else if (catSlug.includes(base) && base.length >= 6) {
+    } else if (catSlug.includes(base) && base.length >= 10) {
       score = base.length + 10
     } else {
-      // token overlap (sala-luxor vs sala-luxor-negro)
       const a = new Set(base.split('-').filter((t) => t.length > 2))
       const b = catSlug.split('-').filter((t) => t.length > 2)
       const overlap = b.filter((t) => a.has(t)).length
-      if (overlap >= 2 && overlap / b.length >= 0.5) {
+      if (overlap >= 2 && overlap / b.length >= 0.6) {
         score = overlap * 5 + Math.min(base.length, catSlug.length)
       }
     }
@@ -330,7 +340,37 @@ function bestCatalogMatch(base) {
     }
   }
 
-  return bestScore >= 10 ? best : null
+  return bestScore >= 18 ? best : null
+}
+
+/** Map Shopify mesa/silla/barra handles to SPA detail routes. */
+function resolveMobiliarioPath(base) {
+  if (!base) return null
+
+  // Combination listings → hub (not a random barra/silla)
+  if (base.startsWith('mesa-') && base.includes('silla-')) {
+    return '/mesas-sillas'
+  }
+
+  const prefixes = [
+    ['silla-', '/sillas/'],
+    ['mesa-', '/mesas/'],
+    ['barra-', '/barras/'],
+  ]
+
+  for (const [prefix, pathPrefix] of prefixes) {
+    if (!base.startsWith(prefix)) continue
+    const candidates = [...productSlugs]
+      .filter((s) => s.startsWith(prefix))
+      .sort((a, b) => b.length - a.length)
+    for (const slug of candidates) {
+      if (base === slug || base.startsWith(`${slug}-`)) {
+        return `${pathPrefix}${slug.slice(prefix.length)}`
+      }
+    }
+  }
+
+  return null
 }
 
 function resolveProductSlug(slug) {
@@ -342,6 +382,9 @@ function resolveProductSlug(slug) {
 
   if (productSlugs.has(base)) return withCity(`/${base}`, city)
   if (catalogPaths.has(base)) return withCity(catalogPaths.get(base), city)
+
+  const mobiliario = resolveMobiliarioPath(base)
+  if (mobiliario) return withCity(mobiliario, city)
 
   const catalogHit = bestCatalogMatch(base)
   if (catalogHit) return withCity(catalogHit, city)
@@ -368,6 +411,9 @@ export function resolveLegacyPath(fromPath) {
     if (slug.includes('estrategias-y-consejos')) {
       slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
     }
+    if (slug.includes('tipos-de-banquetes')) {
+      slug = 'tipos-de-banquetes'
+    }
     return `/blog/${slug}`
   }
 
@@ -388,6 +434,9 @@ export function resolveLegacyPath(fromPath) {
 
     const mapped = matchCollectionBase(base)
     if (mapped) return withCity(mapped, city)
+
+    const mobiliario = resolveMobiliarioPath(base)
+    if (mobiliario) return withCity(mobiliario, city)
 
     const catalogHit = bestCatalogMatch(base)
     if (catalogHit) return withCity(catalogHit, city)
