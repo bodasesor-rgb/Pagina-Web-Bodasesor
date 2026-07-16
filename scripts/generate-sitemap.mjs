@@ -5,6 +5,7 @@
  */
 import fs from 'fs'
 import path from 'path'
+import { collectSpaSeoPaths } from './collect-spa-seo-entries.mjs'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
 const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
@@ -47,7 +48,8 @@ function priorityFor(path) {
   }
   if (STANDALONE.includes(path) || EVENT_TYPES.includes(path)) return '0.8'
   if (CITIES.some((c) => path === `/${c}`)) return '0.75'
-  return '0.6'
+  if (path.split('/').filter(Boolean).length >= 2) return '0.7'
+  return '0.65'
 }
 
 function collectPaths() {
@@ -76,6 +78,9 @@ function collectPaths() {
       paths.add(pathname.replace(/\/+$/, '') || '/')
     }
   }
+
+  // All SPA product/detail + hub URLs (same inventory as prerender shells)
+  for (const p of collectSpaSeoPaths()) paths.add(p)
 
   return [...paths].sort()
 }
