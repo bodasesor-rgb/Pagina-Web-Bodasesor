@@ -1,5 +1,6 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import IconFromEmoji from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { FLORERIA, FloreriaSlug, FLORERIA_BY_CATEGORY } from "../data/floreria-products";
 
@@ -55,7 +56,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
             </nav>
 
             <span className="bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full mb-4 inline-flex items-center gap-1.5">
-              <span>{categoryIcon}</span> {product.categoryLabel}
+              <IconFromEmoji emoji={categoryIcon} className="w-3.5 h-3.5" /> {product.categoryLabel}
             </span>
 
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight mb-2 mt-3">
@@ -93,7 +94,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
               {product.img ? (
                 <img src={product.img} alt={product.name} className="w-full h-full object-contain" />
               ) : (
-                <span className="text-white/10 font-serif text-8xl">{categoryIcon}</span>
+                <IconFromEmoji emoji={categoryIcon} className="w-16 h-16 text-white/10" />
               )}
             </div>
           </div>
@@ -173,9 +174,10 @@ export default function FloreriaDetailPage({ slug }: Props) {
                     {p.img ? (
                       <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     ) : (
-                      <span className="text-[#162040]/20 font-serif text-4xl">
-                        {p.category === 'floral' ? '✿' : p.category === 'globos' ? '○' : '✦'}
-                      </span>
+                      <IconFromEmoji
+                        emoji={p.category === 'floral' ? '✿' : p.category === 'globos' ? '○' : '✦'}
+                        className="w-10 h-10 text-[#162040]/20"
+                      />
                     )}
                   </div>
                   <div className="p-4">

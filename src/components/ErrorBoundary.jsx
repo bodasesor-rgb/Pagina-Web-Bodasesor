@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import IconFromEmoji from './IconFromEmoji'
 import { WHATSAPP } from '../data/site'
 
 export class ErrorBoundary extends Component {
@@ -27,7 +28,9 @@ export class ErrorBoundary extends Component {
       return (
         <div className="min-h-[60vh] flex items-center justify-center px-4 bg-[#f5efe8]">
           <div className="text-center max-w-md">
-            <div className="text-5xl mb-4">🔧</div>
+            <div className="flex justify-center mb-4">
+              <IconFromEmoji emoji="🔧" className="w-12 h-12 text-[#162040]/40" />
+            </div>
             <h1 className="font-serif text-2xl font-bold text-[#162040] mb-3">
               Esta página está en preparación
             </h1>

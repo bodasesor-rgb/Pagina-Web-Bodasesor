@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import OptimizedImage from "../components/OptimizedImage";
+import IconFromEmoji from "../components/IconFromEmoji";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar una barra de bebidas para mi evento. ¿Me pueden dar información?");
@@ -120,7 +121,7 @@ export default function BarrasBebidasPage() {
             {ITEMS.map(item => (
               <a key={item.href} href={`#${item.href.slice(1)}`}
                 className="flex items-center gap-2 bg-[#f5efe8] border border-[#162040]/10 rounded-full px-4 py-2 font-serif text-sm text-[#162040] hover:border-[#162040]/30 hover:shadow-sm transition-all">
-                <span>{item.icon}</span>
+                <IconFromEmoji emoji={item.icon} className="w-5 h-5 inline-block" />
                 <span>{item.name}</span>
               </a>
             ))}
@@ -172,7 +173,7 @@ function BebidaCard({ name, href, tag, icon, img, city, priority = false }: {
           <OptimizedImage src={img} alt="" width={400} height={208} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-          <span className="absolute bottom-3 left-3 text-3xl">{icon}</span>
+          <IconFromEmoji emoji={icon} className="absolute bottom-3 left-3 w-8 h-8 text-white" />
         </div>
       </Link>
       <div className="p-5 flex-1 flex flex-col">

@@ -3,6 +3,7 @@ const Link = CityLink;
 import { FLORERIA, FLORERIA_BY_CATEGORY } from "../data/floreria-products";
 import type { FloreriaProduct } from "../data/floreria-products";
 import { useCity } from "../context/CityContext";
+import IconFromEmoji from "../components/IconFromEmoji";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar decoración floral o decoración para mi evento. ¿Me pueden dar información?");
@@ -48,7 +49,7 @@ export default function FloreriaPage() {
                 {p.img ? (
                   <img src={p.img} alt={p.name} className="w-full h-full object-cover opacity-80" />
                 ) : (
-                  <span className="text-white/20 font-serif text-4xl">{categoryConfig[p.category].icon}</span>
+                  <IconFromEmoji emoji={categoryConfig[p.category].icon} className="w-12 h-12 text-white/20" />
                 )}
               </div>
             ))}
@@ -91,7 +92,7 @@ export default function FloreriaPage() {
             {(Object.entries(categoryConfig) as [keyof typeof categoryConfig, typeof categoryConfig[keyof typeof categoryConfig]][]).map(([key, cfg]) => (
               <a key={key} href={`#${key}`}
                 className="bg-[#f5efe8] rounded-2xl p-5 hover:shadow-md transition-all border border-[#162040]/5 hover:border-[#162040]/20">
-                <p className="font-serif text-2xl text-[#162040]/30 mb-2">{cfg.icon}</p>
+                <IconFromEmoji emoji={cfg.icon} className="w-8 h-8 text-[#162040]/30 mb-2" />
                 <p className="font-serif font-bold text-[#162040] mb-1">{cfg.label}</p>
                 <p className="font-serif text-xs text-gray-600">{cfg.desc}</p>
                 <p className="font-serif text-xs text-[#162040]/75 mt-2 font-semibold">
@@ -107,7 +108,7 @@ export default function FloreriaPage() {
       <section id="floral" className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">✿</span>
+            <IconFromEmoji emoji={categoryConfig.floral.icon} className="w-8 h-8 text-[#162040]/30" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Floral</h2>
@@ -123,7 +124,7 @@ export default function FloreriaPage() {
       <section id="globos" className="py-12 px-4 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">○</span>
+            <IconFromEmoji emoji={categoryConfig.globos.icon} className="w-8 h-8 text-[#162040]/30" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Globos</h2>
@@ -139,7 +140,7 @@ export default function FloreriaPage() {
       <section id="decoracion" className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <span className="text-2xl text-[#162040]/30 font-serif">✦</span>
+            <IconFromEmoji emoji={categoryConfig.decoracion.icon} className="w-8 h-8 text-[#162040]/30" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">Categoría</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Decoración</h2>
@@ -179,9 +180,10 @@ function ProductCard({ product }: { product: FloreriaProduct }) {
           {product.img ? (
             <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           ) : (
-            <span className="text-[#162040]/20 font-serif text-5xl">
-              {product.category === 'floral' ? '✿' : product.category === 'globos' ? '○' : '✦'}
-            </span>
+            <IconFromEmoji
+              emoji={categoryConfig[product.category].icon}
+              className="w-16 h-16 text-[#162040]/20"
+            />
           )}
         </div>
       </Link>

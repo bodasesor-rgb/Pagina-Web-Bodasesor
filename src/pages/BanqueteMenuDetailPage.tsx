@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import IconFromEmoji, { BulletCheck } from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import {
   getBanquetMenu,
@@ -155,7 +156,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
           <div className="grid sm:grid-cols-2 gap-4">
             {menu.included.map((item, i) => (
               <div key={i} className="flex items-start gap-3 p-4 bg-[#f5efe8]/50 rounded-xl border border-[#162040]/10">
-                <span className="text-[#162040]/75 font-serif mt-0.5">◎</span>
+                <BulletCheck className="text-[#162040]/75 mt-0.5 flex-shrink-0" />
                 <p className="font-serif text-gray-600 text-sm">{item}</p>
               </div>
             ))}
@@ -185,7 +186,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                 <ul className="space-y-2">
                   {tier.items.map((item, j) => (
                     <li key={j} className="flex items-start gap-2 text-sm font-serif text-gray-600">
-                      <span className="text-[#162040]/75 mt-0.5">✓</span>{item}
+                      <BulletCheck className="text-[#162040]/75 mt-0.5 flex-shrink-0" />{item}
                     </li>
                   ))}
                 </ul>
@@ -211,8 +212,14 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                     ? "bg-[#162040] text-white border-[#162040]"
                     : "bg-white border-[#162040]/10 hover:border-[#162040]/30 hover:shadow-md"
                 }`}>
-                <div className={`text-2xl mb-2 ${s.slug === menu.slug ? "text-white" : "text-[#162040]"}`}>
-                  {s.slug === "buffet" ? "🍽️" : s.slug === "4-tiempos" ? "4️⃣" : s.slug === "3-tiempos" ? "3️⃣" : "2️⃣"}
+                <div className={`mb-2 flex items-center justify-center ${s.slug === menu.slug ? "text-white" : "text-[#162040]"}`}>
+                  {s.slug === "buffet" ? (
+                    <IconFromEmoji emoji="🍽️" className="w-7 h-7" />
+                  ) : (
+                    <span className="text-xl font-serif font-bold">
+                      {s.slug === "4-tiempos" ? "4T" : s.slug === "3-tiempos" ? "3T" : "2T"}
+                    </span>
+                  )}
                 </div>
                 <p className={`font-serif font-bold text-sm ${s.slug === menu.slug ? "text-white" : "text-[#162040]"}`}>
                   {s.label}

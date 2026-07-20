@@ -2,6 +2,7 @@ import { useRoute } from "wouter";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { ChevronRight, MessageCircle } from "lucide-react";
+import IconFromEmoji from "../components/IconFromEmoji";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { findSectionBySlug } from "../data/navigation";
 import NotFound from "./not-found";
@@ -98,8 +99,9 @@ export default function CategoryPage() {
         <div className="absolute inset-0 bg-primary/65" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-white">
           <div className="gold-divider w-12 mb-4" />
-          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-2" data-testid="category-title">
-            {section.icon} {section.name}
+          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-2 flex items-center gap-3" data-testid="category-title">
+            <IconFromEmoji emoji={section.icon} className="w-10 h-10 md:w-12 md:h-12 text-white flex-shrink-0" />
+            {section.name}
           </h1>
           <p className="text-white/80 text-sm max-w-xl">{description}</p>
           <p className="text-white/60 text-xs mt-2">{totalProducts} servicios disponibles · Ciudad de México</p>

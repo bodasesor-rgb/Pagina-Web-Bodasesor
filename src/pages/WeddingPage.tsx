@@ -1,5 +1,6 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import IconFromEmoji, { PlaceholderIcon } from "../components/IconFromEmoji";
 import { WEDDING } from "../data/wedding-products";
 import type { WeddingProduct } from "../data/wedding-products";
 import { useCity } from "../context/CityContext";
@@ -44,7 +45,7 @@ export default function WeddingPage() {
       <section className="py-14 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-10">
-            <span className="text-2xl text-[#162040]/30 font-serif">◈</span>
+            <IconFromEmoji emoji="◈" className="w-6 h-6 text-[#162040]/30" />
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">Servicios</p>
               <h2 className="text-2xl font-serif font-bold text-[#162040]">Nuestros Servicios de Wedding Planner</h2>
@@ -81,7 +82,7 @@ function WeddingCard({ product }: { product: WeddingProduct }) {
           {product.img ? (
             <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-5xl">◈</div>
+            <div className="w-full h-full flex items-center justify-center"><PlaceholderIcon symbol="◈" className="w-12 h-12 text-[#162040]/20" /></div>
           )}
         </div>
       </Link>

@@ -3,6 +3,7 @@ import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
 import OptimizedImage from "../components/OptimizedImage";
 const Link = CityLink;
+import IconFromEmoji from "../components/IconFromEmoji";
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -71,8 +72,8 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
               <span className="text-white/80">{product.catLabel}</span>
             </nav>
 
-            <div className="inline-block bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full mb-4">
-              {CAT_ICONS[product.cat]} {product.catLabel}
+            <div className="inline-flex items-center gap-1.5 bg-white/10 text-white/70 text-xs font-serif px-3 py-1 rounded-full mb-4">
+              <IconFromEmoji emoji={CAT_ICONS[product.cat]} className="w-3.5 h-3.5" /> {product.catLabel}
             </div>
 
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight mb-4">

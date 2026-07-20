@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { ENTELADOS } from "../data/entelados-products";
 import { useCity } from "../context/CityContext";
+import IconFromEmoji from "../components/IconFromEmoji";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un entelado para techo para mi evento. ¿Me pueden dar información?");
@@ -78,7 +79,7 @@ export default function EnteladosPage() {
               { icon: '✦', title: 'Cotizado por metro cuadrado', desc: 'Precio justo y transparente según el área real.' },
             ].map(f => (
               <div key={f.title} className="bg-[#f5efe8] rounded-2xl p-5 text-left">
-                <p className="text-[#162040]/30 font-serif text-lg mb-2">{f.icon}</p>
+                <IconFromEmoji emoji={f.icon} className="w-5 h-5 text-[#162040]/30 mb-2" />
                 <p className="font-serif font-bold text-[#162040] text-sm mb-1">{f.title}</p>
                 <p className="font-serif text-xs text-gray-600">{f.desc}</p>
               </div>
