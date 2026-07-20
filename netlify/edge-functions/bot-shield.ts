@@ -1,6 +1,34 @@
 import type { Config, Context } from '@netlify/edge-functions'
 
 // ═══════════════════════════════════════════════════════════════
+// CAPA 0 — SONDEOS Shopify / APIs fantasma
+// Evita servir el SPA HTML (7KB+) a bots que piden /products.json etc.
+// ═══════════════════════════════════════════════════════════════
+const PROBE_PATHS = new Set([
+  '/products.json',
+  '/collections.json',
+  '/cart.json',
+  '/cart.js',
+  '/meta.json',
+  '/services/meta.json',
+  '/search/suggest.json',
+  '/search/suggest.json/',
+])
+
+const PROBE_PREFIXES = [
+  '/products.json',
+  '/collections.json',
+  '/cart.js',
+  '/cart.json',
+]
+
+function isShopifyProbe(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, '') || '/'
+  if (PROBE_PATHS.has(pathname) || PROBE_PATHS.has(p)) return true
+  return PROBE_PREFIXES.some((prefix) => p === prefix || p.startsWith(`${prefix}?`))
+}
+
+// ═══════════════════════════════════════════════════════════════
 // CAPA 1 — SIEMPRE PERMITIR (máxima prioridad, nunca se bloquean)
 // SEO + previews WhatsApp/FB/IG
 // ═══════════════════════════════════════════════════════════════
@@ -73,6 +101,22 @@ const BLOCK = [
 ]
 
 export default async (request: Request, context: Context) => {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+
+  // Tiny 404 for legacy Shopify API probes — never SPA HTML soft-404.
+  if (isShopifyProbe(pathname)) {
+    console.log(`PROBE-404 ip=${context.ip} path=${pathname}`)
+    return new Response('Not found.', {
+      status: 404,
+      headers: {
+        'content-type': 'text/plain; charset=utf-8',
+        'cache-control': 'public, max-age=86400',
+        'x-robots-tag': 'noindex',
+      },
+    })
+  }
+
   const ua = request.headers.get('user-agent') || ''
   const category = request.headers.get('netlify-agent-category') || ''
 
@@ -103,6 +147,27 @@ function block(context: Context, ua: string, reason: string) {
 
 export const config: Config = {
   path: '/*',
-  excludedPath: ['/robots.txt', '/.well-known/*'],
+  // Skip edge on static assets so CDN can cache them (Cache-Control headers apply).
+  excludedPath: [
+    '/robots.txt',
+    '/.well-known/*',
+    '/css/*',
+    '/assets/*',
+    '/images/*',
+    '/*.webp',
+    '/*.svg',
+    '/*.png',
+    '/*.jpg',
+    '/*.jpeg',
+    '/*.gif',
+    '/*.ico',
+    '/*.woff',
+    '/*.woff2',
+    '/favicon.ico',
+    '/favicon.svg',
+    '/apple-touch-icon.svg',
+    '/sitemap.xml',
+    '/llms.txt',
+  ],
   onError: 'bypass',
 }
