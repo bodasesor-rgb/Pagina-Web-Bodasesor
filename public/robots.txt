@@ -33,5 +33,12 @@ Disallow: /
 # Resto: permitido (incluye SemrushBot / Ubersuggest)
 User-agent: *
 Allow: /
+# APIs fantasma de Shopify (no existen; solo gastan ancho de banda)
+Disallow: /products.json
+Disallow: /collections.json
+Disallow: /cart.json
+Disallow: /cart.js
+Disallow: /meta.json
+Disallow: /search/suggest.json
 
 Sitemap: https://bodasesor.com/sitemap.xml
