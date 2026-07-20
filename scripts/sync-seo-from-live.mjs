@@ -45,6 +45,8 @@ async function fetchText(url, { retries = 5 } = {}) {
         headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
         redirect: 'follow',
       })
+      // Auth / not-found — do not burn retries (Hostinger often 401 from CI)
+      if (res.status === 401 || res.status === 403 || res.status === 404) return null
       if (res.status === 429 || res.status >= 500) {
         await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
         continue
@@ -62,6 +64,7 @@ async function fetchBuffer(url, { retries = 4 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' })
+      if (res.status === 401 || res.status === 403 || res.status === 404) return null
       if (res.status === 429 || res.status >= 500) {
         await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
         continue
@@ -300,6 +303,36 @@ async function main() {
       console.error(`❌ ${msg}`)
       process.exit(1)
     }
+  }
+
+  // When CI already seeded ≥ MIN landings, skip the full crawl (Hostinger 401 / rate-limit).
+  // Set SEO_SYNC_FORCE=1 to always re-pull from NEXUS_URL / production.
+  const forceSync = process.env.SEO_SYNC_FORCE === '1'
+  if (!forceSync && seeded >= MIN_LANDINGS) {
+    const onDisk = await countSeoOnDisk()
+    const manifest = {
+      pulledAt: new Date().toISOString(),
+      origins: FETCH_ORIGINS,
+      method: 'seed-skip-full-crawl',
+      candidates: slugs.length,
+      expectedCanonical: slugs.length,
+      minRequired: MIN_LANDINGS,
+      landingsSaved: 0,
+      landingsOnDisk: onDisk,
+      seedBeforeSync: seeded,
+      spaSkipped: 0,
+      failed: 0,
+      globalAssetsSaved: globalSaved,
+      note: 'Skipped inventory crawl because seed ≥ MIN_NEXUS_LANDINGS (set SEO_SYNC_FORCE=1 to refresh)',
+    }
+    await writeFile(join(OUT_DIR, '.manifest.json'), JSON.stringify(manifest, null, 2))
+    console.log(
+      `\n✓ Sync SEO: seed-skip onDisk=${onDisk} (seed=${seeded} ≥ ${MIN_LANDINGS}); globals=${globalSaved}`,
+    )
+    return
+  }
+  if (forceSync) {
+    console.log('  SEO_SYNC_FORCE=1 — full inventory crawl')
   }
 
   let { ok, spa, fail, missed } = await pullSlugs(slugs, CONCURRENCY)
