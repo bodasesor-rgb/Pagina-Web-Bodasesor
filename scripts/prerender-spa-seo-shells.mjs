@@ -78,6 +78,49 @@ function applySeo(html, entry) {
     `<meta property="og:url" content="${escapeAttr(entry.canonical)}" />`,
   )
 
+  // Crawler-visible JSON-LD (Service or Article) — no fake prices
+  const isBlog = entry.path.startsWith('/blog/')
+  const jsonLd = isBlog
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: entry.h1 || entry.title,
+        description: entry.description,
+        url: entry.canonical,
+        author: { '@type': 'Organization', name: 'Bodasesor Eventos' },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Bodasesor Eventos',
+          url: 'https://bodasesor.com/',
+        },
+        inLanguage: 'es-MX',
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: entry.h1 || entry.title,
+        description: entry.description,
+        url: entry.canonical,
+        provider: {
+          '@type': 'LocalBusiness',
+          name: 'Bodasesor Eventos',
+          url: 'https://bodasesor.com/',
+          telephone: '+52-55-4008-0373',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Ciudad de México',
+            addressRegion: 'CDMX',
+            addressCountry: 'MX',
+          },
+          areaServed: { '@type': 'Country', name: 'México' },
+        },
+      }
+
+  const jsonLdTag = `<script type="application/ld+json" id="bodasesor-prerender-jsonld">${JSON.stringify(jsonLd)}</script>`
+  if (/<\/head>/i.test(out)) {
+    out = out.replace(/<\/head>/i, `  ${jsonLdTag}\n  </head>`)
+  }
+
   // Crawler-visible content (home hero is hidden via no-lcp-hero)
   const noscript = `<noscript><main style="padding:2rem;font-family:Georgia,serif;color:#162040"><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(entry.description)}</p></main></noscript>`
   if (out.includes('</body>')) {

@@ -20,7 +20,12 @@ import { AUDIO_ILUMINACION } from '../src/data/audio-iluminacion-products.js'
 import { FLORERIA } from '../src/data/floreria-products.js'
 import { SHOWS } from '../src/data/shows-products.js'
 import { COMBINACIONES } from '../src/data/combinaciones-products.js'
+import { blogPosts } from '../src/data/blog-data.js'
+import { CITY_MAP } from '../src/data/city-data.js'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
+
+/** Unique canonical city slugs for hub×city prerender shells */
+const CITY_SLUGS = [...new Set(Object.values(CITY_MAP).map((c) => c.slug))]
 
 const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
 
@@ -57,6 +62,14 @@ const HUBS = [
   { path: '/catalogos', title: 'Catálogos 2026', desc: 'Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más.' },
   { path: '/quienes-somos', title: 'Quiénes Somos', desc: 'Conoce al equipo de Bodasesor Eventos. Más de 10 años organizando eventos en México.' },
   { path: '/blog', title: 'Blog de Eventos y Bodas', desc: 'Consejos, tendencias y guías para planear bodas, XV años y eventos corporativos en México.' },
+  { path: '/bodas', title: 'Bodas', desc: 'Servicios completos para bodas: catering, decoración, música, fotografía y más.' },
+  { path: '/corporativos', title: 'Eventos Corporativos', desc: 'Catering, mobiliario y servicios para eventos corporativos en México.' },
+  { path: '/xv-anos', title: 'XV Años', desc: 'Servicios completos para XV años: banquete, decoración, música, shows y más.' },
+  { path: '/graduaciones', title: 'Graduaciones', desc: 'Servicios para graduaciones: banquete, decoración, música y fotografía.' },
+  { path: '/baby-shower', title: 'Baby Shower', desc: 'Servicios para baby shower: mesa de dulces, decoración, catering y más.' },
+  { path: '/cumpleanos', title: 'Cumpleaños', desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.' },
+  { path: '/primera-comunion', title: 'Primera Comunión', desc: 'Servicios completos para primera comunión: banquete, decoración y más.' },
+  { path: '/parrillada', title: 'Parrillada para Eventos', desc: 'Servicio de parrillada para bodas y eventos en México.' },
 ]
 
 function productHref(slug) {
@@ -95,6 +108,23 @@ export function collectSpaSeoEntries() {
 
   for (const h of HUBS) {
     put(entry(h.path, h.title, h.desc, h.title))
+    // City variants so crawlers don't get the home canonical from SPA fallback
+    for (const citySlug of CITY_SLUGS) {
+      const cityName = CITY_MAP[citySlug]?.name || citySlug
+      put(
+        entry(
+          `${h.path}/${citySlug}`,
+          `${h.title} en ${cityName}`,
+          `${h.desc} Disponible en ${cityName}.`,
+          `${h.title} en ${cityName}`,
+        ),
+      )
+    }
+  }
+
+  for (const post of blogPosts) {
+    if (!post?.slug || !post?.title) continue
+    put(entry(`/blog/${post.slug}`, post.title, post.excerpt || post.title, post.title))
   }
 
   for (const p of products) {

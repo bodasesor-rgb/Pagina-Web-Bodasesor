@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
+import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import type { ProductData } from "../data/products";
 import { buildSeoTitle } from "../utils/seo-title";
 
@@ -1030,6 +1031,12 @@ export default function EventTypePage({ product }: EventTypePageProps) {
 
       {/* ── 6. CTA FINAL ── */}
       <GalleryCarouselSection />
+
+      <SeoRelatedLinks
+        basePath={product.categoryHref || `/${product.slug}`}
+        title={product.title}
+        related={product.related}
+      />
 
       <section className="py-16 bg-[#162040] text-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
