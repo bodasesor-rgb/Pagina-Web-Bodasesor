@@ -5,6 +5,7 @@ import { useCity } from "../context/CityContext";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { Lightbox } from "../components/Lightbox";
 import OptimizedImage from "../components/OptimizedImage";
+import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildSeoTitle } from "../utils/seo-title";
@@ -616,6 +617,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                   alt={product.title}
                   width={400}
                   height={288}
+                  priority
                   className="max-h-72 w-full object-contain drop-shadow-xl"
                 />
               </div>
@@ -1014,6 +1016,12 @@ export default function ServicePage({ params }: ServicePageProps) {
         </div>
       </section>
       )}
+
+      <SeoRelatedLinks
+        basePath={product.categoryHref || `/${slug}`}
+        title={product.title}
+        related={product.related}
+      />
 
       {/* ── 10. FINAL CTA ── */}
       <section className="py-16 bg-[#162040] text-white">

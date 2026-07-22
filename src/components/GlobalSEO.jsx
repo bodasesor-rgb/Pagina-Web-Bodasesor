@@ -1,62 +1,161 @@
 import { useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { useCity } from '../context/CityContext'
-import { syncLcpPreload } from '../utils/lcp-preload'
-import { buildSeoTitle } from '../utils/seo-title'
+import { parseCityFromPath } from '../utils/city-url'
+import {
+  absoluteUrl,
+  canonicalPath,
+  upsertJsonLd,
+  upsertLink,
+  upsertMeta,
+} from '../utils/seo-head'
+import { blogPosts } from '../data/blog-data'
+
+const SITE_BASE = 'https://bodasesor.com'
+const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
 
 const SEO_MAP = {
-  '/':                     { title: 'Banquetes y Catering para Eventos en México', desc: 'Contrata banquetes, catering gourmet, mobiliario, música, fotografía y wedding planner para bodas, XV años y eventos corporativos en CDMX, Guadalajara, Monterrey y todo México.' },
-  '/galeria':              { title: 'Galería de Eventos',          desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor en México.' },
-  '/catalogos':            { title: 'Catálogos 2026',              desc: 'Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más. Cotiza por WhatsApp.' },
-  '/banquetes-catering':   { title: 'Banquetes y Catering',        desc: 'Catálogo completo de banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas para eventos.' },
-  '/barras-de-bebidas':    { title: 'Barras de Bebidas',           desc: 'Barras de bebidas con y sin alcohol para eventos: mocteles, mixología, café premium y carritos de helado.' },
-  '/mesas-personalizadas': { title: 'Mesas Personalizadas',        desc: 'Mesas temáticas para eventos: dulces, botanas, sushi, charcutería, frutas y más. Diseño personalizado con montaje incluido.' },
-  '/combinaciones-mesas-sillas': { title: 'Combinaciones de Mesas y Sillas', desc: 'Paquetes de mesas y sillas coordinadas para bodas, XV años y eventos corporativos en México.' },
-  '/vajillas':             { title: 'Vajillas para Eventos',       desc: 'Renta de vajillas premium para banquetes y eventos: porcelana, cristalería y cubertería de alta calidad.' },
-  '/colgantes':            { title: 'Colgantes Decorativos',       desc: 'Colgantes florales, de luces y decorativos para bodas, quinceañeras y eventos especiales.' },
-  '/entelados':            { title: 'Entelados para Eventos',      desc: 'Entelados y decoración de mesas para bodas, XV años y eventos sociales en México.' },
-  '/floreria':             { title: 'Florería para Eventos',       desc: 'Arreglos florales, centros de mesa y decoración floral para bodas y eventos en México.' },
-  '/shows':                { title: 'Shows y Entretenimiento',     desc: 'Shows en vivo, artistas y entretenimiento para bodas, XV años y eventos corporativos.' },
-  '/pistas-tarimas':       { title: 'Pistas y Tarimas',            desc: 'Renta de pistas de baile, tarimas y escenarios para eventos en México.' },
-  '/salas-periqueras':     { title: 'Salas y Periqueras',          desc: 'Renta de salas lounge y periqueras para eventos, bodas y recepciones en México.' },
-  '/reposteria':           { title: 'Repostería para Eventos',     desc: 'Pasteles, mesas de postres, cupcakes y repostería artesanal para bodas y celebraciones.' },
-  '/wedding-planner':      { title: 'Wedding Planner',             desc: 'Servicio de wedding planner profesional. Planeación, coordinación y asesoría para tu boda.' },
-  '/musica':               { title: 'Música para Eventos',         desc: 'DJ, grupos versátiles, mariachi, saxofonista y música en vivo para bodas y eventos.' },
-  '/fotografia':           { title: 'Fotografía y Video',          desc: 'Fotografía profesional, video, cámara 360, cabina de fotos y más para tu evento.' },
-  '/espacios-eventos':     { title: 'Espacios para Eventos',       desc: 'Salones, jardines y espacios para bodas, XV años y eventos corporativos en México.' },
-  '/carpas':               { title: 'Carpas para Eventos',       desc: 'Renta de carpas para bodas, eventos corporativos y celebraciones al aire libre.' },
-  '/alimentos-empresas':   { title: 'Alimentos para Empresas',     desc: 'Coffee break, box lunch, desayunos ejecutivos y catering corporativo en México.' },
-  '/audio-iluminacion-video': { title: 'Audio, Iluminación y Video', desc: 'Sonido, iluminación y video profesional para eventos, bodas y corporativos en México.' },
-  '/quienes-somos':        { title: 'Quiénes Somos',               desc: 'Conoce al equipo de Bodasesor Eventos. Más de 10 años organizando eventos en México.' },
-  '/blog':                 { title: 'Blog de Eventos y Bodas',     desc: 'Consejos, tendencias y guías para planear bodas, XV años y eventos corporativos en México.' },
-  '/buscar':               { title: 'Buscar servicios',            desc: 'Encuentra banquetes, mobiliario, shows, florería y todos los servicios de Bodasesor.' },
-  '/bodas':                { title: 'Bodas',                       desc: 'Servicios completos para bodas: catering, decoración, música, fotografía y más.' },
-  '/corporativos':         { title: 'Eventos Corporativos',        desc: 'Catering, mobiliario y servicios para eventos corporativos en México.' },
-  '/xv-anos':              { title: 'XV Años',                     desc: 'Servicios completos para XV años: banquete, decoración, música, shows y más.' },
-  '/graduaciones':         { title: 'Graduaciones',                desc: 'Servicios completos para graduaciones: banquete, decoración, música y más.' },
-  '/baby-shower':          { title: 'Baby Shower',                 desc: 'Servicios para baby shower: mesa de dulces, decoración, catering y más.' },
-  '/cumpleanos':           { title: 'Cumpleaños',                  desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.' },
-  '/primera-comunion':     { title: 'Primera Comunión',            desc: 'Servicios completos para primera comunión: banquete, decoración y más.' },
+  '/': {
+    title: 'Banquetes y Catering para Eventos en México',
+    desc: 'Banquetes, catering, mobiliario y servicios premium para bodas, quinceañeras y eventos corporativos en México.',
+  },
+  '/galeria': {
+    title: 'Galería de Eventos',
+    desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor en México.',
+  },
+  '/banquetes-catering': {
+    title: 'Banquetes y Catering',
+    desc: 'Catálogo completo de banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas para eventos.',
+  },
+  '/barras-de-bebidas': {
+    title: 'Barras de Bebidas',
+    desc: 'Barras de bebidas con y sin alcohol para eventos: mocteles, mixología, café premium y carritos de helado.',
+  },
+  '/wedding-planner': {
+    title: 'Wedding Planner',
+    desc: 'Servicio de wedding planner profesional. Planeación, coordinación y asesoría para tu boda.',
+  },
+  '/audio-iluminacion-video': {
+    title: 'Audio, Iluminación y Video',
+    desc: 'Sonido, iluminación y video profesional para eventos, bodas y corporativos en México.',
+  },
+  '/salas-periqueras': {
+    title: 'Salas y Periqueras',
+    desc: 'Renta de salas lounge y periqueras para eventos, bodas y recepciones en México.',
+  },
+  '/fotografia': {
+    title: 'Fotografía y Video',
+    desc: 'Fotografía profesional, video, cámara 360, cabina de fotos y más para tu evento.',
+  },
+  '/quienes-somos': {
+    title: 'Quiénes Somos',
+    desc: 'Conoce al equipo de Bodasesor Eventos. Más de 10 años organizando eventos en México.',
+  },
+  '/bodas': {
+    title: 'Bodas',
+    desc: 'Servicios completos para bodas: catering, decoración, música, fotografía y más.',
+  },
+  '/corporativos': {
+    title: 'Eventos Corporativos',
+    desc: 'Catering, mobiliario y servicios para eventos corporativos en México.',
+  },
+  '/xv-anos': {
+    title: 'XV Años',
+    desc: 'Servicios completos para XV años: banquete, decoración, música, shows y más.',
+  },
+  '/baby-shower': {
+    title: 'Baby Shower',
+    desc: 'Servicios para baby shower: mesa de dulces, decoración, catering y más.',
+  },
+  '/cumpleanos': {
+    title: 'Cumpleaños',
+    desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.',
+  },
+  '/primera-comunion': {
+    title: 'Primera Comunión',
+    desc: 'Servicios completos para primera comunión: banquete, decoración y más.',
+  },
+  '/mesas-sillas': {
+    title: 'Mesas y Sillas',
+    desc: 'Renta de mesas y sillas para bodas, XV años y eventos en México.',
+  },
+  '/parrillada': {
+    title: 'Parrillada para Eventos',
+    desc: 'Servicio de parrillada para bodas y eventos en México. Tradicional mexicana o argentina.',
+  },
+  '/blog': {
+    title: 'Blog de Eventos y Bodas',
+    desc: 'Consejos, tendencias y guías para planear bodas, XV años y eventos corporativos en México.',
+  },
+  '/buscar': {
+    title: 'Buscar servicios',
+    desc: 'Busca banquetes, catering, mobiliario y servicios para eventos en Bodasesor.',
+  },
 }
 
-function setMeta(name, content) {
-  let meta = document.querySelector(`meta[name="${name}"]`)
-  if (!meta) {
-    meta = document.createElement('meta')
-    meta.setAttribute('name', name)
-    document.head.appendChild(meta)
+const NOINDEX_PREFIXES = ['/buscar']
+
+function buildServiceJsonLd({ name, description, url, city }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    description,
+    url,
+    provider: {
+      '@type': 'LocalBusiness',
+      '@id': `${SITE_BASE}/#localbusiness`,
+      name: 'Bodasesor Eventos',
+      url: `${SITE_BASE}/`,
+      telephone: '+52-55-4008-0373',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Ciudad de México',
+        addressRegion: 'CDMX',
+        addressCountry: 'MX',
+      },
+      areaServed: { '@type': 'Country', name: 'México' },
+    },
+    serviceType: name,
   }
-  meta.setAttribute('content', content)
+
+  if (city?.name) {
+    data.areaServed = {
+      '@type': 'City',
+      name: city.name,
+      containedInPlace: { '@type': 'Country', name: 'México' },
+    }
+  }
+
+  return data
 }
 
-function setCanonical(href) {
-  let canonical = document.querySelector('link[rel="canonical"]')
-  if (!canonical) {
-    canonical = document.createElement('link')
-    canonical.setAttribute('rel', 'canonical')
-    document.head.appendChild(canonical)
+function buildArticleJsonLd({ title, description, url, date, image }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    url,
+    datePublished: date || undefined,
+    image: image || undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'Bodasesor Eventos',
+      url: `${SITE_BASE}/`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bodasesor Eventos',
+      url: `${SITE_BASE}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_BASE}/favicon.svg`,
+      },
+    },
+    mainEntityOfPage: url,
+    inLanguage: 'es-MX',
   }
-  canonical.setAttribute('href', href)
 }
 
 export default function GlobalSEO() {
@@ -64,20 +163,100 @@ export default function GlobalSEO() {
   const { city } = useCity()
 
   useEffect(() => {
-    const path = location.replace(/\/$/, '') || '/'
+    const path = canonicalPath(location)
+    const { basePath, city: pathCity } = parseCityFromPath(path)
+    const activeCity = city || pathCity
+    const canonical = absoluteUrl(path)
 
-    const canonicalHref = city && path === '/'
-      ? `https://bodasesor.com/${city.slug}`
-      : `https://bodasesor.com${path === '/' ? '' : path}`
-    setCanonical(canonicalHref)
-    syncLcpPreload(path)
+    // Always set canonical + og:url to the real URL (never leave home stuck).
+    upsertLink('canonical', canonical)
+    upsertMeta('property', 'og:url', canonical)
 
-    const seo = SEO_MAP[path]
-    if (!seo) return
+    const hubSeo = SEO_MAP[basePath]
+    const blogMatch = path.match(/^\/blog\/([^/]+)$/)
+    const blogPost = blogMatch
+      ? blogPosts.find((p) => p.slug === blogMatch[1])
+      : null
 
-    document.title = buildSeoTitle(seo.title, city ? (city.short || city.name) : null)
+    if (blogPost) {
+      const title = `${blogPost.title} | Bodasesor Blog`
+      document.title = title
+      upsertMeta('name', 'description', blogPost.excerpt || blogPost.title)
+      upsertMeta('property', 'og:title', title)
+      upsertMeta('property', 'og:description', blogPost.excerpt || blogPost.title)
+      upsertJsonLd(
+        PAGE_JSONLD_ID,
+        buildArticleJsonLd({
+          title: blogPost.title,
+          description: blogPost.excerpt || blogPost.title,
+          url: canonical,
+          date: blogPost.date,
+          image: blogPost.image,
+        }),
+      )
+      upsertMeta('name', 'robots', 'index, follow')
+      return () => upsertJsonLd(PAGE_JSONLD_ID, null)
+    }
 
-    setMeta('description', city ? `${seo.desc} Disponible en ${city.name}.` : seo.desc)
+    if (hubSeo && basePath !== '/') {
+      const title = activeCity
+        ? `${hubSeo.title} en ${activeCity.name} | Bodasesor`
+        : `${hubSeo.title} | Bodasesor`
+      const desc = activeCity
+        ? `${hubSeo.desc} Disponible en ${activeCity.name}.`
+        : hubSeo.desc
+      document.title = title
+      upsertMeta('name', 'description', desc)
+      upsertMeta('property', 'og:title', title)
+      upsertMeta('property', 'og:description', desc)
+      upsertJsonLd(
+        PAGE_JSONLD_ID,
+        buildServiceJsonLd({
+          name: activeCity ? `${hubSeo.title} en ${activeCity.name}` : hubSeo.title,
+          description: desc,
+          url: canonical,
+          city: activeCity,
+        }),
+      )
+    } else if (basePath === '/') {
+      // HomeJsonLd owns organization graph; clear page-level schema.
+      upsertJsonLd(PAGE_JSONLD_ID, null)
+      if (SEO_MAP['/']) {
+        const title = activeCity
+          ? `Banquetes y Catering en ${activeCity.name} | Bodasesor`
+          : `${SEO_MAP['/'].title} | Bodasesor`
+        document.title = title
+      }
+    } else if (path !== '/' && !path.startsWith('/buscar')) {
+      // Detail pages own their <title>; only attach Service schema from the URL slug.
+      const slugPart = basePath.split('/').filter(Boolean).pop() || 'servicio'
+      const label = slugPart
+        .split('-')
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ')
+      const name = activeCity ? `${label} en ${activeCity.name}` : label
+      const desc =
+        document.querySelector('meta[name="description"]')?.getAttribute('content') ||
+        `${name}. Cotiza banquetes, catering y servicios para eventos con Bodasesor.`
+      upsertJsonLd(
+        PAGE_JSONLD_ID,
+        buildServiceJsonLd({
+          name,
+          description: desc,
+          url: canonical,
+          city: activeCity,
+        }),
+      )
+    }
+
+    const noindex = NOINDEX_PREFIXES.some(
+      (p) => path === p || path.startsWith(`${p}/`),
+    )
+    upsertMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
+
+    return () => {
+      // Keep last schema until next route replaces it
+    }
   }, [location, city])
 
   return null
