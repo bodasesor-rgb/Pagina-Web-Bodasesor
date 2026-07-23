@@ -238,11 +238,14 @@ async function main() {
 
   // Smoke: city service URLs must not soft-404 to home (GA / Search Console killers)
   const citySmokes = [
+    'ciudad-de-mexico',
+    'cuernavaca',
     'banquetes/ciudad-de-mexico',
     'banquetes/cuernavaca',
     'banquetes/3-tiempos/ciudad-de-mexico',
     'desayunos/puerto-vallarta',
     'cupcakes-gourmet/ciudad-de-mexico',
+    'bodas/ciudad-de-mexico',
   ]
   for (const rel of citySmokes) {
     const abs = join(DIST, rel, 'index.html')
@@ -258,6 +261,18 @@ async function main() {
     const expectedCanon = `rel="canonical" href="https://bodasesor.com/${rel}"`
     if (!html.includes(expectedCanon)) {
       console.error(`prerender-spa-seo-shells: ${rel} missing canonical ${expectedCanon}`)
+      process.exit(1)
+    }
+  }
+
+  // Must NOT prerender spam: blog×city or blog-slug product×city
+  const banned = [
+    'blog/ciudad-de-mexico',
+    'como-organizar-boda-perfecta-mexico/ciudad-de-mexico',
+  ]
+  for (const rel of banned) {
+    if (existsSync(join(DIST, rel, 'index.html'))) {
+      console.error(`prerender-spa-seo-shells: unexpected spam shell ${rel}`)
       process.exit(1)
     }
   }

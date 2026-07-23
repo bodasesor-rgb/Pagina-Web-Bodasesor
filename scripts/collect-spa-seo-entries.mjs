@@ -104,12 +104,24 @@ function clipDesc(text) {
   return clampMetaDescription(text)
 }
 
-function entry(path, headline, description, h1) {
+function isCityExemptPath(path) {
+  return CITY_EXEMPT_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`))
+}
+
+/** City landing / service titles — avoid "Bodas para Bodas y Eventos en X" */
+function cityHeadline(baseTitle, cityName) {
+  const core = String(baseTitle || '').trim()
+  if (!core) return `Servicios para Eventos en ${cityName}`
+  if (/en\s+[A-ZÁÉÍÓÚÑ]/i.test(core)) return core
+  return `${core} en ${cityName}`
+}
+
+function entry(path, headline, description, h1, cityShort = null) {
   const cleanPath = path.replace(/\/+$/, '') || '/'
   if (cleanPath === '/') return null
   return {
     path: cleanPath,
-    title: buildSeoTitle(headline),
+    title: buildSeoTitle(headline, cityShort),
     description: clipDesc(description),
     h1: h1 || headline,
     canonical: `${SITE_BASE}${cleanPath}`,
@@ -119,23 +131,39 @@ function entry(path, headline, description, h1) {
 /** @returns {Map<string, {path:string,title:string,description:string,h1:string,canonical:string}>} */
 export function collectSpaSeoEntries() {
   const map = new Map()
+  const blogSlugs = new Set(blogPosts.map((p) => p.slug).filter(Boolean))
 
   const put = (e) => {
     if (!e?.path) return
     if (!map.has(e.path)) map.set(e.path, e)
   }
 
+  // City landings: /cuernavaca, /ciudad-de-mexico — must not soft-404 to home
+  for (const citySlug of CITY_SLUGS) {
+    const city = CITY_MAP[citySlug]
+    if (!city) continue
+    put(
+      entry(
+        `/${citySlug}`,
+        `Banquetes y Eventos en ${city.name}`,
+        `Banquetes, catering, mobiliario y servicios para bodas y eventos en ${city.name}. Cotiza con Bodasesor.`,
+        `Banquetes y Eventos en ${city.name}`,
+      ),
+    )
+  }
+
   for (const h of HUBS) {
     put(entry(h.path, h.title, h.desc, h.title))
-    // City variants so crawlers don't get the home canonical from SPA fallback
+    if (isCityExemptPath(h.path)) continue
     for (const citySlug of CITY_SLUGS) {
       const cityName = CITY_MAP[citySlug]?.name || citySlug
+      const headline = cityHeadline(h.title, cityName)
       put(
         entry(
           `${h.path}/${citySlug}`,
-          `${h.title} para Bodas y Eventos en ${cityName}`,
+          headline,
           `${h.desc} Cotiza en ${cityName} y área metropolitana.`,
-          `${h.title} para Bodas y Eventos en ${cityName}`,
+          headline,
         ),
       )
     }
@@ -149,6 +177,8 @@ export function collectSpaSeoEntries() {
   for (const p of products) {
     const name = p.title || p.name
     if (!name || !p.slug) continue
+    // Blog articles duplicated into products.js — keep only /blog/{slug}
+    if (blogSlugs.has(p.slug)) continue
     const href = productHref(p.slug)
     const desc =
       p.seoDescription ||
@@ -200,21 +230,22 @@ export function collectSpaSeoEntries() {
   // Without these, Netlify serves dist/index.html (home canonical) → soft-404 in Google.
   const bases = [...map.values()]
   for (const base of bases) {
-    if (CITY_EXEMPT_PREFIXES.some((p) => base.path === p || base.path.startsWith(`${p}/`))) {
-      continue
-    }
+    if (isCityExemptPath(base.path)) continue
     const segs = base.path.split('/').filter(Boolean)
     if (!segs.length || CITY_SLUG_SET.has(segs[segs.length - 1])) continue
+    // Bare city landing already handled
+    if (segs.length === 1 && CITY_SLUG_SET.has(segs[0])) continue
 
-    const headline = base.h1 || base.title
+    const headlineBase = base.h1 || base.title
     for (const citySlug of CITY_SLUGS) {
       const cityName = CITY_MAP[citySlug]?.name || citySlug
+      const headline = cityHeadline(headlineBase, cityName)
       put(
         entry(
           `${base.path}/${citySlug}`,
-          `${headline} en ${cityName}`,
+          headline,
           `${base.description} Cotiza en ${cityName} y área metropolitana.`,
-          `${headline} en ${cityName}`,
+          headline,
         ),
       )
     }
