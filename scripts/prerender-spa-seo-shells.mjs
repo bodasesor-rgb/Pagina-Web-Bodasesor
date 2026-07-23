@@ -78,11 +78,40 @@ function applySeo(html, entry) {
     `<meta property="og:url" content="${escapeAttr(entry.canonical)}" />`,
   )
 
-  // Crawler-visible JSON-LD (Service or Article) — no fake prices
+  // Crawler-visible JSON-LD (Service/Article + BreadcrumbList) — no fake prices
   const isBlog = entry.path.startsWith('/blog/')
-  const jsonLd = isBlog
+  const segs = entry.path.split('/').filter(Boolean)
+  const crumbItems = [{ name: 'Inicio', href: 'https://bodasesor.com/' }]
+  if (isBlog) {
+    crumbItems.push({ name: 'Blog', href: 'https://bodasesor.com/blog' })
+    crumbItems.push({ name: entry.h1 || entry.title })
+  } else if (segs.length >= 2) {
+    const hub = segs[0]
+    const hubLabel = hub
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ')
+    crumbItems.push({ name: hubLabel, href: `https://bodasesor.com/${hub}` })
+    crumbItems.push({ name: entry.h1 || entry.title })
+  } else {
+    crumbItems.push({ name: entry.h1 || entry.title })
+  }
+
+  const breadcrumbLd = {
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbItems.map((item, index) => {
+      const row = {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+      }
+      if (item.href) row.item = item.href
+      return row
+    }),
+  }
+
+  const primaryLd = isBlog
     ? {
-        '@context': 'https://schema.org',
         '@type': 'Article',
         headline: entry.h1 || entry.title,
         description: entry.description,
@@ -96,7 +125,6 @@ function applySeo(html, entry) {
         inLanguage: 'es-MX',
       }
     : {
-        '@context': 'https://schema.org',
         '@type': 'Service',
         name: entry.h1 || entry.title,
         description: entry.description,
@@ -116,13 +144,25 @@ function applySeo(html, entry) {
         },
       }
 
+  const jsonLd = { '@context': 'https://schema.org', '@graph': [primaryLd, breadcrumbLd] }
   const jsonLdTag = `<script type="application/ld+json" id="bodasesor-prerender-jsonld">${JSON.stringify(jsonLd)}</script>`
   if (/<\/head>/i.test(out)) {
     out = out.replace(/<\/head>/i, `  ${jsonLdTag}\n  </head>`)
   }
 
+  // Visible breadcrumb for noscript / static crawlers
+  const crumbHtml = crumbItems
+    .map((item, i) => {
+      const sep = i === 0 ? '' : ' / '
+      if (item.href && i < crumbItems.length - 1) {
+        return `${sep}<a href="${escapeAttr(item.href)}">${escapeHtml(item.name)}</a>`
+      }
+      return `${sep}<span>${escapeHtml(item.name)}</span>`
+    })
+    .join('')
+
   // Crawler-visible content (home hero is hidden via no-lcp-hero)
-  const noscript = `<noscript><main style="padding:2rem;font-family:Georgia,serif;color:#162040"><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(entry.description)}</p></main></noscript>`
+  const noscript = `<noscript><main style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(entry.description)}</p></main></noscript>`
   if (out.includes('</body>')) {
     out = out.replace('</body>', `${noscript}\n  </body>`)
   }

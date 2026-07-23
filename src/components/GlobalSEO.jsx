@@ -13,6 +13,70 @@ import { blogPosts } from '../data/blog-data'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
+const BREADCRUMB_JSONLD_ID = 'bodasesor-breadcrumb-jsonld'
+
+function labelFromSlug(slug) {
+  return String(slug || '')
+    .split('-')
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
+}
+
+function buildBreadcrumbJsonLd(items) {
+  const list = (items || []).filter((i) => i?.name)
+  if (list.length < 2) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: list.map((item, index) => {
+      const entry = {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+      }
+      if (item.href) entry.item = absoluteUrl(item.href)
+      return entry
+    }),
+  }
+}
+
+/** Fallback breadcrumbs from URL when a page does not mount <Breadcrumbs />. */
+function breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo) {
+  const items = [{ name: 'Inicio', href: '/' }]
+
+  if (blogPost) {
+    items.push({ name: 'Blog', href: '/blog' })
+    items.push({ name: blogPost.title })
+    return items
+  }
+
+  if (hubSeo && basePath !== '/') {
+    items.push({ name: hubSeo.title, href: basePath })
+    if (activeCity) items.push({ name: activeCity.name })
+    return items
+  }
+
+  const segs = basePath.split('/').filter(Boolean)
+  if (segs.length === 0) return items
+
+  if (segs.length === 1) {
+    items.push({ name: labelFromSlug(segs[0]) })
+  } else {
+    items.push({ name: labelFromSlug(segs[0]), href: `/${segs[0]}` })
+    items.push({ name: labelFromSlug(segs[segs.length - 1]) })
+  }
+  if (activeCity && path !== basePath) {
+    // City is last segment of the full path
+    const last = items[items.length - 1]
+    if (last && !last.href) {
+      // keep leaf as service; append city
+      items[items.length - 1] = { name: last.name, href: basePath }
+      items.push({ name: activeCity.name })
+    }
+  }
+  return items
+}
 
 const SEO_MAP = {
   '/': {
@@ -178,6 +242,14 @@ export default function GlobalSEO() {
       ? blogPosts.find((p) => p.slug === blogMatch[1])
       : null
 
+    // Path-based BreadcrumbList for crawlers (pages with <Breadcrumbs /> refine it).
+    upsertJsonLd(
+      BREADCRUMB_JSONLD_ID,
+      buildBreadcrumbJsonLd(
+        breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo),
+      ),
+    )
+
     if (blogPost) {
       const title = `${blogPost.title} | Bodasesor Blog`
       document.title = title
@@ -195,15 +267,19 @@ export default function GlobalSEO() {
         }),
       )
       upsertMeta('name', 'robots', 'index, follow')
-      return () => upsertJsonLd(PAGE_JSONLD_ID, null)
+      return () => {
+        upsertJsonLd(PAGE_JSONLD_ID, null)
+        upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
+      }
     }
 
     if (hubSeo && basePath !== '/') {
+      // Unique intent: service + use-case + city (no invented prices)
       const title = activeCity
-        ? `${hubSeo.title} en ${activeCity.name} | Bodasesor`
-        : `${hubSeo.title} | Bodasesor`
+        ? `${hubSeo.title} para Bodas y Eventos en ${activeCity.name} | Bodasesor`
+        : `${hubSeo.title} para Bodas y Eventos | Bodasesor`
       const desc = activeCity
-        ? `${hubSeo.desc} Disponible en ${activeCity.name}.`
+        ? `${hubSeo.desc} Cotiza en ${activeCity.name} y área metropolitana.`
         : hubSeo.desc
       document.title = title
       upsertMeta('name', 'description', desc)
@@ -212,7 +288,9 @@ export default function GlobalSEO() {
       upsertJsonLd(
         PAGE_JSONLD_ID,
         buildServiceJsonLd({
-          name: activeCity ? `${hubSeo.title} en ${activeCity.name}` : hubSeo.title,
+          name: activeCity
+            ? `${hubSeo.title} para bodas y eventos en ${activeCity.name}`
+            : `${hubSeo.title} para bodas y eventos`,
           description: desc,
           url: canonical,
           city: activeCity,
@@ -221,19 +299,17 @@ export default function GlobalSEO() {
     } else if (basePath === '/') {
       // HomeJsonLd owns organization graph; clear page-level schema.
       upsertJsonLd(PAGE_JSONLD_ID, null)
+      upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
       if (SEO_MAP['/']) {
         const title = activeCity
-          ? `Banquetes y Catering en ${activeCity.name} | Bodasesor`
+          ? `Banquetes y Catering para Bodas y Eventos en ${activeCity.name} | Bodasesor`
           : `${SEO_MAP['/'].title} | Bodasesor`
         document.title = title
       }
     } else if (path !== '/' && !path.startsWith('/buscar')) {
       // Detail pages own their <title>; only attach Service schema from the URL slug.
       const slugPart = basePath.split('/').filter(Boolean).pop() || 'servicio'
-      const label = slugPart
-        .split('-')
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ')
+      const label = labelFromSlug(slugPart)
       const name = activeCity ? `${label} en ${activeCity.name}` : label
       const desc =
         document.querySelector('meta[name="description"]')?.getAttribute('content') ||
@@ -255,7 +331,7 @@ export default function GlobalSEO() {
     upsertMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
 
     return () => {
-      // Keep last schema until next route replaces it
+      upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
     }
   }, [location, city])
 
