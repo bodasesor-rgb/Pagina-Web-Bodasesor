@@ -131,6 +131,10 @@ function buildRedirectsFile(map) {
   lines.push(`# Fallback for unknown legacy products`)
   lines.push(`/products/:slug  /banquetes-catering  301!`)
   lines.push('')
+  lines.push(`# Blog posts not listed in the CSV map`)
+  lines.push(`/blogs/noticias/*  /blog/:splat  301`)
+  lines.push(`/blogs/*  /blog  301`)
+  lines.push('')
   lines.push(`# SPA fallback — MUST stay last`)
   lines.push(`/*  /index.html  200`)
 
