@@ -116,6 +116,19 @@ function cityHeadline(baseTitle, cityName) {
   return `${core} en ${cityName}`
 }
 
+/** Only pass abbreviation to title builder when it adds signal (CDMX, GDL…) */
+function usefulCityShort(city) {
+  if (!city?.short) return null
+  const short = city.short.trim()
+  const name = String(city.name || '').trim()
+  if (!short || !name) return null
+  if (short.toLowerCase() === name.toLowerCase()) return null
+  // "Morelia" / "Toluca" style — short equals first token
+  const first = name.split(/[\s/]/)[0]
+  if (short.toLowerCase() === first.toLowerCase()) return null
+  return short
+}
+
 function entry(path, headline, description, h1, cityShort = null) {
   const cleanPath = path.replace(/\/+$/, '') || '/'
   if (cleanPath === '/') return null
@@ -148,6 +161,7 @@ export function collectSpaSeoEntries() {
         `Banquetes y Eventos en ${city.name}`,
         `Banquetes, catering, mobiliario y servicios para bodas y eventos en ${city.name}. Cotiza con Bodasesor.`,
         `Banquetes y Eventos en ${city.name}`,
+        usefulCityShort(city),
       ),
     )
   }
@@ -156,7 +170,8 @@ export function collectSpaSeoEntries() {
     put(entry(h.path, h.title, h.desc, h.title))
     if (isCityExemptPath(h.path)) continue
     for (const citySlug of CITY_SLUGS) {
-      const cityName = CITY_MAP[citySlug]?.name || citySlug
+      const city = CITY_MAP[citySlug]
+      const cityName = city?.name || citySlug
       const headline = cityHeadline(h.title, cityName)
       put(
         entry(
@@ -164,6 +179,7 @@ export function collectSpaSeoEntries() {
           headline,
           `${h.desc} Cotiza en ${cityName} y área metropolitana.`,
           headline,
+          usefulCityShort(city),
         ),
       )
     }
@@ -238,7 +254,8 @@ export function collectSpaSeoEntries() {
 
     const headlineBase = base.h1 || base.title
     for (const citySlug of CITY_SLUGS) {
-      const cityName = CITY_MAP[citySlug]?.name || citySlug
+      const city = CITY_MAP[citySlug]
+      const cityName = city?.name || citySlug
       const headline = cityHeadline(headlineBase, cityName)
       put(
         entry(
@@ -246,6 +263,7 @@ export function collectSpaSeoEntries() {
           headline,
           `${base.description} Cotiza en ${cityName} y área metropolitana.`,
           headline,
+          usefulCityShort(city),
         ),
       )
     }
