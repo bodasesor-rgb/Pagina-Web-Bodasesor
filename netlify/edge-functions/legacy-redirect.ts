@@ -41,5 +41,23 @@ export default async function handler(request: Request, context: Context) {
     }
   }
 
+  // Pattern fallback if a specific _redirects row is missing
+  if (pathname.startsWith('/blogs/noticias/')) {
+    let slug = pathname.split('/').pop() || ''
+    slug = slug.replace(/®️/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
+    if (slug.includes('estrategias-y-consejos')) {
+      slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
+    }
+    if (slug.includes('tipos-de-banquetes')) {
+      slug = 'tipos-de-banquetes'
+    }
+    if (slug) {
+      return Response.redirect(resolveDestination(`/blog/${slug}`, url.origin), 301)
+    }
+  }
+  if (pathname === '/blogs' || pathname === '/blogs/noticias' || pathname.startsWith('/blogs/')) {
+    return Response.redirect(resolveDestination('/blog', url.origin), 301)
+  }
+
   return context.next()
 }

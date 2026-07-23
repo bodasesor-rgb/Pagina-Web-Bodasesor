@@ -30,6 +30,11 @@
   function = "legacy-redirect"
   path = "/pages/*"
 
+# Glued/legacy city URLs → slash-canonical 301 (before SPA fallback)
+[[edge_functions]]
+  function = "city-canonical-redirect"
+  path = "/*"
+
 # Bot shield — block AI/scraper traffic (403 at edge)
 [[edge_functions]]
   path = "/*"

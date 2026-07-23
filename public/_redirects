@@ -4247,5 +4247,9 @@
 # Fallback for unknown legacy products
 /products/:slug  /banquetes-catering  301!
 
+# Blog posts not listed in the CSV map
+/blogs/noticias/*  /blog/:splat  301
+/blogs/*  /blog  301
+
 # SPA fallback — MUST stay last
 /*  /index.html  200
