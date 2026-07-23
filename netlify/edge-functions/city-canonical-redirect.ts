@@ -113,13 +113,34 @@ export function toCanonicalCityPath(pathname: string): string | null {
 
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
+  const pathname = url.pathname.replace(/\/+$/, '') || '/'
   const canonical = toCanonicalCityPath(url.pathname)
 
-  if (canonical && canonical !== (url.pathname.replace(/\/+$/, '') || '/')) {
-    const dest = new URL(canonical, url.origin)
-    dest.search = url.search
-    return Response.redirect(dest.toString(), 301)
+  // Always resolve the static/Nexus/SPA response first.
+  // Hyphenated Nexus landings (e.g. /banquete-kosher-ciudad-de-mexico) must NOT
+  // be 301'd away — they are real SEO HTML with seo-service-hero.
+  const response = await context.next()
+
+  if (!canonical || canonical === pathname) {
+    return response
   }
 
-  return context.next()
+  try {
+    const ct = response.headers.get('content-type') || ''
+    if (response.ok && ct.includes('text/html')) {
+      const html = await response.clone().text()
+      if (html.includes('seo-service-hero')) {
+        return response
+      }
+    }
+  } catch {
+    // If we can't inspect the body, prefer preserving the current response
+    // over a blind redirect that could orphan Nexus landings.
+    return response
+  }
+
+  // SPA soft-404 / missing landing → slash-canonical 301
+  const dest = new URL(canonical, url.origin)
+  dest.search = url.search
+  return Response.redirect(dest.toString(), 301)
 }
