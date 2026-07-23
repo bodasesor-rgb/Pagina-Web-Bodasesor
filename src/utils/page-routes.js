@@ -24,6 +24,8 @@ export const STANDALONE_PATHS = new Set([
   '/galeria',
   '/catalogos',
   '/quienes-somos',
+  '/aviso-de-privacidad',
+  '/terminos-y-condiciones',
   '/blog',
   '/buscar',
 ])

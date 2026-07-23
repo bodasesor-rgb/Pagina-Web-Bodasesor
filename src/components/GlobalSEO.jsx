@@ -10,6 +10,7 @@ import {
   upsertMeta,
 } from '../utils/seo-head'
 import { blogPosts } from '../data/blog-data'
+import { clampMetaDescription } from '../utils/seo-meta'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
@@ -155,6 +156,14 @@ const SEO_MAP = {
     title: 'Buscar servicios',
     desc: 'Busca banquetes, catering, mobiliario y servicios para eventos en Bodasesor.',
   },
+  '/aviso-de-privacidad': {
+    title: 'Aviso de Privacidad',
+    desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales, contacto y derechos ARCO.',
+  },
+  '/terminos-y-condiciones': {
+    title: 'Términos y Condiciones',
+    desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos en México.',
+  },
 }
 
 const NOINDEX_PREFIXES = ['/buscar']
@@ -253,9 +262,10 @@ export default function GlobalSEO() {
     if (blogPost) {
       const title = `${blogPost.title} | Bodasesor Blog`
       document.title = title
-      upsertMeta('name', 'description', blogPost.excerpt || blogPost.title)
+      const blogDesc = clampMetaDescription(blogPost.excerpt || blogPost.title)
+      upsertMeta('name', 'description', blogDesc)
       upsertMeta('property', 'og:title', title)
-      upsertMeta('property', 'og:description', blogPost.excerpt || blogPost.title)
+      upsertMeta('property', 'og:description', blogDesc)
       upsertJsonLd(
         PAGE_JSONLD_ID,
         buildArticleJsonLd({
@@ -278,9 +288,11 @@ export default function GlobalSEO() {
       const title = activeCity
         ? `${hubSeo.title} para Bodas y Eventos en ${activeCity.name} | Bodasesor`
         : `${hubSeo.title} para Bodas y Eventos | Bodasesor`
-      const desc = activeCity
-        ? `${hubSeo.desc} Cotiza en ${activeCity.name} y área metropolitana.`
-        : hubSeo.desc
+      const desc = clampMetaDescription(
+        activeCity
+          ? `${hubSeo.desc} Cotiza en ${activeCity.name} y área metropolitana.`
+          : hubSeo.desc,
+      )
       document.title = title
       upsertMeta('name', 'description', desc)
       upsertMeta('property', 'og:title', title)
