@@ -14,8 +14,10 @@ import {
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
+import Breadcrumbs from "../components/Breadcrumbs";
 import type { ProductData } from "../data/products";
 import { buildSeoTitle } from "../utils/seo-title";
+import { useCity } from "../context/CityContext";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   '🍽️': Utensils, '🥂': Wine, '🍹': Wine, '🍸': Wine, '🧃': Droplets,
@@ -807,13 +809,26 @@ interface EventTypePageProps {
 }
 
 export default function EventTypePage({ product }: EventTypePageProps) {
+  const { city } = useCity();
   const waUrl = WA_MSG(product.title);
   const groups = EVENT_SERVICES[product.slug] ?? [];
   const shortName = product.title.replace(/^Servicios para\s+/i, '');
+  const heroAlt = city
+    ? `${product.title} en ${city.name}`
+    : `${product.title} en México`;
+  const crumbItems = [
+    { name: 'Inicio', href: '/' },
+    { name: 'Tipos de Evento', href: '/bodas' },
+    {
+      name: city
+        ? `${shortName} en ${city.short || city.name}`
+        : shortName,
+    },
+  ];
 
   useEffect(() => {
-    document.title = buildSeoTitle(product.seoTitle);
-  }, [product.seoTitle]);
+    document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
+  }, [product.seoTitle, city]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -822,8 +837,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
       <section className="relative overflow-hidden bg-[#162040]" style={{ minHeight: '280px' }}>
         <OptimizedImage
           src={EVENT_HERO_IMAGES[product.slug] ?? '/images/galeria/g3.jpg'}
-          alt=""
-          aria-hidden="true"
+          alt={heroAlt}
           priority
           width={1200}
           height={675}
@@ -831,15 +845,11 @@ export default function EventTypePage({ product }: EventTypePageProps) {
         />
         <div className="absolute inset-0 bg-[#162040]/55" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
-          <nav className="flex items-center gap-2 text-sm text-white/60 mb-5 font-serif flex-wrap">
-            <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-            <span>/</span>
-            <span className="text-white/90">Tipo de Evento</span>
-            <span>/</span>
-            <span className="text-white/80">{product.title}</span>
-          </nav>
+          <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
           <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-            {product.title}
+            {city
+              ? `${product.title} en ${city.name}`
+              : product.title}
           </h1>
           <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-2xl">
             {product.headline}

@@ -114,9 +114,9 @@ export function collectSpaSeoEntries() {
       put(
         entry(
           `${h.path}/${citySlug}`,
-          `${h.title} en ${cityName}`,
-          `${h.desc} Disponible en ${cityName}.`,
-          `${h.title} en ${cityName}`,
+          `${h.title} para Bodas y Eventos en ${cityName}`,
+          `${h.desc} Cotiza en ${cityName} y área metropolitana.`,
+          `${h.title} para Bodas y Eventos en ${cityName}`,
         ),
       )
     }

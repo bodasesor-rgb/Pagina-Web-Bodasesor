@@ -2,6 +2,8 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useEffect } from "react";
 import { getBlogPostBySlug, blogPosts } from "../data/blog-data";
+import Breadcrumbs from "../components/Breadcrumbs";
+import OptimizedImage from "../components/OptimizedImage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -44,9 +46,12 @@ export default function BlogDetailPage({ slug }: Props) {
 
       {/* ── Hero imagen ── */}
       <div className="relative h-72 md:h-96 overflow-hidden">
-        <img
+        <OptimizedImage
           src={post.image}
-          alt={post.title}
+          alt={`${post.title} — guía Bodasesor sobre ${post.category}`}
+          width={1200}
+          height={640}
+          priority
           className="w-full h-full object-cover"
           onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
         />
@@ -64,12 +69,15 @@ export default function BlogDetailPage({ slug }: Props) {
 
       {/* ── Breadcrumb ── */}
       <div className="bg-[#f5efe8] py-3 px-4">
-        <div className="max-w-4xl mx-auto flex items-center gap-2 text-sm font-serif text-gray-600">
-          <Link href="/" className="hover:text-[#162040] hover:underline">Inicio</Link>
-          <span>›</span>
-          <Link href="/blog" className="hover:text-[#162040] hover:underline">Blog</Link>
-          <span>›</span>
-          <span className="text-[#162040] font-bold truncate">{post.title}</span>
+        <div className="max-w-4xl mx-auto">
+          <Breadcrumbs
+            variant="light"
+            items={[
+              { name: 'Inicio', href: '/' },
+              { name: 'Blog', href: '/blog' },
+              { name: post.title },
+            ]}
+          />
         </div>
       </div>
 

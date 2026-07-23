@@ -6,6 +6,7 @@ import GalleryCarouselSection from "../components/GalleryCarousel";
 import { Lightbox } from "../components/Lightbox";
 import OptimizedImage from "../components/OptimizedImage";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildSeoTitle } from "../utils/seo-title";
@@ -575,6 +576,18 @@ export default function ServicePage({ params }: ServicePageProps) {
     HERO_IMAGES[slug]?.startsWith('/images/mesas/') ||
     HERO_IMAGES[slug]?.startsWith('/images/barras/') ||
     false;
+  const heroAlt = city
+    ? `${product.title} para eventos en ${city.name}`
+    : `${product.title} para eventos y banquetes`;
+  const crumbItems = [
+    { name: 'Inicio', href: '/' },
+    { name: product.categoryLabel || 'Servicios', href: product.categoryHref || '/' },
+    {
+      name: city
+        ? `${product.title} en ${city.short || city.name}`
+        : product.title,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -586,15 +599,11 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-5">
               <div className="lg:col-span-3 px-4 sm:px-6 lg:px-12 py-10 md:py-16 flex flex-col justify-center min-h-[260px]">
-                <nav className="flex items-center gap-2 text-sm text-white/60 mb-5 font-serif flex-wrap">
-                  <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-                  <span>/</span>
-                  <Link href={product.categoryHref} className="hover:text-white transition-colors">{product.categoryLabel}</Link>
-                  <span>/</span>
-                  <span className="text-white/80">{product.title}</span>
-                </nav>
+                <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
                 <h1 className="text-4xl md:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-                  {city ? `${product.title} en ${city.name}` : product.title}
+                  {city
+                    ? `${product.title} para Bodas y Eventos en ${city.name}`
+                    : `${product.title} para Bodas y Eventos`}
                 </h1>
                 <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-xl">
                   {product.headline}
@@ -614,7 +623,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               <div className="lg:col-span-2 flex items-center justify-center bg-[#f5efe8] min-h-[260px] py-8 px-8">
                 <OptimizedImage
                   src={HERO_IMAGES[slug]!}
-                  alt={product.title}
+                  alt={heroAlt}
                   width={400}
                   height={288}
                   priority
@@ -629,24 +638,19 @@ export default function ServicePage({ params }: ServicePageProps) {
         <section className="relative overflow-hidden bg-[#162040]" style={{ minHeight: '280px' }}>
           <OptimizedImage
             src={HERO_IMAGES[slug] ?? '/images/galeria/g3.jpg'}
-            alt=""
+            alt={heroAlt}
             width={1200}
             height={675}
             priority
-            aria-hidden="true"
             className="absolute inset-0 w-full h-full object-contain opacity-60"
           />
           <div className="absolute inset-0 bg-[#162040]/55" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-14">
-            <nav className="flex items-center gap-2 text-sm text-white/60 mb-5 font-serif flex-wrap">
-              <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
-              <span>/</span>
-              <Link href={product.categoryHref} className="hover:text-white transition-colors">{product.categoryLabel}</Link>
-              <span>/</span>
-              <span className="text-white/80">{product.title}</span>
-            </nav>
+            <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-              {city ? `${product.title} en ${city.name}` : product.title}
+              {city
+                ? `${product.title} para Bodas y Eventos en ${city.name}`
+                : `${product.title} para Bodas y Eventos`}
             </h1>
             <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-2xl">
               {product.headline}
