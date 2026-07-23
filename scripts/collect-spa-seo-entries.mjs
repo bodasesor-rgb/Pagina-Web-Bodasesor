@@ -27,6 +27,19 @@ import { clampMetaDescription } from '../src/utils/seo-meta.js'
 
 /** Unique canonical city slugs for hub×city prerender shells */
 const CITY_SLUGS = [...new Set(Object.values(CITY_MAP).map((c) => c.slug))]
+const CITY_SLUG_SET = new Set(CITY_SLUGS)
+
+/** Keep in sync with src/utils/city-url.js CITY_EXEMPT_PREFIXES */
+const CITY_EXEMPT_PREFIXES = [
+  '/blog',
+  '/buscar',
+  '/quienes-somos',
+  '/aviso-de-privacidad',
+  '/terminos-y-condiciones',
+  '/galeria',
+  '/catalogo',
+  '/catalogos',
+]
 
 const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
 
@@ -71,6 +84,11 @@ const HUBS = [
   { path: '/cumpleanos', title: 'Cumpleaños', desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.' },
   { path: '/primera-comunion', title: 'Primera Comunión', desc: 'Servicios completos para primera comunión: banquete, decoración y más.' },
   { path: '/parrillada', title: 'Parrillada para Eventos', desc: 'Servicio de parrillada para bodas y eventos en México.' },
+  // Banquet hubs (indexed heavily; must not soft-404 to home SPA)
+  { path: '/banquetes', title: 'Banquetes', desc: 'Banquetes formales para bodas, XV años y eventos: menús por tiempos, buffet y servicio de meseros en México.' },
+  { path: '/banquete-kosher', title: 'Banquete Kosher', desc: 'Banquete kosher para bodas y eventos con menús certificados y servicio profesional en México.' },
+  { path: '/banquete-mexicano', title: 'Banquete Mexicano', desc: 'Banquete mexicano para bodas y eventos: estaciones, antojitos y menús tradicionales en México.' },
+  { path: '/banquete-navideno', title: 'Banquete Navideño', desc: 'Banquete navideño para empresas y eventos: menús de temporada y servicio completo en México.' },
   { path: '/aviso-de-privacidad', title: 'Aviso de Privacidad', desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales y derechos ARCO.' },
   { path: '/terminos-y-condiciones', title: 'Términos y Condiciones', desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos.' },
 ]
@@ -86,12 +104,37 @@ function clipDesc(text) {
   return clampMetaDescription(text)
 }
 
-function entry(path, headline, description, h1) {
+function isCityExemptPath(path) {
+  return CITY_EXEMPT_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`))
+}
+
+/** City landing / service titles — avoid "Bodas para Bodas y Eventos en X" */
+function cityHeadline(baseTitle, cityName) {
+  const core = String(baseTitle || '').trim()
+  if (!core) return `Servicios para Eventos en ${cityName}`
+  if (/en\s+[A-ZÁÉÍÓÚÑ]/i.test(core)) return core
+  return `${core} en ${cityName}`
+}
+
+/** Only pass abbreviation to title builder when it adds signal (CDMX, GDL…) */
+function usefulCityShort(city) {
+  if (!city?.short) return null
+  const short = city.short.trim()
+  const name = String(city.name || '').trim()
+  if (!short || !name) return null
+  if (short.toLowerCase() === name.toLowerCase()) return null
+  // "Morelia" / "Toluca" style — short equals first token
+  const first = name.split(/[\s/]/)[0]
+  if (short.toLowerCase() === first.toLowerCase()) return null
+  return short
+}
+
+function entry(path, headline, description, h1, cityShort = null) {
   const cleanPath = path.replace(/\/+$/, '') || '/'
   if (cleanPath === '/') return null
   return {
     path: cleanPath,
-    title: buildSeoTitle(headline),
+    title: buildSeoTitle(headline, cityShort),
     description: clipDesc(description),
     h1: h1 || headline,
     canonical: `${SITE_BASE}${cleanPath}`,
@@ -101,23 +144,42 @@ function entry(path, headline, description, h1) {
 /** @returns {Map<string, {path:string,title:string,description:string,h1:string,canonical:string}>} */
 export function collectSpaSeoEntries() {
   const map = new Map()
+  const blogSlugs = new Set(blogPosts.map((p) => p.slug).filter(Boolean))
 
   const put = (e) => {
     if (!e?.path) return
     if (!map.has(e.path)) map.set(e.path, e)
   }
 
+  // City landings: /cuernavaca, /ciudad-de-mexico — must not soft-404 to home
+  for (const citySlug of CITY_SLUGS) {
+    const city = CITY_MAP[citySlug]
+    if (!city) continue
+    put(
+      entry(
+        `/${citySlug}`,
+        `Banquetes y Eventos en ${city.name}`,
+        `Banquetes, catering, mobiliario y servicios para bodas y eventos en ${city.name}. Cotiza con Bodasesor.`,
+        `Banquetes y Eventos en ${city.name}`,
+        usefulCityShort(city),
+      ),
+    )
+  }
+
   for (const h of HUBS) {
     put(entry(h.path, h.title, h.desc, h.title))
-    // City variants so crawlers don't get the home canonical from SPA fallback
+    if (isCityExemptPath(h.path)) continue
     for (const citySlug of CITY_SLUGS) {
-      const cityName = CITY_MAP[citySlug]?.name || citySlug
+      const city = CITY_MAP[citySlug]
+      const cityName = city?.name || citySlug
+      const headline = cityHeadline(h.title, cityName)
       put(
         entry(
           `${h.path}/${citySlug}`,
-          `${h.title} para Bodas y Eventos en ${cityName}`,
+          headline,
           `${h.desc} Cotiza en ${cityName} y área metropolitana.`,
-          `${h.title} para Bodas y Eventos en ${cityName}`,
+          headline,
+          usefulCityShort(city),
         ),
       )
     }
@@ -131,6 +193,8 @@ export function collectSpaSeoEntries() {
   for (const p of products) {
     const name = p.title || p.name
     if (!name || !p.slug) continue
+    // Blog articles duplicated into products.js — keep only /blog/{slug}
+    if (blogSlugs.has(p.slug)) continue
     const href = productHref(p.slug)
     const desc =
       p.seoDescription ||
@@ -175,6 +239,33 @@ export function collectSpaSeoEntries() {
       const name = item[nameKey] || item.name
       if (!name || !item.slug) continue
       put(entry(hrefFn(item), name, item.desc || item.short || name, name))
+    }
+  }
+
+  // City variants for EVERY service/product path (not only HUBS).
+  // Without these, Netlify serves dist/index.html (home canonical) → soft-404 in Google.
+  const bases = [...map.values()]
+  for (const base of bases) {
+    if (isCityExemptPath(base.path)) continue
+    const segs = base.path.split('/').filter(Boolean)
+    if (!segs.length || CITY_SLUG_SET.has(segs[segs.length - 1])) continue
+    // Bare city landing already handled
+    if (segs.length === 1 && CITY_SLUG_SET.has(segs[0])) continue
+
+    const headlineBase = base.h1 || base.title
+    for (const citySlug of CITY_SLUGS) {
+      const city = CITY_MAP[citySlug]
+      const cityName = city?.name || citySlug
+      const headline = cityHeadline(headlineBase, cityName)
+      put(
+        entry(
+          `${base.path}/${citySlug}`,
+          headline,
+          `${base.description} Cotiza en ${cityName} y área metropolitana.`,
+          headline,
+          usefulCityShort(city),
+        ),
+      )
     }
   }
 

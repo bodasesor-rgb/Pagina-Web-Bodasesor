@@ -18,7 +18,7 @@ const STANDALONE = [
   '/wedding-planner', '/musica', '/fotografia', '/alimentos-empresas',
   '/espacios-eventos', '/carpas', '/audio-iluminacion-video', '/galeria',
   '/catalogos',
-  '/quienes-somos', '/blog', '/buscar',
+  '/quienes-somos', '/blog',
 ]
 
 const EVENT_TYPES = [
@@ -75,14 +75,22 @@ function collectPaths() {
       if (dest.startsWith(SITE_BASE)) pathname = dest.slice(SITE_BASE.length)
       if (!pathname.startsWith('/') || pathname.includes('/blog/')) continue
       if (pathname.startsWith('/products/') || pathname.startsWith('/collections/')) continue
+      // Never sitemap search / thin query landings (soft-404 + noindex intent)
+      if (pathname === '/buscar' || pathname.startsWith('/buscar?') || pathname.includes('?')) continue
       paths.add(pathname.replace(/\/+$/, '') || '/')
     }
   }
 
   // All SPA product/detail + hub URLs (same inventory as prerender shells)
-  for (const p of collectSpaSeoPaths()) paths.add(p)
+  for (const p of collectSpaSeoPaths()) {
+    if (p === '/buscar' || p.startsWith('/buscar')) continue
+    paths.add(p)
+  }
 
-  return [...paths].sort()
+  // Final scrub
+  return [...paths]
+    .filter((p) => p !== '/buscar' && !p.startsWith('/buscar') && !p.includes('?'))
+    .sort()
 }
 
 function escapeXml(s) {

@@ -9,6 +9,8 @@
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "generate:webp": "node scripts/generate-webp.mjs",
     "prerender:seo": "node scripts/prerender-spa-seo-shells.mjs",
+    "audit:seo": "node scripts/audit-seo-production.mjs",
+    "check:glued-city": "node scripts/check-glued-city-canonical.mjs",
     "guard:redirects": "node scripts/guard-redirects.mjs",
     "check:redirects": "node scripts/check-production-redirects.mjs",
     "verify:nexus": "node scripts/verify-nexus-production.mjs",
