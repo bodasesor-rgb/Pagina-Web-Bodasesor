@@ -8,6 +8,8 @@ export const CITY_EXEMPT_PREFIXES = [
   '/blog',
   '/buscar',
   '/quienes-somos',
+  '/aviso-de-privacidad',
+  '/terminos-y-condiciones',
   '/galeria',
   '/catalogo',
   '/catalogos',

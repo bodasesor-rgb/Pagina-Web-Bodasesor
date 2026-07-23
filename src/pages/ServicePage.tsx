@@ -10,6 +10,8 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildSeoTitle } from "../utils/seo-title";
+import { upsertJsonLd } from "../utils/seo-head";
+import { buildFaqPageJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
@@ -522,6 +524,16 @@ export default function ServicePage({ params }: ServicePageProps) {
     document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
   }, [product?.seoTitle, city]);
 
+  useEffect(() => {
+    if (!product) return;
+    const faqs =
+      Array.isArray(product.faqs) && product.faqs.length >= 2
+        ? product.faqs
+        : defaultServiceFaqs(product.title);
+    upsertJsonLd('bodasesor-faq-jsonld', buildFaqPageJsonLd(faqs));
+    return () => upsertJsonLd('bodasesor-faq-jsonld', null);
+  }, [product]);
+
   if (!loaded) {
     return (
       <div className="min-h-screen bg-white" aria-busy="true" aria-live="polite">
@@ -1020,6 +1032,41 @@ export default function ServicePage({ params }: ServicePageProps) {
         </div>
       </section>
       )}
+
+      {/* ── FAQ (visible + FAQPage schema) ── */}
+      {(() => {
+        const faqs =
+          Array.isArray(product.faqs) && product.faqs.length >= 2
+            ? product.faqs
+            : defaultServiceFaqs(product.title);
+        return (
+          <section className="py-14 bg-white border-t border-[#162040]/10" aria-labelledby="faq-heading">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 id="faq-heading" className="text-2xl md:text-3xl font-serif font-bold text-[#162040] mb-2">
+                Preguntas frecuentes
+              </h2>
+              <p className="text-gray-600 font-serif text-sm mb-8">
+                Respuestas claras sobre {product.title}
+                {city ? ` en ${city.name}` : ''}.
+              </p>
+              <div className="space-y-4">
+                {faqs.map((f) => (
+                  <details
+                    key={f.q}
+                    className="group rounded-xl border border-[#162040]/10 bg-[#faf7f2] px-5 py-4"
+                  >
+                    <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
+                      <span>{f.q}</span>
+                      <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                    </summary>
+                    <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       <SeoRelatedLinks
         basePath={product.categoryHref || `/${slug}`}

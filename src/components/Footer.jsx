@@ -57,6 +57,8 @@ export default function Footer() {
                 { name: 'Wedding Planner', href: '/wedding-planner' },
                 { name: 'Blog de Eventos', href: '/blog' },
                 { name: 'Quiénes somos', href: '/quienes-somos' },
+                { name: 'Aviso de privacidad', href: '/aviso-de-privacidad' },
+                { name: 'Términos y condiciones', href: '/terminos-y-condiciones' },
               ].map(item => (
                 <li key={item.href}>
                   <Link href={item.href} className={linkClass}>{item.name}</Link>

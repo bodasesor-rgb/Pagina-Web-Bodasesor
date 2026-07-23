@@ -23,6 +23,7 @@ import { COMBINACIONES } from '../src/data/combinaciones-products.js'
 import { blogPosts } from '../src/data/blog-data.js'
 import { CITY_MAP } from '../src/data/city-data.js'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
+import { clampMetaDescription } from '../src/utils/seo-meta.js'
 
 /** Unique canonical city slugs for hub×city prerender shells */
 const CITY_SLUGS = [...new Set(Object.values(CITY_MAP).map((c) => c.slug))]
@@ -70,6 +71,8 @@ const HUBS = [
   { path: '/cumpleanos', title: 'Cumpleaños', desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.' },
   { path: '/primera-comunion', title: 'Primera Comunión', desc: 'Servicios completos para primera comunión: banquete, decoración y más.' },
   { path: '/parrillada', title: 'Parrillada para Eventos', desc: 'Servicio de parrillada para bodas y eventos en México.' },
+  { path: '/aviso-de-privacidad', title: 'Aviso de Privacidad', desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales y derechos ARCO.' },
+  { path: '/terminos-y-condiciones', title: 'Términos y Condiciones', desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos.' },
 ]
 
 function productHref(slug) {
@@ -79,10 +82,8 @@ function productHref(slug) {
   return `/${slug}`
 }
 
-function clipDesc(text, max = 160) {
-  const t = String(text || '').replace(/\s+/g, ' ').trim()
-  if (t.length <= max) return t
-  return `${t.slice(0, max - 1).trim()}…`
+function clipDesc(text) {
+  return clampMetaDescription(text)
 }
 
 function entry(path, headline, description, h1) {

@@ -1,3 +1,5 @@
+import { clampMetaDescription } from './seo-meta'
+
 const SITE_BASE = 'https://bodasesor.com'
 
 /** Normalize pathname for canonical URLs (no trailing slash except home). */
@@ -32,7 +34,11 @@ export function upsertMeta(attr, key, content) {
     el.setAttribute(attr, key)
     document.head.appendChild(el)
   }
-  el.setAttribute('content', content)
+  const value =
+    attr === 'name' && key === 'description'
+      ? clampMetaDescription(content)
+      : String(content ?? '')
+  el.setAttribute('content', value)
 }
 
 export function upsertJsonLd(id, data) {

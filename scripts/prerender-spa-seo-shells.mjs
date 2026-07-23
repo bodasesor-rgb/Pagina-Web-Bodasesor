@@ -10,6 +10,7 @@ import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { collectSpaSeoEntries } from './collect-spa-seo-entries.mjs'
+import { clampMetaDescription } from '../src/utils/seo-meta.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -53,9 +54,10 @@ function applySeo(html, entry) {
 
   out = out.replace(/<title>[^<]*<\/title>/i, `<title>${escapeHtml(entry.title)}</title>`)
 
+  const description = clampMetaDescription(entry.description)
   out = out.replace(
     /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
-    `<meta name="description" content="${escapeAttr(entry.description)}" />`,
+    `<meta name="description" content="${escapeAttr(description)}" />`,
   )
 
   out = out.replace(
@@ -70,8 +72,21 @@ function applySeo(html, entry) {
 
   out = out.replace(
     /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/i,
-    `<meta property="og:description" content="${escapeAttr(entry.description)}" />`,
+    `<meta property="og:description" content="${escapeAttr(description)}" />`,
   )
+
+  // Single H1 for crawlers: demote static LCP hero title (hidden on non-home shells)
+  out = out.replace(
+    /(<div id="static-hero-copy">\s*)<h1>([\s\S]*?)<\/h1>/i,
+    '$1<p class="hero-title">$2</p>',
+  )
+  // Keep visual weight if CSS targeted h1 — mirror styles for .hero-title
+  if (!out.includes('#static-hero-copy .hero-title')) {
+    out = out.replace(
+      /#static-hero-copy h1\{/i,
+      '#static-hero-copy .hero-title,#static-hero-copy h1{',
+    )
+  }
 
   out = out.replace(
     /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
@@ -114,7 +129,7 @@ function applySeo(html, entry) {
     ? {
         '@type': 'Article',
         headline: entry.h1 || entry.title,
-        description: entry.description,
+        description,
         url: entry.canonical,
         author: { '@type': 'Organization', name: 'Bodasesor Eventos' },
         publisher: {
@@ -127,7 +142,7 @@ function applySeo(html, entry) {
     : {
         '@type': 'Service',
         name: entry.h1 || entry.title,
-        description: entry.description,
+        description,
         url: entry.canonical,
         provider: {
           '@type': 'LocalBusiness',
@@ -162,15 +177,15 @@ function applySeo(html, entry) {
     .join('')
 
   // Crawler-visible content (home hero is hidden via no-lcp-hero)
-  const noscript = `<noscript><main style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(entry.description)}</p></main></noscript>`
+  const noscript = `<noscript><main style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(description)}</p></main></noscript>`
   if (out.includes('</body>')) {
     out = out.replace('</body>', `${noscript}\n  </body>`)
   }
 
   // Also rewrite static hero copy so any crawler that ignores noscript still sees product text
   out = out.replace(
-    /(<div id="static-hero-copy">\s*<h1>)[^<]*(<\/h1>\s*<p class="hero-sub">)[^<]*(<\/p>)/i,
-    `$1${escapeHtml(entry.h1)}$2${escapeHtml(entry.description)}$3`,
+    /(<div id="static-hero-copy">\s*<p class="hero-title">)[^<]*(<\/p>\s*<p class="hero-sub">)[^<]*(<\/p>)/i,
+    `$1${escapeHtml(entry.h1)}$2${escapeHtml(description)}$3`,
   )
 
   return out

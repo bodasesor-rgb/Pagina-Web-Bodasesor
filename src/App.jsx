@@ -61,6 +61,7 @@ const EspaciosDetailPage = lazy(() => import('./pages/EspaciosDetailPage.tsx'))
 const CombinacionesPage = lazy(() => import('./pages/CombinacionesPage.tsx'))
 const CombinacionDetailPage = lazy(() => import('./pages/CombinacionDetailPage.tsx'))
 const QuienesSomosPage = lazy(() => import('./pages/QuienesSomosPage.tsx'))
+const LegalPage = lazy(() => import('./pages/LegalPage.tsx'))
 const BlogPage = lazy(() => import('./pages/BlogPage.tsx'))
 const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage.tsx'))
 const ServicePage = lazy(() => import('./pages/ServicePage.tsx'))
@@ -395,8 +396,14 @@ function Router() {
             {(params) => <AudioIluminacionDetailPage slug={stripCityFromSlug(params.slug)} />}
           </Route>
 
-          {/* Quiénes somos */}
+          {/* Quiénes somos + legal (E-E-A-T) */}
           <Route path="/quienes-somos" component={QuienesSomosPage} />
+          <Route path="/aviso-de-privacidad">
+            {() => <LegalPage kind="privacidad" />}
+          </Route>
+          <Route path="/terminos-y-condiciones">
+            {() => <LegalPage kind="terminos" />}
+          </Route>
 
           {/* Blog */}
           <Route path="/blog" component={BlogPage} />
