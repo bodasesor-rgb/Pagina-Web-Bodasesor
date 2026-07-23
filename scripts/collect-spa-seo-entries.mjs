@@ -27,6 +27,19 @@ import { clampMetaDescription } from '../src/utils/seo-meta.js'
 
 /** Unique canonical city slugs for hub×city prerender shells */
 const CITY_SLUGS = [...new Set(Object.values(CITY_MAP).map((c) => c.slug))]
+const CITY_SLUG_SET = new Set(CITY_SLUGS)
+
+/** Keep in sync with src/utils/city-url.js CITY_EXEMPT_PREFIXES */
+const CITY_EXEMPT_PREFIXES = [
+  '/blog',
+  '/buscar',
+  '/quienes-somos',
+  '/aviso-de-privacidad',
+  '/terminos-y-condiciones',
+  '/galeria',
+  '/catalogo',
+  '/catalogos',
+]
 
 const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
 
@@ -71,6 +84,11 @@ const HUBS = [
   { path: '/cumpleanos', title: 'Cumpleaños', desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.' },
   { path: '/primera-comunion', title: 'Primera Comunión', desc: 'Servicios completos para primera comunión: banquete, decoración y más.' },
   { path: '/parrillada', title: 'Parrillada para Eventos', desc: 'Servicio de parrillada para bodas y eventos en México.' },
+  // Banquet hubs (indexed heavily; must not soft-404 to home SPA)
+  { path: '/banquetes', title: 'Banquetes', desc: 'Banquetes formales para bodas, XV años y eventos: menús por tiempos, buffet y servicio de meseros en México.' },
+  { path: '/banquete-kosher', title: 'Banquete Kosher', desc: 'Banquete kosher para bodas y eventos con menús certificados y servicio profesional en México.' },
+  { path: '/banquete-mexicano', title: 'Banquete Mexicano', desc: 'Banquete mexicano para bodas y eventos: estaciones, antojitos y menús tradicionales en México.' },
+  { path: '/banquete-navideno', title: 'Banquete Navideño', desc: 'Banquete navideño para empresas y eventos: menús de temporada y servicio completo en México.' },
   { path: '/aviso-de-privacidad', title: 'Aviso de Privacidad', desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales y derechos ARCO.' },
   { path: '/terminos-y-condiciones', title: 'Términos y Condiciones', desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos.' },
 ]
@@ -175,6 +193,30 @@ export function collectSpaSeoEntries() {
       const name = item[nameKey] || item.name
       if (!name || !item.slug) continue
       put(entry(hrefFn(item), name, item.desc || item.short || name, name))
+    }
+  }
+
+  // City variants for EVERY service/product path (not only HUBS).
+  // Without these, Netlify serves dist/index.html (home canonical) → soft-404 in Google.
+  const bases = [...map.values()]
+  for (const base of bases) {
+    if (CITY_EXEMPT_PREFIXES.some((p) => base.path === p || base.path.startsWith(`${p}/`))) {
+      continue
+    }
+    const segs = base.path.split('/').filter(Boolean)
+    if (!segs.length || CITY_SLUG_SET.has(segs[segs.length - 1])) continue
+
+    const headline = base.h1 || base.title
+    for (const citySlug of CITY_SLUGS) {
+      const cityName = CITY_MAP[citySlug]?.name || citySlug
+      put(
+        entry(
+          `${base.path}/${citySlug}`,
+          `${headline} en ${cityName}`,
+          `${base.description} Cotiza en ${cityName} y área metropolitana.`,
+          `${headline} en ${cityName}`,
+        ),
+      )
     }
   }
 

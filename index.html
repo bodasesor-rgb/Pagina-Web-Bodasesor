@@ -28,11 +28,27 @@
     <link rel="preload" as="image" href="/images/hero-bg-new-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high" />
     <link rel="preload" as="image" href="/images/hero-bg-new.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high" />
     <script>
-      if (/^\/(products|collections|blogs|pages)\//.test(location.pathname)) {
-        var s = document.createElement('script');
-        s.src = '/legacy-redirect-boot.js';
-        document.head.appendChild(s);
-      }
+      (function () {
+        var p = location.pathname.replace(/\/+$/, '') || '/';
+        if (/^\/(products|collections|blogs|pages)\//.test(p)) {
+          var s = document.createElement('script');
+          s.src = '/legacy-redirect-boot.js';
+          document.head.appendChild(s);
+          return;
+        }
+        // Glued city: last segment ends with a city slug but is longer (e.g. carpasmorelia)
+        var last = p.split('/').pop() || '';
+        var cities = ['ciudad-de-mexico','estado-de-mexico','san-miguel-allende','san-luis-potosi','puerto-vallarta','valle-de-bravo','aguascalientes','guadalajara','cuernavaca','monterrey','los-cabos','acapulco','cancun','cozumel','morelia','queretaro','pachuca','tijuana','torreon','veracruz','vallarta','oaxaca','merida','puebla','toluca','cdmx','leon'];
+        for (var i = 0; i < cities.length; i++) {
+          var c = cities[i];
+          if (last !== c && last.length > c.length && last.slice(-c.length) === c) {
+            var s2 = document.createElement('script');
+            s2.src = '/legacy-redirect-boot.js';
+            document.head.appendChild(s2);
+            return;
+          }
+        }
+      })();
     </script>
     <script>
       (function () {

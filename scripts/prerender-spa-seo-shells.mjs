@@ -235,6 +235,32 @@ async function main() {
     console.error('prerender-spa-seo-shells: smoke shell still has home SEO meta')
     process.exit(1)
   }
+
+  // Smoke: city service URLs must not soft-404 to home (GA / Search Console killers)
+  const citySmokes = [
+    'banquetes/ciudad-de-mexico',
+    'banquetes/cuernavaca',
+    'banquetes/3-tiempos/ciudad-de-mexico',
+    'desayunos/puerto-vallarta',
+    'cupcakes-gourmet/ciudad-de-mexico',
+  ]
+  for (const rel of citySmokes) {
+    const abs = join(DIST, rel, 'index.html')
+    if (!existsSync(abs)) {
+      console.error(`prerender-spa-seo-shells: missing city shell ${rel}`)
+      process.exit(1)
+    }
+    const html = await readFile(abs, 'utf8')
+    if (html.includes('rel="canonical" href="https://bodasesor.com/"')) {
+      console.error(`prerender-spa-seo-shells: ${rel} still has home canonical (soft-404)`)
+      process.exit(1)
+    }
+    const expectedCanon = `rel="canonical" href="https://bodasesor.com/${rel}"`
+    if (!html.includes(expectedCanon)) {
+      console.error(`prerender-spa-seo-shells: ${rel} missing canonical ${expectedCanon}`)
+      process.exit(1)
+    }
+  }
 }
 
 main().catch((err) => {
