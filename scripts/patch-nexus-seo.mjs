@@ -61,15 +61,33 @@ async function walkHtml(dir, files = []) {
   return files
 }
 
+function stripGtagSnippets(html) {
+  let out = html
+  out = out.replace(/<!--\s*Google tag \(gtag\.js\)\s*-->\s*/gi, '')
+  out = out.replace(
+    /<script[^>]*\bsrc=["']https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=[^"']+["'][^>]*>\s*<\/script>\s*/gi,
+    '',
+  )
+  // Inline bootstrap that defines gtag + config (Nexus / prior patches)
+  out = out.replace(
+    /<script>\s*(?:window\.)?dataLayer\s*=\s*(?:window\.)?dataLayer\s*\|\|\s*\[\];[\s\S]*?function\s+gtag\s*\([\s\S]*?gtag\(\s*['"]config['"]\s*,\s*['"]G-[A-Z0-9]+['"]\s*(?:,\s*\{[\s\S]*?\})?\s*\);?\s*<\/script>\s*/gi,
+    '',
+  )
+  return out
+}
+
+/** Ensure exactly one GA4 gtag snippet (dedupe doubles that inflate pageviews). */
 function ensureGtag(html) {
-  if (html.includes(GA_ID) || html.includes('googletagmanager.com/gtag/js')) {
+  const scriptCount = (html.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length
+  const hasId = html.includes(GA_ID)
+  if (scriptCount === 1 && hasId) {
     return { html, changed: false }
   }
   if (!/<head[^>]*>/i.test(html)) return { html, changed: false }
-  return {
-    html: html.replace(/<head([^>]*)>/i, `<head$1>\n${GA_SNIPPET}`),
-    changed: true,
-  }
+
+  let out = stripGtagSnippets(html)
+  out = out.replace(/<head([^>]*)>/i, `<head$1>\n${GA_SNIPPET}`)
+  return { html: out, changed: out !== html }
 }
 
 /**
@@ -214,6 +232,7 @@ async function main() {
   const files = await walkHtml(DIST)
   let patched = 0
   let titles = 0
+  let gaFixed = 0
 
   for (const file of files) {
     const rel = file.replace(`${DIST}/`, '')
@@ -222,16 +241,25 @@ async function main() {
     const html = await readFile(file, 'utf8')
     if (!html.includes('<title>')) continue
 
+    const beforeScripts = (html.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length
     const { html: next, changed } = patchHtml(html)
     if (!changed) continue
 
     await writeFile(file, next)
     patched++
+    const afterScripts = (next.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length
+    if (beforeScripts !== 1 || afterScripts !== 1 || !next.includes(GA_ID)) {
+      if (afterScripts === 1 && next.includes(GA_ID) && beforeScripts !== 1) gaFixed++
+    } else if (beforeScripts > 1) {
+      gaFixed++
+    }
     const titleMatch = next.match(/<title>([^<]*)<\/title>/i)
     if (titleMatch && titleMatch[1].length <= MAX_TITLE) titles++
   }
 
-  console.log(`patch-nexus-seo: ${patched} HTML files updated (${files.length} scanned)`)
+  console.log(
+    `patch-nexus-seo: ${patched} HTML files updated (${files.length} scanned, ga_normalized=${gaFixed})`,
+  )
 }
 
 main().catch((err) => {

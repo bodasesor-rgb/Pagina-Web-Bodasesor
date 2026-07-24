@@ -7,7 +7,8 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-6VGGKNB77P');
+      // SPA: page_views are sent by GoogleAnalytics.jsx (initial + client navigations)
+      gtag('config', 'G-6VGGKNB77P', { send_page_view: false });
     </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

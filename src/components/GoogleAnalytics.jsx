@@ -4,8 +4,8 @@ import { useLocation } from 'wouter'
 const GA_ID = 'G-6VGGKNB77P'
 
 /**
- * Sends a GA4 page_view on every SPA route change.
- * Initial page_view comes from the gtag config in index.html.
+ * Sends a GA4 page_view on initial load and every SPA route change.
+ * index.html configures gtag with send_page_view: false so we own all hits.
  */
 export default function GoogleAnalytics() {
   const [location] = useLocation()
@@ -15,11 +15,6 @@ export default function GoogleAnalytics() {
     if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
 
     const path = location || '/'
-    // Skip duplicate of the first config page_view for the landing URL
-    if (prevPath.current === null) {
-      prevPath.current = path
-      return
-    }
     if (prevPath.current === path) return
     prevPath.current = path
 
