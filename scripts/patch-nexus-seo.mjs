@@ -73,14 +73,22 @@ function stripGtagSnippets(html) {
     /<script>\s*(?:window\.)?dataLayer\s*=\s*(?:window\.)?dataLayer\s*\|\|\s*\[\];[\s\S]*?function\s+gtag\s*\([\s\S]*?gtag\(\s*['"]config['"]\s*,\s*['"]G-[A-Z0-9]+['"]\s*(?:,\s*\{[\s\S]*?\})?\s*\);?\s*<\/script>\s*/gi,
     '',
   )
+  // Deferred Nexus loadGa() injectors (often duplicated; cause triple page_view)
+  out = out.replace(
+    /<script>\s*\(function\s*\(\)\s*\{\s*function\s+loadGa\s*\(\)\s*\{[\s\S]*?googletagmanager\.com\/gtag\/js\?id=G-[A-Z0-9]+[\s\S]*?\}\)\s*\(\)\s*;?\s*<\/script>\s*/gi,
+    '',
+  )
   return out
 }
 
 /** Ensure exactly one GA4 gtag snippet (dedupe doubles that inflate pageviews). */
 function ensureGtag(html) {
-  const scriptCount = (html.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length
+  const headScriptCount = (
+    html.match(/<head[\s\S]*?<\/head>/i)?.[0]?.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []
+  ).length
+  const deferredCount = (html.match(/function\s+loadGa\s*\(/g) || []).length
   const hasId = html.includes(GA_ID)
-  if (scriptCount === 1 && hasId) {
+  if (headScriptCount === 1 && deferredCount === 0 && hasId) {
     return { html, changed: false }
   }
   if (!/<head[^>]*>/i.test(html)) return { html, changed: false }
