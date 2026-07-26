@@ -84,6 +84,14 @@ run(
   { optional: allowSpaOnly },
 )
 
+// Static blog articles (not in blog-data.js) — same preserve model as Nexus
+run(
+  '1c Sync blogs estáticos desde producción (no pisar en deploy SPA)',
+  'node',
+  ['scripts/sync-blogs-from-live.mjs'],
+  { optional: true },
+)
+
 run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
 
 if (existsSync(LIVE) && liveLandingCount() > 0) {
@@ -92,6 +100,9 @@ if (existsSync(LIVE) && liveLandingCount() > 0) {
     optional: true,
   })
   run('4b Verificar Nexus en dist (guard)', 'node', ['scripts/guard-nexus-dist.mjs'])
+  run('4b2 Verificar blogs estáticos en dist (guard)', 'node', ['scripts/guard-blogs-dist.mjs'], {
+    optional: true,
+  })
 } else if (!allowSpaOnly) {
   console.error('\n❌ Sin landings SEO en .netlify-live/ — abortando para no publicar SPA-only.')
   console.error('   Revisa NEXUS_URL / SITE_BASE o republica lotes desde Nexus.')

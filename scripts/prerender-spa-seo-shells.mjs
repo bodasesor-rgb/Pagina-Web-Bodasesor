@@ -41,6 +41,26 @@ async function isNexusLanding(absPath) {
   }
 }
 
+/** Rich static blog HTML (Shopify/legacy) — must not be replaced by thin SPA shells */
+async function isPreservedBlogHtml(absPath) {
+  try {
+    await access(absPath)
+    const html = await readFile(absPath, 'utf8')
+    if (html.includes('id="root"') && /\/assets\/index-[^"]+\.js/.test(html)) return false
+    if (html.includes('Bodasesor Eventos Blog')) return true
+    if (html.length >= 20_000 && !html.includes('seo-service-hero')) return true
+    return false
+  } catch {
+    return false
+  }
+}
+
+async function shouldSkipExistingLanding(absPath) {
+  if (await isNexusLanding(absPath)) return true
+  if (await isPreservedBlogHtml(absPath)) return true
+  return false
+}
+
 function applySeo(html, entry) {
   let out = html
 
@@ -203,6 +223,7 @@ async function main() {
 
   let written = 0
   let skippedNexus = 0
+  let skippedBlog = 0
   let skippedSame = 0
 
   for (const entry of entries.values()) {
@@ -213,6 +234,10 @@ async function main() {
       skippedNexus++
       continue
     }
+    if (await isPreservedBlogHtml(outPath)) {
+      skippedBlog++
+      continue
+    }
 
     const html = applySeo(template, entry)
     await mkdir(dirname(outPath), { recursive: true })
@@ -221,7 +246,7 @@ async function main() {
   }
 
   console.log(
-    `prerender-spa-seo-shells: wrote ${written} shells (skipped Nexus=${skippedNexus}, inventory=${entries.size}, unused=${skippedSame})`,
+    `prerender-spa-seo-shells: wrote ${written} shells (skipped Nexus=${skippedNexus}, skipped blogs=${skippedBlog}, inventory=${entries.size}, unused=${skippedSame})`,
   )
 
   // Smoke: critical product page must not keep home canonical

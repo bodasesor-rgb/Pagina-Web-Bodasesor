@@ -24,6 +24,7 @@
     "build:safe": "node scripts/safe-build.mjs",
     "sync:netlify": "node scripts/pull-netlify-live.mjs",
     "sync:seo": "node scripts/sync-seo-from-live.mjs",
+    "sync:blogs": "node scripts/sync-blogs-from-live.mjs",
     "merge:netlify": "node scripts/merge-live-into-dist.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
