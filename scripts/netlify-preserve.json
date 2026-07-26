@@ -1,7 +1,8 @@
 {
-  "comment": "Rutas que viven en Netlify (Nexus/SEO) y NO deben perderse al publicar el SPA.",
+  "comment": "Rutas que viven en Netlify (Nexus/SEO + blogs estáticos) y NO deben perderse al publicar el SPA.",
   "alwaysPreservePrefixes": [
     "css/",
+    "blog/",
     "eventos/",
     "nexus-output-pages/",
     "private/nexus-output-pages/",
@@ -26,6 +27,7 @@
     "_headers",
     "favicon.svg",
     "icons.svg",
-    "apple-touch-icon.svg"
+    "apple-touch-icon.svg",
+    "blog/index.html"
   ]
 }
