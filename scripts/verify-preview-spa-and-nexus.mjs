@@ -9,7 +9,7 @@
  *
  * Never use this as a reason to deploy --prod; it only checks an already-published URL.
  */
-import { browserNavHeaders, BROWSER_UA } from './lib/browser-fetch-headers.mjs'
+import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
 
 const BASE = (process.argv[2] || process.env.PREVIEW_URL || '').replace(/\/$/, '')
 const MIN_CSS_BYTES = Number(process.env.MIN_SEO_CSS_BYTES || 10_000)
