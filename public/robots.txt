@@ -8,6 +8,9 @@ Allow: /
 User-agent: AdsBot-Google
 Allow: /
 
+User-agent: SemrushBot
+Allow: /
+
 # Crawlers de IA: fuera
 User-agent: GPTBot
 Disallow: /
@@ -19,6 +22,9 @@ User-agent: OAI-SearchBot
 Disallow: /
 
 User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-User
 Disallow: /
 
 User-agent: anthropic-ai
@@ -57,7 +63,16 @@ Disallow: /
 User-agent: meta-externalagent
 Disallow: /
 
-# SEO scrapers de ancho de banda (SemrushBot permitido para Ubersuggest)
+User-agent: MistralAI-User
+Disallow: /
+
+User-agent: Timpibot
+Disallow: /
+
+User-agent: AI2Bot
+Disallow: /
+
+# SEO scrapers de ancho de banda (SemrushBot permitido arriba)
 User-agent: AhrefsBot
 Disallow: /
 
@@ -77,6 +92,12 @@ User-agent: PetalBot
 Disallow: /
 
 User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: SEOkicks
+Disallow: /
+
+User-agent: Barkrowler
 Disallow: /
 
 User-agent: *
