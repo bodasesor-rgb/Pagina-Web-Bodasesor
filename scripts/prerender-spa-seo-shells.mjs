@@ -11,6 +11,12 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { collectSpaSeoEntries } from './collect-spa-seo-entries.mjs'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
+import {
+  SITE_AUTHOR,
+  SITE_PUBLISHER,
+  buildPageKeywords,
+  organizationRef,
+} from '../src/utils/seo-page-meta.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -79,6 +85,30 @@ function applySeo(html, entry) {
     /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
     `<meta name="description" content="${escapeAttr(description)}" />`,
   )
+
+  const keywords =
+    entry.keywords ||
+    buildPageKeywords({
+      path: entry.path,
+      title: entry.title,
+      h1: entry.h1,
+    })
+
+  // Author / publisher / keywords (replace if present, else inject after description)
+  const ensureMeta = (name, content) => {
+    const re = new RegExp(`<meta\\s+name="${name}"\\s+content="[^"]*"\\s*\\/?>`, 'i')
+    const tag = `<meta name="${name}" content="${escapeAttr(content)}" />`
+    if (re.test(out)) out = out.replace(re, tag)
+    else {
+      out = out.replace(
+        /(<meta\s+name="description"\s+content="[^"]*"\s*\/?>)/i,
+        `$1\n    ${tag}`,
+      )
+    }
+  }
+  ensureMeta('author', SITE_AUTHOR)
+  ensureMeta('publisher', SITE_PUBLISHER)
+  ensureMeta('keywords', keywords)
 
   out = out.replace(
     /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
@@ -151,11 +181,14 @@ function applySeo(html, entry) {
         headline: entry.h1 || entry.title,
         description,
         url: entry.canonical,
-        author: { '@type': 'Organization', name: 'Bodasesor Eventos' },
+        keywords,
+        author: organizationRef(),
         publisher: {
-          '@type': 'Organization',
-          name: 'Bodasesor Eventos',
-          url: 'https://bodasesor.com/',
+          ...organizationRef(),
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://bodasesor.com/favicon.svg',
+          },
         },
         inLanguage: 'es-MX',
       }
@@ -164,6 +197,7 @@ function applySeo(html, entry) {
         name: entry.h1 || entry.title,
         description,
         url: entry.canonical,
+        keywords,
         provider: {
           '@type': 'LocalBusiness',
           name: 'Bodasesor Eventos',

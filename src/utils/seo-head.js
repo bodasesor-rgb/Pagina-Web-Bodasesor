@@ -1,4 +1,9 @@
 import { clampMetaDescription } from './seo-meta'
+import {
+  SITE_AUTHOR,
+  SITE_PUBLISHER,
+  buildPageKeywords,
+} from './seo-page-meta'
 
 const SITE_BASE = 'https://bodasesor.com'
 
@@ -55,4 +60,21 @@ export function upsertJsonLd(id, data) {
     document.head.appendChild(el)
   }
   el.textContent = JSON.stringify(data)
+}
+
+/**
+ * Author/publisher (bodasesor.com) + independent keywords for the current page.
+ */
+export function applyPageIdentityMeta({ path, title = '', h1 = '', cityName = '', extraKeywords = [] } = {}) {
+  upsertMeta('name', 'author', SITE_AUTHOR)
+  upsertMeta('name', 'publisher', SITE_PUBLISHER)
+  const keywords = buildPageKeywords({
+    path,
+    title,
+    h1,
+    cityName,
+    extra: extraKeywords,
+  })
+  upsertMeta('name', 'keywords', keywords)
+  return keywords
 }

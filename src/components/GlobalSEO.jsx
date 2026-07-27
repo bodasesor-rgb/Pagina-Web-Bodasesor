@@ -8,9 +8,11 @@ import {
   upsertJsonLd,
   upsertLink,
   upsertMeta,
+  applyPageIdentityMeta,
 } from '../utils/seo-head'
 import { blogPosts } from '../data/blog-data'
 import { clampMetaDescription } from '../utils/seo-meta'
+import { organizationRef } from '../utils/seo-page-meta'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
@@ -85,7 +87,7 @@ const SEO_MAP = {
     desc: 'Banquetes, catering, mobiliario y servicios premium para bodas, quinceañeras y eventos corporativos en México.',
   },
   '/galeria': {
-    title: 'Galería de Eventos',
+    title: 'Galería de Banquetes y Eventos Reales',
     desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor en México.',
   },
   '/banquetes-catering': {
@@ -203,7 +205,7 @@ function buildServiceJsonLd({ name, description, url, city }) {
   return data
 }
 
-function buildArticleJsonLd({ title, description, url, date, image }) {
+function buildArticleJsonLd({ title, description, url, date, image, keywords }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -212,15 +214,10 @@ function buildArticleJsonLd({ title, description, url, date, image }) {
     url,
     datePublished: date || undefined,
     image: image || undefined,
-    author: {
-      '@type': 'Organization',
-      name: 'Bodasesor Eventos',
-      url: `${SITE_BASE}/`,
-    },
+    keywords: keywords || undefined,
+    author: organizationRef(),
     publisher: {
-      '@type': 'Organization',
-      name: 'Bodasesor Eventos',
-      url: `${SITE_BASE}/`,
+      ...organizationRef(),
       logo: {
         '@type': 'ImageObject',
         url: `${SITE_BASE}/favicon.svg`,
@@ -266,6 +263,12 @@ export default function GlobalSEO() {
       upsertMeta('name', 'description', blogDesc)
       upsertMeta('property', 'og:title', title)
       upsertMeta('property', 'og:description', blogDesc)
+      const keywords = applyPageIdentityMeta({
+        path,
+        title: blogPost.title,
+        h1: blogPost.title,
+        extraKeywords: [blogPost.category, 'blog eventos', 'consejos bodas'].filter(Boolean),
+      })
       upsertJsonLd(
         PAGE_JSONLD_ID,
         buildArticleJsonLd({
@@ -274,6 +277,7 @@ export default function GlobalSEO() {
           url: canonical,
           date: blogPost.date,
           image: blogPost.image,
+          keywords,
         }),
       )
       upsertMeta('name', 'robots', 'index, follow')
@@ -297,6 +301,12 @@ export default function GlobalSEO() {
       upsertMeta('name', 'description', desc)
       upsertMeta('property', 'og:title', title)
       upsertMeta('property', 'og:description', desc)
+      applyPageIdentityMeta({
+        path,
+        title: hubSeo.title,
+        h1: hubSeo.title,
+        cityName: activeCity?.name,
+      })
       upsertJsonLd(
         PAGE_JSONLD_ID,
         buildServiceJsonLd({
@@ -317,6 +327,12 @@ export default function GlobalSEO() {
           ? `Banquetes y Catering para Bodas y Eventos en ${activeCity.name} | Bodasesor`
           : `${SEO_MAP['/'].title} | Bodasesor`
         document.title = title
+        applyPageIdentityMeta({
+          path: '/',
+          title: SEO_MAP['/'].title,
+          h1: 'Banquetes, catering y servicios para eventos en México',
+          cityName: activeCity?.name,
+        })
       }
     } else if (path !== '/' && !path.startsWith('/buscar')) {
       // Detail pages own their <title>; only attach Service schema from the URL slug.
@@ -326,6 +342,12 @@ export default function GlobalSEO() {
       const desc =
         document.querySelector('meta[name="description"]')?.getAttribute('content') ||
         `${name}. Cotiza banquetes, catering y servicios para eventos con Bodasesor.`
+      applyPageIdentityMeta({
+        path,
+        title: name,
+        h1: name,
+        cityName: activeCity?.name,
+      })
       upsertJsonLd(
         PAGE_JSONLD_ID,
         buildServiceJsonLd({
@@ -335,6 +357,12 @@ export default function GlobalSEO() {
           city: activeCity,
         }),
       )
+    } else {
+      applyPageIdentityMeta({
+        path,
+        title: document.title,
+        cityName: activeCity?.name,
+      })
     }
 
     const noindex = NOINDEX_PREFIXES.some(

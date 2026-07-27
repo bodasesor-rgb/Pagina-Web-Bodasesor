@@ -7,6 +7,7 @@ const JSON_LD = {
       '@type': 'Organization',
       '@id': 'https://bodasesor.com/#organization',
       name: 'Bodasesor Eventos',
+      alternateName: 'bodasesor.com',
       url: 'https://bodasesor.com/',
       logo: 'https://bodasesor.com/favicon.svg',
       description:

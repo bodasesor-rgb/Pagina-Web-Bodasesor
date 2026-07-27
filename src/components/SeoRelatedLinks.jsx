@@ -82,7 +82,7 @@ export default function SeoRelatedLinks({ basePath = '/banquetes-catering', titl
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-serif font-bold text-[#162040] mb-2">
-          Ver también
+          Servicios relacionados de banquete y eventos
         </h2>
         <p className="text-sm text-gray-600 font-serif mb-6 max-w-2xl">
           Explora servicios relacionados

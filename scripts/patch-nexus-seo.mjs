@@ -11,6 +11,14 @@ import { readFile, writeFile, readdir, stat } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { existsSync } from 'node:fs'
+import {
+  SITE_AUTHOR,
+  SITE_PUBLISHER,
+  buildPageKeywords,
+  buildImageAlt,
+  imageStemFromPath,
+  labelFromSlug,
+} from '../src/utils/seo-page-meta.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -157,7 +165,156 @@ function preferWebpSrc(html) {
   return { html: out, changed }
 }
 
-function patchHtml(html) {
+function escapeAttr(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+}
+
+function pathFromFile(file) {
+  const rel = file.replace(`${DIST}/`, '').replace(/\\/g, '/')
+  if (rel === 'index.html') return '/'
+  return `/${rel.replace(/\/index\.html$/i, '')}`
+}
+
+function ensureNamedMeta(html, name, content) {
+  const re = new RegExp(`<meta\\s+name="${name}"\\s+content="[^"]*"\\s*\\/?>`, 'i')
+  const tag = `<meta name="${name}" content="${escapeAttr(content)}">`
+  if (re.test(html)) return { html: html.replace(re, tag), changed: true }
+  if (/<meta\s+name="description"/i.test(html)) {
+    return {
+      html: html.replace(
+        /(<meta\s+name="description"\s+content="[^"]*"\s*\/?>)/i,
+        `$1\n  ${tag}`,
+      ),
+      changed: true,
+    }
+  }
+  if (/<\/title>/i.test(html)) {
+    return {
+      html: html.replace(/<\/title>/i, `</title>\n  ${tag}`),
+      changed: true,
+    }
+  }
+  return { html, changed: false }
+}
+
+function extractTitle(html) {
+  const m = html.match(/<title[^>]*>([^<]*)<\/title>/i)
+  return m ? m[1].trim() : ''
+}
+
+function extractH1(html) {
+  const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)
+  if (!m) return ''
+  return m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+/** Inject author/publisher/keywords unique per page path. */
+function patchIdentityMetas(html, filePath) {
+  let out = html
+  let changed = false
+  const path = pathFromFile(filePath)
+  const title = extractTitle(out)
+  const h1 = extractH1(out)
+  const keywords = buildPageKeywords({ path, title, h1 })
+
+  for (const [name, content] of [
+    ['author', SITE_AUTHOR],
+    ['publisher', SITE_PUBLISHER],
+    ['keywords', keywords],
+  ]) {
+    const r = ensureNamedMeta(out, name, content)
+    out = r.html
+    if (r.changed) changed = true
+  }
+
+  // Align JSON-LD author/publisher name → bodasesor.com when present
+  const beforeLd = out
+  out = out.replace(
+    /("author"\s*:\s*\{[^}]*?"name"\s*:\s*")([^"]+)(")/gi,
+    `$1${SITE_AUTHOR}$3`,
+  )
+  out = out.replace(
+    /("publisher"\s*:\s*\{[^}]*?"name"\s*:\s*")([^"]+)(")/gi,
+    `$1${SITE_PUBLISHER}$3`,
+  )
+  if (out !== beforeLd) changed = true
+
+  return { html: out, changed, keywords, path, title, h1 }
+}
+
+/**
+ * Optimize img alt/title from page URL + service keywords.
+ * Prefer slug-aligned naming in alt text (filenames on Nexus already match URL).
+ */
+function patchImageAlts(html, { path, title, h1 }) {
+  let changed = false
+  let imgIndex = 0
+  const stem = imageStemFromPath(path)
+  const core = h1 || title || labelFromSlug(stem)
+  const out = html.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
+    imgIndex++
+    let next = attrs
+    const alt = buildImageAlt({
+      path,
+      title,
+      h1,
+      index: imgIndex - 1,
+      role: imgIndex === 1 ? 'imagen principal' : 'detalle',
+    })
+
+    if (/\balt\s*=\s*["'][^"']*["']/i.test(next)) {
+      const prev = (next.match(/\balt\s*=\s*["']([^"']*)["']/i) || [])[1] || ''
+      // Upgrade weak/generic alts
+      if (
+        !prev.trim() ||
+        /^evento real/i.test(prev) ||
+        /^image$/i.test(prev) ||
+        prev.length < 8 ||
+        /^(foto|imagen)\s*\d*$/i.test(prev)
+      ) {
+        next = next.replace(/\balt\s*=\s*["'][^"']*["']/i, `alt="${escapeAttr(alt)}"`)
+        changed = true
+      }
+    } else {
+      next = ` alt="${escapeAttr(alt)}"${next}`
+      changed = true
+    }
+
+    if (!/\btitle\s*=/i.test(next)) {
+      next = ` title="${escapeAttr(core)}"${next}`
+      changed = true
+    }
+
+    // Annotate data-seo-stem for debugging / future renames (harmless)
+    if (!/\bdata-seo-stem\s*=/i.test(next) && imgIndex === 1) {
+      next = ` data-seo-stem="${escapeAttr(stem)}"${next}`
+      changed = true
+    }
+
+    if (next === attrs) return match
+    return `<img${next}>`
+  })
+
+  // Soften weak generic H2s that hurt service intent
+  let html2 = out
+  const beforeH2 = html2
+  html2 = html2.replace(
+    /(<h2[^>]*>)\s*Galería(?:\s+de\s+eventos)?\s*(<\/h2>)/gi,
+    `$1Fotos del servicio y montaje$2`,
+  )
+  html2 = html2.replace(
+    /(<h2[^>]*>)\s*Nuestros servicios\s*(<\/h2>)/gi,
+    `$1Servicios de banquete, catering y eventos$2`,
+  )
+  if (html2 !== beforeH2) changed = true
+
+  return { html: html2, changed }
+}
+
+function patchHtml(html, filePath) {
   let changed = false
   let out = html
 
@@ -172,6 +329,14 @@ function patchHtml(html) {
   const webp = preferWebpSrc(out)
   out = webp.html
   if (webp.changed) changed = true
+
+  const identity = patchIdentityMetas(out, filePath)
+  out = identity.html
+  if (identity.changed) changed = true
+
+  const imgs = patchImageAlts(out, identity)
+  out = imgs.html
+  if (imgs.changed) changed = true
 
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {
     const next = shortenTitle(inner)
@@ -250,7 +415,7 @@ async function main() {
     if (!html.includes('<title>')) continue
 
     const beforeScripts = (html.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length
-    const { html: next, changed } = patchHtml(html)
+    const { html: next, changed } = patchHtml(html, file)
     if (!changed) continue
 
     await writeFile(file, next)

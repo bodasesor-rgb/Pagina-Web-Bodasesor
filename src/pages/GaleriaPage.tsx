@@ -14,9 +14,27 @@ const EXCLUDED = new Set([
   188, 190, 195, 196, 198,
 ]);
 
+const GALLERY_ALT_SERVICES = [
+  'Banquete para boda en México',
+  'Catering gourmet para eventos',
+  'XV años con banquete completo',
+  'Mobiliario premium para bodas',
+  'Decoración floral de eventos',
+  'Wedding planner y producción',
+  'Coffee break empresarial',
+  'Open bar y barras de bebidas',
+  'Fotografía y video de eventos',
+  'Música en vivo para bodas',
+  'Carpas y montaje exterior',
+  'Evento corporativo Bodasesor',
+]
+
 const ALL_PHOTOS = Array.from({ length: 200 }, (_, i) => i + 1)
   .filter(n => !EXCLUDED.has(n))
-  .map(n => ({ src: `/images/instagram/ig${n}.jpg`, alt: `Evento real Bodasesor ${n}` }));
+  .map((n, i) => ({
+    src: `/images/instagram/ig${n}.jpg`,
+    alt: `${GALLERY_ALT_SERVICES[i % GALLERY_ALT_SERVICES.length]} — foto ${i + 1} | Bodasesor`,
+  }))
 
 const TOTAL_PHOTOS = ALL_PHOTOS.length;
 
@@ -27,7 +45,7 @@ export default function GaleriaPage() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   useEffect(() => {
-    document.title = "Galería de Eventos | Bodasesor";
+    document.title = "Galería de Banquetes y Eventos Reales | Bodasesor";
     window.scrollTo(0, 0);
   }, []);
 
@@ -56,10 +74,10 @@ export default function GaleriaPage() {
             <span className="text-white/70 font-serif text-sm tracking-widest uppercase">@bodasesormx</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-3">
-            Galería de Eventos
+            Galería de banquetes y eventos reales
           </h1>
           <p className="text-white/80 font-serif text-lg max-w-2xl">
-            Más de {TOTAL_PHOTOS} fotos reales de eventos realizados por Bodasesor en todo México.
+            Más de {TOTAL_PHOTOS} fotos reales de bodas, catering, XV años y eventos corporativos producidos por Bodasesor en México.
           </p>
         </div>
       </section>
@@ -125,7 +143,7 @@ export default function GaleriaPage() {
       <section className="py-16 bg-[#162040] text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            ¿Tu evento puede estar aquí?
+            Cotiza tu banquete o evento con Bodasesor
           </h2>
           <p className="text-white/70 font-serif text-lg mb-8">
             Contáctanos hoy y recibe una cotización personalizada en menos de una hora.

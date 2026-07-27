@@ -192,7 +192,7 @@ const PRODUCT_GALLERY: Record<string, string[]> = {
 };
 const DEFAULT_GALLERY = ['/images/instagram/ig1.jpg','/images/instagram/ig2.jpg','/images/instagram/ig3.jpg','/images/instagram/ig4.jpg','/images/instagram/ig5.jpg','/images/instagram/ig6.jpg','/images/instagram/ig7.jpg','/images/instagram/ig8.jpg','/images/instagram/ig9.jpg','/images/instagram/ig10.jpg','/images/instagram/ig11.jpg','/images/instagram/ig12.jpg','/images/instagram/ig13.jpg','/images/instagram/ig14.jpg','/images/instagram/ig15.jpg','/images/instagram/ig16.jpg','/images/instagram/ig17.jpg','/images/instagram/ig18.jpg','/images/instagram/ig19.jpg','/images/instagram/ig20.jpg','/images/instagram/ig21.jpg','/images/instagram/ig22.jpg','/images/instagram/ig23.jpg','/images/instagram/ig24.jpg','/images/instagram/ig25.jpg','/images/instagram/ig26.jpg','/images/instagram/ig27.jpg','/images/instagram/ig28.jpg','/images/instagram/ig29.jpg','/images/instagram/ig30.jpg'];
 
-function ProductGalleryCarousel({ slug }: { slug: string }) {
+function ProductGalleryCarousel({ slug, title }: { slug: string; title?: string }) {
   const gallery = PRODUCT_GALLERY[slug] ?? DEFAULT_GALLERY;
   const heroImg = HERO_IMAGES[slug];
   // Always show the AI-generated product image as the first carousel photo
@@ -201,6 +201,7 @@ function ProductGalleryCarousel({ slug }: { slug: string }) {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const prev = () => setIdx(i => (i - 1 + images.length) % images.length);
   const next = () => setIdx(i => (i + 1) % images.length);
+  const label = title || slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   return (
     <>
       <div className="relative rounded-2xl overflow-hidden shadow-lg">
@@ -210,7 +211,7 @@ function ProductGalleryCarousel({ slug }: { slug: string }) {
         >
           <img
             src={images[idx]}
-            alt={`Evento real Bodasesor ${idx + 1}`}
+            alt={`${label} para bodas y eventos — foto ${idx + 1} | Bodasesor`}
             className="w-full h-full object-contain bg-[#f5efe8] transition-opacity duration-300"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria/g1.jpg'; }}
           />
@@ -710,7 +711,9 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-serif font-bold text-[#162040] mb-6">
-                {city ? `${product.title} en ${city.name}` : product.title}
+                {city
+                  ? `${product.title} para bodas y eventos en ${city.name}`
+                  : `${product.title} para bodas y eventos`}
               </h2>
               <div className="space-y-4">
                 {product.description.map((para, i) => (
@@ -731,7 +734,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               </div>
             </div>
             <div className="lg:sticky lg:top-24">
-              <ProductGalleryCarousel slug={slug} />
+              <ProductGalleryCarousel slug={slug} title={product.title} />
             </div>
           </div>
         </div>
