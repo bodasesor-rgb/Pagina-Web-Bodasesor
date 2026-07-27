@@ -125,9 +125,14 @@ export default async function handler(request: Request, context: Context) {
     return response
   }
 
+  // Never turn bot-shield / errors into a fake city 301.
+  if (!response.ok) {
+    return response
+  }
+
   try {
     const ct = response.headers.get('content-type') || ''
-    if (response.ok && ct.includes('text/html')) {
+    if (ct.includes('text/html')) {
       const html = await response.clone().text()
       if (html.includes('seo-service-hero')) {
         return response

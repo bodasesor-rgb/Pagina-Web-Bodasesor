@@ -76,6 +76,8 @@ const ALLOW = [
   /discordbot/i,
   // Ubersuggest / auditorías pedidas por el equipo
   /semrushbot/i,
+  // Smoke tests / sync internos de CI (deploy + preserve blogs)
+  /BodasesorNexusVerify/i,
 ]
 
 // ═══════════════════════════════════════════════════════════════

@@ -3,14 +3,14 @@
  * Audit Google Analytics (gtag) presence on production HTML pages.
  * Usage: node scripts/audit-ga-tagging.mjs
  */
+import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
+
 const BASE = (process.env.BASE_URL || 'https://bodasesor.com').replace(/\/$/, '')
 const GA_ID = 'G-6VGGKNB77P'
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 const CONCURRENCY = Number(process.env.CONCURRENCY || 16)
 
 async function sitemapUrls() {
-  const res = await fetch(`${BASE}/sitemap.xml`, { headers: { 'user-agent': UA } })
+  const res = await fetch(`${BASE}/sitemap.xml`, { headers: browserNavHeaders() })
   const xml = await res.text()
   return [...new Set([...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim()))]
 }
@@ -46,7 +46,7 @@ function analyze(html, url) {
 async function probe(url) {
   try {
     const res = await fetch(url, {
-      headers: { 'user-agent': UA, accept: 'text/html' },
+      headers: browserNavHeaders({ accept: 'text/html' }),
       redirect: 'follow',
     })
     if (!res.ok) return { url, status: res.status, issues: [`http_${res.status}`] }

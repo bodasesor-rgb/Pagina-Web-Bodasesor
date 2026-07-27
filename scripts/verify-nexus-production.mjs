@@ -6,6 +6,8 @@
  * Fails when a known landing URL returns the generic SPA index (~7 KB) instead of
  * static Nexus HTML (>15 KB with city/service-specific title).
  */
+import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
+
 const UA =
   'Mozilla/5.0 (compatible; BodasesorNexusVerify/1.0; +https://bodasesor.com)'
 
@@ -49,7 +51,11 @@ function isSpaShell(html, title) {
 
 async function checkProbe(probe) {
   const res = await fetch(probe.url, {
-    headers: { 'User-Agent': UA, Accept: 'text/html' },
+    headers: {
+      ...browserNavHeaders(),
+      // Keep identifiable UA for allowlist + logs; Sec-Fetch still sent.
+      'User-Agent': UA,
+    },
     redirect: 'follow',
   })
   const html = await res.text()

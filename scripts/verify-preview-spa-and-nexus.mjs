@@ -9,9 +9,9 @@
  *
  * Never use this as a reason to deploy --prod; it only checks an already-published URL.
  */
+import { browserNavHeaders, BROWSER_UA } from './lib/browser-fetch-headers.mjs'
+
 const BASE = (process.argv[2] || process.env.PREVIEW_URL || '').replace(/\/$/, '')
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 const MIN_CSS_BYTES = Number(process.env.MIN_SEO_CSS_BYTES || 10_000)
 
 const SMOKES = [
@@ -24,7 +24,7 @@ const SMOKES = [
 async function fetchRes(path, accept = 'text/html') {
   const url = `${BASE}${path}`
   const res = await fetch(url, {
-    headers: { 'User-Agent': UA, Accept: accept },
+    headers: browserNavHeaders({ Accept: accept }),
     redirect: 'follow',
   })
   const buf = Buffer.from(await res.arrayBuffer())
