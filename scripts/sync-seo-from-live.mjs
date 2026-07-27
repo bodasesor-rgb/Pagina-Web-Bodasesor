@@ -15,6 +15,7 @@ import { mkdir, writeFile, rm, readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { browserNavHeaders, browserAssetHeaders } from './lib/browser-fetch-headers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -25,8 +26,6 @@ const NEXUS = (process.env.NEXUS_URL || 'https://white-ferret-567834.hostingersi
   '',
 )
 const FETCH_ORIGINS = [...new Set([NEXUS, PROD].filter(Boolean))]
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
 const MIN_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 1200)
 
@@ -42,7 +41,7 @@ async function fetchText(url, { retries = 5 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
+        headers: browserNavHeaders(),
         redirect: 'follow',
       })
       // Auth / not-found — do not burn retries (Hostinger often 401 from CI)
@@ -63,7 +62,7 @@ async function fetchText(url, { retries = 5 } = {}) {
 async function fetchBuffer(url, { retries = 4 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow' })
+      const res = await fetch(url, { headers: browserAssetHeaders(), redirect: 'follow' })
       if (res.status === 401 || res.status === 403 || res.status === 404) return null
       if (res.status === 429 || res.status >= 500) {
         await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))

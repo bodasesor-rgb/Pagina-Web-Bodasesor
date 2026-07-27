@@ -16,13 +16,12 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const OUT_DIR = join(ROOT, '.netlify-live')
 const PROD = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
 const MIN_BLOG_PAGES = Number(process.env.MIN_BLOG_PAGES || 50)
 
@@ -45,7 +44,7 @@ async function fetchText(url, { retries = 4 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': UA, Accept: 'text/html,application/xml' },
+        headers: browserNavHeaders(),
         redirect: 'follow',
       })
       if (res.status === 401 || res.status === 403 || res.status === 404) return null
