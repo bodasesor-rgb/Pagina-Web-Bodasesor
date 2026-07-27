@@ -13,15 +13,15 @@ const SAMPLES = [
   { url: 'https://bodasesor.com/desayunospuerto-vallarta', expectStatus: 301, expectLocationIncludes: '/desayunos/puerto-vallarta' },
 ]
 
+const BROWSER_UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+
 let failed = 0
 
 for (const { url, expectStatus, expectLocationIncludes } of SAMPLES) {
   const res = await fetch(url, {
     redirect: 'manual',
-    headers: {
-      'user-agent':
-        'Mozilla/5.0 (compatible; BodasesorRedirectCheck/1.0; +https://bodasesor.com)',
-    },
+    headers: { 'user-agent': BROWSER_UA },
   })
   const loc = res.headers.get('location') || ''
   let ok = res.status === expectStatus
@@ -32,7 +32,9 @@ for (const { url, expectStatus, expectLocationIncludes } of SAMPLES) {
   if (!ok) failed++
 }
 
-const mapRes = await fetch('https://bodasesor.com/redirects-map.json')
+const mapRes = await fetch('https://bodasesor.com/redirects-map.json', {
+  headers: { 'user-agent': BROWSER_UA, accept: 'application/json' },
+})
 const ct = mapRes.headers.get('content-type') || ''
 const mapOk = mapRes.ok && ct.includes('json')
 console.log(`${mapOk ? '✓' : '✗'} redirects-map.json → ${mapRes.status} ${ct}`)
