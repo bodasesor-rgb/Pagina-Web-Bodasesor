@@ -177,16 +177,19 @@ const BLOCK = [
   /HTTrack/i,
   /Nutch/i,
   /heritrix/i,
-  /Firefox/.*\bBot\b/i,
+  /Firefox\/.*Bot/i,
 ]
 
 /** Obvious non-browser UAs that still burn bandwidth */
 function isSuspiciousUa(ua: string): boolean {
   const t = ua.trim()
   if (t.length < 12) return true
-  // Generic library markers without a real browser token
   if (/^(Mozilla\/4\.0)$/i.test(t)) return true
-  if (/\b(bot|crawler|spider|scraper|fetch|scan)\b/i.test(t) && !ALLOW.some((rx) => rx.test(t))) {
+  // Match Bot/Crawler even inside tokens like SomeRandomBot/1.0
+  if (
+    /bot|crawler|spider|scraper|fetch\/\d|scanner/i.test(t) &&
+    !ALLOW.some((rx) => rx.test(t))
+  ) {
     return true
   }
   return false
