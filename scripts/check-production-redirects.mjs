@@ -16,12 +16,22 @@ const SAMPLES = [
 const BROWSER_UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
+/** Mimic a real Chrome navigation so bot-shield Sec-Fetch checks pass. */
+const BROWSER_NAV_HEADERS = {
+  'user-agent': BROWSER_UA,
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'sec-fetch-site': 'none',
+  'sec-fetch-mode': 'navigate',
+  'sec-fetch-dest': 'document',
+  'sec-fetch-user': '?1',
+}
+
 let failed = 0
 
 for (const { url, expectStatus, expectLocationIncludes } of SAMPLES) {
   const res = await fetch(url, {
     redirect: 'manual',
-    headers: { 'user-agent': BROWSER_UA },
+    headers: BROWSER_NAV_HEADERS,
   })
   const loc = res.headers.get('location') || ''
   let ok = res.status === expectStatus
@@ -33,7 +43,13 @@ for (const { url, expectStatus, expectLocationIncludes } of SAMPLES) {
 }
 
 const mapRes = await fetch('https://bodasesor.com/redirects-map.json', {
-  headers: { 'user-agent': BROWSER_UA, accept: 'application/json' },
+  headers: {
+    'user-agent': BROWSER_UA,
+    accept: 'application/json',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-dest': 'empty',
+  },
 })
 const ct = mapRes.headers.get('content-type') || ''
 const mapOk = mapRes.ok && ct.includes('json')

@@ -87,6 +87,7 @@ const BLOCK = [
   /OAI-SearchBot/i,
   /ChatGPT-User/i,
   /ClaudeBot/i,
+  /Claude-User/i,
   /anthropic-ai/i,
   /Claude-Web/i,
   /CCBot/i,
@@ -110,6 +111,9 @@ const BLOCK = [
   /ICC-Crawler/i,
   /Kangaroobot/i,
   /FriendlyCrawler/i,
+  /MistralAI-User/i,
+  /NovaAct/i,
+  /Operator/i,
 
   // SEO / bandwidth scrapers (Semrush permitido arriba en ALLOW)
   /AhrefsBot/i,
@@ -131,6 +135,11 @@ const BLOCK = [
   /Turnitin/i,
   /trendictionbot/i,
   /Blackboard\s?Safeassign/i,
+  /SEOkicks/i,
+  /Domains\s?Project/i,
+  /Buck\/\d/i,
+  /Barkrowler/i,
+  /Grapeshot/i,
 
   // Security scanners / internet census
   /CensysInspect/i,
@@ -178,7 +187,38 @@ const BLOCK = [
   /Nutch/i,
   /heritrix/i,
   /Firefox\/.*Bot/i,
+  /facebookscraper/i,
 ]
+
+/** Netlify sets Netlify-Agent-Category as `<category>[;<subcategory>]`. */
+function parseAgentCategory(header: string | null): { category: string; subcategory: string } {
+  const raw = (header || '').toLowerCase().trim()
+  if (!raw) return { category: '', subcategory: '' }
+  const semi = raw.indexOf(';')
+  if (semi === -1) return { category: raw, subcategory: '' }
+  return {
+    category: raw.slice(0, semi).trim(),
+    subcategory: raw.slice(semi + 1).trim(),
+  }
+}
+
+/**
+ * Block non-human Netlify categories after ALLOW list.
+ * Legacy `ai` / `ads` kept in case older edge metadata still appears.
+ * Never block tooling;netlify-service (Netlify internals).
+ */
+function shouldBlockCategory(category: string, subcategory: string): string | null {
+  if (!category) return null
+  if (category === 'tooling' && subcategory === 'netlify-service') return null
+
+  if (category === 'none') return 'categoria:none'
+  if (category === 'ai-agent' || category === 'ai') return `categoria:${category}`
+  if (category === 'ads') return 'categoria:ads'
+  if (category === 'crawler') return `categoria:crawler${subcategory ? ';' + subcategory : ''}`
+  if (category === 'tooling') return `categoria:tooling${subcategory ? ';' + subcategory : ''}`
+  if (category === 'other') return 'categoria:other'
+  return null
+}
 
 /** Obvious non-browser UAs that still burn bandwidth */
 function isSuspiciousUa(ua: string): boolean {
@@ -190,6 +230,24 @@ function isSuspiciousUa(ua: string): boolean {
     /bot|crawler|spider|scraper|fetch\/\d|scanner/i.test(t) &&
     !ALLOW.some((rx) => rx.test(t))
   ) {
+    return true
+  }
+  return false
+}
+
+/** HTML navigations without typical browser client hints are often scrapers spoofing Chrome. */
+function isLikelySpoofedBrowser(request: Request, pathname: string, ua: string): boolean {
+  // Only apply to document-like paths (not assets / api probes already handled)
+  if (/\.(js|css|map|webp|png|jpe?g|gif|svg|ico|woff2?|ttf|txt|xml|json)$/i.test(pathname)) {
+    return false
+  }
+  if (!/Mozilla\/5\.0/i.test(ua)) return false
+  if (!/Chrome\/|Firefox\/|Safari\/|Edg\//i.test(ua)) return false
+  // Real browsers send Sec-Fetch-* on navigations; most scrapers omit all of them.
+  const secFetchSite = request.headers.get('sec-fetch-site')
+  const secFetchMode = request.headers.get('sec-fetch-mode')
+  const secFetchDest = request.headers.get('sec-fetch-dest')
+  if (!secFetchSite && !secFetchMode && !secFetchDest) {
     return true
   }
   return false
@@ -212,14 +270,19 @@ export default async (request: Request, context: Context) => {
   }
 
   const ua = request.headers.get('user-agent') || ''
-  const category = (request.headers.get('netlify-agent-category') || '').toLowerCase()
+  const { category, subcategory } = parseAgentCategory(
+    request.headers.get('netlify-agent-category'),
+  )
 
-  // SEO / social previews always pass
+  // SEO / social previews always pass (HTML + assets)
   if (ALLOW.some((rx) => rx.test(ua))) return context.next()
 
-  // Netlify-classified AI / scraper traffic
-  if (category === 'ai' || category === 'ads') {
-    return block(context, ua, `categoria:${category}`)
+  // page-preview (WhatsApp/Slack/etc.) — allow even if not in ALLOW regex
+  if (category === 'page-preview') return context.next()
+
+  const categoryReason = shouldBlockCategory(category, subcategory)
+  if (categoryReason) {
+    return block(context, ua, categoryReason)
   }
 
   if (BLOCK.some((rx) => rx.test(ua))) {
@@ -228,6 +291,10 @@ export default async (request: Request, context: Context) => {
 
   if (ua.trim() === '' || isSuspiciousUa(ua)) {
     return block(context, ua, ua.trim() === '' ? 'sin-user-agent' : 'ua-sospechoso')
+  }
+
+  if (isLikelySpoofedBrowser(request, pathname, ua)) {
+    return block(context, ua, 'spoof-sin-sec-fetch')
   }
 
   return context.next()
@@ -247,27 +314,11 @@ function block(context: Context, ua: string, reason: string) {
 
 export const config: Config = {
   path: '/*',
-  // Skip edge on static assets so CDN can cache them (Cache-Control headers apply).
-  // Note: asset hits still count in Netlify bandwidth — that is expected and
-  // explains most of GA vs Netlify request gaps for real visitors too.
+  // Keep robots/sitemap reachable without edge (crawlers + monitors).
+  // Assets ARE shielded so scrapers cannot burn bandwidth on JS/CSS/images.
   excludedPath: [
     '/robots.txt',
     '/.well-known/*',
-    '/css/*',
-    '/assets/*',
-    '/images/*',
-    '/*.webp',
-    '/*.svg',
-    '/*.png',
-    '/*.jpg',
-    '/*.jpeg',
-    '/*.gif',
-    '/*.ico',
-    '/*.woff',
-    '/*.woff2',
-    '/favicon.ico',
-    '/favicon.svg',
-    '/apple-touch-icon.svg',
     '/sitemap.xml',
     '/llms.txt',
   ],
