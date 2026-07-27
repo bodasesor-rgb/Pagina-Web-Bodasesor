@@ -72,7 +72,7 @@ const HUBS = [
   { path: '/alimentos-empresas', title: 'Alimentos para Empresas', desc: 'Coffee break, box lunch, desayunos ejecutivos y catering corporativo en México.' },
   { path: '/audio-iluminacion-video', title: 'Audio, Iluminación y Video', desc: 'Sonido, iluminación y video profesional para eventos, bodas y corporativos en México.' },
   { path: '/mesas-sillas', title: 'Mesas y Sillas', desc: 'Renta de mesas y sillas para bodas, XV años y eventos en México.' },
-  { path: '/galeria', title: 'Galería de Eventos', desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor.' },
+  { path: '/galeria', title: 'Galería de Banquetes y Eventos Reales', desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor.' },
   { path: '/catalogos', title: 'Catálogos 2026', desc: 'Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más.' },
   { path: '/quienes-somos', title: 'Quiénes Somos', desc: 'Conoce al equipo de Bodasesor Eventos. Más de 10 años organizando eventos en México.' },
   { path: '/blog', title: 'Blog de Eventos y Bodas', desc: 'Consejos, tendencias y guías para planear bodas, XV años y eventos corporativos en México.' },

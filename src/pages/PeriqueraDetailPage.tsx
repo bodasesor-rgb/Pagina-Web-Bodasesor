@@ -145,7 +145,7 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
       {allImgs.length > 2 && (
         <section className="py-10 px-4 bg-[#f5efe8]">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Galería</h2>
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Fotos del montaje y servicio</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {allImgs.slice(2).map((img, i) => (
                 <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden">

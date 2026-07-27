@@ -27,16 +27,16 @@ const gallerySlides = [
   [31, 32, 34].map(n => `/images/instagram/ig${n}.jpg`),
 ];
 const galleryAlts = [
-  ["Evento real Bodasesor", "Evento con decoración", "Boda o quinceañera"],
-  ["Catering en evento", "Mobiliario premium", "Decoración elegante"],
-  ["Banquete servido", "Evento social", "Celebración especial"],
-  ["Montaje de mesas", "Evento corporativo", "Salon decorado"],
-  ["Catering gourmet", "Servicio de meseros", "Boda en salón"],
-  ["Montaje floral", "Mesa banquete", "Evento privado"],
-  ["Servicio a domicilio", "Evento íntimo", "Mesa dulces"],
-  ["Decoracion boda", "Evento XV años", "Catering buffet"],
-  ["Evento de empresa", "Servicio premium", "Banquete formal"],
-  ["Celebración social", "Gala corporativa", "Evento familiar"],
+  ["Banquete para boda Bodasesor", "Decoración floral para eventos", "XV años con catering gourmet"],
+  ["Catering servido en sitio", "Mobiliario premium para bodas", "Montaje de mesas para eventos"],
+  ["Banquete formal México", "Recepción con open bar", "Celebración con wedding planner"],
+  ["Mesas y sillas para eventos", "Coffee break empresarial", "Salón decorado para boda"],
+  ["Catering gourmet Bodasesor", "Servicio de meseros en evento", "Boda con banquete completo"],
+  ["Centros de mesa florales", "Mesa de banquete elegante", "Evento privado con catering"],
+  ["Banquete a domicilio", "Evento íntimo con menú", "Mesa de dulces para XV años"],
+  ["Decoración de boda México", "Quinceañera con banquete", "Buffet y estaciones de comida"],
+  ["Catering corporativo", "Producción integral de eventos", "Banquete formal Bodasesor"],
+  ["Celebración social con catering", "Gala corporativa México", "Evento familiar con mobiliario"],
 ];
 
 const allGalleryImages = gallerySlides.flat();
@@ -262,8 +262,8 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section id="servicios" className="py-24 bg-white" data-testid="section-servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Nuestros servicios</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto font-serif">Todo lo que necesitas para hacer de tu evento una experiencia inolvidable</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Banquetes, catering y mobiliario para tu evento</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto font-serif">Todo lo que necesitas para bodas, XV años y eventos corporativos en un solo lugar</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
@@ -378,7 +378,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section id="galeria" className="py-24 bg-[#f5efe8]" data-testid="section-gallery">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Galería de eventos</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Bodas y banquetes reales que hemos producido</h2>
             <p className="text-xl text-gray-800 max-w-3xl mx-auto font-serif">Descubre la magia que creamos en cada celebración</p>
           </div>
           <GalleryCarousel />
@@ -399,7 +399,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <p className="text-sm font-bold text-[#162040] mb-4 font-serif tracking-wider">COBERTURA NACIONAL</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Servicio en las principales ciudades</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Banquetes y catering en las principales ciudades</h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto font-serif">Llevamos la excelencia de nuestros servicios a todo México</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
