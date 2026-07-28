@@ -29,7 +29,7 @@ export default function CatalogoVajillasPage() {
             onClick={() => setLocation("/vajillas")}
             className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-serif px-4 py-2 rounded-lg transition-colors"
           >
-            Ver catálogo interactivo
+            Ver Catálogointeractivo
           </button>
           <a href={WA_MSG} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white text-xs font-serif px-4 py-2 rounded-lg transition-colors font-bold">
@@ -49,7 +49,7 @@ export default function CatalogoVajillasPage() {
           href="/vajillas"
           className="inline-flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-8 py-4 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105"
         >
-          Ver catálogo completo
+          Ver Catálogocompleto
         </Link>
       </div>
 

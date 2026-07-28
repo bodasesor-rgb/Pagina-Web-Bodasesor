@@ -31,7 +31,7 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
         <div>
           <h1 className="text-2xl font-serif font-bold text-[#162040] mb-4">Periquera no encontrada</h1>
           <Link href="/salas-periqueras" className="text-[#162040] underline font-serif">
-            Ver catálogo completo
+            Ver Catálogo Completo
           </Link>
         </div>
       </div>
@@ -121,7 +121,7 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
 
@@ -145,7 +145,7 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
       {allImgs.length > 2 && (
         <section className="py-10 px-4 bg-[#f5efe8]">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Fotos del montaje y servicio</h2>
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Fotos del Montaje y Servicio</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {allImgs.slice(2).map((img, i) => (
                 <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden">
@@ -171,7 +171,7 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
           ) : <div />}
           <Link href="/salas-periqueras"
             className="text-xs font-serif font-semibold text-[#162040]/75 hover:text-[#162040] uppercase tracking-wide">
-            Ver catálogo
+            Ver Catálogo
           </Link>
           {next ? (
             <Link href={`/periqueras/${next.slug}`}

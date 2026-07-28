@@ -131,7 +131,7 @@ export default function SubcategoryPage() {
             className="flex items-center gap-2 px-5 py-2.5 bg-[#0d6849] text-white text-sm font-semibold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-md"
           >
             <MessageCircle size={16} />
-            Cotizar ahora
+            Cotizar Ahora
           </a>
         </div>
 

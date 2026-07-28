@@ -39,7 +39,7 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
         <div>
           <h1 className="text-2xl font-serif font-bold text-[#162040] mb-4">Producto no encontrado</h1>
           <Link href="/pistas-tarimas" className="text-[#162040] underline font-serif">
-            Ver catálogo de pistas y tarimas
+            Ver Catálogode pistas y tarimas
           </Link>
         </div>
       </div>
@@ -105,13 +105,13 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
               </a>
             </div>
 
-            {/* Ver catálogo completo */}
+            {/* Ver Catálogo Completo */}
             <Link href="/pistas-tarimas"
               className="inline-flex items-center gap-2 text-[#8a9bb5] hover:text-white text-sm font-serif transition-colors">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
 
@@ -158,7 +158,7 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
           <div className="flex gap-3 flex-wrap">
             <Link href="/pistas-tarimas"
               className="flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-5 py-2.5 rounded-xl font-semibold font-serif text-sm transition-all hover:scale-105">
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>
@@ -221,7 +221,7 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
       {others.length > 0 && (
         <section className="py-10 px-4">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">También te puede interesar</h2>
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">También Te Puede Interesar</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {others.map(p => (
                 <Link key={p.slug} href={`/pistas-tarimas/${p.slug}`}
@@ -257,7 +257,7 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
             </a>
             <Link href="/pistas-tarimas"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white px-7 py-3 rounded-xl font-semibold font-serif hover:bg-white hover:text-[#162040] transition-all duration-300">
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function CarpaDetailPage({ slug }: Props) {
       <div className="min-h-screen flex items-center justify-center bg-[#f5efe8]">
         <div className="text-center">
           <p className="text-2xl font-serif text-[#162040] mb-4">Carpa no encontrada</p>
-          <Link href="/carpas" className="text-[#162040] underline font-serif">Ver todas las carpas</Link>
+          <Link href="/carpas" className="text-[#162040] underline font-serif">Ver Todas Las carpas</Link>
         </div>
       </div>
     );
@@ -77,7 +77,7 @@ export default function CarpaDetailPage({ slug }: Props) {
               </a>
               <Link href="/carpas"
                 className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-xl font-serif transition-colors">
-                Ver todas las carpas
+                Ver Todas Las carpas
               </Link>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function CarpaDetailPage({ slug }: Props) {
               </a>
               <Link href="/carpas"
                 className="w-full flex items-center justify-center text-[#162040] text-sm font-serif hover:underline">
-                Ver todos los estilos
+                Ver Todos Los estilos
               </Link>
             </div>
           </div>

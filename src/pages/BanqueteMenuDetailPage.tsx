@@ -113,7 +113,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
       <section className="py-14 px-4 bg-[#f5efe8]/40">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-serif font-bold text-[#162040]">Menú de ejemplo</h2>
+            <h2 className="text-3xl font-serif font-bold text-[#162040]">Menú de Ejemplo</h2>
             <p className="text-gray-600 mt-2 font-serif">Propuesta referencial — personalizamos cada menú a tu gusto</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -167,7 +167,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
       <section className="py-14 px-4 bg-[#f5efe8]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-serif font-bold text-[#162040]">Niveles de servicio</h2>
+            <h2 className="text-3xl font-serif font-bold text-[#162040]">Niveles de Servicio</h2>
             <p className="text-gray-600 mt-2 font-serif">Elige el paquete que mejor se adapte a tu evento</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">

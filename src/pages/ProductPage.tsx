@@ -255,7 +255,7 @@ export default function ProductPage() {
           className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0d6849] text-white font-bold rounded-xl hover:bg-[#1ebe57] transition-colors shadow-xl"
         >
           <MessageCircle size={18} />
-          Cotizar ahora
+          Cotizar Ahora
         </a>
       </div>
     </div>

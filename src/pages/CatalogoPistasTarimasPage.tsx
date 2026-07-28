@@ -42,7 +42,7 @@ export default function CatalogoPistasTarimasPage() {
               href="/pistas-tarimas"
               className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg font-serif text-sm font-semibold transition-colors"
             >
-              Ver catálogo interactivo
+              Ver Catálogointeractivo
             </Link>
             <a
               href={waMsg}
@@ -67,7 +67,7 @@ export default function CatalogoPistasTarimasPage() {
           href="/pistas-tarimas"
           className="inline-flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-8 py-4 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105"
         >
-          Ver catálogo completo
+          Ver Catálogocompleto
         </Link>
       </div>
 

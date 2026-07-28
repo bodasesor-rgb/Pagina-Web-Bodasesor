@@ -117,7 +117,7 @@ export default function BlogDetailPage({ slug }: Props) {
       {/* ── Artículos relacionados ── */}
       <section className="bg-[#f5efe8] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#162040] font-serif mb-10 text-center">También te puede interesar</h2>
+          <h2 className="text-2xl font-bold text-[#162040] font-serif mb-10 text-center">También Te Puede Interesar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {related.map(p => (
               <Link key={p.slug} href={`/blog/${p.slug}`}>
@@ -145,7 +145,7 @@ export default function BlogDetailPage({ slug }: Props) {
           </div>
           <div className="text-center mt-10">
             <Link href="/blog" className="inline-block border-2 border-[#162040] text-[#162040] hover:bg-[#162040] hover:text-white px-8 py-3 rounded-xl font-bold font-serif transition-all duration-300">
-              Ver todos los artículos
+              Ver Todos Los artículos
             </Link>
           </div>
         </div>

@@ -9,7 +9,7 @@ export default function NotFound() {
         <Search className="w-10 h-10 text-primary" />
       </div>
       <h1 className="text-7xl font-serif font-bold text-primary mb-4">404</h1>
-      <h2 className="text-2xl font-serif text-foreground mb-3">Página no encontrada</h2>
+      <h2 className="text-2xl font-serif text-foreground mb-3">Página No Encontrada</h2>
       <p className="text-muted-foreground mb-8 max-w-md leading-relaxed">
         La página que buscas no existe o fue movida. Explora nuestros servicios o regresa al inicio.
       </p>
@@ -19,7 +19,7 @@ export default function NotFound() {
           className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors shadow-md"
         >
           <Home size={18} />
-          Volver al inicio
+          Volver al Inicio
         </a>
       </Link>
     </div>

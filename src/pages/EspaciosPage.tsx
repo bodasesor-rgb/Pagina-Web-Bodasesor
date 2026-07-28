@@ -87,7 +87,7 @@ function EspacioCard({ product }: { product: EspaciosProduct }) {
         <p className="font-serif text-gray-600 text-sm mb-3 italic">{product.tagline}</p>
         <p className="font-serif text-gray-600 text-sm mb-5 leading-relaxed">{product.short}</p>
         <div className="flex gap-3">
-          <Link href={`/espacios-eventos/${product.slug}`} className="flex-1 text-center text-sm font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2.5 rounded-xl hover:bg-[#f5efe8] transition-colors">Ver detalle</Link>
+          <Link href={`/espacios-eventos/${product.slug}`} className="flex-1 text-center text-sm font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2.5 rounded-xl hover:bg-[#f5efe8] transition-colors">Ver Detalle</Link>
           <a href={waMsg} target="_blank" rel="noopener noreferrer" className="flex-1 text-center text-sm font-serif font-semibold text-white bg-[#0d6849] hover:bg-[#0a5740] py-2.5 rounded-xl transition-colors">Consultar</a>
         </div>
       </div>

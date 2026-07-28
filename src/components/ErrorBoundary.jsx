@@ -29,7 +29,7 @@ export class ErrorBoundary extends Component {
           <div className="text-center max-w-md">
             <div className="text-5xl mb-4">🔧</div>
             <h1 className="font-serif text-2xl font-bold text-[#162040] mb-3">
-              Esta página está en preparación
+              Esta Página Está en Preparación
             </h1>
             <p className="text-gray-600 font-serif mb-4">
               Estamos trabajando en este contenido.

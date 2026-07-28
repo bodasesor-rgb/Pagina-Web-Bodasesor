@@ -24,7 +24,7 @@ export default function ColganteDetailPage({ slug }: Props) {
       <div className="min-h-screen flex items-center justify-center bg-[#f5efe8]">
         <div className="text-center">
           <p className="text-2xl font-serif text-[#162040] mb-4">Diseño no encontrado</p>
-          <Link href="/colgantes" className="text-[#162040] underline font-serif">Ver todos los colgantes</Link>
+          <Link href="/colgantes" className="text-[#162040] underline font-serif">Ver Todos Los colgantes</Link>
         </div>
       </div>
     );
@@ -98,7 +98,7 @@ export default function ColganteDetailPage({ slug }: Props) {
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
 
@@ -149,7 +149,7 @@ export default function ColganteDetailPage({ slug }: Props) {
           <div className="flex gap-3 flex-wrap">
             <Link href="/colgantes"
               className="flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-5 py-2.5 rounded-xl font-semibold font-serif text-sm transition-all hover:scale-105">
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function ColganteDetailPage({ slug }: Props) {
       {others.length > 0 && (
         <section className="py-10 px-4">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">También te puede interesar</h2>
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">También Te Puede Interesar</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {others.map(c => (
                 <Link key={c.slug} href={`/colgantes/${c.slug}`}
@@ -249,7 +249,7 @@ export default function ColganteDetailPage({ slug }: Props) {
             </a>
             <Link href="/colgantes"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white px-7 py-3 rounded-xl font-semibold font-serif hover:bg-white hover:text-[#162040] transition-all duration-300">
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>
