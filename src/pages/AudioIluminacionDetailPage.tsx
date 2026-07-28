@@ -22,7 +22,7 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
   const product = AUDIO_ILUMINACION.find(p => p.slug === slug);
   if (!product) return (
     <div className="min-h-screen flex items-center justify-center font-serif text-[#162040]">
-      Servicio no encontrado. <Link href="/audio-iluminacion-video" className="ml-2 underline">Ver Catálogo/Link>
+      Servicio no encontrado. <Link href="/audio-iluminacion-video" className="ml-2 underline">Ver Catálogo</Link>
     </div>
   );
 
