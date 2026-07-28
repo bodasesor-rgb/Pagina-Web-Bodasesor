@@ -67,56 +67,6 @@ async function fetchText(url, { retries = 4 } = {}) {
   return null
 }
 
-async function fetchBuffer(url, { retries = 4 } = {}) {
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const res = await fetch(url, {
-        headers: browserNavHeaders(),
-        redirect: 'follow',
-      })
-      if (res.status === 401 || res.status === 403 || res.status === 404) return null
-      if (res.status === 429 || res.status >= 500) {
-        await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
-        continue
-      }
-      if (!res.ok) return null
-      return await res.arrayBuffer()
-    } catch {
-      await new Promise((r) => setTimeout(r, 500 * 2 ** attempt))
-    }
-  }
-  return null
-}
-
-async function downloadBlogImages(blogHtml, blogPath, outDir) {
-  if (!blogHtml) return 0
-  const srcMatches = [...blogHtml.matchAll(/src=["']([^"']+)["']/g)]
-  let downloaded = 0
-  
-  for (const match of srcMatches) {
-    const src = match[1]
-    if (!src.startsWith('/blog/')) continue
-    
-    const imgPath = `${PROD}${src}`
-    const relPath = src.slice(1) // remove leading /
-    const destPath = join(outDir, relPath)
-    
-    if (!existsSync(destPath)) {
-      try {
-        const buffer = await fetchBuffer(imgPath)
-        if (buffer) {
-          await mkdir(dirname(destPath), { recursive: true })
-          await writeFile(destPath, Buffer.from(buffer))
-          downloaded++
-        }
-      } catch {
-        // skip individual image failures
-      }
-    }
-  }
-  return downloaded
-}
-
 async function mapPool(items, limit, fn) {
   let i = 0
   async function worker() {
@@ -268,17 +218,6 @@ async function main() {
 
     await mkdir(dirname(dest), { recursive: true })
     await writeFile(dest, body)
-    
-    // Also download blog images
-    try {
-      const imgCount = await downloadBlogImages(body, path, OUT_DIR)
-      if (imgCount > 0) {
-        console.log(`    … ${imgCount} images downloaded for ${rel}`)
-      }
-    } catch {
-      // continue on image sync failures
-    }
-    
     saved++
     kept.push(rel)
     if (saved % 25 === 0) console.log(`  … ${saved} blog pages saved/refreshed`)
