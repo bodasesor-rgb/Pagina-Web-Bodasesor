@@ -28,7 +28,7 @@ export default function SearchPage() {
     <div className="min-h-screen bg-[#f5efe8]/30">
       <div className="bg-[#162040] py-10 px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">Buscar servicios</h1>
+          <h1 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">Buscar Servicios</h1>
           <SearchBar
             defaultQuery={query}
             autoFocus
@@ -44,7 +44,7 @@ export default function SearchPage() {
         ) : results.length === 0 ? (
           <div className="text-center">
             <p className="text-gray-600 font-serif mb-4">No encontramos resultados para &ldquo;{query}&rdquo;.</p>
-            <Link href="/banquetes-catering" className="text-[#162040] underline font-serif">Ver catálogo completo</Link>
+            <Link href="/banquetes-catering" className="text-[#162040] underline font-serif">Ver Catálogo Completo</Link>
           </div>
         ) : (
           <>

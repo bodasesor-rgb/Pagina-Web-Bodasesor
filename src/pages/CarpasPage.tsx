@@ -128,7 +128,7 @@ export default function CarpasPage() {
                         href={`/carpas/${carpa.slug}`}
                         className="flex-1 bg-[#162040] hover:bg-[#1e2d56] text-white text-sm font-bold font-serif py-2.5 px-4 rounded-xl text-center transition-colors"
                       >
-                        Ver detalles
+                        Ver Detalles
                       </Link>
                       <a href={wa} target="_blank" rel="noopener noreferrer"
                         aria-label={`Cotizar ${carpa.name} por WhatsApp`}
@@ -156,7 +156,7 @@ export default function CarpasPage() {
           <a href={waGeneral} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105">
             <WaSvg />
-            Cotizar ahora
+            Cotizar Ahora
           </a>
         </div>
       </section>

@@ -26,7 +26,7 @@ export default function SectionCTA({ title, subtitle }) {
           href={`tel:+52${PHONE.replace(/\s/g, '')}`}
           className="inline-flex items-center gap-2 border border-gray-600 text-white hover:border-accent hover:text-accent font-semibold px-7 py-3.5 rounded-full transition-colors"
         >
-          Llamar ahora
+          Llamar Ahora
         </a>
       </div>
       <div className="flex flex-wrap gap-6 justify-center mt-8 text-sm text-[#8a9bb5]">

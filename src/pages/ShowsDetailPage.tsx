@@ -32,7 +32,7 @@ export default function ShowsDetailPage({ slug }: Props) {
       <div className="min-h-screen flex items-center justify-center bg-[#f5efe8]">
         <div className="text-center">
           <p className="text-2xl font-serif text-[#162040] mb-4">Show no encontrado</p>
-          <Link href="/shows" className="text-[#162040] underline font-serif">Ver todos los shows</Link>
+          <Link href="/shows" className="text-[#162040] underline font-serif">Ver Todos Los shows</Link>
         </div>
       </div>
     );
@@ -125,7 +125,7 @@ export default function ShowsDetailPage({ slug }: Props) {
         </div>
       </section>
 
-      {/* Ver catálogo banner */}
+      {/* Ver Catálogobanner */}
       <section className="py-8 px-4 bg-white border-b border-gray-100">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#f5efe8] rounded-2xl px-6 py-5">
           <div>
@@ -134,7 +134,7 @@ export default function ShowsDetailPage({ slug }: Props) {
           </div>
           <Link href="/shows"
             className="flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-5 py-2.5 rounded-xl font-semibold font-serif text-sm transition-all hover:scale-105">
-            Ver catálogo completo
+            Ver Catálogo Completo
           </Link>
         </div>
       </section>
@@ -205,7 +205,7 @@ export default function ShowsDetailPage({ slug }: Props) {
             </a>
             <Link href="/shows"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white px-7 py-3 rounded-xl font-semibold font-serif hover:bg-white hover:text-[#162040] transition-all duration-300">
-              Ver todos los shows
+              Ver Todos Los shows
             </Link>
           </div>
         </div>

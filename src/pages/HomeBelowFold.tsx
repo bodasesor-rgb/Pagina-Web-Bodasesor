@@ -262,7 +262,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section id="servicios" className="py-24 bg-white" data-testid="section-servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Banquetes, catering y mobiliario para tu evento</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Banquetes, Catering y Mobiliario para Tu Evento</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto font-serif">Todo lo que necesitas para bodas, XV años y eventos corporativos en un solo lugar</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -311,7 +311,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 </svg>
               </div>
               <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold text-[#162040] mb-4 font-serif">Eventos completos</h3>
+                <h3 className="text-2xl font-bold text-[#162040] mb-4 font-serif">Eventos Completos</h3>
                 <p className="text-gray-700 mb-6 font-serif">Organización integral de tu evento de principio a fin</p>
                 <ul className="space-y-3 mb-6 flex-grow">
                   {[
@@ -345,7 +345,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 </svg>
               </div>
               <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-bold text-[#162040] mb-4 font-serif">Mobiliario premium</h3>
+                <h3 className="text-2xl font-bold text-[#162040] mb-4 font-serif">Mobiliario Premium</h3>
                 <p className="text-gray-700 mb-6 font-serif">Renta de muebles elegantes para cualquier tipo de evento</p>
                 <ul className="space-y-3 mb-6 flex-grow">
                   {[
@@ -378,7 +378,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section id="galeria" className="py-24 bg-[#f5efe8]" data-testid="section-gallery">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Bodas y banquetes reales que hemos producido</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Bodas y Banquetes Reales Que Hemos Producido</h2>
             <p className="text-xl text-gray-800 max-w-3xl mx-auto font-serif">Descubre la magia que creamos en cada celebración</p>
           </div>
           <GalleryCarousel />
@@ -388,7 +388,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
               target="_blank" rel="noopener noreferrer"
               className="inline-block bg-[#162040] hover:bg-[#1a2a52] text-white px-10 py-4 rounded-lg font-bold transition-colors duration-300 font-serif text-lg"
             >
-              Ver más eventos
+              Ver Más Eventos
             </a>
           </div>
         </div>
@@ -399,7 +399,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <p className="text-sm font-bold text-[#162040] mb-4 font-serif tracking-wider">COBERTURA NACIONAL</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Banquetes y catering en las principales ciudades</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Banquetes y Catering en Las Principales Ciudades</h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto font-serif">Llevamos la excelencia de nuestros servicios a todo México</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -420,31 +420,31 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section className="py-24 bg-[#f5efe8]" data-testid="section-como-funciona">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Cómo funciona</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Cómo Funciona</h2>
             <p className="text-xl text-gray-800 max-w-3xl mx-auto font-serif">Organizar tu evento es más fácil de lo que piensas</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
             {[
               {
-                title: 'Cotiza gratis',
+                title: 'Cotiza Gratis',
                 desc: 'Contáctanos por WhatsApp y cuéntanos sobre tu evento',
                 icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>,
                 last: false,
               },
               {
-                title: 'Recibe propuesta',
+                title: 'Recibe Propuesta',
                 desc: 'Opciones personalizadas con precios claros',
                 icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>,
                 last: false,
               },
               {
-                title: 'Confirma detalles',
+                title: 'Confirma Detalles',
                 desc: 'Ajustamos según tus preferencias',
                 icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>,
                 last: false,
               },
               {
-                title: 'Disfruta tu evento',
+                title: 'Disfruta Tu Evento',
                 desc: 'Nosotros nos encargamos de todo',
                 icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>,
                 last: true,
@@ -474,7 +474,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
             <div>
               <p className="text-sm font-bold text-[#162040] mb-4 font-serif tracking-widest uppercase">Quiénes somos</p>
               <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-8 font-serif leading-tight">
-                Creamos eventos que se convierten en recuerdos
+                Creamos Eventos Que Se Convierten en Recuerdos
               </h2>
               <p className="text-xl text-gray-700 font-serif leading-relaxed mb-8">
                 Somos Bodasesor Eventos, una empresa especializada en la organización y producción de celebraciones en la Ciudad de México. Con más de diez años de experiencia, acompañamos a nuestros clientes en cada etapa de su evento.
@@ -490,7 +490,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 </div>
               </div>
               <Link href="/quienes-somos" className="inline-block bg-[#162040] hover:bg-[#1a2a52] text-white px-8 py-4 rounded-lg font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                Conoce nuestra historia →
+                Conoce Nuestra Historia →
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-6">
@@ -517,7 +517,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section className="py-16 bg-[#162040] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
           <p className="text-[#f5efe8] text-xs font-serif tracking-widest mb-3 uppercase">Nuestros clientes</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-serif">Empresas que confían en nosotros</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-serif">Empresas Que Confían en Nosotros</h2>
         </div>
         <div className="relative overflow-hidden select-none">
           <div className="marquee-track">
@@ -537,7 +537,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section id="testimonios" className="py-24 bg-white" data-testid="section-reviews">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Lo que dicen nuestros clientes</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#162040] mb-6 font-serif">Lo Que Dicen Nuestros Clientes</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto font-serif">Testimonios reales de quienes confiaron en nosotros</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -570,14 +570,14 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 target="_blank" rel="noopener noreferrer"
                 className="inline-block bg-[#162040] hover:bg-[#1a2a52] text-white px-10 py-4 rounded-lg font-bold transition-colors duration-300 font-serif text-lg"
               >
-                Ver todas las reseñas
+                Ver Todas Las reseñas
               </a>
               <a
                 href="https://g.page/r/CfYUk4pqp8VBEBM/review"
                 target="_blank" rel="noopener noreferrer"
                 className="inline-block bg-white hover:bg-[#f5efe8] text-[#162040] border-2 border-[#162040] px-10 py-4 rounded-lg font-bold transition-colors duration-300 font-serif text-lg"
               >
-                Escribe una reseña
+                Escribe Una Reseña
               </a>
             </div>
           </div>

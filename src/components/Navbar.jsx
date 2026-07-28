@@ -206,7 +206,7 @@ function CityBadge() {
         setLocation(stripCityFromPath(location))
       }}
       className="flex items-center gap-1 bg-white/15 hover:bg-white/25 text-white text-xs font-bold font-serif px-2.5 py-1 rounded-lg transition-colors"
-      title="Quitar ciudad"
+      title="Quitar Ciudad"
     >
       <span aria-hidden="true">📍</span> {city.short}
       <X className="w-2.5 h-2.5 opacity-60 ml-0.5" />
@@ -230,7 +230,7 @@ function SimpleDropdown({ items, align = "left", width = "w-52", overviewHref })
       {overviewHref && (
         <>
           <Link href={overviewHref} className="block px-4 py-1.5 text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040] hover:bg-[#f5efe8] transition-colors rounded">
-            Ver todos los servicios →
+            Ver Todos los servicios →
           </Link>
           <div className="border-t border-gray-100 my-1" />
         </>
@@ -283,7 +283,7 @@ function FlyoutDropdown({ groups, align = "left", overviewHref }) {
         {overviewHref && (
           <>
             <Link href={overviewHref} className="block px-4 py-1.5 text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040] hover:bg-[#f5efe8] transition-colors rounded">
-              Ver todos →
+              Ver Todos →
             </Link>
             <div className="border-t border-gray-100 my-1" />
           </>
@@ -644,7 +644,7 @@ function MobiliarioDropdown() {
           <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
         </Link>
         <div className="absolute left-full top-0 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[60] opacity-0 invisible group-hover/entelados-menu:opacity-100 group-hover/entelados-menu:visible transition-all duration-150">
-          <Link href="/entelados" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todos los estilos</Link>
+          <Link href="/entelados" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver Todos los estilos</Link>
           <div className="border-t border-gray-100 my-1" />
           {enteladosNavItems.map(item => (
             <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -669,7 +669,7 @@ function MobiliarioDropdown() {
               <ChevronRight className="w-3.5 h-3.5 opacity-60 flex-shrink-0 ml-2" />
             </Link>
             <div className="absolute left-full top-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-[70] opacity-0 invisible group-hover/col-floral-flyout:opacity-100 group-hover/col-floral-flyout:visible transition-all duration-150 max-h-[75vh] overflow-y-auto">
-              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver todos los florales</Link>
+              <Link href="/colgantes" className={`${ddLink} text-[10px] font-bold uppercase tracking-widest text-gray-600 hover:text-gray-600`}>Ver Todos los florales</Link>
               <div className="border-t border-gray-100 my-1" />
               {colgantesNavItems.floral.map(item => (
                 <NavItemLink key={item.href} href={item.href} name={item.name} />
@@ -1171,13 +1171,13 @@ export default function Navbar() {
                   onClick={() => { clearCity(); setMobileOpen(false); }}
                   className="block py-2 text-xs text-red-500 font-serif hover:text-red-700"
                 >
-                  ✕ Quitar ciudad seleccionada
+                  ✕ Quitar Ciudad seleccionada
                 </button>
               )}
             </MobileSection>
 
             <MobileSection title="Banquete & Catering" id="catering" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
-              <Link href="/banquetes-catering" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todos los servicios →</Link>
+              <Link href="/banquetes-catering" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todos los servicios →</Link>
               <div className="border-t border-gray-100 my-1" />
               {cateringGroups.map(group => (
                 <MobileSubSection key={group.heading} title={group.heading} id={group.heading} expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
@@ -1192,19 +1192,19 @@ export default function Navbar() {
             </MobileSection>
 
             <MobileSection title="Barras de Bebidas" id="bebidas" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
-              <Link href="/barras-de-bebidas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todos los servicios →</Link>
+              <Link href="/barras-de-bebidas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todos los servicios →</Link>
               <div className="border-t border-gray-100 my-1" />
               {bebidasItems.map(i => <Link key={i.href} href={i.href} className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
             </MobileSection>
 
             <MobileSection title="Mesas Personalizadas" id="mesas" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
-              <Link href="/mesas-personalizadas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todos los servicios →</Link>
+              <Link href="/mesas-personalizadas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todos los servicios →</Link>
               <div className="border-t border-gray-100 my-1" />
               {mesasItems.map(i => <Link key={i.href} href={i.href} className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
             </MobileSection>
 
             <MobileSection title="Mobiliario y Decoración" id="mobiliario" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
-              <Link href="/mesas-sillas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Mesas y Sillas</Link>
+              <Link href="/mesas-sillas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Mesas y Sillas</Link>
               <MobileSubSection title="Sillas" id="mob-sillas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(sillasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
@@ -1212,11 +1212,11 @@ export default function Navbar() {
                 {sortItems(mesasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/combinaciones-mesas-sillas" className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">Combinaciones de Mesas y Sillas</Link>
-              <Link href="/barras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Barras</Link>
+              <Link href="/barras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Barras</Link>
               <MobileSubSection title="Barras" id="mob-barras" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(barrasMobiliarioNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/salas-periqueras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Salas y Periqueras</Link>
+              <Link href="/salas-periqueras" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Salas y Periqueras</Link>
               <MobileSubSection title="Salas" id="mob-salas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {salasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
@@ -1224,7 +1224,7 @@ export default function Navbar() {
                 {periquerasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
               <Link href="/pistas-tarimas" className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">Pistas y Tarimas</Link>
-              <Link href="/vajillas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Vajillas y Estilo</Link>
+              <Link href="/vajillas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Vajillas y Estilo</Link>
               <MobileSubSection title="Lozas" id="mob-lozas" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {vajillasNavItems.lozas.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
@@ -1246,7 +1246,7 @@ export default function Navbar() {
               <MobileSubSection title="Cubiertos y Cristalería" id="mob-cristal" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {[...vajillasNavItems.cubiertos, ...vajillasNavItems.cristaleria].map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/colgantes" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Colgantes Premium</Link>
+              <Link href="/colgantes" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Colgantes Premium</Link>
               <MobileSubSection title="Colgantes Florales" id="mob-col-floral" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {colgantesNavItems.floral.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
@@ -1259,9 +1259,9 @@ export default function Navbar() {
               <MobileSubSection title="Estructuras Especiales" id="mob-col-estructura" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {colgantesNavItems.estructura.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/entelados" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Entelados para Techo</Link>
+              <Link href="/entelados" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Entelados para Techo</Link>
               {enteladosNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
-              <Link href="/carpas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Carpas para Eventos</Link>
+              <Link href="/carpas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Carpas para Eventos</Link>
               {carpasNavItems.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
             </MobileSection>
 
@@ -1269,37 +1269,37 @@ export default function Navbar() {
               {serviciosItems.filter(i => !['/floreria','/shows','/reposteria','/wedding-planner','/musica','/fotografia','/alimentos-empresas','/espacios-eventos','/audio-iluminacion-video'].includes(i.href)).map(i => (
                 <Link key={i.href} href={i.href} className="block py-2 text-sm text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>
               ))}
-              <Link href="/audio-iluminacion-video" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Audio, Iluminación y Video</Link>
+              <Link href="/audio-iluminacion-video" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Audio, Iluminación y Video</Link>
               {audioIluminacionNavGroups.map(group => (
                 <MobileSubSection key={group.heading} title={group.heading} id={`mob-audio-${group.heading.toLowerCase()}`} expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                   {group.items.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
                 </MobileSubSection>
               ))}
-              <Link href="/espacios-eventos" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Espacios</Link>
-              <MobileSubSection title="Tipos de venue" id="mob-esp" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
+              <Link href="/espacios-eventos" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Espacios</Link>
+              <MobileSubSection title="Tipos de Venue" id="mob-esp" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(espaciosNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/reposteria" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Repostería</Link>
+              <Link href="/reposteria" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Repostería</Link>
               <MobileSubSection title="Especialidades" id="mob-repo" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(reposteriaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/wedding-planner" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Wedding Planner</Link>
+              <Link href="/wedding-planner" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Wedding Planner</Link>
               <MobileSubSection title="Servicios" id="mob-wed" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(weddingNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/musica" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Música</Link>
-              <MobileSubSection title="Opciones musicales" id="mob-mus" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
+              <Link href="/musica" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Música</Link>
+              <MobileSubSection title="Opciones Musicales" id="mob-mus" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(musicaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/fotografia" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Fotografía y Video</Link>
+              <Link href="/fotografia" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Fotografía y Video</Link>
               <MobileSubSection title="Servicios foto/video" id="mob-foto" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(fotografiaNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/alimentos-empresas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Alimentos para Empresas</Link>
+              <Link href="/alimentos-empresas" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Alimentos para Empresas</Link>
               <MobileSubSection title="Servicios empresariales" id="mob-emp" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {sortItems(empresasNavItems).map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/shows" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Shows</Link>
+              <Link href="/shows" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Shows</Link>
               <MobileSubSection title="Percusión" id="mob-shows-perc" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {showsNavItems.percusion.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
@@ -1312,7 +1312,7 @@ export default function Navbar() {
               <MobileSubSection title="Circo" id="mob-shows-circo" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {showsNavItems.circo.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>
-              <Link href="/floreria" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver todo: Florería y Decoración</Link>
+              <Link href="/floreria" className="block py-1.5 text-xs font-bold text-[#162040] font-serif">Ver Todo: Florería y Decoración</Link>
               <MobileSubSection title="Floral" id="mob-svc-floral" expanded={mobileSubExpanded} setExpanded={setMobileSubExpanded}>
                 {floreriaNavItems.floral.map(i => <Link key={i.href} href={i.href} className="block py-1.5 text-xs text-gray-600 font-serif hover:text-[#162040]">{i.name}</Link>)}
               </MobileSubSection>

@@ -31,7 +31,7 @@ export default function CombinacionDetailPage({ slug }: Props) {
         <div>
           <h1 className="text-2xl font-serif font-bold text-[#162040] mb-4">Combinación no encontrada</h1>
           <Link href="/combinaciones-mesas-sillas" className="text-[#162040] underline font-serif">
-            Ver catálogo de combinaciones
+            Ver Catálogode combinaciones
           </Link>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function CombinacionDetailPage({ slug }: Props) {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
 
@@ -174,7 +174,7 @@ export default function CombinacionDetailPage({ slug }: Props) {
             </a>
             <Link href="/combinaciones-mesas-sillas"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white px-7 py-3 rounded-xl font-semibold font-serif hover:bg-white hover:text-[#162040] transition-all duration-300">
-              Ver todas las combinaciones
+              Ver Todas Las combinaciones
             </Link>
           </div>
         </div>

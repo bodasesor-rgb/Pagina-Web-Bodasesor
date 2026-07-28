@@ -164,7 +164,7 @@ export default function PistasTarimasPage() {
                         <div className="flex gap-2">
                           <Link href={`/pistas-tarimas/${product.slug}`}
                             className="flex-1 flex items-center justify-center border border-[#162040]/20 text-[#162040] py-2 px-3 rounded-xl font-semibold font-serif text-xs hover:bg-[#f5efe8] transition-colors">
-                            Ver detalle
+                            Ver Detalle
                           </Link>
                           <a href={waMsg} target="_blank" rel="noopener noreferrer"
                             className="flex-1 flex items-center justify-center gap-1.5 bg-[#0d6849] hover:bg-[#0a5740] text-white py-2 px-3 rounded-xl font-bold font-serif text-xs transition-all duration-200">

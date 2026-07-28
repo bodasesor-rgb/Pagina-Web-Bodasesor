@@ -124,7 +124,7 @@ export default function VajillasPage() {
                       <div className="flex gap-2">
                         <Link href={`/vajillas/${product.slug}`}
                           className="flex-1 text-center text-xs font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2 rounded-lg hover:bg-[#f5efe8] transition-colors">
-                          Ver detalle
+                          Ver Detalle
                         </Link>
                         <a href={WA_BASE + encodeURIComponent(`Hola, me interesa cotizar: ${product.name} para mi evento.`)}
                           target="_blank" rel="noopener noreferrer"

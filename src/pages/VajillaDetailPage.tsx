@@ -22,7 +22,7 @@ export default function VajillaDetailPage({ slug }: Props) {
       <div className="min-h-screen flex items-center justify-center bg-[#f5efe8]">
         <div className="text-center">
           <p className="text-2xl font-serif text-[#162040] mb-4">Colección no encontrada</p>
-          <Link href="/vajillas" className="text-[#162040] underline font-serif">Ver todas las vajillas</Link>
+          <Link href="/vajillas" className="text-[#162040] underline font-serif">Ver Todas Las vajillas</Link>
         </div>
       </div>
     );
@@ -91,7 +91,7 @@ export default function VajillaDetailPage({ slug }: Props) {
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
 
@@ -108,10 +108,10 @@ export default function VajillaDetailPage({ slug }: Props) {
         </div>
       </section>
 
-      {/* Piezas disponibles */}
+      {/* Piezas Disponibles */}
       <section className="py-12 px-4 bg-[#f5efe8]">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Piezas disponibles</h2>
+          <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">Piezas Disponibles</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {(product.piezas ?? []).map(pieza => (
               <div key={pieza}
@@ -136,7 +136,7 @@ export default function VajillaDetailPage({ slug }: Props) {
           <div className="flex gap-3 flex-wrap">
             <Link href="/vajillas"
               className="flex items-center gap-2 bg-[#162040] hover:bg-[#1a2a52] text-white px-5 py-2.5 rounded-xl font-semibold font-serif text-sm transition-all hover:scale-105">
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function VajillaDetailPage({ slug }: Props) {
           ) : <div />}
           <Link href="/vajillas"
             className="text-xs font-serif font-semibold text-[#162040]/75 hover:text-[#162040] uppercase tracking-wide whitespace-nowrap">
-            Ver catálogo
+            Ver Catálogo
           </Link>
           {next ? (
             <Link href={`/vajillas/${next.slug}`}
@@ -199,7 +199,7 @@ export default function VajillaDetailPage({ slug }: Props) {
       {others.length > 0 && (
         <section className="py-10 px-4">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">También te puede interesar</h2>
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-5">También Te Puede Interesar</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {others.map(v => (
                 <Link key={v.slug} href={`/vajillas/${v.slug}`}
@@ -235,7 +235,7 @@ export default function VajillaDetailPage({ slug }: Props) {
             </a>
             <Link href="/vajillas"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white px-7 py-3 rounded-xl font-semibold font-serif hover:bg-white hover:text-[#162040] transition-all duration-300">
-              Ver catálogo completo
+              Ver Catálogo Completo
             </Link>
           </div>
         </div>

@@ -52,7 +52,7 @@ export default function WeddingDetailPage({ slug }: { slug?: string }) {
         </div>
         {others.length > 0 && (
           <div>
-            <h2 className="text-2xl font-serif font-bold text-[#162040] mb-6">Otros servicios</h2>
+            <h2 className="text-2xl font-serif font-bold text-[#162040] mb-6">Otros Servicios</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {others.map(p => (
                 <Link key={p.slug} href={`/wedding-planner/${p.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-lg transition-all">

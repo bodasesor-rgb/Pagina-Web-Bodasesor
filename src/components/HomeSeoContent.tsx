@@ -12,7 +12,7 @@ export default function HomeSeoContent() {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 font-serif text-gray-700 leading-relaxed space-y-5 text-[0.95rem] md:text-base">
         <h2 id="seo-intro-heading" className="text-2xl md:text-3xl font-bold text-[#162040] text-center mb-6">
-          Creamos eventos completos en todo México
+          Creamos Eventos Completos en Todo México
         </h2>
 
         <p>
@@ -30,7 +30,7 @@ export default function HomeSeoContent() {
         </p>
 
         <h3 className="text-xl font-bold text-[#162040] pt-2">
-          Banquetes y catering a la medida
+          Banquetes y Catering a La Medida
         </h3>
         <p>
           Nuestro{' '}
@@ -50,7 +50,7 @@ export default function HomeSeoContent() {
         </p>
 
         <h3 className="text-xl font-bold text-[#162040] pt-2">
-          Producción integral: mobiliario, decoración y entretenimiento
+          Producción Integral: Mobiliario, Decoración y Entretenimiento
         </h3>
         <p>
           Integramos{' '}
@@ -89,7 +89,7 @@ export default function HomeSeoContent() {
         </p>
 
         <h3 className="text-xl font-bold text-[#162040] pt-2">
-          Bodas, XV años y eventos en tu ciudad
+          Bodas, XV Años y Eventos en Tu Ciudad
         </h3>
         <p>
           Producción completa para{' '}

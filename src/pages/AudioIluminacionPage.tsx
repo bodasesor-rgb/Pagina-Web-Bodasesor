@@ -40,7 +40,7 @@ function ProductCard({ product }: { product: AudioIluminacionProduct }) {
         <div className="flex gap-2">
           <Link href={`/audio-iluminacion-video/${product.slug}`}
             className="flex-1 text-center text-xs font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2 rounded-lg hover:bg-[#f5efe8] transition-colors">
-            Ver detalle
+            Ver Detalle
           </Link>
           <a href={waMsg} target="_blank" rel="noopener noreferrer"
             className="flex-1 text-center text-xs font-serif font-semibold text-white bg-[#0d6849] hover:bg-[#0a5740] py-2 rounded-lg transition-colors">
@@ -197,7 +197,7 @@ export default function AudioIluminacionPage() {
           </p>
           <a href={waGeneral} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-8 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105">
-            <WaSvg /> Solicitar cotización personalizada
+            <WaSvg /> Solicitar Cotización personalizada
           </a>
         </div>
       </section>

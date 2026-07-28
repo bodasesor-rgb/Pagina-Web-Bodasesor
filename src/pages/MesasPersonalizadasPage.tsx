@@ -193,7 +193,7 @@ function MesaCard({ name, href, tag, icon, img, highlight, city, priority = fals
         <div className="flex gap-2">
           <Link href={href}
             className="flex-1 text-center text-sm font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2.5 rounded-xl hover:bg-[#f5efe8] transition-colors">
-            Ver detalle
+            Ver Detalle
           </Link>
           <a href={waMsg} target="_blank" rel="noopener noreferrer"
             className="flex-1 text-center text-sm font-serif font-semibold text-white bg-[#0d6849] hover:bg-[#0a5740] py-2.5 rounded-xl transition-colors">

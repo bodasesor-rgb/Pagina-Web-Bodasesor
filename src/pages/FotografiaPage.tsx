@@ -83,7 +83,7 @@ function FotoCard({ product }: { product: FotografiaProduct }) {
         <p className="font-serif text-gray-600 text-xs mb-3 italic">{product.tagline}</p>
         <p className="font-serif text-gray-600 text-xs mb-4 leading-relaxed line-clamp-2">{product.short}</p>
         <div className="flex gap-2">
-          <Link href={`/fotografia/${product.slug}`} className="flex-1 text-center text-xs font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2 rounded-lg hover:bg-[#f5efe8] transition-colors">Ver detalle</Link>
+          <Link href={`/fotografia/${product.slug}`} className="flex-1 text-center text-xs font-serif font-semibold text-[#162040] border border-[#162040]/20 py-2 rounded-lg hover:bg-[#f5efe8] transition-colors">Ver Detalle</Link>
           <a href={waMsg} target="_blank" rel="noopener noreferrer" className="flex-1 text-center text-xs font-serif font-semibold text-white bg-[#0d6849] hover:bg-[#0a5740] py-2 rounded-lg transition-colors">Cotizar</a>
         </div>
       </div>

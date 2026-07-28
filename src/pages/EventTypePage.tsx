@@ -992,7 +992,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
                             href={svc.href}
                             className="flex items-center gap-1.5 flex-1 justify-center bg-[#162040]/10 text-[#162040] border border-[#162040]/20 text-xs font-bold font-serif py-2 rounded-lg hover:bg-[#162040] hover:text-white transition-all duration-300"
                           >
-                            Ver detalles <ArrowRight className="w-3.5 h-3.5" />
+                            Ver Detalles <ArrowRight className="w-3.5 h-3.5" />
                           </Link>
                           <a
                             href={WA_MSG(svc.title)}

@@ -42,7 +42,7 @@ export default function QuienesSomosPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-[#f5efe8] text-sm font-serif tracking-widest mb-4 uppercase">Quiénes somos</p>
           <h1 className="text-4xl md:text-6xl font-bold text-white font-serif mb-8 leading-tight">
-            Creamos eventos que se convierten en recuerdos
+            Creamos Eventos Que Se Convierten en Recuerdos
           </h1>
           <p className="text-xl text-[#f5efe8] font-serif max-w-3xl mx-auto leading-relaxed">
             Somos Bodasesor Eventos, una empresa especializada en la organización y producción de celebraciones sociales en la Ciudad de México. Con más de diez años de experiencia, acompañamos a nuestros clientes en cada etapa de su evento: desde la primera idea hasta el último detalle.

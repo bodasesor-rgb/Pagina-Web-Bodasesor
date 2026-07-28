@@ -152,7 +152,7 @@ export default function CatalogosPage() {
                     }}
                     className={btnPrimary}
                   >
-                    {isOpen ? "Ocultar catálogo" : "Ver catálogo"}
+                    {isOpen ? "Ocultar catálogo" : "Ver Catálogo}
                   </button>
                   <a
                     href={pagePath}
