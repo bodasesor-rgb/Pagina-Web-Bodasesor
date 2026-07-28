@@ -53,6 +53,7 @@ async function walkFiles(dir, base = dir) {
   for (const entry of entries) {
     const full = join(dir, entry.name)
     if (entry.name === '.manifest.json') continue
+    if (entry.name.startsWith('.blogs-')) continue
     if (entry.isDirectory()) {
       files.push(...(await walkFiles(full, base)))
     } else {
@@ -65,6 +66,38 @@ async function walkFiles(dir, base = dir) {
 async function copyFileEnsuringDir(src, dest) {
   await mkdir(dirname(dest), { recursive: true })
   await copyFile(src, dest)
+}
+
+function isSpaShellHtml(html) {
+  if (!html) return true
+  return html.includes('id="root"') && /\/assets\/index-[^"']+\.js/.test(html)
+}
+
+function isRichBlogHtml(html) {
+  if (!html || isSpaShellHtml(html)) return false
+  if (html.includes('Bodasesor Eventos Blog')) return true
+  return html.length >= 20_000
+}
+
+/** Never replace rich static blog HTML with SPA/thin content from live. */
+async function shouldSkipBlogClobber(rel, livePath, distPath) {
+  const norm = rel.replace(/\\/g, '/')
+  if (!norm.startsWith('blog/') || !norm.endsWith('index.html')) return false
+  if (norm === 'blog/index.html') return false // hub: spaWinsExact handles it
+  if (!existsSync(distPath)) return false
+  try {
+    const [liveHtml, distHtml] = await Promise.all([
+      readFile(livePath, 'utf8'),
+      readFile(distPath, 'utf8'),
+    ])
+    if (isRichBlogHtml(distHtml) && !isRichBlogHtml(liveHtml)) return true
+    if (isRichBlogHtml(distHtml) && isRichBlogHtml(liveHtml) && distHtml.length > liveHtml.length * 1.1) {
+      return true
+    }
+  } catch {
+    return false
+  }
+  return false
 }
 
 async function main() {
@@ -109,6 +142,11 @@ async function main() {
 
     if (spaWins && distHas) {
       skippedSpa++
+      continue
+    }
+
+    if (await shouldSkipBlogClobber(rel, livePath, distPath)) {
+      skippedExists++
       continue
     }
 

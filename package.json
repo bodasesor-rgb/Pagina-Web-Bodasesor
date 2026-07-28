@@ -25,6 +25,9 @@
     "sync:netlify": "node scripts/pull-netlify-live.mjs",
     "sync:seo": "node scripts/sync-seo-from-live.mjs",
     "sync:blogs": "node scripts/sync-blogs-from-live.mjs",
+    "ensure:blogs": "node scripts/ensure-blog-seed.mjs",
+    "verify:blogs": "node scripts/verify-blogs-production.mjs",
+    "guard:blogs": "node scripts/guard-blogs-dist.mjs",
     "merge:netlify": "node scripts/merge-live-into-dist.mjs",
     "lint": "eslint .",
     "preview": "vite preview"

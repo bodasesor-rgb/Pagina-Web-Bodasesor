@@ -1,29 +1,36 @@
 #!/usr/bin/env node
 /**
- * Sync static blog HTML from production into .netlify-live/blog/
- * so SPA deploys do not wipe Shopify/legacy blog articles.
+ * Sync / refresh static blog HTML into .netlify-live/blog/.
  *
- * These pages are NOT Nexus (no seo-service-hero) and are NOT in blog-data.js —
- * they must be pulled from the live site (or a Netlify ZIP that still has them).
+ * HARD RULES:
+ * - Never delete existing rich blog HTML
+ * - Never overwrite rich HTML with SPA / thin HTML from live
+ * - Prefer durable seed (seo-seed/) when live is wiped
+ * - Fail the build if rich blogs on disk < MIN_BLOG_PAGES
  *
  * Usage: node scripts/sync-blogs-from-live.mjs
  * Env:
  *   SITE_BASE=https://bodasesor.com
  *   SEO_SYNC_CONCURRENCY=8
- *   MIN_BLOG_PAGES=50  (warn below this; does not fail the build)
+ *   MIN_BLOG_PAGES=50
+ *   ALLOW_SPA_ONLY_DEPLOY=1  — warn instead of fail (unsafe)
  */
-import { mkdir, writeFile, readFile } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
+import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises'
+import { existsSync, readFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
+import { spawnSync } from 'node:child_process'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const OUT_DIR = join(ROOT, '.netlify-live')
+const BLOG_DIR = join(OUT_DIR, 'blog')
+const SLUG_LIST = join(ROOT, 'seo-seed', 'blog-slugs.txt')
 const PROD = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
 const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
 const MIN_BLOG_PAGES = Number(process.env.MIN_BLOG_PAGES || 50)
+const allowSpaOnly = process.env.ALLOW_SPA_ONLY_DEPLOY === '1'
 
 function isSpaShell(html) {
   if (!html) return true
@@ -35,7 +42,6 @@ function isSpaShell(html) {
 function isRichBlogHtml(html) {
   if (!html || isSpaShell(html)) return false
   if (html.includes('Bodasesor Eventos Blog')) return true
-  // Static blog articles are typically 20KB+ of real content
   if (html.length >= 20_000 && /<article|<main|blog/i.test(html)) return true
   return false
 }
@@ -72,6 +78,25 @@ async function mapPool(items, limit, fn) {
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => worker()))
 }
 
+function loadSeedSlugs() {
+  if (!existsSync(SLUG_LIST)) return []
+  return readFileSync(SLUG_LIST, 'utf8')
+    .split('\n')
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
+async function listExistingBlogPaths() {
+  if (!existsSync(BLOG_DIR)) return []
+  const paths = []
+  const entries = await readdir(BLOG_DIR, { withFileTypes: true })
+  for (const e of entries) {
+    if (e.isDirectory()) paths.push(`/blog/${e.name}`)
+    else if (e.name === 'index.html') paths.push('/blog')
+  }
+  return paths
+}
+
 async function listBlogPathsFromSitemap() {
   const xml = await fetchText(`${PROD}/sitemap.xml`)
   if (!xml) return []
@@ -82,32 +107,38 @@ async function listBlogPathsFromSitemap() {
     let path = loc.slice(PROD.length).replace(/\/+$/, '') || '/'
     if (path === '/blog' || path.startsWith('/blog/')) paths.add(path)
   }
-  // Also try common library hub even if sitemap omits it
   paths.add('/blog/articulos')
-  return [...paths].sort()
+  return [...paths]
 }
 
 function relFromBlogPath(path) {
   const clean = path.replace(/\/+$/, '') || '/blog'
-  // /blog → blog/index.html ; /blog/slug → blog/slug/index.html
   if (clean === '/blog') return 'blog/index.html'
   return `${clean.replace(/^\//, '')}/index.html`
 }
 
-async function countBlogsOnDisk() {
-  if (!existsSync(join(OUT_DIR, 'blog'))) return 0
-  const { readdir } = await import('node:fs/promises')
-  async function walk(dir) {
-    let n = 0
+async function countRichOnDisk() {
+  if (!existsSync(BLOG_DIR)) return { rich: 0, total: 0 }
+  async function walk(dir, files = []) {
     const entries = await readdir(dir, { withFileTypes: true })
     for (const e of entries) {
       const full = join(dir, e.name)
-      if (e.isDirectory()) n += await walk(full)
-      else if (e.name === 'index.html') n++
+      if (e.isDirectory()) await walk(full, files)
+      else if (e.name === 'index.html') files.push(full)
     }
-    return n
+    return files
   }
-  return walk(join(OUT_DIR, 'blog'))
+  const files = await walk(BLOG_DIR)
+  let rich = 0
+  for (const f of files) {
+    try {
+      const html = await readFile(f, 'utf8')
+      if (isRichBlogHtml(html)) rich++
+    } catch {
+      /* skip */
+    }
+  }
+  return { rich, total: files.length }
 }
 
 async function main() {
@@ -115,60 +146,112 @@ async function main() {
   console.log(`  source: ${PROD}`)
   await mkdir(OUT_DIR, { recursive: true })
 
-  const paths = await listBlogPathsFromSitemap()
-  console.log(`  candidates from sitemap: ${paths.length}`)
+  // 0) Always ensure durable seed first (no-op if enough rich blogs already)
+  const seed = spawnSync('node', ['scripts/ensure-blog-seed.mjs'], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: process.env,
+  })
+  if (seed.status !== 0 && !allowSpaOnly) {
+    process.exit(seed.status ?? 1)
+  }
+
+  const seedSlugs = loadSeedSlugs()
+  const existing = await listExistingBlogPaths()
+  const fromSitemap = await listBlogPathsFromSitemap()
+
+  const paths = new Set([
+    ...fromSitemap,
+    ...existing,
+    ...seedSlugs.map((s) => `/blog/${s}`),
+    '/blog/articulos',
+  ])
+  // Never treat SPA hub as something to pull as "article"
+  paths.delete('/blog')
+
+  console.log(
+    `  candidates: sitemap=${fromSitemap.length} seed=${seedSlugs.length} existing=${existing.length} union=${paths.size}`,
+  )
 
   let saved = 0
   let skippedSpa = 0
+  let skippedKeepRich = 0
   let failed = 0
   const kept = []
 
-  await mapPool(paths, CONCURRENCY, async (path) => {
-    const url = `${PROD}${path}/`.replace(/([^:]\/)\/+/g, '$1')
-    const html = await fetchText(url.endsWith('/') ? url : `${url}/`)
-    // try without trailing slash if needed
-    const body = html || (await fetchText(`${PROD}${path}`))
-    if (!body || isSpaShell(body)) {
-      skippedSpa++
-      return
-    }
-    if (!isRichBlogHtml(body)) {
-      skippedSpa++
-      return
-    }
+  await mapPool([...paths].sort(), CONCURRENCY, async (path) => {
     const rel = relFromBlogPath(path)
-    // Do not overwrite /blog hub with soft-404 SPA; only save rich hubs
+    const dest = join(OUT_DIR, rel)
+
+    // Never clobber existing rich HTML
+    if (existsSync(dest)) {
+      try {
+        const existingHtml = await readFile(dest, 'utf8')
+        if (isRichBlogHtml(existingHtml)) {
+          // Still try live refresh only if live is also rich AND larger
+          const url = `${PROD}${path}`
+          const body = (await fetchText(`${url}/`)) || (await fetchText(url))
+          if (body && isRichBlogHtml(body) && body.length > existingHtml.length * 1.05) {
+            await writeFile(dest, body)
+            saved++
+            kept.push(rel)
+            return
+          }
+          skippedKeepRich++
+          return
+        }
+      } catch {
+        /* fall through to fetch */
+      }
+    }
+
+    const url = `${PROD}${path}`
+    const body = (await fetchText(`${url}/`)) || (await fetchText(url))
+    if (!body || isSpaShell(body) || !isRichBlogHtml(body)) {
+      skippedSpa++
+      return
+    }
     if (rel === 'blog/index.html' && body.length < 20_000) {
       skippedSpa++
       return
     }
-    const dest = join(OUT_DIR, rel)
+
     await mkdir(dirname(dest), { recursive: true })
     await writeFile(dest, body)
     saved++
     kept.push(rel)
-    if (saved % 25 === 0) console.log(`  … ${saved} blog pages saved`)
+    if (saved % 25 === 0) console.log(`  … ${saved} blog pages saved/refreshed`)
   })
 
-  const onDisk = await countBlogsOnDisk()
+  const onDisk = await countRichOnDisk()
   const manifest = {
     pulledAt: new Date().toISOString(),
     source: PROD,
-    candidates: paths.length,
+    candidates: paths.size,
     savedThisRun: saved,
     skippedSpa,
+    skippedKeepRich,
     failed,
-    blogsOnDisk: onDisk,
+    blogsRichOnDisk: onDisk.rich,
+    blogsTotalOnDisk: onDisk.total,
     sample: kept.slice(0, 30),
   }
   await writeFile(join(OUT_DIR, '.blogs-manifest.json'), JSON.stringify(manifest, null, 2))
 
-  console.log(`\n✓ Blogs sync: saved=${saved}, skippedSpa=${skippedSpa}, onDisk=${onDisk}`)
-  if (onDisk < MIN_BLOG_PAGES) {
-    console.warn(
-      `⚠ Solo ${onDisk} blogs en .netlify-live/blog/ (esperado ≥${MIN_BLOG_PAGES}). ` +
-        'Si producción aún tiene artículos, revisa SITE_BASE / red.',
-    )
+  console.log(
+    `\n✓ Blogs sync: saved/refreshed=${saved}, skippedSpa=${skippedSpa}, keptRich=${skippedKeepRich}, richOnDisk=${onDisk.rich}`,
+  )
+
+  if (onDisk.rich < MIN_BLOG_PAGES) {
+    const msg =
+      `❌ Solo ${onDisk.rich} blogs ricos en .netlify-live/blog/ (esperado ≥${MIN_BLOG_PAGES}). ` +
+      'No se publicará un deploy que borre los artículos estáticos.'
+    if (allowSpaOnly) {
+      console.warn(`⚠ ALLOW_SPA_ONLY_DEPLOY=1 — ${msg}`)
+    } else {
+      console.error(msg)
+      process.exit(1)
+    }
   }
 }
 
