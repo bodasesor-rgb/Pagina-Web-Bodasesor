@@ -181,11 +181,53 @@ async function main() {
     throw new Error(`ZIP no disponible para deploy ${deploy.id}`)
   }
 
+  // Preserve rich blogs if the published ZIP is a wiped SPA deploy
+  const blogBackup = join(ROOT, '.netlify-live-blog-backup')
+  let hadRichBlogs = false
+  if (existsSync(join(OUT_DIR, 'blog'))) {
+    try {
+      const listing = execSync(`find "${join(OUT_DIR, 'blog')}" -name index.html | wc -l`, {
+        encoding: 'utf8',
+      }).trim()
+      hadRichBlogs = Number(listing) > 0
+    } catch {
+      hadRichBlogs = existsSync(join(OUT_DIR, 'blog'))
+    }
+    if (hadRichBlogs) {
+      execSync(`rm -rf "${blogBackup}" && cp -a "${join(OUT_DIR, 'blog')}" "${blogBackup}"`, {
+        stdio: 'inherit',
+      })
+      console.log('  backed up existing .netlify-live/blog/ before ZIP extract')
+    }
+  }
+
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
 
   execSync(`unzip -q -o "${ZIP_PATH}" -d "${OUT_DIR}"`, { stdio: 'inherit' })
   await rm(ZIP_PATH, { force: true })
+
+  // If ZIP wiped blogs, restore backup (and/or leave ensure-blog-seed to refill)
+  const zipBlogCount = (() => {
+    try {
+      return Number(
+        execSync(`find "${join(OUT_DIR, 'blog')}" -name index.html 2>/dev/null | wc -l`, {
+          encoding: 'utf8',
+        }).trim(),
+      )
+    } catch {
+      return 0
+    }
+  })()
+  if (hadRichBlogs && existsSync(blogBackup) && zipBlogCount < 50) {
+    console.warn(
+      `  ⚠ ZIP solo trae ${zipBlogCount} blogs — restaurando backup rico (no pisar artículos)`,
+    )
+    execSync(`rm -rf "${join(OUT_DIR, 'blog')}" && cp -a "${blogBackup}" "${join(OUT_DIR, 'blog')}"`, {
+      stdio: 'inherit',
+    })
+  }
+  execSync(`rm -rf "${blogBackup}"`, { stdio: 'inherit' })
 
   const manifest = {
     pulledAt: new Date().toISOString(),
@@ -194,6 +236,7 @@ async function main() {
     siteId,
     commitRef: deploy.commit_ref || null,
     commitMessage: deploy.title || null,
+    zipBlogCount,
   }
   await writeFile(join(OUT_DIR, '.manifest.json'), JSON.stringify(manifest, null, 2))
 

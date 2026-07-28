@@ -20,6 +20,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const DIST = join(ROOT, process.env.DIST_DIR || 'dist')
 const MIN_NEXUS_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 1200)
+const MIN_BLOG_PAGES = Number(process.env.MIN_BLOG_PAGES || 50)
 const INVENTORY = join(__dirname, 'seo-landing-slugs.json')
 
 /** Known Nexus landings that must exist after merge (smoke probes). */
@@ -27,6 +28,12 @@ const SMOKE_SLUGS = [
   'banquete-de-lujo-estado-de-mexico',
   'banquete-kosher-ciudad-de-mexico',
   'banquete-3-tiempos-a-domicilio-aguascalientes',
+]
+
+const BLOG_SMOKES = [
+  'blog/articulos',
+  'blog/5-claves-para-elegir-el-salon-de-eventos-ideal-para-el-lanzamiento-de-tu-marca',
+  'blog/5-errores-comunes-al-contratar-el-catering-de-tu-evento-corporativo-y-como-evitarlos',
 ]
 
 async function walkIndexHtml(dir, base = dir, found = []) {
@@ -181,11 +188,53 @@ async function verifySeoLandingCss(dist, issues) {
   }
 }
 
+function isSpaShell(html) {
+  return html.includes('id="root"') && /\/assets\/index-[^"']+\.js/.test(html)
+}
+
+function isRichBlog(html) {
+  if (!html || isSpaShell(html)) return false
+  if (html.includes('Bodasesor Eventos Blog')) return true
+  return html.length >= 20_000
+}
+
+async function verifyStaticBlogs(dist, issues) {
+  const blogRoot = join(dist, 'blog')
+  if (!existsSync(blogRoot)) {
+    issues.push('Static blogs missing: dist/blog/')
+    return
+  }
+  const indexes = await walkIndexHtml(blogRoot, blogRoot)
+  let rich = 0
+  for (const rel of indexes) {
+    const html = await readFile(join(blogRoot, rel), 'utf8')
+    if (isRichBlog(html)) rich++
+  }
+  console.log(`Static rich blogs: ${rich} (min ${MIN_BLOG_PAGES})`)
+  if (rich < MIN_BLOG_PAGES) {
+    issues.push(
+      `Static blogs wiped: rich=${rich} < MIN_BLOG_PAGES=${MIN_BLOG_PAGES} (SPA deploy would delete articles)`,
+    )
+  }
+  for (const rel of BLOG_SMOKES) {
+    const p = join(dist, rel, 'index.html')
+    if (!existsSync(p)) {
+      issues.push(`Blog smoke missing: dist/${rel}/index.html`)
+      continue
+    }
+    const html = await readFile(p, 'utf8')
+    if (!isRichBlog(html)) {
+      issues.push(`Blog smoke is SPA/thin (wiped): dist/${rel}/index.html`)
+    }
+  }
+}
+
 async function main() {
   console.log('══════════════════════════════════════════════════')
   console.log(' verify-dist-spa-and-nexus (Gate A)')
   console.log(` DIST=${DIST}`)
   console.log(` MIN_NEXUS_LANDINGS=${MIN_NEXUS_LANDINGS}`)
+  console.log(` MIN_BLOG_PAGES=${MIN_BLOG_PAGES}`)
   console.log('══════════════════════════════════════════════════')
 
   const issues = []
@@ -220,6 +269,7 @@ async function main() {
   await verifySmoke(DIST, issues)
   await verifySpaSeoShells(DIST, issues)
   await verifySeoLandingCss(DIST, issues)
+  await verifyStaticBlogs(DIST, issues)
 
   // SPA must still win at root
   if (existsSync(join(DIST, 'index.html'))) {
@@ -239,7 +289,9 @@ async function main() {
     process.exit(1)
   }
 
-  console.log(`✓ Gate A OK — SPA present + ${count} Nexus SEO landings (≥${MIN_NEXUS_LANDINGS}) + seo-landing.css`)
+  console.log(
+    `✓ Gate A OK — SPA + ${count} Nexus SEO (≥${MIN_NEXUS_LANDINGS}) + blogs (≥${MIN_BLOG_PAGES}) + css`,
+  )
   console.log(`  Smokes: ${SMOKE_SLUGS.join(', ')}`)
   void seen
 }

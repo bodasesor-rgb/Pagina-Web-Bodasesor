@@ -61,6 +61,23 @@ async function isPreservedBlogHtml(absPath) {
   }
 }
 
+/** Any existing non-SPA blog HTML must never be overwritten by prerender. */
+async function mustNotOverwriteBlog(absPath, entryPath) {
+  if (!String(entryPath || '').startsWith('/blog/')) return false
+  try {
+    await access(absPath)
+    const html = await readFile(absPath, 'utf8')
+    const isSpa = html.includes('id="root"') && /\/assets\/index-[^"]+\.js/.test(html)
+    // Existing rich or non-SPA blog stays forever
+    if (!isSpa) return true
+    if (html.includes('Bodasesor Eventos Blog')) return true
+    if (html.length >= 20_000) return true
+    return false
+  } catch {
+    return false
+  }
+}
+
 async function shouldSkipExistingLanding(absPath) {
   if (await isNexusLanding(absPath)) return true
   if (await isPreservedBlogHtml(absPath)) return true
@@ -268,7 +285,7 @@ async function main() {
       skippedNexus++
       continue
     }
-    if (await isPreservedBlogHtml(outPath)) {
+    if (await isPreservedBlogHtml(outPath) || (await mustNotOverwriteBlog(outPath, entry.path))) {
       skippedBlog++
       continue
     }

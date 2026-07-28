@@ -38,8 +38,16 @@ jobs:
           mkdir -p .netlify-live
           gh release download netlify-live-seed -p 'netlify-live-seed.tgz' -O /tmp/netlify-live-seed.tgz
           tar -xzf /tmp/netlify-live-seed.tgz -C .netlify-live
-          echo "Seeded landings:"
+          echo "Seeded Nexus landings:"
           find .netlify-live -name index.html | wc -l
+          # Durable static blogs ship in-repo (seo-seed/) — ensure-blog-seed runs in build:nexus
+          if [ -f seo-seed/netlify-blog-seed.tgz ]; then
+            echo "Repo blog seed present:"
+            tar -tzf seo-seed/netlify-blog-seed.tgz | grep -c 'index.html$' || true
+          else
+            echo "ERROR: missing seo-seed/netlify-blog-seed.tgz" >&2
+            exit 1
+          fi
 
       - name: Build (SPA + merge Nexus/SEO pages)
         run: npm run build:nexus
@@ -49,14 +57,18 @@ jobs:
           # Pull production ZIP first so SEO landings seed survives Hostinger rate-limits
           SEO_SYNC_CONCURRENCY: "3"
           MIN_NEXUS_LANDINGS: "1200"
+          MIN_BLOG_PAGES: "50"
 
       - name: Deploy merged dist to Netlify production
-        run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO pages"
+        run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO + blogs"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
       - name: Verify Nexus SEO landings in production
         run: node scripts/verify-nexus-production.mjs
+
+      - name: Verify static blogs in production
+        run: node scripts/verify-blogs-production.mjs
 
       - name: Verify legacy redirects in production
         run: node scripts/check-production-redirects.mjs

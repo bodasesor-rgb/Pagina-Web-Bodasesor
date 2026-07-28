@@ -7,16 +7,19 @@
  * / `vite build` is SPA-only and WILL wipe Nexus SEO landings on Netlify.
  *
  * Order:
- * 1) Optional Netlify ZIP snapshot
- * 2) Sync SEO landings from NEXUS_URL / production (seo-service-hero) — REQUIRED
- * 3) Build SPA
- * 4) Merge SEO into dist/ + guard + verify-dist-spa-and-nexus (Gate A)
+ * 1) Optional Netlify ZIP snapshot (preserves blog/ if ZIP is wiped)
+ * 1b) Sync SEO landings — REQUIRED
+ * 1c) Ensure blog seed + sync blogs — REQUIRED (fail if rich blogs missing)
+ * 2) Build SPA
+ * 3) Merge SEO + blogs into dist/
+ * 4) Patch / guard Nexus + blogs (REQUIRED) + prerender + Gate A
  *
  * Env:
  *   NEXUS_URL=https://white-ferret-567834.hostingersite.com
  *   SITE_BASE=https://bodasesor.com
- *   MIN_NEXUS_LANDINGS=1200  (default; Phase-1 inventory = 1402)
- *   ALLOW_SPA_ONLY_DEPLOY=1  — emergency only (Gate A still fails unless you skip it)
+ *   MIN_NEXUS_LANDINGS=1200
+ *   MIN_BLOG_PAGES=50
+ *   ALLOW_SPA_ONLY_DEPLOY=1  — emergency only
  */
 import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
@@ -30,6 +33,7 @@ const allowSpaOnly = process.env.ALLOW_SPA_ONLY_DEPLOY === '1'
 const inCi = process.env.CI === 'true'
 const isPreview =
   process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy'
+const MIN_BLOG_PAGES = Number(process.env.MIN_BLOG_PAGES || 50)
 
 function run(label, cmd, args, { optional = false } = {}) {
   console.log(`\n▶ ${label}`)
@@ -50,15 +54,30 @@ function liveLandingCount() {
   return existsSync(LIVE) ? 1 : 0
 }
 
+function liveBlogRichHint() {
+  if (!existsSync(join(LIVE, 'blog'))) return 0
+  try {
+    const listing = spawnSync(
+      'bash',
+      ['-lc', `find "${join(LIVE, 'blog')}" -name index.html 2>/dev/null | wc -l`],
+      { encoding: 'utf8' },
+    )
+    return Number(String(listing.stdout || '0').trim()) || 0
+  } catch {
+    return 0
+  }
+}
+
 console.log('══════════════════════════════════════════════════')
-console.log(' netlify-build-nexus — SPA + preserve Nexus SEO')
+console.log(' netlify-build-nexus — SPA + preserve Nexus SEO + blogs')
 console.log(` CONTEXT=${process.env.CONTEXT || '(none)'} preview=${isPreview} CI=${inCi}`)
 console.log(` MIN_NEXUS_LANDINGS=${process.env.MIN_NEXUS_LANDINGS || 1200}`)
+console.log(` MIN_BLOG_PAGES=${MIN_BLOG_PAGES}`)
 console.log('══════════════════════════════════════════════════')
 
 if (allowSpaOnly) {
   console.warn(
-    '\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 set — sync may be optional, but Gate A (verify-dist-spa-and-nexus) still requires SPA+SEO unless you remove that step.',
+    '\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 set — sync may be optional, but Gate A still requires SPA+SEO unless you skip it.',
   )
 }
 
@@ -84,48 +103,60 @@ run(
   { optional: allowSpaOnly },
 )
 
-// Static blog articles (not in blog-data.js) — same preserve model as Nexus
+// Static blogs: seed (durable) + live refresh — REQUIRED so SPA deploys cannot wipe them
 run(
-  '1c Sync blogs estáticos desde producción (no pisar en deploy SPA)',
+  '1c Ensure + sync blogs estáticos (seed durable, no pisar ricos)',
   'node',
   ['scripts/sync-blogs-from-live.mjs'],
-  { optional: true },
+  { optional: allowSpaOnly },
 )
 
 run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
 
-if (existsSync(LIVE) && liveLandingCount() > 0) {
-  run('3/4 Fusionar páginas Nexus/SEO en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
+const hasSeo = existsSync(LIVE) && liveLandingCount() > 0
+const hasBlogs = liveBlogRichHint() > 0
+
+if (hasSeo || hasBlogs) {
+  run('3/4 Fusionar Nexus/SEO + blogs en dist', 'node', ['scripts/merge-live-into-dist.mjs'])
   run('4a Parchear SEO Nexus (CSS blocking, titles, lazy imgs, gtag)', 'node', ['scripts/patch-nexus-seo.mjs'], {
     optional: true,
   })
-  run('4b Verificar Nexus en dist (guard)', 'node', ['scripts/guard-nexus-dist.mjs'])
-  run('4b2 Verificar blogs estáticos en dist (guard)', 'node', ['scripts/guard-blogs-dist.mjs'], {
-    optional: true,
+  if (hasSeo) {
+    run('4b Verificar Nexus en dist (guard)', 'node', ['scripts/guard-nexus-dist.mjs'])
+  }
+  run('4b2 Verificar blogs estáticos en dist (guard OBLIGATORIO)', 'node', ['scripts/guard-blogs-dist.mjs'], {
+    optional: allowSpaOnly,
   })
 } else if (!allowSpaOnly) {
-  console.error('\n❌ Sin landings SEO en .netlify-live/ — abortando para no publicar SPA-only.')
-  console.error('   Revisa NEXUS_URL / SITE_BASE o republica lotes desde Nexus.')
-  console.error('   Preview y producción EXIGEN SPA + SEO (Phase 1).')
+  console.error('\n❌ Sin landings SEO ni blogs en .netlify-live/ — abortando para no publicar SPA-only.')
+  console.error('   Revisa NEXUS_URL / SITE_BASE / seo-seed/netlify-blog-seed.tgz')
   process.exit(1)
 } else {
-  console.warn('\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 — continuing without SEO merge (unsafe).')
+  console.warn('\n⚠ ALLOW_SPA_ONLY_DEPLOY=1 — continuing without SEO/blog merge (unsafe).')
 }
 
-// SPA product shells with correct title/canonical (after Nexus merge so we skip real landings)
+// SPA product shells AFTER merge so rich blogs / Nexus are skipped, not overwritten
 run(
   '4c Prerender SPA SEO shells (meta + canonical por producto)',
   'node',
   ['scripts/prerender-spa-seo-shells.mjs'],
 )
 
+// Re-check blogs after prerender (must not have been replaced by SPA shells)
+run(
+  '4c2 Re-verificar blogs tras prerender (no pisar)',
+  'node',
+  ['scripts/guard-blogs-dist.mjs'],
+  { optional: allowSpaOnly },
+)
+
 // Gate A — absolute: fail if SPA OR Nexus landings missing
 run(
-  '4c Gate A: verify-dist-spa-and-nexus (SPA + SEO)',
+  '4d Gate A: verify-dist-spa-and-nexus (SPA + SEO + blogs)',
   'node',
   ['scripts/verify-dist-spa-and-nexus.mjs'],
 )
 
 run('Verificar redirects en dist', 'node', ['scripts/verify-redirects-deploy.mjs'])
 
-console.log('\n✓ netlify-build-nexus listo (SPA + Nexus SEO preservado, Gate A OK)')
+console.log('\n✓ netlify-build-nexus listo (SPA + Nexus SEO + blogs preservados, Gate A OK)')
