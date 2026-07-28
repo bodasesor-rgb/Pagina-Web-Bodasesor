@@ -1,5 +1,5 @@
 {
-  "comment": "Rutas que viven en Netlify (Nexus/SEO + blogs estáticos) y NO deben perderse al publicar el SPA.",
+  "comment": "Rutas que viven en Netlify (Nexus/SEO + blogs estáticos) y NO deben perderse al publicar el SPA. Los blogs (HTML + imágenes) se protegen completamente para que Nexus pueda mantenerlos.",
   "alwaysPreservePrefixes": [
     "css/",
     "blog/",

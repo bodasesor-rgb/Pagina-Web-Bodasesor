@@ -1,6 +1,16 @@
 #!/usr/bin/env node
 /**
  * Fail build if static blogs were wiped from dist/ (same idea as guard-nexus-dist).
+ * 
+ * IMPORTANT: Nexus is responsible for maintaining blog HTML and images.
+ * This script GUARDS that blogs are never lost during SPA deploys.
+ * The merge-live-into-dist.mjs preserves blog/ folder from .netlify-live.
+ * 
+ * If blogs are missing:
+ * 1. Check that .netlify-live/blog/ has content (sync-blogs-from-live.mjs should populate it)
+ * 2. Check that netlify-preserve.json includes "blog/" in alwaysPreservePrefixes
+ * 3. Run Nexus build to regenerate missing blog pages/images
+ * 
  * Usage: node scripts/guard-blogs-dist.mjs
  */
 import { readdir, readFile, access } from 'node:fs/promises'
