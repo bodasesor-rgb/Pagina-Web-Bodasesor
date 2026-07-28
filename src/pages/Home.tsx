@@ -122,9 +122,9 @@ export default function Home() {
             className="text-3xl sm:text-4xl md:text-7xl font-serif font-bold text-white mb-5 md:mb-8 leading-tight"
           >
             {city ? (
-              <>Banquetes y catering para eventos<br />en {city.name}</>
+              <>Banquetes y Catering para Eventos<br />en {city.name}</>
             ) : (
-              <>Banquetes, catering y servicios<br />para eventos en México</>
+              <>Banquetes, Catering y Servicios<br />para Eventos en México</>
             )}
           </h1>
           <p className="text-base sm:text-xl md:text-2xl text-[#f5efe8] mb-8 md:mb-12 max-w-4xl mx-auto font-serif">
