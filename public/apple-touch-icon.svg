@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <rect width="180" height="180" rx="36" fill="#162040"/>
+  <!-- temple arm -->
+  <rect x="14" y="68" width="9" height="32" rx="4.5" fill="#ffffff"/>
+  <!-- left lens -->
+  <circle cx="61" cy="78" r="29" fill="none" stroke="#ffffff" stroke-width="12"/>
+  <path d="M 47 62 A 14 14 0 0 1 61 52" fill="none" stroke="#162040" stroke-width="4" stroke-linecap="round"/>
+  <!-- right lens -->
+  <circle cx="119" cy="78" r="29" fill="none" stroke="#ffffff" stroke-width="12"/>
+  <!-- mustache left -->
+  <path d="M 50 128 Q 68 110 90 120 Q 76 138 50 132 Z" fill="#ffffff"/>
+  <!-- mustache right -->
+  <path d="M 130 128 Q 112 110 90 120 Q 104 138 130 132 Z" fill="#ffffff"/>
+</svg>

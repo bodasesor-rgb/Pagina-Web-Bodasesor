@@ -1,0 +1,54 @@
+/*
+  Ensure redirects-map.json is served as JSON (not rewritten to SPA HTML).
+*/
+/redirects-map.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Shared by ~1400 Nexus landings — cache at CDN/browser (was max-age=0).
+/css/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# Legacy Shopify API probes — never SPA soft-404 HTML
+/products.json
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=86400
+
+/collections.json
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=86400
+
+/cart.json
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=86400
+
+/cart.js
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=86400
+
+/legacy-redirect-boot.js
+  Cache-Control: public, max-age=86400
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate

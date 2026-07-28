@@ -1,0 +1,46 @@
+# Bodasesor Eventos
+
+> Bodasesor es una productora de eventos integrales en México: diseñamos y ejecutamos bodas, quinceañeras y eventos corporativos con banquetes, catering, mobiliario, decoración, música, fotografía, espacios y más. Cotiza por WhatsApp o explora nuestros servicios en línea.
+
+Contacto principal: WhatsApp +52 55 4008 0373 · Teléfono +52 55 4008 0373 · Sitio https://bodasesor.com
+
+## Servicios principales
+
+- [Banquetes y catering](https://bodasesor.com/banquetes-catering): Menús, barras de alimentos, estaciones y catering para bodas y eventos corporativos
+- [Barras de bebidas](https://bodasesor.com/barras-de-bebidas): Coctelería, mocteles, café premium y barras temáticas
+- [Mesas personalizadas](https://bodasesor.com/mesas-personalizadas): Mesas de dulces, postres, quesos y estaciones dulces
+- [Mobiliario y decoración](https://bodasesor.com/salas-periqueras): Salas, periqueras, sillas, mesas, carpas, entelados, colgantes y vajillas
+- [Pistas y tarimas](https://bodasesor.com/pistas-tarimas): Pistas de baile, tarimas y escenarios
+- [Florería](https://bodasesor.com/floreria): Arreglos florales y decoración floral para eventos
+- [Shows y entretenimiento](https://bodasesor.com/shows): Animación, performers y experiencias para invitados
+- [Música para eventos](https://bodasesor.com/musica): Grupos, DJ y producción musical
+- [Fotografía y video](https://bodasesor.com/fotografia): Cobertura fotográfica y audiovisual
+- [Wedding planner](https://bodasesor.com/wedding-planner): Planeación integral de bodas
+- [Espacios para eventos](https://bodasesor.com/espacios-eventos): Venues, haciendas, salones y locaciones
+- [Audio e iluminación](https://bodasesor.com/audio-iluminacion): Sonido, iluminación y producción técnica
+- [Repostería](https://bodasesor.com/reposteria): Pasteles, postres y mesas dulces artesanales
+
+## Ciudades
+
+- [Ciudad de México (CDMX)](https://bodasesor.com/ciudad-de-mexico): Servicios para eventos en CDMX
+- [Estado de México](https://bodasesor.com/estado-de-mexico): Servicios en zona metropolitana y Edomex
+- [Ver catálogo por ciudad](https://bodasesor.com/): Selecciona ciudad desde el menú principal del sitio
+
+## Tipos de evento
+
+- [Bodas](https://bodasesor.com/bodas): Servicios completos para bodas
+- [XV años](https://bodasesor.com/xv-anos): Celebraciones de quince años
+- [Eventos corporativos](https://bodasesor.com/eventos-corporativos): Convenciones, lanzamientos y cenas de empresa
+- [Graduaciones](https://bodasesor.com/graduaciones): Banquetes y fiestas de graduación
+
+## Información y contacto
+
+- [Galería de eventos](https://bodasesor.com/galeria): Fotos de montajes y celebraciones reales
+- [Blog](https://bodasesor.com/blog): Consejos, tendencias e ideas para eventos
+- [Quiénes somos](https://bodasesor.com/quienes-somos): Historia y propuesta de valor de Bodasesor
+- [Cotizar por WhatsApp](https://api.whatsapp.com/send?phone=5215540080373&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento): Contacto directo para cotizaciones
+
+## Optional
+
+- [Buscar servicios](https://bodasesor.com/buscar): Buscador del catálogo
+- [Empresas](https://bodasesor.com/empresas): Alimentos y servicios para eventos corporativos

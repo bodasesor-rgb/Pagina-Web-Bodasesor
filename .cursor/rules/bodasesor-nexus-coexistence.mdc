@@ -1,0 +1,47 @@
+---
+alwaysApply: true
+---
+# Pagina-Web-Bodasesor + landings SEO Nexus
+
+## Contexto
+- Este repo es la **SPA** de https://bodasesor.com (Netlify site ID `b3e5d4b5-9b66-4322-b2d7-12252f3625ac`).
+- Las landings SEO las genera **Nexus SEO** (Hostinger: https://white-ferret-567834.hostingersite.com).
+- Un deploy SPA-only (`npm run build` / `vite build` → `dist/` → Netlify) **BORRA** las landings SEO.
+
+## Phase 1 (estable)
+- Inventario canónico: **1402** landings en `scripts/seo-landing-slugs.json`.
+- Los ~13k quedan para **Fase 2** (pendiente confirmación de conteo Hostinger por Nexus).
+- `MIN_NEXUS_LANDINGS` default **1200** (override por env).
+
+## Regla CRÍTICA (no negociable)
+**TODO deploy (prod O preview) DEBE usar:**
+
+```bash
+npm run build:nexus
+# alias: npm run build:netlify → scripts/netlify-build-nexus.mjs
+```
+
+Sync + merge son **obligatorios también en deploy-preview**. Nunca SPA-only preview.
+
+### Gate A (build)
+`npm run verify:dist-bundle` → `scripts/verify-dist-spa-and-nexus.mjs`  
+Falla si falta la SPA **o** faltan landings (`seo-service-hero` < MIN).
+
+### Gate B (URL publicada preview/prod)
+`PREVIEW_URL=... node scripts/verify-preview-spa-and-nexus.mjs`
+
+### Prohibido
+- `npm run build` solo + `netlify deploy --prod`
+- Preview sin Nexus merge
+- Quitar `ignore = "exit 0"` en `netlify.toml`
+- Merge a main / `--prod` sin Gates A+B verdes en el PR
+
+## Variables
+- `NEXUS_URL=https://white-ferret-567834.hostingersite.com`
+- `SITE_BASE=https://bodasesor.com`
+- `MIN_NEXUS_LANDINGS=1200`
+- `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID`
+
+## Verificación
+- Preview: workflow `Netlify Deploy Preview (SPA + Nexus)` en PRs
+- Prod smoke: `npm run verify:nexus`

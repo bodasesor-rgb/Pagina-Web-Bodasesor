@@ -1,0 +1,33 @@
+{
+  "comment": "Rutas que viven en Netlify (Nexus/SEO + blogs estáticos) y NO deben perderse al publicar el SPA.",
+  "alwaysPreservePrefixes": [
+    "css/",
+    "blog/",
+    "eventos/",
+    "nexus-output-pages/",
+    "private/nexus-output-pages/",
+    "private/nexus-reports/",
+    "nexus-db/"
+  ],
+  "neverOverwriteFromLive": [
+    "_redirects",
+    "redirects-map.json"
+  ],
+  "neverCopyPrefixes": [
+    "banquete-kosher/",
+    "banquete-mexicano/"
+  ],
+  "spaWinsPrefixes": [
+    "assets/"
+  ],
+  "spaWinsExact": [
+    "index.html",
+    "_redirects",
+    "redirects-map.json",
+    "_headers",
+    "favicon.svg",
+    "icons.svg",
+    "apple-touch-icon.svg",
+    "blog/index.html"
+  ]
+}
