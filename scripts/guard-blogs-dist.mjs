@@ -65,7 +65,10 @@ async function main() {
     )
     process.exit(1)
   }
+  
+  // También verificar que imágenes de blog existan (delegado a guard-blog-images-dist.mjs)
   console.log('✓ Blogs estáticos preservados en dist/')
+  console.log('  (Imágenes se verifican en guard-blog-images-dist.mjs)')
 }
 
 main().catch((err) => {

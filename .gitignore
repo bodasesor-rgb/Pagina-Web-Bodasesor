@@ -11,7 +11,10 @@ nexus-ia-power*.json
 audit-pagespeed-results.json
 public/sitemap.xml
 public/images/**/*.webp
-# PERO permitir imágenes de blog que Nexus genera
+# ⚠️ EXCEPCIÓN CRÍTICA: Permitir imágenes de blog generadas por Nexus
+# Nexus mantiene blog HTML + imágenes en public/images/blog/
+# Estos deben commitarse para que aparezcan en Netlify
 !public/images/blog/**/*.webp
 !public/images/blog/**/*.jpg
 !public/images/blog/**/*.png
+# Otras imágenes de producto (no-blog) se ignoran para reducir tamaño del repo

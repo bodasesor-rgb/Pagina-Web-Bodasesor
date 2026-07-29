@@ -3,6 +3,7 @@
   "alwaysPreservePrefixes": [
     "css/",
     "blog/",
+    "public/images/blog/",
     "eventos/",
     "nexus-output-pages/",
     "private/nexus-output-pages/",

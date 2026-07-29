@@ -34,7 +34,10 @@ function shouldSpaWin(relPath, config) {
 }
 
 function isPreservedPath(relPath, config) {
-  return matchesPrefix(relPath.replace(/\\/g, '/'), config.alwaysPreservePrefixes || [])
+  const norm = relPath.replace(/\\/g, '/')
+  // Siempre preservar imágenes de blog (crítico para que no aparezcan rotas)
+  if (norm.startsWith('public/images/blog/')) return true
+  return matchesPrefix(norm, config.alwaysPreservePrefixes || [])
 }
 
 function isNeverOverwriteFromLive(relPath, config) {
