@@ -11,3 +11,7 @@ nexus-ia-power*.json
 audit-pagespeed-results.json
 public/sitemap.xml
 public/images/**/*.webp
+# PERO permitir imágenes de blog que Nexus genera
+!public/images/blog/**/*.webp
+!public/images/blog/**/*.jpg
+!public/images/blog/**/*.png
