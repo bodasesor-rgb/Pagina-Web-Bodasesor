@@ -8,8 +8,8 @@
   --white: #ffffff;
   --text: #1e293b;
   --muted: #64748b;
-  --wa: #0d6849;
-  --wa-dark: #0a5740;
+  --wa: #25D366;
+  --wa-dark: #1ebe57;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -451,18 +451,12 @@ a { color: inherit; text-decoration: none; }
 
 .seo-btn-wa {
   background: var(--wa);
-  color: #fff !important;
-}
-
-.seo-btn-wa:visited,
-.seo-btn-wa:hover,
-.seo-btn-wa:active {
-  color: #fff !important;
-  background: var(--wa-dark);
-}
-
-.seo-btn-wa .ico-wa {
   color: #fff;
+}
+
+.seo-btn-wa:hover {
+  background: #22c55e;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, .35);
 }
 
 .seo-btn-call {
@@ -548,18 +542,9 @@ a { color: inherit; text-decoration: none; }
 .seo-section {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 56px clamp(24px, 5vw, 48px);
+  padding: 64px clamp(24px, 5vw, 48px);
   width: 100%;
   box-sizing: border-box;
-  background: var(--white);
-}
-
-.seo-main > .seo-section:not(.seo-section--faq):not(.seo-section--cream) {
-  background: var(--white);
-}
-
-.seo-main > .seo-section + .seo-section:not(.seo-section--faq):not(.seo-section--cream) {
-  border-top: 1px solid rgba(22, 32, 64, .06);
 }
 
 .seo-section--cream {
@@ -568,28 +553,6 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   padding-left: 0;
   padding-right: 0;
-}
-
-.seo-section--faq {
-  background: var(--navy);
-  max-width: none;
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  color: #fff;
-}
-
-.seo-section--faq .seo-section-title {
-  color: #fff;
-}
-
-.seo-section--faq .seo-section-sub {
-  color: rgba(255, 255, 255, .78);
-}
-
-.seo-section--faq .seo-faq-item {
-  background: var(--white);
-  border-color: rgba(255, 255, 255, .12);
 }
 
 .seo-section-inner {
@@ -916,25 +879,6 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
 }
 
-.seo-stat {
-  background: var(--white);
-  border: 1px solid rgba(22, 32, 64, .08);
-  border-radius: 12px;
-  padding: 20px 16px;
-  box-shadow: 0 2px 8px rgba(22, 32, 64, .04);
-}
-
-.seo-section--cream .seo-stat,
-.seo-section--cream .seo-service-link {
-  background: var(--white);
-  border-color: rgba(22, 32, 64, .1);
-}
-
-.seo-section--cream .seo-service-link:hover {
-  border-color: var(--navy);
-  box-shadow: 0 6px 20px rgba(22, 32, 64, .1);
-}
-
 .seo-stat strong {
   display: block;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -1093,21 +1037,15 @@ a.seo-variant-tag:hover {
 }
 
 .seo-garantia-strip {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 48px clamp(20px, 4vw, 40px);
-  background: var(--cream);
-  border-top: 1px solid rgba(22,32,64,.06);
-}
-
-.seo-garantia-strip-inner {
   max-width: 1120px;
   margin: 0 auto;
+  padding: 48px clamp(20px, 4vw, 40px);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
+  background: var(--cream);
+  border-top: 1px solid rgba(22,32,64,.06);
   text-align: center;
 }
 
@@ -1209,7 +1147,7 @@ a.seo-variant-tag:hover {
   .bodasesor-links { gap: 0; justify-content: flex-start; }
   .nav-top-link { font-size: 12px; padding: 10px 8px; }
   .nav-dropdown { display: none; }
-  .seo-garantia-strip-inner { flex-direction: column; text-align: center; }
+  .seo-garantia-strip { flex-direction: column; text-align: center; }
 }
 
 /* ── Blog (bodasesor.com/blog) ── */
@@ -1429,23 +1367,6 @@ a.seo-variant-tag:hover {
   margin-bottom: 1rem;
 }
 
-.seo-section--intro .seo-intro-detail {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--text);
-  margin-bottom: 1.25rem;
-}
-
-.seo-section--intro .seo-intro-detail strong {
-  color: var(--navy);
-  font-weight: 700;
-}
-
-.seo-section--intro {
-  padding-top: 48px;
-  padding-bottom: 40px;
-}
-
 .seo-section--intro .seo-intro-benefit {
   font-size: 1rem;
   font-weight: 700;
@@ -1493,8 +1414,7 @@ a.seo-variant-tag:hover {
 }
 
 .seo-section--specs {
-  padding-top: 40px;
-  padding-bottom: 48px;
+  padding-top: 0;
 }
 
 .seo-cta-box--blog {
@@ -1766,16 +1686,6 @@ body.seo-blog-conversion { background: #fff; }
   margin-bottom: 1.15rem;
 }
 
-/* Texto plano en landings SEO (cuerpo; tablas/FAQ/stats conservan recuadros) */
-.seo-main .seo-content-block .seo-plain-p,
-.seo-main .seo-content-block .seo-plain-lead {
-  max-width: 44rem;
-}
-
-.seo-main .seo-content-block h2 + .seo-plain-lead {
-  margin-top: 0.5rem;
-}
-
 .seo-plain-lead {
   font-size: clamp(1.1rem, 2.8vw, 1.2rem);
   color: #334155;
@@ -1867,11 +1777,9 @@ body.seo-blog-conversion { background: #fff; }
 }
 
 .seo-blog-service-link {
-  color: var(--navy);
   font-weight: 700;
-  font-size: 0.95rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-size: 14px;
+  color: #007BFF;
 }
 
 .seo-blog-testimonials {
