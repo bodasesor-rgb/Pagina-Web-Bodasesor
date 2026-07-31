@@ -115,11 +115,15 @@ async function main() {
 
   const config = await loadConfig()
   const liveFiles = await walkFiles(LIVE_DIR)
+  const distFiles = await walkFiles(DIST_DIR)
+  
   let copied = 0
   let skippedSpa = 0
   let skippedExists = 0
+  let distProtected = 0  // Archivos nuevos en dist/ que se preservan
   const log = []
-
+  
+  // PASO 1: Copiar de .netlify-live → dist/ (como antes)
   for (const rel of liveFiles) {
     const livePath = join(LIVE_DIR, rel)
     const distPath = join(DIST_DIR, rel)
@@ -162,10 +166,32 @@ async function main() {
     copied++
     log.push(rel)
   }
+  
+  // PASO 2: Copiar de dist/ → .netlify-live/ (NUEVO CAMBIO)
+  // Esto preserva cambios NUEVOS en dist/ que Nexus NO tiene aún
+  // Ej: El nuevo blog que Nexus acaba de agregar
+  for (const rel of distFiles) {
+    // Si ya existe en .netlify-live, saltalo (no duplicar trabajo)
+    if (liveFiles.includes(rel)) continue
+    
+    const distPath = join(DIST_DIR, rel)
+    const livePath = join(LIVE_DIR, rel)
+    
+    // Si es blog/ o público, PRESERVARLO en .netlify-live para que Nexus lo vea
+    if (rel.startsWith('blog/') || rel.startsWith('public/images/blog/')) {
+      const st = await stat(distPath)
+      if (!st.isFile()) continue
+      
+      await copyFileEnsuringDir(distPath, livePath)
+      distProtected++
+      log.push(`[PROTECT] ${rel}`)
+    }
+  }
 
   const report = {
     mergedAt: new Date().toISOString(),
-    copiedCount: copied,
+    copiedFromLive: copied,
+    protectedFromDist: distProtected,
     skippedSpa,
     skippedExists,
     copiedPaths: log.slice(0, 200),
@@ -175,6 +201,7 @@ async function main() {
 
   console.log(`Merge completado:`)
   console.log(`  Copiados desde Netlify: ${copied}`)
+  console.log(`  Protegidos en Netlify (dist→live): ${distProtected}`)
   console.log(`  Omitidos (SPA gana): ${skippedSpa}`)
   console.log(`  Omitidos (ya en dist): ${skippedExists}`)
 
