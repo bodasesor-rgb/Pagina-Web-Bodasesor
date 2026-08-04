@@ -4226,12 +4226,6 @@
 /products/zaz-photography-fotografos-cdmx  /fotografia/ciudad-de-mexico  301
 /products/zaz-photography-fotografos-cdmx/  /fotografia/ciudad-de-mexico  301
 
-# SPA product hubs shadowed by Nexus SEO folders — force ServicePage
-/banquete-kosher  /index.html  200!
-/banquete-kosher/  /index.html  200!
-/banquete-mexicano  /index.html  200!
-/banquete-mexicano/  /index.html  200!
-
 # Banquet menu subpages — always SPA (Nexus has parent HTML but not menu subdirs)
 /banquetes/:menu  /index.html  200
 /banquete-kosher/:menu  /index.html  200

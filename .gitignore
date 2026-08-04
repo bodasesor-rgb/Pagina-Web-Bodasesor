@@ -12,9 +12,10 @@ audit-pagespeed-results.json
 public/sitemap.xml
 public/images/**/*.webp
 # ⚠️ EXCEPCIÓN CRÍTICA: Permitir imágenes de blog generadas por Nexus
-# Nexus mantiene blog HTML + imágenes en public/images/blog/
-# Estos deben commitarse para que aparezcan en Netlify
+# Nexus mantiene blog HTML + imágenes en public/images/blog/ y public/blog/{slug}/
+# Estos deben commitarse para que aparezcan en Netlify (no son product webps)
 !public/images/blog/**/*.webp
 !public/images/blog/**/*.jpg
 !public/images/blog/**/*.png
+# public/blog/** no está en el ignore de webp (solo public/images/**/*.webp)
 # Otras imágenes de producto (no-blog) se ignoran para reducir tamaño del repo

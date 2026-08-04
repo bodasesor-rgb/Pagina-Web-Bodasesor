@@ -87,6 +87,34 @@ function collectPaths() {
     paths.add(p)
   }
 
+  // Nexus SEO landings (~1402+) — without these Google never discovers city/service HTML
+  const nexusSlugsPath = path.join(ROOT, 'scripts/seo-landing-slugs.json')
+  if (fs.existsSync(nexusSlugsPath)) {
+    try {
+      const payload = JSON.parse(fs.readFileSync(nexusSlugsPath, 'utf8'))
+      const slugs = Array.isArray(payload?.slugs) ? payload.slugs : []
+      for (const slug of slugs) {
+        if (typeof slug !== 'string' || !slug.trim()) continue
+        const clean = slug.trim().replace(/^\/+|\/+$/g, '')
+        if (!clean || clean.includes('?') || clean.startsWith('blog/')) continue
+        paths.add(`/${clean}`)
+      }
+    } catch (err) {
+      console.warn('⚠ seo-landing-slugs.json unreadable — Nexus URLs omitted from sitemap:', err.message)
+    }
+  }
+
+  // Static blog articles (seed list) — hub already in STANDALONE
+  paths.add('/blog/articulos')
+  const blogSlugsPath = path.join(ROOT, 'seo-seed', 'blog-slugs.txt')
+  if (fs.existsSync(blogSlugsPath)) {
+    for (const line of fs.readFileSync(blogSlugsPath, 'utf8').split('\n')) {
+      const slug = line.trim()
+      if (!slug || slug === 'articulos') continue
+      paths.add(`/blog/${slug}`)
+    }
+  }
+
   // Final scrub
   return [...paths]
     .filter((p) => p !== '/buscar' && !p.startsWith('/buscar') && !p.includes('?'))

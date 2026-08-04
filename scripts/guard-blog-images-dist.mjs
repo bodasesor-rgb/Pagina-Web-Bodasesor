@@ -1,18 +1,16 @@
 #!/usr/bin/env node
 /**
- * Verificar que imágenes de blog se preserven en dist/ después del merge.
- * 
- * Las imágenes de blog son críticas: sin ellas, los blogs aparecen rotos.
- * Este guard asegura que:
- * 1. Las imágenes de blog no se sobrescriben durante el merge
- * 2. El .gitignore permite que se committen
- * 3. El netlify-preserve.json protege public/images/blog/
- * 
- * Si falta alguna imagen:
- * - Nexus debe hacer commit y push de public/images/blog/* a bodasesor.com
- * - Luego el merge-live-into-dist los traerá desde .netlify-live
- * 
+ * Verificar que las imágenes de artículos de blog estén en dist/ tras el merge.
+ *
+ * Los posts estáticos referencian archivos hermanos:
+ *   /blog/{slug}/{slug}.webp  (y a veces -inline-*.webp)
+ * Algunos posts nuevos usan /images/blog/*.webp
+ *
+ * Sin estos archivos Netlify sirve el SPA (text/html) en la URL de la imagen.
+ *
  * Usage: node scripts/guard-blog-images-dist.mjs
+ * Env: MIN_BLOG_IMAGES=50
+ *      ALLOW_SPA_ONLY_DEPLOY=1 — warn instead of fail
  */
 import { readdir, stat } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
@@ -21,8 +19,10 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
-const DIST = join(ROOT, process.env.DIST_DIR || 'dist')
-const MIN_IMAGES = Number(process.env.MIN_BLOG_IMAGES || 10)
+const DIST_ENV = process.env.DIST_DIR || 'dist'
+const DIST = DIST_ENV.startsWith('/') ? DIST_ENV : join(ROOT, DIST_ENV)
+const MIN_IMAGES = Number(process.env.MIN_BLOG_IMAGES || 50)
+const allowSpaOnly = process.env.ALLOW_SPA_ONLY_DEPLOY === '1'
 
 async function walkImages(dir, found = []) {
   if (!existsSync(dir)) return found
@@ -32,8 +32,13 @@ async function walkImages(dir, found = []) {
       const full = join(dir, e.name)
       if (e.isDirectory()) {
         await walkImages(full, found)
-      } else if (/\.(webp|jpg|jpeg|png)$/i.test(e.name)) {
-        found.push(full)
+      } else if (/\.(webp|jpg|jpeg|png|avif)$/i.test(e.name)) {
+        try {
+          const st = await stat(full)
+          if (st.size > 200) found.push(full)
+        } catch {
+          /* skip */
+        }
       }
     }
   } catch {
@@ -43,32 +48,37 @@ async function walkImages(dir, found = []) {
 }
 
 async function main() {
-  const imagesDir = join(DIST, 'public', 'images', 'blog')
-  const images = await walkImages(imagesDir)
-  
-  console.log(`guard-blog-images-dist: encontradas ${images.length} imágenes de blog (mín ${MIN_IMAGES})`)
-  
+  const underBlog = await walkImages(join(DIST, 'blog'))
+  const underImagesBlog = await walkImages(join(DIST, 'images', 'blog'))
+  const underPublicImagesBlog = await walkImages(join(DIST, 'public', 'images', 'blog'))
+  const images = [...underBlog, ...underImagesBlog, ...underPublicImagesBlog]
+
+  console.log(
+    `guard-blog-images-dist: ${images.length} imágenes reales ` +
+      `(blog/=${underBlog.length}, images/blog/=${underImagesBlog.length}, ` +
+      `public/images/blog/=${underPublicImagesBlog.length}; mín ${MIN_IMAGES})`,
+  )
+
   if (images.length > 0) {
-    console.log(`  Ejemplos:`)
-    images.slice(0, 3).forEach(img => {
+    console.log('  Ejemplos:')
+    images.slice(0, 3).forEach((img) => {
       console.log(`    ✓ ${img.replace(ROOT, '.')}`)
     })
   }
-  
+
   if (images.length < MIN_IMAGES) {
-    console.warn(
-      `\n⚠️  Solo hay ${images.length} imágenes de blog en dist/public/images/blog/\n` +
-      `   Esto significa que Nexus aún no ha hecho push de las imágenes.\n\n` +
-      `   ACCIÓN REQUERIDA:\n` +
-      `   1. En Nexus (seo-nexus-2.0), verificar que public/images/blog/ tiene imágenes\n` +
-      `   2. Hacer commit y push a bodasesor.com:\n` +
-      `      git add public/images/blog/**/*.{webp,jpg,png}\n` +
-      `      git commit -m "feat: include blog images in deployment"\n` +
-      `      git push origin main\n` +
-      `   3. Luego merge-live-into-dist.mjs las traerá aquí\n`
-    )
+    const msg =
+      `\n❌ Solo hay ${images.length} imágenes de blog en dist/ (esperado ≥${MIN_IMAGES}).\n` +
+      `   Restaurar desde Nexus: node scripts/sync-blog-images-from-nexus.mjs\n` +
+      `   Origen: NEXUS_URL (Hostinger) → public/blog/{slug}/*.webp\n`
+    if (allowSpaOnly) {
+      console.warn(`⚠ ALLOW_SPA_ONLY_DEPLOY=1 — ${msg}`)
+    } else {
+      console.error(msg)
+      process.exit(1)
+    }
   } else {
-    console.log(`✓ Imágenes de blog protegidas en dist/`)
+    console.log('✓ Imágenes de blog presentes en dist/')
   }
 }
 

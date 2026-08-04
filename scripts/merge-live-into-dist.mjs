@@ -37,6 +37,7 @@ function isPreservedPath(relPath, config) {
   const norm = relPath.replace(/\\/g, '/')
   // Siempre preservar imágenes de blog (crítico para que no aparezcan rotas)
   if (norm.startsWith('public/images/blog/')) return true
+  if (norm.startsWith('blog/') && /\.(webp|jpe?g|png|avif)$/i.test(norm)) return true
   return matchesPrefix(norm, config.alwaysPreservePrefixes || [])
 }
 

@@ -62,12 +62,13 @@ export function guardRedirectsFile(filePath, label, minRules = MIN_RULES) {
     fail(`${label} missing SPA fallback at end (/* /index.html 200)`)
   }
 
-  if (!text.includes('/banquete-kosher  /index.html  200!')) {
-    fail(`${label} missing forced SPA rewrite for /banquete-kosher`)
-  }
-
-  if (!text.includes('/banquete-mexicano  /index.html  200!')) {
-    fail(`${label} missing forced SPA rewrite for /banquete-mexicano`)
+  // Forced hub→/index.html 200! causes soft-404 (home title/canonical) for crawlers.
+  for (const hub of ['banquete-kosher', 'banquete-mexicano']) {
+    if (text.includes(`/${hub}  /index.html  200!`) || text.includes(`/${hub}/  /index.html  200!`)) {
+      fail(
+        `${label} must NOT force /${hub} → /index.html 200! (soft-404). Use prerender shells + neverCopyPrefixes.`,
+      )
+    }
   }
 
   for (const parent of ['banquetes', 'banquete-kosher', 'banquete-mexicano', 'banquete-navideno']) {

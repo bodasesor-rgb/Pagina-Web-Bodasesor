@@ -147,6 +147,13 @@ const KNOWN_ONE_SEGMENT = new Set([
   'cenas',
   'mesas-sillas',
   'banquetes-catering',
+  'banquetes',
+  'banquete-kosher',
+  'banquete-mexicano',
+  'banquete-navideno',
+  'mesa-dulces',
+  'mesa-postres',
+  'mesa-quesos',
 ])
 
 function isKnownServicePath(pathname) {

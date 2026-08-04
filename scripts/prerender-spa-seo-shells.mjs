@@ -322,6 +322,12 @@ async function main() {
     'desayunos/puerto-vallarta',
     'cupcakes-gourmet/ciudad-de-mexico',
     'bodas/ciudad-de-mexico',
+    // Hubs previously forced to /index.html 200! (home soft-404)
+    'banquete-kosher',
+    'banquete-mexicano',
+    'mesa-dulces',
+    'mesa-postres',
+    'mesa-quesos',
   ]
   for (const rel of citySmokes) {
     const abs = join(DIST, rel, 'index.html')

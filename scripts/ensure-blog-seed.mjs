@@ -52,6 +52,17 @@ async function walkIndexes(dir, found = []) {
   return found
 }
 
+async function walkBlogImages(dir, found = []) {
+  if (!existsSync(dir)) return found
+  const entries = await readdir(dir, { withFileTypes: true })
+  for (const e of entries) {
+    const full = join(dir, e.name)
+    if (e.isDirectory()) await walkBlogImages(full, found)
+    else if (/\.(webp|jpe?g|png|avif)$/i.test(e.name)) found.push(full)
+  }
+  return found
+}
+
 async function countRich(dir) {
   const files = await walkIndexes(dir)
   let rich = 0
@@ -87,6 +98,7 @@ async function mergeSeedIntoLive() {
   let written = 0
   let kept = 0
   let skippedThin = 0
+  let imagesWritten = 0
 
   for (const seedFile of seedFiles) {
     const rel = seedFile.slice(seedBlog.length + 1) // e.g. slug/index.html
@@ -111,8 +123,28 @@ async function mergeSeedIntoLive() {
     written++
   }
 
+  // Also restore article images from seed (sibling *.webp next to index.html)
+  const seedImages = await walkBlogImages(seedBlog)
+  for (const img of seedImages) {
+    const rel = img.slice(seedBlog.length + 1)
+    const dest = join(BLOG_DIR, rel)
+    const buf = await readFile(img)
+    if (buf.length < 200) continue // skip 1x1 stubs
+    if (existsSync(dest)) {
+      try {
+        const existing = await readFile(dest)
+        if (existing.length >= buf.length && existing.length > 200) continue
+      } catch {
+        /* overwrite */
+      }
+    }
+    await mkdir(dirname(dest), { recursive: true })
+    await writeFile(dest, buf)
+    imagesWritten++
+  }
+
   execSync(`rm -rf "${tmp}"`, { stdio: 'inherit' })
-  return { written, kept, skippedThin, seedFiles: seedFiles.length }
+  return { written, kept, skippedThin, imagesWritten, seedFiles: seedFiles.length }
 }
 
 async function main() {
@@ -136,7 +168,7 @@ async function main() {
   const result = await mergeSeedIntoLive()
   const after = await countRich(BLOG_DIR)
   console.log(
-    `  seed merge: written=${result.written}, kept=${result.kept}, seedFiles=${result.seedFiles}`,
+    `  seed merge: written=${result.written}, kept=${result.kept}, images=${result.imagesWritten || 0}, seedFiles=${result.seedFiles}`,
   )
   console.log(`  after: rich=${after.rich} total_indexes=${after.total}`)
 
