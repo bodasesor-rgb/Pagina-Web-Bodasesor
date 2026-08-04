@@ -93,12 +93,42 @@ async function main() {
     issues.push('/css/seo-landing.css body looks like HTML, not CSS')
   }
 
+  // Blog featured image must be real image/*, not SPA HTML
+  const blogImg =
+    '/blog/5-errores-comunes-al-contratar-el-catering-de-tu-evento-corporativo-y-como-evitarlos/5-errores-comunes-al-contratar-el-catering-de-tu-evento-corporativo-y-como-evitarlos.webp'
+  const img = await fetchRes(blogImg, 'image/webp,image/*,*/*;q=0.8')
+  console.log(
+    `  ${img.status} ${img.bytes}B type=${img.contentType || '(none)'} ${img.url}`,
+  )
+  if (img.status !== 200) {
+    issues.push(`blog image HTTP ${img.status}: ${blogImg}`)
+  } else if (/text\/html/i.test(img.contentType) || img.html.trimStart().startsWith('<!DOCTYPE')) {
+    issues.push(`blog image is HTML (SPA fallback), not webp: ${blogImg}`)
+  } else if (img.bytes < 500) {
+    issues.push(`blog image too small (${img.bytes}B): ${blogImg}`)
+  }
+
+  // Sitemap must list Nexus landings
+  const sm = await fetchRes('/sitemap.xml', 'application/xml,text/xml,*/*;q=0.8')
+  console.log(`  sitemap ${sm.status} ${sm.bytes}B`)
+  if (sm.status !== 200) {
+    issues.push(`sitemap.xml HTTP ${sm.status}`)
+  } else {
+    const locs = [...sm.html.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
+    if (locs.length < 1200) {
+      issues.push(`sitemap.xml only ${locs.length} URLs (need ≥1200 including Nexus)`)
+    }
+    if (!locs.some((u) => u.includes('banquete-de-lujo-estado-de-mexico'))) {
+      issues.push('sitemap.xml missing Nexus smoke landing')
+    }
+  }
+
   if (issues.length) {
     console.error('\n❌ Gate B FAILED:')
     for (const i of issues) console.error(`  - ${i}`)
     process.exit(1)
   }
-  console.log('\n✓ Gate B OK — SPA home + SEO smokes + seo-landing.css')
+  console.log('\n✓ Gate B OK — SPA home + SEO smokes + seo-landing.css + blog image + sitemap')
 }
 
 main().catch((err) => {

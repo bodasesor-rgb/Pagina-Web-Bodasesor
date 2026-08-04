@@ -21,6 +21,7 @@ const ROOT = join(__dirname, '..')
 const DIST = join(ROOT, process.env.DIST_DIR || 'dist')
 const MIN_NEXUS_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 1200)
 const MIN_BLOG_PAGES = Number(process.env.MIN_BLOG_PAGES || 50)
+const MIN_SEO_CSS_BYTES = Number(process.env.MIN_SEO_CSS_BYTES || 10_000)
 const INVENTORY = join(__dirname, 'seo-landing-slugs.json')
 
 /** Known Nexus landings that must exist after merge (smoke probes). */
@@ -179,12 +180,37 @@ async function verifySeoLandingCss(dist, issues) {
   }
   const css = await readFile(cssPath, 'utf8')
   const bytes = Buffer.byteLength(css, 'utf8')
-  console.log(`SEO CSS: dist/css/seo-landing.css (${bytes}B)`)
-  if (bytes < 10_000) {
-    issues.push(`SEO CSS too small (${bytes}B < 10000) — likely SPA HTML soft-404`)
+  console.log(`SEO CSS: dist/css/seo-landing.css (${bytes}B, min ${MIN_SEO_CSS_BYTES})`)
+  if (bytes < MIN_SEO_CSS_BYTES) {
+    issues.push(`SEO CSS too small (${bytes}B < ${MIN_SEO_CSS_BYTES}) — likely SPA HTML soft-404`)
   }
   if (!looksLikeCssText(css)) {
     issues.push('SEO CSS does not look like CSS (DOCTYPE/html or missing :root/.seo-service-hero)')
+  }
+}
+
+async function verifySitemap(dist, issues) {
+  const sitemapPath = join(dist, 'sitemap.xml')
+  if (!existsSync(sitemapPath)) {
+    issues.push('sitemap.xml missing in dist/')
+    return
+  }
+  const xml = await readFile(sitemapPath, 'utf8')
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
+  console.log(`Sitemap URLs: ${locs.length}`)
+  if (locs.length < MIN_NEXUS_LANDINGS) {
+    issues.push(
+      `sitemap.xml too small (${locs.length} URLs < MIN_NEXUS_LANDINGS=${MIN_NEXUS_LANDINGS}) — Nexus landings missing from sitemap`,
+    )
+  }
+  // Smoke: at least one known Nexus landing in sitemap
+  const hasSmoke = locs.some((u) => u.includes('banquete-de-lujo-estado-de-mexico'))
+  if (!hasSmoke) {
+    issues.push('sitemap.xml missing Nexus smoke URL banquete-de-lujo-estado-de-mexico')
+  }
+  const blogUrls = locs.filter((u) => /\/blog\//.test(u))
+  if (blogUrls.length < 20) {
+    issues.push(`sitemap.xml has only ${blogUrls.length} /blog/ URLs (expected ≥20)`)
   }
 }
 
@@ -270,6 +296,7 @@ async function main() {
   await verifySpaSeoShells(DIST, issues)
   await verifySeoLandingCss(DIST, issues)
   await verifyStaticBlogs(DIST, issues)
+  await verifySitemap(DIST, issues)
 
   // SPA must still win at root
   if (existsSync(join(DIST, 'index.html'))) {
@@ -290,7 +317,7 @@ async function main() {
   }
 
   console.log(
-    `✓ Gate A OK — SPA + ${count} Nexus SEO (≥${MIN_NEXUS_LANDINGS}) + blogs (≥${MIN_BLOG_PAGES}) + css`,
+    `✓ Gate A OK — SPA + ${count} Nexus SEO (≥${MIN_NEXUS_LANDINGS}) + blogs (≥${MIN_BLOG_PAGES}) + css + sitemap`,
   )
   console.log(`  Smokes: ${SMOKE_SLUGS.join(', ')}`)
   void seen

@@ -87,7 +87,7 @@ function collectPaths() {
     paths.add(p)
   }
 
-  // Nexus SEO landings (~1402) — without these Google never discovers city/service HTML
+  // Nexus SEO landings (~1402+) — without these Google never discovers city/service HTML
   const nexusSlugsPath = path.join(ROOT, 'scripts/seo-landing-slugs.json')
   if (fs.existsSync(nexusSlugsPath)) {
     try {
@@ -101,6 +101,17 @@ function collectPaths() {
       }
     } catch (err) {
       console.warn('⚠ seo-landing-slugs.json unreadable — Nexus URLs omitted from sitemap:', err.message)
+    }
+  }
+
+  // Static blog articles (seed list) — hub already in STANDALONE
+  paths.add('/blog/articulos')
+  const blogSlugsPath = path.join(ROOT, 'seo-seed', 'blog-slugs.txt')
+  if (fs.existsSync(blogSlugsPath)) {
+    for (const line of fs.readFileSync(blogSlugsPath, 'utf8').split('\n')) {
+      const slug = line.trim()
+      if (!slug || slug === 'articulos') continue
+      paths.add(`/blog/${slug}`)
     }
   }
 

@@ -13,6 +13,12 @@ alwaysApply: true
 - Los ~13k quedan para **Fase 2** (pendiente confirmación de conteo Hostinger por Nexus).
 - `MIN_NEXUS_LANDINGS` default **1200** (override por env).
 
+## Phase 3 (armonía publish paralelo)
+- Hostinger = fuente de verdad. Este repo = único publisher a Netlify prod.
+- Nexus idealmente **no** publica directo a Netlify; solo Hostinger.
+- Si publica: incremental sobre deploy prod actual + Gate B + rollback. Ver `NEXUS_WEB_HARMONY.md`.
+- Sitemap: `finalize-sitemap.mjs` tras merge incluye landings en `dist/` (también nuevas).
+
 ## Regla CRÍTICA (no negociable)
 **TODO deploy (prod O preview) DEBE usar:**
 
@@ -25,16 +31,19 @@ Sync + merge son **obligatorios también en deploy-preview**. Nunca SPA-only pre
 
 ### Gate A (build)
 `npm run verify:dist-bundle` → `scripts/verify-dist-spa-and-nexus.mjs`  
-Falla si falta la SPA **o** faltan landings (`seo-service-hero` < MIN).
+Falla si falta la SPA **o** faltan landings (`seo-service-hero` < MIN) **o** CSS **o** sitemap incompleto.
 
 ### Gate B (URL publicada preview/prod)
-`PREVIEW_URL=... node scripts/verify-preview-spa-and-nexus.mjs`
+`PREVIEW_URL=... node scripts/verify-preview-spa-and-nexus.mjs`  
+También exige blog image `image/*` (no HTML) + sitemap con Nexus.
 
 ### Prohibido
 - `npm run build` solo + `netlify deploy --prod`
 - Preview sin Nexus merge
 - Quitar `ignore = "exit 0"` en `netlify.toml`
 - Merge a main / `--prod` sin Gates A+B verdes en el PR
+- Editar `dist/` a mano
+- Publish Nexus→Netlify que reemplace el site sin SPA/CSS
 
 ## Variables
 - `NEXUS_URL=https://white-ferret-567834.hostingersite.com`

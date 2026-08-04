@@ -58,11 +58,16 @@ jobs:
           SEO_SYNC_CONCURRENCY: "3"
           MIN_NEXUS_LANDINGS: "1200"
           MIN_BLOG_PAGES: "50"
+          MIN_BLOG_IMAGES: "50"
+          MIN_SEO_CSS_BYTES: "10000"
 
       - name: Deploy merged dist to Netlify production
         run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO + blogs"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+      - name: Gate B — verify production SPA + SEO + CSS + blog image + sitemap
+        run: PREVIEW_URL=https://bodasesor.com node scripts/verify-preview-spa-and-nexus.mjs
 
       - name: Verify Nexus SEO landings in production
         run: node scripts/verify-nexus-production.mjs

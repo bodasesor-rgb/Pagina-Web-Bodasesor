@@ -32,7 +32,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "sync:blog-images": "node scripts/sync-blog-images-from-nexus.mjs",
-    "guard:blog-images": "node scripts/guard-blog-images-dist.mjs"
+    "guard:blog-images": "node scripts/guard-blog-images-dist.mjs",
+    "finalize:sitemap": "node scripts/finalize-sitemap.mjs"
   },
   "dependencies": {
     "@fontsource/lato": "^5.2.7",
