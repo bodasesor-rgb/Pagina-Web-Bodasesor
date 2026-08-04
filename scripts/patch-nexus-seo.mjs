@@ -165,6 +165,108 @@ function preferWebpSrc(html) {
   return { html: out, changed }
 }
 
+/**
+ * If landing hero points at /{slug}/{slug}.webp and the file is missing in dist/,
+ * swap to a real product fallback so browsers don't get SPA HTML soft-404 images.
+ */
+function fixMissingLocalHeroes(html, filePath) {
+  const pagePath = pathFromFile(filePath)
+  const slug = pagePath.replace(/^\//, '').split('/')[0] || ''
+  let fallback = '/images/banquete-hero.png'
+  if (/kosher/i.test(slug)) fallback = '/images/banquete-kosher-hero.png'
+  else if (/mexicano/i.test(slug)) fallback = '/images/banquete-mexicano-hero.png'
+  else if (/navide/i.test(slug)) fallback = '/images/banquete-navideno-hero.png'
+  else if (/mesa-dulces|dulces/i.test(slug)) fallback = '/images/productos/mesa-dulces.png'
+  else if (/mesa-postres|postres/i.test(slug)) fallback = '/images/productos/mesa-postres.png'
+  else if (/mesa-quesos|quesos/i.test(slug)) fallback = '/images/productos/mesa-quesos.png'
+  else if (/salon|fiestas|eventos/i.test(slug)) fallback = '/images/banquete-hero.png'
+
+  let changed = false
+  let out = html.replace(
+    /(<img\b[^>]*\bsrc=["'])([^"']+)(["'][^>]*>)/gi,
+    (match, pre, src, post) => {
+      let pathname = src
+      try {
+        if (src.startsWith('http')) {
+          const u = new URL(src)
+          if (!u.hostname.includes('bodasesor.com')) return match
+          pathname = u.pathname
+        }
+      } catch {
+        return match
+      }
+      if (!pathname.startsWith('/')) return match
+      // Only local landing/product images — not logo/sello/css assets
+      if (
+        pathname.startsWith('/images/logo') ||
+        pathname.startsWith('/images/sello') ||
+        pathname.startsWith('/css/') ||
+        pathname.startsWith('/assets/')
+      ) {
+        return match
+      }
+      if (!/\.(webp|png|jpe?g)$/i.test(pathname)) return match
+      const abs = join(DIST, pathname.replace(/^\//, ''))
+      if (existsSync(abs)) return match
+      changed = true
+      return `${pre}${fallback}${post}`
+    },
+  )
+
+  // og:image pointing at missing local hero → same fallback (absolute URL)
+  out = out.replace(
+    /(<meta\s+property="og:image"\s+content=["'])([^"']+)(["']\s*\/?>)/gi,
+    (match, pre, src, post) => {
+      let pathname = src
+      try {
+        if (src.startsWith('http')) {
+          const u = new URL(src)
+          if (!u.hostname.includes('bodasesor.com')) return match
+          pathname = u.pathname
+        }
+      } catch {
+        return match
+      }
+      if (!pathname.startsWith('/') || !/\.(webp|png|jpe?g)$/i.test(pathname)) return match
+      if (pathname.startsWith('/images/logo') || pathname.startsWith('/images/sello')) return match
+      const abs = join(DIST, pathname.replace(/^\//, ''))
+      if (existsSync(abs)) return match
+      changed = true
+      return `${pre}https://bodasesor.com${fallback}${post}`
+    },
+  )
+  return { html: out, changed }
+}
+
+/** Make meta description include the page label when it is generic/duplicated. */
+function uniquifyMetaDescription(html, filePath) {
+  const path = pathFromFile(filePath)
+  const label = labelFromSlug(path.replace(/^\//, '').split('/').filter(Boolean).pop() || path)
+  const re = /<meta\s+name="description"\s+content="([^"]*)"\s*\/?>/i
+  const m = html.match(re)
+  if (!m) return { html, changed: false }
+  let desc = m[1].trim()
+  const generic =
+    /Banquetes premium y catering gourmet\.?\s*Cotiza gratis/i.test(desc) ||
+    /Salones para bodas y eventos\.?\s*Cotiza gratis/i.test(desc) ||
+    desc.length < 80
+  if (!generic) return { html, changed: false }
+  if (desc.toLowerCase().includes(label.toLowerCase().slice(0, Math.min(12, label.length)))) {
+    return { html, changed: false }
+  }
+  const stripped = desc.replace(
+    new RegExp(`^${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[.\s—-]*`, 'i'),
+    '',
+  )
+  let next = `${label}. ${stripped || 'Cotiza banquetes, catering y eventos con Bodasesor en México. Respuesta por WhatsApp.'}`
+  if (next.length > 155) next = `${next.slice(0, 152).trim()}…`
+  if (next === desc) return { html, changed: false }
+  return {
+    html: html.replace(re, `<meta name="description" content="${escapeAttr(next)}">`),
+    changed: true,
+  }
+}
+
 function escapeAttr(s) {
   return String(s ?? '')
     .replace(/&/g, '&amp;')
@@ -330,9 +432,17 @@ function patchHtml(html, filePath) {
   out = webp.html
   if (webp.changed) changed = true
 
+  const heroes = fixMissingLocalHeroes(out, filePath)
+  out = heroes.html
+  if (heroes.changed) changed = true
+
   const identity = patchIdentityMetas(out, filePath)
   out = identity.html
   if (identity.changed) changed = true
+
+  const uniqDesc = uniquifyMetaDescription(out, filePath)
+  out = uniqDesc.html
+  if (uniqDesc.changed) changed = true
 
   const imgs = patchImageAlts(out, identity)
   out = imgs.html

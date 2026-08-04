@@ -13,7 +13,7 @@
  * 1d) Sync blog images from NEXUS_URL — REQUIRED (sibling *.webp under /blog/{slug}/)
  * 2) Build SPA
  * 3) Merge SEO + blogs into dist/
- * 4) Patch / guard Nexus + blogs + images (REQUIRED) + prerender + Gate A
+ * 4) Patch / guard Nexus + blogs + images + finalize sitemap + prerender + Gate A
  *
  * Env:
  *   NEXUS_URL=https://white-ferret-567834.hostingersite.com
@@ -21,6 +21,7 @@
  *   MIN_NEXUS_LANDINGS=1200
  *   MIN_BLOG_PAGES=50
  *   MIN_BLOG_IMAGES=50
+ *   MIN_SEO_CSS_BYTES=10000
  *   ALLOW_SPA_ONLY_DEPLOY=1  — emergency only
  */
 import { spawnSync } from 'node:child_process'
@@ -142,6 +143,11 @@ if (hasSeo || hasBlogs) {
     'node',
     ['scripts/guard-blog-images-dist.mjs'],
     { optional: allowSpaOnly },
+  )
+  run(
+    '4b4 Finalize sitemap (SPA + Nexus dist landings + blogs)',
+    'node',
+    ['scripts/finalize-sitemap.mjs'],
   )
 } else if (!allowSpaOnly) {
   console.error('\n❌ Sin landings SEO ni blogs en .netlify-live/ — abortando para no publicar SPA-only.')

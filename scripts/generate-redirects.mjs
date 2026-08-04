@@ -110,12 +110,10 @@ function buildRedirectsFile(map) {
   }
 
   lines.push('')
-  lines.push(`# SPA product hubs shadowed by Nexus SEO folders — force ServicePage`)
-  lines.push(`/banquete-kosher  /index.html  200!`)
-  lines.push(`/banquete-kosher/  /index.html  200!`)
-  lines.push(`/banquete-mexicano  /index.html  200!`)
-  lines.push(`/banquete-mexicano/  /index.html  200!`)
-  lines.push('')
+  // Do NOT force /banquete-kosher|/banquete-mexicano → /index.html 200!
+  // That served the HOME shell (soft-404 for crawlers). Hubs use prerendered
+  // dist/{hub}/index.html (correct title/canonical); neverCopyPrefixes still
+  // blocks Nexus HTML from shadowing ServicePage.
   lines.push(`# Banquet menu subpages — always SPA (Nexus has parent HTML but not menu subdirs)`)
   lines.push(`/banquetes/:menu  /index.html  200`)
   lines.push(`/banquete-kosher/:menu  /index.html  200`)
