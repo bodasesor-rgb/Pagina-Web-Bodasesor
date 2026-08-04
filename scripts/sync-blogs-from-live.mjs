@@ -253,6 +253,16 @@ async function main() {
       process.exit(1)
     }
   }
+
+  // Refresh article images after HTML (Nexus Hostinger → public/blog)
+  const imgs = spawnSync('node', ['scripts/sync-blog-images-from-nexus.mjs'], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: process.env,
+  })
+  if (imgs.status !== 0 && !allowSpaOnly) {
+    process.exit(imgs.status ?? 1)
+  }
 }
 
 main().catch((err) => {

@@ -10,15 +10,17 @@
  * 1) Optional Netlify ZIP snapshot (preserves blog/ if ZIP is wiped)
  * 1b) Sync SEO landings — REQUIRED
  * 1c) Ensure blog seed + sync blogs — REQUIRED (fail if rich blogs missing)
+ * 1d) Sync blog images from NEXUS_URL — REQUIRED (sibling *.webp under /blog/{slug}/)
  * 2) Build SPA
  * 3) Merge SEO + blogs into dist/
- * 4) Patch / guard Nexus + blogs (REQUIRED) + prerender + Gate A
+ * 4) Patch / guard Nexus + blogs + images (REQUIRED) + prerender + Gate A
  *
  * Env:
  *   NEXUS_URL=https://white-ferret-567834.hostingersite.com
  *   SITE_BASE=https://bodasesor.com
  *   MIN_NEXUS_LANDINGS=1200
  *   MIN_BLOG_PAGES=50
+ *   MIN_BLOG_IMAGES=50
  *   ALLOW_SPA_ONLY_DEPLOY=1  — emergency only
  */
 import { spawnSync } from 'node:child_process'
@@ -111,6 +113,14 @@ run(
   { optional: allowSpaOnly },
 )
 
+// Blog article images (sibling *.webp under /blog/{slug}/) — REQUIRED so URLs are not SPA HTML
+run(
+  '1d Sync imágenes de blog desde NEXUS_URL (public/blog + .netlify-live)',
+  'node',
+  ['scripts/sync-blog-images-from-nexus.mjs'],
+  { optional: allowSpaOnly },
+)
+
 run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
 
 const hasSeo = existsSync(LIVE) && liveLandingCount() > 0
@@ -127,6 +137,12 @@ if (hasSeo || hasBlogs) {
   run('4b2 Verificar blogs estáticos en dist (guard OBLIGATORIO)', 'node', ['scripts/guard-blogs-dist.mjs'], {
     optional: allowSpaOnly,
   })
+  run(
+    '4b3 Verificar imágenes de blog en dist (OBLIGATORIO)',
+    'node',
+    ['scripts/guard-blog-images-dist.mjs'],
+    { optional: allowSpaOnly },
+  )
 } else if (!allowSpaOnly) {
   console.error('\n❌ Sin landings SEO ni blogs en .netlify-live/ — abortando para no publicar SPA-only.')
   console.error('   Revisa NEXUS_URL / SITE_BASE / seo-seed/netlify-blog-seed.tgz')
