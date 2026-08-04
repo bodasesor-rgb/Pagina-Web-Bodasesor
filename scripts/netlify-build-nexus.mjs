@@ -127,6 +127,12 @@ if (hasSeo || hasBlogs) {
   run('4b2 Verificar blogs estáticos en dist (guard OBLIGATORIO)', 'node', ['scripts/guard-blogs-dist.mjs'], {
     optional: allowSpaOnly,
   })
+  run(
+    '4b3 Verificar imágenes de blog en dist (aviso si Nexus aún no las subió)',
+    'node',
+    ['scripts/guard-blog-images-dist.mjs'],
+    { optional: true },
+  )
 } else if (!allowSpaOnly) {
   console.error('\n❌ Sin landings SEO ni blogs en .netlify-live/ — abortando para no publicar SPA-only.')
   console.error('   Revisa NEXUS_URL / SITE_BASE / seo-seed/netlify-blog-seed.tgz')

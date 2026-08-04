@@ -89,11 +89,19 @@ const HUBS = [
   { path: '/banquete-kosher', title: 'Banquete Kosher', desc: 'Banquete kosher para bodas y eventos con menús certificados y servicio profesional en México.' },
   { path: '/banquete-mexicano', title: 'Banquete Mexicano', desc: 'Banquete mexicano para bodas y eventos: estaciones, antojitos y menús tradicionales en México.' },
   { path: '/banquete-navideno', title: 'Banquete Navideño', desc: 'Banquete navideño para empresas y eventos: menús de temporada y servicio completo en México.' },
+  // Mesa hubs (linked from Nexus nav + SPA) — must prerender or soft-404 to home
+  { path: '/mesa-dulces', title: 'Mesa de Dulces', desc: 'Mesa de dulces para bodas y eventos: macarons, chocolates y dulces artesanales en México.' },
+  { path: '/mesa-postres', title: 'Mesa de Postres', desc: 'Mesa de postres para bodas y eventos: pasteles, tartaletas y repostería fina en México.' },
+  { path: '/mesa-quesos', title: 'Mesa de Quesos', desc: 'Mesa de quesos y charcutería gourmet para bodas, cenas y eventos corporativos en México.' },
   { path: '/aviso-de-privacidad', title: 'Aviso de Privacidad', desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales y derechos ARCO.' },
   { path: '/terminos-y-condiciones', title: 'Términos y Condiciones', desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos.' },
 ]
 
+/** Service hubs that must keep /{slug} (not /mesas/{rest}) */
+const MESA_SERVICE_SLUGS = new Set(['mesa-dulces', 'mesa-postres', 'mesa-quesos'])
+
 function productHref(slug) {
+  if (MESA_SERVICE_SLUGS.has(slug)) return `/${slug}`
   if (slug.startsWith('silla-')) return `/sillas/${slug.slice(6)}`
   if (slug.startsWith('mesa-')) return `/mesas/${slug.slice(5)}`
   if (MOBILIARIO_BARRAS.has(slug)) return `/barras/${slug.slice(6)}`
