@@ -78,6 +78,8 @@ const ALLOW = [
   /semrushbot/i,
   // Smoke tests / sync internos de CI (deploy + preserve blogs)
   /BodasesorNexusVerify/i,
+  // Mailing interno Bodasesor (HTML emails / preview de páginas)
+  /BodasesorMailingBot/i,
 ]
 
 // ═══════════════════════════════════════════════════════════════
