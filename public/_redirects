@@ -4245,5 +4245,5 @@
 /blogs/noticias/*  /blog/:splat  301
 /blogs/*  /blog  301
 
-# SPA fallback — MUST stay last
-/*  /index.html  200
+# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.
+/*  /404.html  404

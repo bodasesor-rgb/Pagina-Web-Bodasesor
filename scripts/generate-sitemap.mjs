@@ -5,7 +5,7 @@
  */
 import fs from 'fs'
 import path from 'path'
-import { collectSpaSeoPaths } from './collect-spa-seo-entries.mjs'
+import { collectSpaSeoPathsForSitemap } from './collect-spa-seo-entries.mjs'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
 const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
@@ -81,8 +81,8 @@ function collectPaths() {
     }
   }
 
-  // All SPA product/detail + hub URLs (same inventory as prerender shells)
-  for (const p of collectSpaSeoPaths()) {
+  // SPA hubs + products + hub×city (NOT every product×city — crawl budget)
+  for (const p of collectSpaSeoPathsForSitemap()) {
     if (p === '/buscar' || p.startsWith('/buscar')) continue
     paths.add(p)
   }

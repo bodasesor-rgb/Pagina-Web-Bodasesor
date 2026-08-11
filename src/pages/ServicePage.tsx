@@ -31,6 +31,41 @@ const WHATSAPP_NUMBER = "5215540080373";
 const WA_MSG = (title: string) =>
   `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20interesa%20cotizar%3A%20${encodeURIComponent(title)}`;
 
+function ServicioNoEncontrado() {
+  useEffect(() => {
+    const prev = document.querySelector('meta[name="robots"]')?.getAttribute('content')
+    let el = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null
+    if (!el) {
+      el = document.createElement('meta')
+      el.setAttribute('name', 'robots')
+      document.head.appendChild(el)
+    }
+    el.setAttribute('content', 'noindex, follow')
+    document.title = 'Servicio no encontrado | Bodasesor'
+    return () => {
+      if (el && prev) el.setAttribute('content', prev)
+    }
+  }, [])
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5efe8] text-[#162040]">
+      <h1 className="text-4xl font-serif font-bold mb-4">Servicio no encontrado</h1>
+      <p className="text-lg mb-8 text-gray-600">Aún estamos preparando esta página.</p>
+      <a
+        href={WA_MSG('información de servicios')}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 bg-[#0d6849] text-white px-6 py-3 rounded-xl font-bold font-serif hover:bg-[#0a5740] transition-colors"
+      >
+        <WaSvg /> Cotizar por WhatsApp
+      </a>
+      <Link href="/" className="mt-4 text-[#162040] underline font-serif">
+        ← Volver al inicio
+      </Link>
+    </div>
+  )
+}
+
 const HERO_IMAGES: Record<string, string> = {
   // Banquetes — imágenes hero dedicadas
   'banquetes':             '/images/banquete-hero.png',
@@ -556,20 +591,7 @@ export default function ServicePage({ params }: ServicePageProps) {
   }
 
   if (!product) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5efe8] text-[#162040]">
-        <h1 className="text-4xl font-serif font-bold mb-4">Servicio no encontrado</h1>
-        <p className="text-lg mb-8 text-gray-600">Aún estamos preparando esta página.</p>
-        <a
-          href={WA_MSG("información de servicios")}
-          target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#0d6849] text-white px-6 py-3 rounded-xl font-bold font-serif hover:bg-[#0a5740] transition-colors"
-        >
-          <WaSvg /> Cotizar por WhatsApp
-        </a>
-        <Link href="/" className="mt-4 text-[#162040] underline font-serif">← Volver al inicio</Link>
-      </div>
-    );
+    return <ServicioNoEncontrado />;
   }
 
   if (product.category === 'eventos') {

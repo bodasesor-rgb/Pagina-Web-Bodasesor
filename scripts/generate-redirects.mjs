@@ -133,8 +133,8 @@ function buildRedirectsFile(map) {
   lines.push(`/blogs/noticias/*  /blog/:splat  301`)
   lines.push(`/blogs/*  /blog  301`)
   lines.push('')
-  lines.push(`# SPA fallback — MUST stay last`)
-  lines.push(`/*  /index.html  200`)
+  lines.push(`# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.`)
+  lines.push(`/*  /404.html  404`)
 
   return `${lines.join('\n')}\n`
 }
