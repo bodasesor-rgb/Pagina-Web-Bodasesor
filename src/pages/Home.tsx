@@ -1,9 +1,46 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, useLayoutEffect, lazy, Suspense } from "react";
 import { useCity } from "../context/CityContext";
 import HomeSeoContent from "../components/HomeSeoContent";
 import HomeJsonLd from "../components/HomeJsonLd";
+import { beginHomeLcpHandoff, finishHomeLcpHandoff } from "../utils/static-lcp-shell";
 
 const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
+
+/**
+ * Keep the preloaded static hero as LCP; React img loads from HTTP cache then
+ * we remove the static layer (no re-download, no layout reparent CLS).
+ */
+function HeroMedia() {
+  useLayoutEffect(() => {
+    beginHomeLcpHandoff()
+    const t = window.setTimeout(() => finishHomeLcpHandoff(), 3000)
+    return () => window.clearTimeout(t)
+  }, [])
+
+  const onReady = () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => finishHomeLcpHandoff())
+    })
+  }
+
+  return (
+    <picture className="absolute inset-0 -z-10" aria-hidden="true">
+      <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
+      <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
+      <img
+        src="/images/hero-bg-new.webp"
+        alt=""
+        className="w-full h-full object-cover object-center"
+        fetchPriority="high"
+        decoding="async"
+        width={1408}
+        height={768}
+        onLoad={onReady}
+        onError={onReady}
+      />
+    </picture>
+  )
+}
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WHATSAPP_BASE = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
@@ -99,24 +136,12 @@ export default function Home() {
     <div>
       <HomeJsonLd />
       <section className="relative min-h-[520px] md:min-h-[480px] flex items-center overflow-x-hidden md:overflow-hidden md:aspect-[1408/768]" data-testid="section-hero">
-        <picture className="absolute inset-0 -z-10" aria-hidden="true">
-          <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
-          <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
-          <img
-            src="/images/hero-bg-new.webp"
-            alt=""
-            className="w-full h-full object-cover object-center"
-            fetchPriority="high"
-            decoding="async"
-            width={1408}
-            height={768}
-          />
-        </picture>
-        <div className="absolute inset-0 bg-[#162040]/60 pointer-events-none" aria-hidden="true" />
+        <HeroMedia />
+        <div className="absolute inset-0 bg-[#162040]/60 pointer-events-none z-[1]" aria-hidden="true" />
         <div className="hidden md:block">
           <RotatingReviewCard />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-24 text-center z-10 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-24 text-center z-[2] w-full">
           <h1
             key={city?.slug ?? 'default'}
             className="text-3xl sm:text-4xl md:text-7xl font-serif font-bold text-white mb-5 md:mb-8 leading-tight"

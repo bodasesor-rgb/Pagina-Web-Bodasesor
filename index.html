@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VGGKNB77P"></script>
+    <!-- Google Analytics: load after idle so it never competes with LCP -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       // SPA: page_views are sent by GoogleAnalytics.jsx (initial + client navigations)
       gtag('config', 'G-6VGGKNB77P', { send_page_view: false });
+      (function loadGtagWhenIdle() {
+        function inject() {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-6VGGKNB77P';
+          document.head.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(inject, { timeout: 4000 });
+        } else {
+          window.addEventListener('load', function () { setTimeout(inject, 1200); });
+        }
+      })();
     </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -98,6 +110,9 @@
       @media (min-width:768px){#static-nav-shell .nav-sub{display:block;height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}}
       html.no-lcp-hero #static-hero-copy,html.no-lcp-hero #lcp-hero-wrap{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       html.no-lcp-shell #static-hero-copy,html.no-lcp-shell #lcp-hero-wrap,html.no-lcp-shell #static-nav-shell{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
+      /* Let the preloaded fixed hero show through until React hero is ready */
+      html.home-lcp-pending #root{background:transparent}
+      html.home-lcp-pending #lcp-hero-wrap{z-index:0}
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy{top:8rem}#static-hero-copy h1{font-size:4.5rem;margin-bottom:1.5rem}#static-hero-copy .hero-sub{font-size:1.25rem;margin-bottom:2rem}}
     </style>

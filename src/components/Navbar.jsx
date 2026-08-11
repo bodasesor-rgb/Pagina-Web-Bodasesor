@@ -22,7 +22,7 @@ import { espaciosNavItems } from "../data/espacios-products";
 import { audioIluminacionNavGroups } from "../data/audio-iluminacion-products";
 import { banquetesNavGroups } from "../data/banquetes-menus";
 
-import { hideStaticLcpShell } from "../utils/static-lcp-shell";
+import { hideStaticLcpShell, isHomePath } from "../utils/static-lcp-shell";
 import { prefetchProducts } from "../data/products-loader";
 
 const SearchBar = lazy(() => import("./SearchBar"));
@@ -966,18 +966,35 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [mobileSubExpanded, setMobileSubExpanded] = useState(null);
+  const [showSearch, setShowSearch] = useState(false);
   const [location, setLocation] = useLocation();
   const { city } = useCity();
 
   useLayoutEffect(() => {
-    // Hide static shell immediately so mobile never shows double nav bars
-    hideStaticLcpShell()
-    document.getElementById('static-nav-shell')?.remove()
+    // Hide static nav shell so mobile never shows double nav bars.
+    // On home, keep #lcp-hero-wrap visible — Home owns LCP handoff.
+    if (isHomePath(location)) {
+      document.getElementById('static-nav-shell')?.remove()
+      document.getElementById('static-hero-copy')?.remove()
+    } else {
+      hideStaticLcpShell()
+      document.getElementById('static-nav-shell')?.remove()
+    }
+  }, [location])
+
+  useEffect(() => {
+    const reveal = () => setShowSearch(true)
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(reveal, { timeout: 3500 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const t = setTimeout(reveal, 2000)
+    return () => clearTimeout(t)
   }, [])
 
   useEffect(() => {
-    // Warm products chunk so catalog/detail pages show items without a blank flash
-    const t = setTimeout(() => prefetchProducts(), 400)
+    // Warm products after LCP budget — avoid competing with hero/logo bytes.
+    const t = setTimeout(() => prefetchProducts(), 2800)
     return () => clearTimeout(t)
   }, [])
 
@@ -1010,18 +1027,34 @@ export default function Navbar() {
             {/* Logo + city badge */}
             <div className="flex items-center gap-2">
               <Link href="/" className="flex items-center" data-testid="link-logo">
-                <img src="/images/logo-white-transparent.png" alt="Bodasesor" className="h-12" style={{ filter: 'brightness(0) invert(1)' }} />
+                <picture>
+                  <source srcSet="/images/logo-white-transparent.webp" type="image/webp" />
+                  <img
+                    src="/images/logo-white-transparent.png"
+                    alt="Bodasesor"
+                    className="h-12 w-auto"
+                    width={192}
+                    height={54}
+                    decoding="async"
+                    fetchPriority="low"
+                    style={{ filter: 'brightness(0) invert(1)' }}
+                  />
+                </picture>
               </Link>
               <CityBadge />
             </div>
 
             {/* Desktop: search + actions */}
             <div className="hidden md:flex items-center space-x-6">
+              {showSearch ? (
               <Suspense fallback={<div className="w-64 h-10 rounded-lg bg-white/20 animate-pulse" />}>
               <SearchBar
                 inputClassName="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
               />
               </Suspense>
+              ) : (
+                <div className="w-64 h-10 rounded-lg bg-white/20" aria-hidden="true" />
+              )}
 
               <a href="tel:5215540080373" className="flex items-center space-x-2 hover:text-[#f5efe8] transition-colors" data-testid="link-llamar">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1148,6 +1181,7 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-200 max-h-[80vh] overflow-y-auto shadow-xl">
           <div className="px-4 pt-3 pb-2">
             {/* Search */}
+            {showSearch ? (
             <Suspense fallback={<div className="w-full h-10 rounded-lg bg-gray-100 animate-pulse mb-3" />}>
             <SearchBar
               onNavigate={() => setMobileOpen(false)}
@@ -1155,6 +1189,7 @@ export default function Navbar() {
               inputClassName="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif"
             />
             </Suspense>
+            ) : null}
 
             <MobileSection title="Ciudad" id="ciudad" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
               {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (

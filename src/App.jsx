@@ -175,26 +175,26 @@ function CatchAllRoute({ slug }) {
 function StaticLcpCleanup() {
   const [location] = useLocation()
   useLayoutEffect(() => {
-    // Tear down fixed LCP shell as soon as React paints — avoids double nav / stacked hero.
     if (isHomePath(location)) {
-      hideStaticLcpShell()
+      // Home.HeroMedia owns handoff; only clear static nav chrome here.
       document.getElementById('static-nav-shell')?.remove()
       document.getElementById('static-hero-copy')?.remove()
-      document.getElementById('lcp-hero-wrap')?.remove()
     } else {
+      document.documentElement.classList.remove('home-lcp-pending')
       hideStaticHeroOnly()
       hideStaticLcpShell()
       document.getElementById('static-nav-shell')?.remove()
+      document.getElementById('lcp-hero-wrap')?.remove()
+      document.getElementById('static-hero-copy')?.remove()
     }
   }, [location])
   useEffect(() => {
-    // Warm product catalog after first paint so detail pages don't flash "Cargando…"
     const warm = () => prefetchProducts()
     if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(warm, { timeout: 2000 })
+      const id = window.requestIdleCallback(warm, { timeout: 4500 })
       return () => window.cancelIdleCallback(id)
     }
-    const t = setTimeout(warm, 800)
+    const t = setTimeout(warm, 2500)
     return () => clearTimeout(t)
   }, [])
   return null

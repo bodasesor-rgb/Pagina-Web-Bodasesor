@@ -67,6 +67,10 @@ function deferNonCriticalPreloadsPlugin() {
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/icons-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/vendor-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/rolldown-runtime-[^"]+">\n?/g, '')
+          // Heavy data chunks — only needed after interaction / route change
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/products-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/search-index-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/blog-data-[^"]+">\n?/g, '')
 
         // Move main stylesheet before module scripts so first paint isn't unstyled.
         const cssLink = out.match(/<link\s+rel="stylesheet"[^>]*href="\/assets\/[^"]+\.css"[^>]*>/i)
