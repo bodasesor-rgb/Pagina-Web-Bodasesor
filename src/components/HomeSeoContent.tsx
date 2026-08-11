@@ -1,4 +1,5 @@
 import CityLink from './CityLink'
+import { NEXUS_PRIORITY_LINKS } from '../data/nexus-priority-links'
 
 const Link = CityLink
 
@@ -46,7 +47,23 @@ export default function HomeSeoContent() {
           <Link href="/alimentos-empresas" className="text-[#162040] font-semibold hover:underline">
             soluciones corporativas
           </Link>{' '}
-          para convenciones y cenas de empresa.
+          para convenciones y cenas de empresa. Guías locales:{' '}
+          <a href="/banquete-de-lujo-ciudad-de-mexico/" className="text-[#162040] font-semibold hover:underline">
+            banquete de lujo en CDMX
+          </a>
+          ,{' '}
+          <a href="/banquete-kosher-ciudad-de-mexico/" className="text-[#162040] font-semibold hover:underline">
+            banquete kosher en Ciudad de México
+          </a>
+          ,{' '}
+          <a href="/banquete-3-tiempos-ciudad-de-mexico/" className="text-[#162040] font-semibold hover:underline">
+            banquete 3 tiempos en CDMX
+          </a>{' '}
+          y{' '}
+          <a href="/banquete-de-lujo-estado-de-mexico/" className="text-[#162040] font-semibold hover:underline">
+            banquete de lujo en Estado de México
+          </a>
+          .
         </p>
 
         <h3 className="text-xl font-bold text-[#162040] pt-2">
@@ -108,6 +125,19 @@ export default function HomeSeoContent() {
           y el resto del país. Cotiza por WhatsApp y recibe una propuesta personalizada con menú, montaje y
           opciones según tu tipo de evento e invitados.
         </p>
+
+        <h3 className="text-xl font-bold text-[#162040] pt-2">
+          Guías de Banquete por Ciudad
+        </h3>
+        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-2 list-disc list-inside marker:text-[#162040]/40">
+          {NEXUS_PRIORITY_LINKS.map((item) => (
+            <li key={item.href}>
+              <a href={item.href} className="text-[#162040] font-semibold hover:underline">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

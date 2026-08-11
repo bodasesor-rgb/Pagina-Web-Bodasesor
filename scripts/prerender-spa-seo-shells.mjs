@@ -364,6 +364,25 @@ async function main() {
     }
   }
 
+  // Hub × city stays indexable; thin product/menu × city is noindex (crawl budget)
+  const hubCityHtml = await readFile(join(DIST, 'banquetes/ciudad-de-mexico/index.html'), 'utf8')
+  if (/name="robots"\s+content="noindex/i.test(hubCityHtml)) {
+    console.error('prerender-spa-seo-shells: hub×city banquetes/ciudad-de-mexico must stay indexable')
+    process.exit(1)
+  }
+  const thinCityRels = [
+    'banquetes/3-tiempos/ciudad-de-mexico',
+    'desayunos/puerto-vallarta',
+    'cupcakes-gourmet/ciudad-de-mexico',
+  ]
+  for (const rel of thinCityRels) {
+    const html = await readFile(join(DIST, rel, 'index.html'), 'utf8')
+    if (!/name="robots"\s+content="noindex/i.test(html)) {
+      console.error(`prerender-spa-seo-shells: thin city shell ${rel} must be noindex`)
+      process.exit(1)
+    }
+  }
+
   // Must NOT prerender spam: blog×city or blog-slug product×city
   const banned = [
     'blog/ciudad-de-mexico',

@@ -1,9 +1,16 @@
 import { useLocation } from "wouter";
 import CityLink from "./CityLink";
+import { NEXUS_PRIORITY_LINKS } from "../data/nexus-priority-links";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
 const Link = CityLink;
+
+/** Nexus landings — plain <a>, never CityLink (glued city slugs break if city is appended). */
+const NEXUS_FOOTER_LINKS = NEXUS_PRIORITY_LINKS.slice(0, 6).map((l) => ({
+  name: l.shortLabel || l.label,
+  href: l.href,
+}))
 
 const CITIES = [
   { name: 'Ciudad de México', href: '/ciudad-de-mexico' },
@@ -31,14 +38,17 @@ export default function Footer() {
               {[
                 { name: 'Catálogos', href: '/catalogos' },
                 { name: 'Banquetes para Bodas', href: '/banquetes' },
-                { name: 'Taquiza de Guisados', href: '/taquiza-guisados' },
-                { name: 'Barra de Bebidas', href: '/barra-bebidas' },
+                { name: 'Barra de Bebidas', href: '/barras-de-bebidas' },
                 { name: 'Renta de Mobiliario', href: '/mesas-sillas' },
                 { name: 'Wedding Planner', href: '/wedding-planner' },
-                { name: 'Coffee Break Empresarial', href: '/coffee-break' },
               ].map(item => (
                 <li key={item.href}>
                   <Link href={item.href} className={linkClass}>{item.name}</Link>
+                </li>
+              ))}
+              {NEXUS_FOOTER_LINKS.map(item => (
+                <li key={item.href}>
+                  <a href={item.href} className={linkClass}>{item.name}</a>
                 </li>
               ))}
             </ul>
