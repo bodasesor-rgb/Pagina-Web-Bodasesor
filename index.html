@@ -124,11 +124,22 @@
       @media (min-width:768px){#static-nav-shell .nav-sub{display:block;height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}}
       html.no-lcp-hero #static-hero-copy,html.no-lcp-hero #lcp-hero-wrap{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       html.no-lcp-shell #static-hero-copy,html.no-lcp-shell #lcp-hero-wrap,html.no-lcp-shell #static-nav-shell{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
-      /* Home: keep preloaded hero + static H1 behind/over transparent root (early LCP) */
+      /* Home: keep preloaded hero + static H1 behind/over transparent root (early LCP).
+         After live: absolute (not fixed) so title/image scroll away with the portada. */
       html.home-lcp-live #root{background:transparent}
-      html.home-lcp-live #lcp-hero-wrap{z-index:0}
+      html.home-lcp-live #lcp-hero-wrap.lcp-hero-live{
+        position:absolute;inset:0;z-index:0;bottom:auto;height:auto;min-height:520px
+      }
+      @media (min-width:769px){
+        html.home-lcp-live #lcp-hero-wrap.lcp-hero-live{min-height:480px;aspect-ratio:1408/768}
+      }
       html.home-lcp-live #lcp-hero-wrap.lcp-hero-live::after{display:none}
-      html.home-lcp-live #static-hero-copy.lcp-copy-live{z-index:5;pointer-events:auto}
+      html.home-lcp-live #static-hero-copy.lcp-copy-live{
+        position:absolute;left:0;right:0;top:5.5rem;z-index:5;pointer-events:auto
+      }
+      @media (min-width:768px){
+        html.home-lcp-live #static-hero-copy.lcp-copy-live{top:8rem}
+      }
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy{top:8rem}#static-hero-copy h1{font-size:4.5rem;margin-bottom:1.5rem}#static-hero-copy .hero-sub{font-size:1.25rem;margin-bottom:2rem}}
     </style>
