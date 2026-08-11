@@ -11,6 +11,7 @@ import {
   applyPageIdentityMeta,
 } from '../utils/seo-head'
 import { blogPosts } from '../data/blog-data'
+import { SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
 
@@ -169,6 +170,13 @@ const SEO_MAP = {
 }
 
 const NOINDEX_PREFIXES = ['/buscar']
+
+/** Thin SPA shells: /{product|detail}/{city} — hubs × city stay indexable. */
+function isThinCityProductShell(path, basePath, pathCity) {
+  if (!pathCity || basePath === '/' || path.startsWith('/blog')) return false
+  if (SPA_SEO_HUB_PATHS.has(basePath)) return false
+  return true
+}
 
 function buildServiceJsonLd({ name, description, url, city }) {
   const data = {
@@ -365,9 +373,9 @@ export default function GlobalSEO() {
       })
     }
 
-    const noindex = NOINDEX_PREFIXES.some(
-      (p) => path === p || path.startsWith(`${p}/`),
-    )
+    const noindex =
+      NOINDEX_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`)) ||
+      isThinCityProductShell(path, basePath, pathCity)
     upsertMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
 
     return () => {
