@@ -80,6 +80,14 @@ export function enableHomeStaticHero() {
   document.documentElement.classList.remove('no-lcp-hero', 'no-lcp-shell', 'home-lcp-pending')
   document.getElementById('static-nav-shell')?.remove()
 
+  // Anchor LCP nodes inside the React hero so they scroll with the portada
+  // (fixed → stuck title over the whole page while scrolling).
+  const hero = document.querySelector('[data-testid="section-hero"]')
+  if (hero) {
+    if (wrap.parentElement !== hero) hero.insertBefore(wrap, hero.firstChild)
+    if (copy.parentElement !== hero) hero.appendChild(copy)
+  }
+
   wrap.classList.add('lcp-hero-live')
   // Clear any hide() inline styles from a prior route.
   wrap.style.removeProperty('display')
