@@ -25,11 +25,6 @@ const JSON_LD = {
       name: 'Bodasesor Eventos',
       publisher: { '@id': 'https://bodasesor.com/#organization' },
       inLanguage: 'es-MX',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: 'https://bodasesor.com/buscar?q={search_term_string}',
-        'query-input': 'required name=search_term_string',
-      },
     },
     {
       '@type': 'LocalBusiness',

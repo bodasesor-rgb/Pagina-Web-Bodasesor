@@ -15,7 +15,7 @@ import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises'
 import { existsSync, readFileSync } from 'node:fs'
 import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { collectSpaSeoPaths } from './collect-spa-seo-entries.mjs'
+import { collectSpaSeoPathsForSitemap } from './collect-spa-seo-entries.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -107,7 +107,7 @@ async function collectPaths() {
   const paths = new Set(['/'])
   const nexusFromDist = new Set()
 
-  for (const p of collectSpaSeoPaths()) {
+  for (const p of collectSpaSeoPathsForSitemap()) {
     if (p === '/buscar' || p.startsWith('/buscar') || p.includes('?')) continue
     paths.add(p)
   }

@@ -137,7 +137,7 @@ function usefulCityShort(city) {
   return short
 }
 
-function entry(path, headline, description, h1, cityShort = null) {
+function entry(path, headline, description, h1, cityShort = null, opts = {}) {
   const cleanPath = path.replace(/\/+$/, '') || '/'
   if (cleanPath === '/') return null
   return {
@@ -146,11 +146,12 @@ function entry(path, headline, description, h1, cityShort = null) {
     description: clipDesc(description),
     h1: h1 || headline,
     canonical: `${SITE_BASE}${cleanPath}`,
+    noindex: Boolean(opts?.noindex),
   }
 }
 
-/** @returns {Map<string, {path:string,title:string,description:string,h1:string,canonical:string}>} */
-export function collectSpaSeoEntries() {
+/** @returns {Map<string, {path:string,title:string,description:string,h1:string,canonical:string,noindex?:boolean}>} */
+export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = {}) {
   const map = new Map()
   const blogSlugs = new Set(blogPosts.map((p) => p.slug).filter(Boolean))
 
@@ -158,6 +159,18 @@ export function collectSpaSeoEntries() {
     if (!e?.path) return
     if (!map.has(e.path)) map.set(e.path, e)
   }
+
+  // Search UI — prerender with noindex (never soft-404 as home)
+  put(
+    entry(
+      '/buscar',
+      'Buscar servicios',
+      'Busca banquetes, catering, mobiliario y servicios para eventos en Bodasesor.',
+      'Buscar servicios',
+      null,
+      { noindex: true },
+    ),
+  )
 
   // City landings: /cuernavaca, /ciudad-de-mexico — must not soft-404 to home
   for (const citySlug of CITY_SLUGS) {
@@ -250,30 +263,32 @@ export function collectSpaSeoEntries() {
     }
   }
 
-  // City variants for EVERY service/product path (not only HUBS).
-  // Without these, Netlify serves dist/index.html (home canonical) → soft-404 in Google.
-  const bases = [...map.values()]
-  for (const base of bases) {
-    if (isCityExemptPath(base.path)) continue
-    const segs = base.path.split('/').filter(Boolean)
-    if (!segs.length || CITY_SLUG_SET.has(segs[segs.length - 1])) continue
-    // Bare city landing already handled
-    if (segs.length === 1 && CITY_SLUG_SET.has(segs[0])) continue
+  // City variants for EVERY service/product path (prerender only — prevents soft-404).
+  // Sitemap uses collectSpaSeoPathsForSitemap() WITHOUT this explosion (crawl budget).
+  if (includeAllCityProductVariants) {
+    const bases = [...map.values()]
+    for (const base of bases) {
+      if (isCityExemptPath(base.path)) continue
+      const segs = base.path.split('/').filter(Boolean)
+      if (!segs.length || CITY_SLUG_SET.has(segs[segs.length - 1])) continue
+      // Bare city landing already handled
+      if (segs.length === 1 && CITY_SLUG_SET.has(segs[0])) continue
 
-    const headlineBase = base.h1 || base.title
-    for (const citySlug of CITY_SLUGS) {
-      const city = CITY_MAP[citySlug]
-      const cityName = city?.name || citySlug
-      const headline = cityHeadline(headlineBase, cityName)
-      put(
-        entry(
-          `${base.path}/${citySlug}`,
-          headline,
-          `${base.description} Cotiza en ${cityName} y área metropolitana.`,
-          headline,
-          usefulCityShort(city),
-        ),
-      )
+      const headlineBase = base.h1 || base.title
+      for (const citySlug of CITY_SLUGS) {
+        const city = CITY_MAP[citySlug]
+        const cityName = city?.name || citySlug
+        const headline = cityHeadline(headlineBase, cityName)
+        put(
+          entry(
+            `${base.path}/${citySlug}`,
+            headline,
+            `${base.description} Cotiza en ${cityName} y área metropolitana.`,
+            headline,
+            usefulCityShort(city),
+          ),
+        )
+      }
     }
   }
 
@@ -282,4 +297,9 @@ export function collectSpaSeoEntries() {
 
 export function collectSpaSeoPaths() {
   return [...collectSpaSeoEntries().keys()].sort()
+}
+
+/** Sitemap: hubs + hub×city + products + blogs — not every product×city thin shell. */
+export function collectSpaSeoPathsForSitemap() {
+  return [...collectSpaSeoEntries({ includeAllCityProductVariants: false }).keys()].sort()
 }

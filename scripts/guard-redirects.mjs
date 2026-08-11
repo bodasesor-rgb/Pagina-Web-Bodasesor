@@ -58,8 +58,11 @@ export function guardRedirectsFile(filePath, label, minRules = MIN_RULES) {
     fail(`${label} has only ${ruleCount} rules (expected >= ${minRules})`)
   }
 
-  if (!text.includes('/*  /index.html  200')) {
-    fail(`${label} missing SPA fallback at end (/* /index.html 200)`)
+  if (!text.includes('/*  /404.html  404')) {
+    fail(`${label} missing real 404 fallback at end (/* /404.html 404) — soft-404 to index.html hurts SEO`)
+  }
+  if (text.includes('/*  /index.html  200')) {
+    fail(`${label} must NOT use /* /index.html 200 (soft-404). Use /* /404.html 404`)
   }
 
   // Forced hub→/index.html 200! causes soft-404 (home title/canonical) for crawlers.

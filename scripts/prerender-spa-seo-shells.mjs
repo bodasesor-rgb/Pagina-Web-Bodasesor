@@ -126,6 +126,7 @@ function applySeo(html, entry) {
   ensureMeta('author', SITE_AUTHOR)
   ensureMeta('publisher', SITE_PUBLISHER)
   ensureMeta('keywords', keywords)
+  ensureMeta('robots', entry.noindex ? 'noindex, follow' : 'index, follow')
 
   out = out.replace(
     /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
@@ -299,6 +300,22 @@ async function main() {
   console.log(
     `prerender-spa-seo-shells: wrote ${written} shells (skipped Nexus=${skippedNexus}, skipped blogs=${skippedBlog}, inventory=${entries.size}, unused=${skippedSame})`,
   )
+
+  // Smoke: /buscar must be noindex (never indexable soft-home)
+  const buscar = join(DIST, 'buscar/index.html')
+  if (!existsSync(buscar)) {
+    console.error('prerender-spa-seo-shells: missing /buscar shell')
+    process.exit(1)
+  }
+  const buscarHtml = await readFile(buscar, 'utf8')
+  if (!/name="robots"\s+content="noindex/i.test(buscarHtml)) {
+    console.error('prerender-spa-seo-shells: /buscar must have robots noindex')
+    process.exit(1)
+  }
+  if (buscarHtml.includes('rel="canonical" href="https://bodasesor.com/"')) {
+    console.error('prerender-spa-seo-shells: /buscar must not use home canonical')
+    process.exit(1)
+  }
 
   // Smoke: critical product page must not keep home canonical
   const smoke = join(DIST, 'pistas-tarimas/pista-pintada-mano/index.html')
