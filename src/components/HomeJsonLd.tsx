@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+/** Keep in sync with static JSON-LD in index.html (crawler-visible without JS). */
 const JSON_LD = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -44,6 +45,7 @@ export default function HomeJsonLd() {
   useEffect(() => {
     const id = 'bodasesor-jsonld'
     let el = document.getElementById(id) as HTMLScriptElement | null
+    // Prefer the static <head> copy from index.html for first paint / crawlers.
     if (!el) {
       el = document.createElement('script')
       el.id = id
@@ -51,7 +53,8 @@ export default function HomeJsonLd() {
       document.head.appendChild(el)
     }
     el.textContent = JSON.stringify(JSON_LD)
-    return () => el?.remove()
+    // Do not remove on unmount — other routes clear page schema via GlobalSEO;
+    // org graph stays site-wide.
   }, [])
   return null
 }

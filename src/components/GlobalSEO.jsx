@@ -14,6 +14,7 @@ import { blogPosts } from '../data/blog-data'
 import { SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
+import { absoluteOgImage, DEFAULT_OG_IMAGE_ALT } from '../utils/seo-social'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
@@ -171,6 +172,22 @@ const SEO_MAP = {
 
 const NOINDEX_PREFIXES = ['/buscar']
 
+function applySocialMeta({ title, description, url, image, type = 'website' }) {
+  const ogImage = absoluteOgImage(image)
+  upsertMeta('property', 'og:title', title)
+  upsertMeta('property', 'og:description', description)
+  upsertMeta('property', 'og:url', url)
+  upsertMeta('property', 'og:type', type)
+  upsertMeta('property', 'og:site_name', 'Bodasesor Eventos')
+  upsertMeta('property', 'og:locale', 'es_MX')
+  upsertMeta('property', 'og:image', ogImage)
+  upsertMeta('property', 'og:image:alt', title || DEFAULT_OG_IMAGE_ALT)
+  upsertMeta('name', 'twitter:card', 'summary_large_image')
+  upsertMeta('name', 'twitter:title', title)
+  upsertMeta('name', 'twitter:description', description)
+  upsertMeta('name', 'twitter:image', ogImage)
+}
+
 /** Thin SPA shells: /{product|detail}/{city} — hubs × city stay indexable. */
 function isThinCityProductShell(path, basePath, pathCity) {
   if (!pathCity || basePath === '/' || path.startsWith('/blog')) return false
@@ -269,8 +286,13 @@ export default function GlobalSEO() {
       document.title = title
       const blogDesc = clampMetaDescription(blogPost.excerpt || blogPost.title)
       upsertMeta('name', 'description', blogDesc)
-      upsertMeta('property', 'og:title', title)
-      upsertMeta('property', 'og:description', blogDesc)
+      applySocialMeta({
+        title,
+        description: blogDesc,
+        url: canonical,
+        image: blogPost.image,
+        type: 'article',
+      })
       const keywords = applyPageIdentityMeta({
         path,
         title: blogPost.title,
@@ -284,7 +306,7 @@ export default function GlobalSEO() {
           description: blogPost.excerpt || blogPost.title,
           url: canonical,
           date: blogPost.date,
-          image: blogPost.image,
+          image: absoluteOgImage(blogPost.image),
           keywords,
         }),
       )
@@ -307,8 +329,7 @@ export default function GlobalSEO() {
       )
       document.title = title
       upsertMeta('name', 'description', desc)
-      upsertMeta('property', 'og:title', title)
-      upsertMeta('property', 'og:description', desc)
+      applySocialMeta({ title, description: desc, url: canonical })
       applyPageIdentityMeta({
         path,
         title: hubSeo.title,
@@ -335,6 +356,9 @@ export default function GlobalSEO() {
           ? `Banquetes y Catering para Bodas y Eventos en ${activeCity.name} | Bodasesor`
           : `${SEO_MAP['/'].title} | Bodasesor`
         document.title = title
+        const desc = clampMetaDescription(SEO_MAP['/'].desc)
+        upsertMeta('name', 'description', desc)
+        applySocialMeta({ title, description: desc, url: canonical })
         applyPageIdentityMeta({
           path: '/',
           title: SEO_MAP['/'].title,
@@ -350,6 +374,8 @@ export default function GlobalSEO() {
       const desc =
         document.querySelector('meta[name="description"]')?.getAttribute('content') ||
         `${name}. Cotiza banquetes, catering y servicios para eventos con Bodasesor.`
+      const title = document.title || `${name} | Bodasesor`
+      applySocialMeta({ title, description: desc, url: canonical })
       applyPageIdentityMeta({
         path,
         title: name,
@@ -366,6 +392,12 @@ export default function GlobalSEO() {
         }),
       )
     } else {
+      const title = document.title || 'Bodasesor'
+      const desc =
+        document.querySelector('meta[name="description"]')?.getAttribute('content') ||
+        SEO_MAP['/']?.desc ||
+        title
+      applySocialMeta({ title, description: desc, url: canonical })
       applyPageIdentityMeta({
         path,
         title: document.title,

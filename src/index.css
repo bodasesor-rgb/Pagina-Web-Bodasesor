@@ -1,3 +1,4 @@
+/* font-display: swap is set inside @fontsource CSS — keep Georgia/Arial fallbacks below to avoid FOIT */
 @import '@fontsource/playfair-display/latin-400.css';
 @import '@fontsource/playfair-display/latin-700.css';
 @import '@fontsource/lato/latin-400.css';
@@ -10,10 +11,11 @@
   contain-intrinsic-size: auto 900px;
 }
 
-/* Prefer swap but keep metrics closer to webfonts to cut CLS */
+/* Metric-matched fallbacks cut CLS while webfonts swap in */
 @font-face {
   font-family: 'Lato Fallback';
   src: local('Arial');
+  font-display: swap;
   size-adjust: 97%;
   ascent-override: 95%;
   descent-override: 22%;
@@ -22,6 +24,7 @@
 @font-face {
   font-family: 'Playfair Fallback';
   src: local('Georgia');
+  font-display: swap;
   size-adjust: 105%;
   ascent-override: 90%;
   descent-override: 22%;
