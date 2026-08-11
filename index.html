@@ -139,37 +139,25 @@
       <div class="nav-top"></div>
       <div class="nav-sub"></div>
     </div>
-    <picture id="lcp-hero-wrap" aria-hidden="true"></picture>
-    <div id="static-hero-copy" hidden></div>
     <script>
       (function () {
-        // Inner SPA pages: strip empty home LCP nodes so they never compete with route LCP.
-        if (!window.__BS_HOME_LCP) {
-          var wrap = document.getElementById('lcp-hero-wrap');
-          var copy = document.getElementById('static-hero-copy');
-          if (wrap) wrap.remove();
-          if (copy) copy.remove();
-          return;
-        }
-        var pic = document.getElementById('lcp-hero-wrap');
-        if (pic) {
-          pic.innerHTML =
+        // Write home cover only on home/city — avoids inner pages fetching hero bytes.
+        if (!window.__BS_HOME_LCP) return;
+        document.write(
+          '<picture id="lcp-hero-wrap" aria-hidden="true">' +
             '<source media="(max-width: 768px)" srcset="/images/hero-bg-new-mobile.webp" type="image/webp" />' +
             '<source srcset="/images/hero-bg-new.webp" type="image/webp" />' +
-            '<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="" width="1408" height="768" fetchpriority="high" decoding="async" />';
-        }
-        var box = document.getElementById('static-hero-copy');
-        if (box) {
-          box.hidden = false;
-          box.removeAttribute('hidden');
-          box.innerHTML =
+            '<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="" width="1408" height="768" fetchpriority="high" decoding="async" />' +
+          '</picture>' +
+          '<div id="static-hero-copy">' +
             '<h1>Banquetes, Catering y Servicios para Eventos en México</h1>' +
             '<p class="hero-sub">Banquetes premium, catering gourmet y mobiliario elegante para bodas, quinceañeras, eventos corporativos y celebraciones en todo México</p>' +
             '<div class="hero-btns">' +
-            '<a class="btn-wa" href="https://api.whatsapp.com/send/?phone=5215540080373&amp;text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento">Cotiza por WhatsApp</a>' +
-            '<a class="btn-svc" href="#servicios">Ver Servicios</a>' +
-            '</div>';
-        }
+              '<a class="btn-wa" href="https://api.whatsapp.com/send/?phone=5215540080373&amp;text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento">Cotiza por WhatsApp</a>' +
+              '<a class="btn-svc" href="#servicios">Ver Servicios</a>' +
+            '</div>' +
+          '</div>'
+        );
       })();
     </script>
     <script type="module" src="/src/main.jsx"></script>
