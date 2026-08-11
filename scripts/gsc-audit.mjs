@@ -28,8 +28,13 @@ import { loadGoogleCredentials, getGoogleAccessToken, GSC_SCOPES } from './lib/g
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
-const SITE = (process.env.GSC_SITE_URL || 'https://bodasesor.com/').replace(/\/?$/, '/')
-const SITE_ENC = encodeURIComponent(SITE)
+const SITE_RAW = (process.env.GSC_SITE_URL || 'sc-domain:bodasesor.com').trim()
+/** Domain properties use sc-domain:example.com ; URL-prefix use https://example.com/ */
+function normalizeSiteUrl(raw) {
+  if (raw.startsWith('sc-domain:')) return raw
+  return raw.replace(/\/?$/, '/')
+}
+const SITE = normalizeSiteUrl(SITE_RAW)
 const DAYS = Number(process.env.GSC_DAYS || 28)
 const ROW_LIMIT = Number(process.env.GSC_ROW_LIMIT || 25_000)
 const OUT_DIR = join(ROOT, '.gsc-audit')
@@ -65,7 +70,7 @@ async function gscFetch(token, path, { method = 'GET', body } = {}) {
   return data
 }
 
-async function urlInspect(token, inspectionUrl) {
+async function urlInspect(token, inspectionUrl, siteUrl) {
   const res = await fetch('https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', {
     method: 'POST',
     headers: {
@@ -74,7 +79,7 @@ async function urlInspect(token, inspectionUrl) {
     },
     body: JSON.stringify({
       inspectionUrl,
-      siteUrl: SITE,
+      siteUrl,
       languageCode: 'es',
     }),
   })
@@ -106,8 +111,9 @@ function loadSitemapPaths() {
 
 async function fetchLiveSitemapPaths() {
   const paths = new Set()
+  const base = 'https://bodasesor.com'
   try {
-    const res = await fetch(`${SITE.replace(/\/$/, '')}/sitemap.xml`, {
+    const res = await fetch(`${base}/sitemap.xml`, {
       headers: { 'user-agent': 'BodasesorGscAudit/1.0' },
     })
     if (!res.ok) return paths
@@ -160,11 +166,23 @@ Guía: SETUP_GSC_ACCESS.md
   const siteEntries = sites?.siteEntry || []
   const matched = siteEntries.find((s) => {
     const u = (s.siteUrl || '').replace(/\/?$/, '/')
-    return u === SITE || u === SITE.replace(/\/$/, '') || s.siteUrl === `sc-domain:bodasesor.com`
+    return (
+      s.siteUrl === SITE ||
+      u === SITE ||
+      u === SITE.replace(/\/$/, '') ||
+      s.siteUrl === 'sc-domain:bodasesor.com' ||
+      String(s.siteUrl).includes('bodasesor')
+    )
   })
   console.log(`\nProperties visible to SA: ${siteEntries.length}`)
   for (const s of siteEntries.slice(0, 20)) {
     console.log(`  - ${s.siteUrl} (${s.permissionLevel || '?'})`)
+  }
+
+  // Prefer the property URL Google actually granted (domain vs url-prefix)
+  let effectiveSite = SITE
+  if (matched?.siteUrl) {
+    effectiveSite = matched.siteUrl
   }
   if (!matched && !siteEntries.some((s) => String(s.siteUrl).includes('bodasesor'))) {
     console.error(`\n❌ La service account NO ve la propiedad ${SITE}.`)
@@ -172,11 +190,13 @@ Guía: SETUP_GSC_ACCESS.md
     console.error(`   ${creds.client_email}`)
     process.exit(1)
   }
+  const effectiveEnc = encodeURIComponent(effectiveSite)
+  console.log(`Using property: ${effectiveSite}`)
 
   // 2) Sitemaps submitted
   let sitemaps = { sitemap: [] }
   try {
-    sitemaps = await gscFetch(token, `/sites/${SITE_ENC}/sitemaps`)
+    sitemaps = await gscFetch(token, `/sites/${effectiveEnc}/sitemaps`)
   } catch (err) {
     console.warn(`⚠ sitemaps: ${err.message}`)
   }
@@ -195,7 +215,7 @@ Guía: SETUP_GSC_ACCESS.md
   // 3) Search analytics — pages with clicks/impressions (proxy of known/indexed surface)
   const end = new Date()
   const start = new Date(Date.now() - DAYS * 86400000)
-  const analytics = await gscFetch(token, `/sites/${SITE_ENC}/searchAnalytics/query`, {
+  const analytics = await gscFetch(token, `/sites/${effectiveEnc}/searchAnalytics/query`, {
     method: 'POST',
     body: {
       startDate: ymd(start),
@@ -238,7 +258,8 @@ Guía: SETUP_GSC_ACCESS.md
   await mkdir(OUT_DIR, { recursive: true })
   const report = {
     auditedAt: new Date().toISOString(),
-    site: SITE,
+    site: effectiveSite,
+    requestedSite: SITE,
     serviceAccount: creds.client_email,
     days: DAYS,
     sitemaps: smList,
@@ -276,10 +297,10 @@ Guía: SETUP_GSC_ACCESS.md
   if (args.inspect) {
     const path = args.inspect.startsWith('http')
       ? args.inspect
-      : `${SITE.replace(/\/$/, '')}${args.inspect.startsWith('/') ? '' : '/'}${args.inspect}`
+      : `https://bodasesor.com${args.inspect.startsWith('/') ? '' : '/'}${args.inspect}`
     console.log(`\n▶ URL Inspection: ${path}`)
     try {
-      const insp = await urlInspect(token, path)
+      const insp = await urlInspect(token, path, effectiveSite)
       const result = insp?.inspectionResult?.indexStatusResult || {}
       console.log(`  coverageState: ${result.coverageState || '?'}`)
       console.log(`  indexingState: ${result.indexingState || '?'}`)
