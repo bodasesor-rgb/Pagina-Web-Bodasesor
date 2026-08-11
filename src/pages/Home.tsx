@@ -2,44 +2,20 @@ import { useState, useEffect, useLayoutEffect, lazy, Suspense } from "react";
 import { useCity } from "../context/CityContext";
 import HomeSeoContent from "../components/HomeSeoContent";
 import HomeJsonLd from "../components/HomeJsonLd";
-import { beginHomeLcpHandoff, finishHomeLcpHandoff } from "../utils/static-lcp-shell";
+import { enableHomeStaticHero, disableHomeStaticHero } from "../utils/static-lcp-shell";
 
 const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
 
 /**
- * Keep the preloaded static hero as LCP; React img loads from HTTP cache then
- * we remove the static layer (no re-download, no layout reparent CLS).
+ * Reuse the preloaded #lcp-hero-wrap as the only hero image (no React duplicate).
+ * Removing/replacing that node caused a large CLS regression.
  */
 function HeroMedia() {
   useLayoutEffect(() => {
-    beginHomeLcpHandoff()
-    const t = window.setTimeout(() => finishHomeLcpHandoff(), 3000)
-    return () => window.clearTimeout(t)
+    enableHomeStaticHero()
+    return () => disableHomeStaticHero()
   }, [])
-
-  const onReady = () => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => finishHomeLcpHandoff())
-    })
-  }
-
-  return (
-    <picture className="absolute inset-0 -z-10" aria-hidden="true">
-      <source media="(max-width: 768px)" srcSet="/images/hero-bg-new-mobile.webp" type="image/webp" />
-      <source srcSet="/images/hero-bg-new.webp" type="image/webp" />
-      <img
-        src="/images/hero-bg-new.webp"
-        alt=""
-        className="w-full h-full object-cover object-center"
-        fetchPriority="high"
-        decoding="async"
-        width={1408}
-        height={768}
-        onLoad={onReady}
-        onError={onReady}
-      />
-    </picture>
-  )
+  return null
 }
 
 const WHATSAPP_NUMBER = "5215540080373";

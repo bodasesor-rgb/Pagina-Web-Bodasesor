@@ -30,18 +30,26 @@ export function hideStaticLcpShell() {
   hideElements(SHELL_IDS)
 }
 
-/** Mark home so #root stays transparent and the preloaded hero remains the LCP. */
-export function beginHomeLcpHandoff() {
-  document.documentElement.classList.add('home-lcp-pending')
+/**
+ * Home: keep the preloaded fixed hero as the LCP layer for the whole visit.
+ * Do not remove/reparent it (that caused ~0.66 CLS). Opaque below-fold
+ * sections cover it while scrolling.
+ */
+export function enableHomeStaticHero() {
+  document.documentElement.classList.add('home-lcp-live')
+  document.documentElement.classList.remove('no-lcp-hero', 'no-lcp-shell', 'home-lcp-pending')
   document.getElementById('static-nav-shell')?.remove()
   document.getElementById('static-hero-copy')?.remove()
+  const wrap = document.getElementById('lcp-hero-wrap')
+  if (wrap) {
+    // Drop the static dimmer — React paints its own overlay on the hero section.
+    wrap.classList.add('lcp-hero-live')
+  }
 }
 
-/** Drop static hero after React hero has painted from cache. */
-export function finishHomeLcpHandoff() {
-  document.documentElement.classList.remove('home-lcp-pending')
+export function disableHomeStaticHero() {
+  document.documentElement.classList.remove('home-lcp-live', 'home-lcp-pending')
   document.getElementById('lcp-hero-wrap')?.remove()
-  document.documentElement.classList.add('no-lcp-hero')
 }
 
 /** Inline boot script source — keep in sync with index.html */
