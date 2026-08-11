@@ -7,7 +7,7 @@ import GoogleAnalytics from './components/GoogleAnalytics'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import Navbar from './components/Navbar'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
-import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath } from './utils/static-lcp-shell'
+import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero } from './utils/static-lcp-shell'
 import { syncLcpPreload } from './utils/lcp-preload'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
@@ -181,12 +181,10 @@ function StaticLcpCleanup() {
       document.getElementById('static-nav-shell')?.remove()
       syncLcpPreload('/')
     } else {
-      document.documentElement.classList.remove('home-lcp-live', 'home-lcp-pending')
       hideStaticHeroOnly()
       hideStaticLcpShell()
       document.getElementById('static-nav-shell')?.remove()
-      document.getElementById('lcp-hero-wrap')?.remove()
-      document.getElementById('static-hero-copy')?.remove()
+      removeHomeStaticHero()
       syncLcpPreload(location)
     }
   }, [location])
