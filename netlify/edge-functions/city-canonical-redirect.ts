@@ -125,7 +125,19 @@ export default async function handler(request: Request, context: Context) {
     return response
   }
 
-  // Never turn bot-shield / errors into a fake city 301.
+  // Bot shield / upstream errors — never invent a city 301.
+  if (response.status === 403 || response.status >= 500) {
+    return response
+  }
+
+  // After P0 (/* → /404.html 404), glued legacy URLs no longer soft-200 the SPA.
+  // Still 301 them to slash-canonical; only real Nexus HTML below is preserved.
+  if (response.status === 404) {
+    const dest = new URL(canonical, url.origin)
+    dest.search = url.search
+    return Response.redirect(dest.toString(), 301)
+  }
+
   if (!response.ok) {
     return response
   }
