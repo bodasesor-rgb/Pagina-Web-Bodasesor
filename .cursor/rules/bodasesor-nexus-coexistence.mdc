@@ -50,6 +50,12 @@ También exige blog image `image/*` (no HTML) + sitemap con Nexus.
 - `SITE_BASE=https://bodasesor.com`
 - `MIN_NEXUS_LANDINGS=1200`
 - `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID`
+- `GOOGLE_SERVICE_ACCOUNT_JSON` — acceso persistente a Search Console (`npm run gsc:audit`). Guía: `SETUP_GSC_ACCESS.md`
+
+## Google Search Console
+- Con secret configurado: `npm run gsc:audit` / `node scripts/gsc-audit.mjs --inspect=/ruta/`
+- No subir claves JSON al repo.
+- La UI “No indexadas” completa puede requerir export CSV; la API cubre sitemaps, analytics e inspección por URL.
 
 ## Verificación
 - Preview: workflow `Netlify Deploy Preview (SPA + Nexus)` en PRs

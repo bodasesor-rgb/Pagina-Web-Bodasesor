@@ -7,6 +7,9 @@ dist
 .DS_Store
 live-bundle.js
 private/credentials/
+.gsc-audit/
+*-gsc-sa.json
+google-sa*.json
 nexus-ia-power*.json
 audit-pagespeed-results.json
 public/sitemap.xml
