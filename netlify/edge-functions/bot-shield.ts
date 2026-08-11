@@ -57,6 +57,10 @@ const ALLOW = [
   /adsbot-google/i,
   /apis-google/i,
   /mediapartners-google/i,
+  // PageSpeed Insights / Lighthouse lab (otherwise Netlify marks tooling → 403)
+  /chrome-lighthouse/i,
+  /googleother/i,
+  /pagespeed.?insights/i,
   /bingbot/i,
   /bingpreview/i,
   /adidxbot/i,
