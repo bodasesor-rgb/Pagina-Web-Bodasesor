@@ -10,7 +10,6 @@ import {
   upsertMeta,
   applyPageIdentityMeta,
 } from '../utils/seo-head'
-import { blogPosts } from '../data/blog-data'
 import { SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
@@ -258,159 +257,172 @@ export default function GlobalSEO() {
   const { city } = useCity()
 
   useEffect(() => {
+    let cancelled = false
     const path = canonicalPath(location)
     const { basePath, city: pathCity } = parseCityFromPath(path)
     const activeCity = city || pathCity
     const canonical = absoluteUrl(path)
 
-    // Always set canonical + og:url to the real URL (never leave home stuck).
     upsertLink('canonical', canonical)
     upsertMeta('property', 'og:url', canonical)
 
     const hubSeo = SEO_MAP[basePath]
     const blogMatch = path.match(/^\/blog\/([^/]+)$/)
-    const blogPost = blogMatch
-      ? blogPosts.find((p) => p.slug === blogMatch[1])
-      : null
 
-    // Path-based BreadcrumbList for crawlers (pages with <Breadcrumbs /> refine it).
-    upsertJsonLd(
-      BREADCRUMB_JSONLD_ID,
-      buildBreadcrumbJsonLd(
-        breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo),
-      ),
-    )
-
-    if (blogPost) {
-      const title = `${blogPost.title} | Bodasesor Blog`
-      document.title = title
-      const blogDesc = clampMetaDescription(blogPost.excerpt || blogPost.title)
-      upsertMeta('name', 'description', blogDesc)
-      applySocialMeta({
-        title,
-        description: blogDesc,
-        url: canonical,
-        image: blogPost.image,
-        type: 'article',
-      })
-      const keywords = applyPageIdentityMeta({
-        path,
-        title: blogPost.title,
-        h1: blogPost.title,
-        extraKeywords: [blogPost.category, 'blog eventos', 'consejos bodas'].filter(Boolean),
-      })
+    const applyNonBlog = (blogPost = null) => {
       upsertJsonLd(
-        PAGE_JSONLD_ID,
-        buildArticleJsonLd({
-          title: blogPost.title,
-          description: blogPost.excerpt || blogPost.title,
-          url: canonical,
-          date: blogPost.date,
-          image: absoluteOgImage(blogPost.image),
-          keywords,
-        }),
+        BREADCRUMB_JSONLD_ID,
+        buildBreadcrumbJsonLd(
+          breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo),
+        ),
       )
-      upsertMeta('name', 'robots', 'index, follow')
-      return () => {
-        upsertJsonLd(PAGE_JSONLD_ID, null)
-        upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
-      }
-    }
 
-    if (hubSeo && basePath !== '/') {
-      // Unique intent: service + use-case + city (no invented prices)
-      const title = activeCity
-        ? `${hubSeo.title} para Bodas y Eventos en ${activeCity.name} | Bodasesor`
-        : `${hubSeo.title} para Bodas y Eventos | Bodasesor`
-      const desc = clampMetaDescription(
-        activeCity
-          ? `${hubSeo.desc} Cotiza en ${activeCity.name} y área metropolitana.`
-          : hubSeo.desc,
-      )
-      document.title = title
-      upsertMeta('name', 'description', desc)
-      applySocialMeta({ title, description: desc, url: canonical })
-      applyPageIdentityMeta({
-        path,
-        title: hubSeo.title,
-        h1: hubSeo.title,
-        cityName: activeCity?.name,
-      })
-      upsertJsonLd(
-        PAGE_JSONLD_ID,
-        buildServiceJsonLd({
-          name: activeCity
-            ? `${hubSeo.title} para bodas y eventos en ${activeCity.name}`
-            : `${hubSeo.title} para bodas y eventos`,
-          description: desc,
-          url: canonical,
-          city: activeCity,
-        }),
-      )
-    } else if (basePath === '/') {
-      // HomeJsonLd owns organization graph; clear page-level schema.
-      upsertJsonLd(PAGE_JSONLD_ID, null)
-      upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
-      if (SEO_MAP['/']) {
+      if (hubSeo && basePath !== '/') {
         const title = activeCity
-          ? `Banquetes y Catering para Bodas y Eventos en ${activeCity.name} | Bodasesor`
-          : `${SEO_MAP['/'].title} | Bodasesor`
+          ? `${hubSeo.title} para Bodas y Eventos en ${activeCity.name} | Bodasesor`
+          : `${hubSeo.title} para Bodas y Eventos | Bodasesor`
+        const desc = clampMetaDescription(
+          activeCity
+            ? `${hubSeo.desc} Cotiza en ${activeCity.name} y área metropolitana.`
+            : hubSeo.desc,
+        )
         document.title = title
-        const desc = clampMetaDescription(SEO_MAP['/'].desc)
         upsertMeta('name', 'description', desc)
         applySocialMeta({ title, description: desc, url: canonical })
         applyPageIdentityMeta({
-          path: '/',
-          title: SEO_MAP['/'].title,
-          h1: 'Banquetes, catering y servicios para eventos en México',
+          path,
+          title: hubSeo.title,
+          h1: hubSeo.title,
+          cityName: activeCity?.name,
+        })
+        upsertJsonLd(
+          PAGE_JSONLD_ID,
+          buildServiceJsonLd({
+            name: activeCity
+              ? `${hubSeo.title} para bodas y eventos en ${activeCity.name}`
+              : `${hubSeo.title} para bodas y eventos`,
+            description: desc,
+            url: canonical,
+            city: activeCity,
+          }),
+        )
+      } else if (basePath === '/') {
+        upsertJsonLd(PAGE_JSONLD_ID, null)
+        upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
+        if (SEO_MAP['/']) {
+          const title = activeCity
+            ? `Banquetes y Catering para Bodas y Eventos en ${activeCity.name} | Bodasesor`
+            : `${SEO_MAP['/'].title} | Bodasesor`
+          document.title = title
+          const desc = clampMetaDescription(SEO_MAP['/'].desc)
+          upsertMeta('name', 'description', desc)
+          applySocialMeta({ title, description: desc, url: canonical })
+          applyPageIdentityMeta({
+            path: '/',
+            title: SEO_MAP['/'].title,
+            h1: 'Banquetes, catering y servicios para eventos en México',
+            cityName: activeCity?.name,
+          })
+        }
+      } else if (path !== '/' && !path.startsWith('/buscar')) {
+        const slugPart = basePath.split('/').filter(Boolean).pop() || 'servicio'
+        const label = labelFromSlug(slugPart)
+        const name = activeCity ? `${label} en ${activeCity.name}` : label
+        const desc =
+          document.querySelector('meta[name="description"]')?.getAttribute('content') ||
+          `${name}. Cotiza banquetes, catering y servicios para eventos con Bodasesor.`
+        const title = document.title || `${name} | Bodasesor`
+        applySocialMeta({ title, description: desc, url: canonical })
+        applyPageIdentityMeta({
+          path,
+          title: name,
+          h1: name,
+          cityName: activeCity?.name,
+        })
+        upsertJsonLd(
+          PAGE_JSONLD_ID,
+          buildServiceJsonLd({
+            name,
+            description: desc,
+            url: canonical,
+            city: activeCity,
+          }),
+        )
+      } else {
+        const title = document.title || 'Bodasesor'
+        const desc =
+          document.querySelector('meta[name="description"]')?.getAttribute('content') ||
+          SEO_MAP['/']?.desc ||
+          title
+        applySocialMeta({ title, description: desc, url: canonical })
+        applyPageIdentityMeta({
+          path,
+          title: document.title,
           cityName: activeCity?.name,
         })
       }
-    } else if (path !== '/' && !path.startsWith('/buscar')) {
-      // Detail pages own their <title>; only attach Service schema from the URL slug.
-      const slugPart = basePath.split('/').filter(Boolean).pop() || 'servicio'
-      const label = labelFromSlug(slugPart)
-      const name = activeCity ? `${label} en ${activeCity.name}` : label
-      const desc =
-        document.querySelector('meta[name="description"]')?.getAttribute('content') ||
-        `${name}. Cotiza banquetes, catering y servicios para eventos con Bodasesor.`
-      const title = document.title || `${name} | Bodasesor`
-      applySocialMeta({ title, description: desc, url: canonical })
-      applyPageIdentityMeta({
-        path,
-        title: name,
-        h1: name,
-        cityName: activeCity?.name,
-      })
-      upsertJsonLd(
-        PAGE_JSONLD_ID,
-        buildServiceJsonLd({
-          name,
-          description: desc,
-          url: canonical,
-          city: activeCity,
-        }),
-      )
-    } else {
-      const title = document.title || 'Bodasesor'
-      const desc =
-        document.querySelector('meta[name="description"]')?.getAttribute('content') ||
-        SEO_MAP['/']?.desc ||
-        title
-      applySocialMeta({ title, description: desc, url: canonical })
-      applyPageIdentityMeta({
-        path,
-        title: document.title,
-        cityName: activeCity?.name,
-      })
+
+      const noindex =
+        NOINDEX_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`)) ||
+        isThinCityProductShell(path, basePath, pathCity)
+      upsertMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
     }
 
-    const noindex =
-      NOINDEX_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`)) ||
-      isThinCityProductShell(path, basePath, pathCity)
-    upsertMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
+    if (blogMatch) {
+      // Lazy-load blog corpus only on article URLs (keeps ~700KB off the home critical path)
+      import('../data/blog-data')
+        .then(({ blogPosts }) => {
+          if (cancelled) return
+          const blogPost = blogPosts.find((p) => p.slug === blogMatch[1])
+          if (!blogPost) {
+            applyNonBlog(null)
+            return
+          }
+          const title = `${blogPost.title} | Bodasesor Blog`
+          document.title = title
+          const blogDesc = clampMetaDescription(blogPost.excerpt || blogPost.title)
+          upsertMeta('name', 'description', blogDesc)
+          applySocialMeta({
+            title,
+            description: blogDesc,
+            url: canonical,
+            image: blogPost.image,
+            type: 'article',
+          })
+          const keywords = applyPageIdentityMeta({
+            path,
+            title: blogPost.title,
+            h1: blogPost.title,
+            extraKeywords: [blogPost.category, 'blog eventos', 'consejos bodas'].filter(Boolean),
+          })
+          upsertJsonLd(
+            BREADCRUMB_JSONLD_ID,
+            buildBreadcrumbJsonLd(
+              breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo),
+            ),
+          )
+          upsertJsonLd(
+            PAGE_JSONLD_ID,
+            buildArticleJsonLd({
+              title: blogPost.title,
+              description: blogPost.excerpt || blogPost.title,
+              url: canonical,
+              date: blogPost.date,
+              image: absoluteOgImage(blogPost.image),
+              keywords,
+            }),
+          )
+          upsertMeta('name', 'robots', 'index, follow')
+        })
+        .catch(() => {
+          if (!cancelled) applyNonBlog(null)
+        })
+    } else {
+      applyNonBlog(null)
+    }
 
     return () => {
+      cancelled = true
       upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
     }
   }, [location, city])

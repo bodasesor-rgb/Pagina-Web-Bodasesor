@@ -30,5 +30,19 @@ export function hideStaticLcpShell() {
   hideElements(SHELL_IDS)
 }
 
+/** Mark home so #root stays transparent and the preloaded hero remains the LCP. */
+export function beginHomeLcpHandoff() {
+  document.documentElement.classList.add('home-lcp-pending')
+  document.getElementById('static-nav-shell')?.remove()
+  document.getElementById('static-hero-copy')?.remove()
+}
+
+/** Drop static hero after React hero has painted from cache. */
+export function finishHomeLcpHandoff() {
+  document.documentElement.classList.remove('home-lcp-pending')
+  document.getElementById('lcp-hero-wrap')?.remove()
+  document.documentElement.classList.add('no-lcp-hero')
+}
+
 /** Inline boot script source — keep in sync with index.html */
 export const LCP_SHELL_BOOT_SCRIPT = `(function(){var p=location.pathname.replace(/\\/+$/,'')||'/';if(p==='/')return;var s=p.split('/').filter(Boolean);if(s.length===1){var c=',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';if(c.indexOf(','+s[0]+',')>=0)return}document.documentElement.classList.add('no-lcp-hero')})();`

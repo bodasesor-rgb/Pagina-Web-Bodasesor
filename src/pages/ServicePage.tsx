@@ -1020,10 +1020,14 @@ export default function ServicePage({ params }: ServicePageProps) {
               ))}
             </div>
             <img
-              src="/images/sello-garantia-transparent.png"
+              src="/images/sello-garantia-transparent.webp"
               alt="Garantía de Felicidad Bodasesor"
               className="h-24 w-auto drop-shadow-lg"
-              onError={e => { (e.target as HTMLImageElement).src = '/images/sello-garantia.png'; }}
+              width={120}
+              height={90}
+              loading="lazy"
+              decoding="async"
+              onError={e => { (e.target as HTMLImageElement).src = '/images/sello-garantia.webp'; }}
             />
           </div>
         </div>

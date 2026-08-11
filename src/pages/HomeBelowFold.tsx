@@ -249,10 +249,14 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
           {/* Sello — absolutely positioned to the right, partially outside */}
           <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-8 lg:-right-16">
             <img
-              src="/images/sello-garantia-transparent.png"
+              src="/images/sello-garantia-transparent.webp"
               alt="Garantía de Felicidad Bodasesor"
               className="h-32 w-auto drop-shadow-lg"
-              onError={e => { (e.target as HTMLImageElement).src = '/images/sello-garantia.png'; }}
+              width={160}
+              height={120}
+              loading="lazy"
+              decoding="async"
+              onError={e => { (e.target as HTMLImageElement).src = '/images/sello-garantia.webp'; }}
             />
           </div>
         </div>
