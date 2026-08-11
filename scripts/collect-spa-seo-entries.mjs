@@ -103,6 +103,7 @@ function entry(path, headline, description, h1, cityShort = null, opts = {}) {
     h1: h1 || headline,
     canonical: `${SITE_BASE}${cleanPath}`,
     noindex: Boolean(opts?.noindex),
+    image: opts?.image || null,
   }
 }
 
@@ -164,7 +165,11 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
 
   for (const post of blogPosts) {
     if (!post?.slug || !post?.title) continue
-    put(entry(`/blog/${post.slug}`, post.title, post.excerpt || post.title, post.title))
+    put(
+      entry(`/blog/${post.slug}`, post.title, post.excerpt || post.title, post.title, null, {
+        image: post.image || null,
+      }),
+    )
   }
 
   for (const p of products) {

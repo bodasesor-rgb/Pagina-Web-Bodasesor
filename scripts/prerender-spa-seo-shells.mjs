@@ -17,6 +17,7 @@ import {
   buildPageKeywords,
   organizationRef,
 } from '../src/utils/seo-page-meta.js'
+import { absoluteOgImage, DEFAULT_OG_IMAGE_ALT } from '../src/utils/seo-social.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -161,6 +162,40 @@ function applySeo(html, entry) {
     `<meta property="og:url" content="${escapeAttr(entry.canonical)}" />`,
   )
 
+  const ogImage = absoluteOgImage(entry.image)
+  const ogType = entry.path.startsWith('/blog/') ? 'article' : 'website'
+  const ensureProp = (property, content) => {
+    const re = new RegExp(`<meta\\s+property="${property}"\\s+content="[^"]*"\\s*\\/?>`, 'i')
+    const tag = `<meta property="${property}" content="${escapeAttr(content)}" />`
+    if (re.test(out)) out = out.replace(re, tag)
+    else {
+      out = out.replace(
+        /(<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>)/i,
+        `$1\n    ${tag}`,
+      )
+    }
+  }
+  const ensureName = (name, content) => {
+    const re = new RegExp(`<meta\\s+name="${name}"\\s+content="[^"]*"\\s*\\/?>`, 'i')
+    const tag = `<meta name="${name}" content="${escapeAttr(content)}" />`
+    if (re.test(out)) out = out.replace(re, tag)
+    else {
+      out = out.replace(
+        /(<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>)/i,
+        `$1\n    ${tag}`,
+      )
+    }
+  }
+  ensureProp('og:type', ogType)
+  ensureProp('og:site_name', 'Bodasesor Eventos')
+  ensureProp('og:locale', 'es_MX')
+  ensureProp('og:image', ogImage)
+  ensureProp('og:image:alt', entry.h1 || entry.title || DEFAULT_OG_IMAGE_ALT)
+  ensureName('twitter:card', 'summary_large_image')
+  ensureName('twitter:title', entry.title)
+  ensureName('twitter:description', description)
+  ensureName('twitter:image', ogImage)
+
   // Crawler-visible JSON-LD (Service/Article + BreadcrumbList) — no fake prices
   const isBlog = entry.path.startsWith('/blog/')
   const segs = entry.path.split('/').filter(Boolean)
@@ -200,6 +235,7 @@ function applySeo(html, entry) {
         description,
         url: entry.canonical,
         keywords,
+        image: ogImage,
         author: organizationRef(),
         publisher: {
           ...organizationRef(),
@@ -216,6 +252,7 @@ function applySeo(html, entry) {
         description,
         url: entry.canonical,
         keywords,
+        image: ogImage,
         provider: {
           '@type': 'LocalBusiness',
           name: 'Bodasesor Eventos',
@@ -314,6 +351,14 @@ async function main() {
   }
   if (buscarHtml.includes('rel="canonical" href="https://bodasesor.com/"')) {
     console.error('prerender-spa-seo-shells: /buscar must not use home canonical')
+    process.exit(1)
+  }
+  if (!/property="og:image"\s+content="https:\/\/bodasesor\.com\//i.test(buscarHtml)) {
+    console.error('prerender-spa-seo-shells: /buscar must include absolute og:image')
+    process.exit(1)
+  }
+  if (!/name="twitter:card"\s+content="summary_large_image"/i.test(buscarHtml)) {
+    console.error('prerender-spa-seo-shells: /buscar must include twitter:card')
     process.exit(1)
   }
 
