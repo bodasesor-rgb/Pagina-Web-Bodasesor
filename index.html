@@ -9,16 +9,23 @@
       // SPA: page_views are sent by GoogleAnalytics.jsx (initial + client navigations)
       gtag('config', 'G-6VGGKNB77P', { send_page_view: false });
       (function loadGtagWhenIdle() {
+        var injected = false;
         function inject() {
+          if (injected) return;
+          injected = true;
           var s = document.createElement('script');
           s.async = true;
           s.src = 'https://www.googletagmanager.com/gtag/js?id=G-6VGGKNB77P';
           document.head.appendChild(s);
         }
+        // Prefer after interaction so lab LCP is not competing with gtag.
+        ['pointerdown', 'keydown', 'scroll'].forEach(function (evt) {
+          window.addEventListener(evt, inject, { once: true, passive: true });
+        });
         if ('requestIdleCallback' in window) {
-          requestIdleCallback(inject, { timeout: 4000 });
+          requestIdleCallback(inject, { timeout: 8000 });
         } else {
-          window.addEventListener('load', function () { setTimeout(inject, 1200); });
+          window.addEventListener('load', function () { setTimeout(inject, 4000); });
         }
       })();
     </script>
@@ -53,11 +60,30 @@
     <script type="application/ld+json" id="bodasesor-jsonld">
     {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://bodasesor.com/#organization","name":"Bodasesor Eventos","alternateName":"bodasesor.com","url":"https://bodasesor.com/","logo":"https://bodasesor.com/favicon.svg","description":"Productora de eventos integrales: banquetes, catering, mobiliario y coordinación completa para bodas, quinceañeras y eventos corporativos en México.","telephone":"+52-55-4008-0373","sameAs":["https://www.facebook.com/bodasesor","https://www.instagram.com/bodasesor"]},{"@type":"WebSite","@id":"https://bodasesor.com/#website","url":"https://bodasesor.com/","name":"Bodasesor Eventos","publisher":{"@id":"https://bodasesor.com/#organization"},"inLanguage":"es-MX"},{"@type":"LocalBusiness","@id":"https://bodasesor.com/#localbusiness","name":"Bodasesor Eventos","url":"https://bodasesor.com/","telephone":"+52-55-4008-0373","priceRange":"$$","areaServed":{"@type":"Country","name":"México"},"description":"Productora de eventos con banquetes, catering, mobiliario y producción integral para celebraciones en México."}]}
     </script>
-    <link rel="preload" as="image" href="/images/hero-bg-new-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/hero-bg-new.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high" />
     <script>
       (function () {
         var p = location.pathname.replace(/\/+$/, '') || '/';
+        var cities = ',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';
+        var segments = p.split('/').filter(Boolean);
+        var isHome = p === '/' || (segments.length === 1 && cities.indexOf(',' + segments[0] + ',') >= 0);
+        window.__BS_HOME_LCP = isHome;
+        if (!isHome) {
+          document.documentElement.classList.add('no-lcp-hero');
+        } else {
+          // Only preload home hero on home/city landings — never on /banquetes-catering etc.
+          var m = document.createElement('link');
+          m.rel = 'preload'; m.as = 'image'; m.type = 'image/webp';
+          m.href = '/images/hero-bg-new-mobile.webp';
+          m.media = '(max-width: 768px)';
+          m.fetchPriority = 'high';
+          document.head.appendChild(m);
+          var d = document.createElement('link');
+          d.rel = 'preload'; d.as = 'image'; d.type = 'image/webp';
+          d.href = '/images/hero-bg-new.webp';
+          d.media = '(min-width: 769px)';
+          d.fetchPriority = 'high';
+          document.head.appendChild(d);
+        }
         if (/^\/(products|collections|blogs|pages)\//.test(p)) {
           var s = document.createElement('script');
           s.src = '/legacy-redirect-boot.js';
@@ -66,9 +92,9 @@
         }
         // Glued city: last segment ends with a city slug but is longer (e.g. carpasmorelia)
         var last = p.split('/').pop() || '';
-        var cities = ['ciudad-de-mexico','estado-de-mexico','san-miguel-allende','san-luis-potosi','puerto-vallarta','valle-de-bravo','aguascalientes','guadalajara','cuernavaca','monterrey','los-cabos','acapulco','cancun','cozumel','morelia','queretaro','pachuca','tijuana','torreon','veracruz','vallarta','oaxaca','merida','puebla','toluca','cdmx','leon'];
-        for (var i = 0; i < cities.length; i++) {
-          var c = cities[i];
+        var cityList = ['ciudad-de-mexico','estado-de-mexico','san-miguel-allende','san-luis-potosi','puerto-vallarta','valle-de-bravo','aguascalientes','guadalajara','cuernavaca','monterrey','los-cabos','acapulco','cancun','cozumel','morelia','queretaro','pachuca','tijuana','torreon','veracruz','vallarta','oaxaca','merida','puebla','toluca','cdmx','leon'];
+        for (var i = 0; i < cityList.length; i++) {
+          var c = cityList[i];
           if (last !== c && last.length > c.length && last.slice(-c.length) === c) {
             var s2 = document.createElement('script');
             s2.src = '/legacy-redirect-boot.js';
@@ -76,18 +102,6 @@
             return;
           }
         }
-      })();
-    </script>
-    <script>
-      (function () {
-        var p = location.pathname.replace(/\/+$/, '') || '/';
-        if (p === '/') return;
-        var segments = p.split('/').filter(Boolean);
-        if (segments.length === 1) {
-          var cities = ',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';
-          if (cities.indexOf(',' + segments[0] + ',') >= 0) return;
-        }
-        document.documentElement.classList.add('no-lcp-hero');
       })();
     </script>
     <style>
@@ -110,10 +124,11 @@
       @media (min-width:768px){#static-nav-shell .nav-sub{display:block;height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}}
       html.no-lcp-hero #static-hero-copy,html.no-lcp-hero #lcp-hero-wrap{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       html.no-lcp-shell #static-hero-copy,html.no-lcp-shell #lcp-hero-wrap,html.no-lcp-shell #static-nav-shell{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
-      /* Home: keep preloaded hero fixed behind transparent root (LCP, zero CLS) */
+      /* Home: keep preloaded hero + static H1 behind/over transparent root (early LCP) */
       html.home-lcp-live #root{background:transparent}
       html.home-lcp-live #lcp-hero-wrap{z-index:0}
       html.home-lcp-live #lcp-hero-wrap.lcp-hero-live::after{display:none}
+      html.home-lcp-live #static-hero-copy.lcp-copy-live{z-index:5;pointer-events:auto}
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy{top:8rem}#static-hero-copy h1{font-size:4.5rem;margin-bottom:1.5rem}#static-hero-copy .hero-sub{font-size:1.25rem;margin-bottom:2rem}}
     </style>
@@ -124,27 +139,39 @@
       <div class="nav-top"></div>
       <div class="nav-sub"></div>
     </div>
-    <picture id="lcp-hero-wrap" aria-hidden="true">
-      <source media="(max-width: 768px)" srcset="/images/hero-bg-new-mobile.webp" type="image/webp" />
-      <source srcset="/images/hero-bg-new.webp" type="image/webp" />
-      <img
-        id="lcp-hero"
-        src="/images/hero-bg-new.webp"
-        alt=""
-        width="1408"
-        height="768"
-        fetchpriority="high"
-        decoding="async"
-      />
-    </picture>
-    <div id="static-hero-copy">
-      <h1>Banquetes, Catering y Servicios para Eventos en México</h1>
-      <p class="hero-sub">Banquetes premium, catering gourmet y mobiliario elegante para bodas, quinceañeras, eventos corporativos y celebraciones en todo México</p>
-      <div class="hero-btns">
-        <a class="btn-wa" href="https://api.whatsapp.com/send/?phone=5215540080373&amp;text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento">Cotiza por WhatsApp</a>
-        <a class="btn-svc" href="#servicios">Ver Servicios</a>
-      </div>
-    </div>
+    <picture id="lcp-hero-wrap" aria-hidden="true"></picture>
+    <div id="static-hero-copy" hidden></div>
+    <script>
+      (function () {
+        // Inner SPA pages: strip empty home LCP nodes so they never compete with route LCP.
+        if (!window.__BS_HOME_LCP) {
+          var wrap = document.getElementById('lcp-hero-wrap');
+          var copy = document.getElementById('static-hero-copy');
+          if (wrap) wrap.remove();
+          if (copy) copy.remove();
+          return;
+        }
+        var pic = document.getElementById('lcp-hero-wrap');
+        if (pic) {
+          pic.innerHTML =
+            '<source media="(max-width: 768px)" srcset="/images/hero-bg-new-mobile.webp" type="image/webp" />' +
+            '<source srcset="/images/hero-bg-new.webp" type="image/webp" />' +
+            '<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="" width="1408" height="768" fetchpriority="high" decoding="async" />';
+        }
+        var box = document.getElementById('static-hero-copy');
+        if (box) {
+          box.hidden = false;
+          box.removeAttribute('hidden');
+          box.innerHTML =
+            '<h1>Banquetes, Catering y Servicios para Eventos en México</h1>' +
+            '<p class="hero-sub">Banquetes premium, catering gourmet y mobiliario elegante para bodas, quinceañeras, eventos corporativos y celebraciones en todo México</p>' +
+            '<div class="hero-btns">' +
+            '<a class="btn-wa" href="https://api.whatsapp.com/send/?phone=5215540080373&amp;text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento">Cotiza por WhatsApp</a>' +
+            '<a class="btn-svc" href="#servicios">Ver Servicios</a>' +
+            '</div>';
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

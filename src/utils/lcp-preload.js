@@ -2,7 +2,7 @@ import { stripCityFromPath } from './city-url'
 
 /** Known LCP candidates for catalog and event pages (path without city suffix). */
 const LCP_BY_PATH = {
-  '/banquetes-catering': '/images/banquete-hero.png',
+  // /banquetes-catering: mobile LCP is the H1 (hero collage is lg-only) — do not preload image.
   '/barras-de-bebidas': '/images/productos/barra-bebidas.png',
   '/mesas-personalizadas': '/images/productos/mesa-dulces.png',
   '/salas-periqueras': '/images/salas/sala-vintage-capitoneada-rosa.jpg',

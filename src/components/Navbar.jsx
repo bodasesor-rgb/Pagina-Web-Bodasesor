@@ -972,10 +972,9 @@ export default function Navbar() {
 
   useLayoutEffect(() => {
     // Hide static nav shell so mobile never shows double nav bars.
-    // On home, keep #lcp-hero-wrap visible — Home owns LCP handoff.
+    // On home, keep #lcp-hero-wrap + #static-hero-copy (LCP text).
     if (isHomePath(location)) {
       document.getElementById('static-nav-shell')?.remove()
-      document.getElementById('static-hero-copy')?.remove()
     } else {
       hideStaticLcpShell()
       document.getElementById('static-nav-shell')?.remove()
@@ -983,18 +982,26 @@ export default function Navbar() {
   }, [location])
 
   useEffect(() => {
+    // Search UI only after explicit intent — avoid pulling search chunk during LCP.
     const reveal = () => setShowSearch(true)
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(reveal, { timeout: 3500 })
-      return () => window.cancelIdleCallback(id)
+    const onIntent = () => {
+      reveal()
+      window.removeEventListener('pointerdown', onIntent)
+      window.removeEventListener('keydown', onIntent)
     }
-    const t = setTimeout(reveal, 2000)
-    return () => clearTimeout(t)
+    window.addEventListener('pointerdown', onIntent, { once: true, passive: true })
+    window.addEventListener('keydown', onIntent, { once: true })
+    const t = setTimeout(reveal, 6000)
+    return () => {
+      window.removeEventListener('pointerdown', onIntent)
+      window.removeEventListener('keydown', onIntent)
+      clearTimeout(t)
+    }
   }, [])
 
   useEffect(() => {
     // Warm products after LCP budget — avoid competing with hero/logo bytes.
-    const t = setTimeout(() => prefetchProducts(), 2800)
+    const t = setTimeout(() => prefetchProducts(), 4000)
     return () => clearTimeout(t)
   }, [])
 

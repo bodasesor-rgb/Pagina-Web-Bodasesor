@@ -102,7 +102,8 @@ export default function BanquetesCateringPage() {
               Cotizar Servicio de Alimentos
             </a>
           </div>
-          <div className="hidden lg:grid grid-cols-2 gap-3 h-64">
+          {/* Desktop-only collage — never mark priority (mobile LCP is the H1 text). */}
+          <div className="hidden lg:grid grid-cols-2 gap-3 h-64" aria-hidden="true">
             {["/images/banquete-hero.png", "/images/banquete-mexicano-hero.png", "/images/instagram/ig1.jpg", "/images/instagram/ig18.jpg"].map((src, i) => (
               <div key={i} className="rounded-2xl overflow-hidden bg-[#0d1630]">
                 <OptimizedImage
@@ -110,7 +111,6 @@ export default function BanquetesCateringPage() {
                   alt=""
                   width={300}
                   height={128}
-                  priority={i < 2}
                   className="w-full h-full object-cover opacity-80"
                 />
               </div>
@@ -178,7 +178,7 @@ export default function BanquetesCateringPage() {
             </div>
             <div className={`grid grid-cols-1 sm:grid-cols-2 ${cat.items.length >= 6 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6`}>
               {cat.items.map((item, idx) => (
-                <ServiceCard key={item.href} name={item.name} href={item.href} tag={item.tag} img={item.img} city={city?.name} priority={ci === 0 && idx === 0} />
+                <ServiceCard key={item.href} name={item.name} href={item.href} tag={item.tag} img={item.img} city={city?.name} />
               ))}
             </div>
           </div>
