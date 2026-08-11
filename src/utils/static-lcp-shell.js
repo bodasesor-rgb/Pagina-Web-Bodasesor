@@ -31,26 +31,48 @@ export function hideStaticLcpShell() {
 }
 
 /**
- * Home: keep the preloaded fixed hero as the LCP layer for the whole visit.
- * Do not remove/reparent it (that caused ~0.66 CLS). Opaque below-fold
- * sections cover it while scrolling.
+ * Home: keep preloaded hero IMAGE + static H1 copy as the LCP layer.
+ * Removing the static H1 forced Lighthouse to wait on React + Playfair (~2s+).
  */
 export function enableHomeStaticHero() {
   document.documentElement.classList.add('home-lcp-live')
   document.documentElement.classList.remove('no-lcp-hero', 'no-lcp-shell', 'home-lcp-pending')
   document.getElementById('static-nav-shell')?.remove()
-  document.getElementById('static-hero-copy')?.remove()
+
   const wrap = document.getElementById('lcp-hero-wrap')
-  if (wrap) {
-    // Drop the static dimmer — React paints its own overlay on the hero section.
-    wrap.classList.add('lcp-hero-live')
+  if (wrap) wrap.classList.add('lcp-hero-live')
+
+  const copy = document.getElementById('static-hero-copy')
+  if (copy) {
+    copy.classList.add('lcp-copy-live')
+    copy.style.pointerEvents = 'auto'
+    copy.style.zIndex = '5'
+  }
+}
+
+/** Update the static LCP H1/subcopy when the city context changes (no React remount). */
+export function syncStaticHeroCopy(city) {
+  const root = document.getElementById('static-hero-copy')
+  if (!root) return
+  const h1 = root.querySelector('h1, .hero-title')
+  const sub = root.querySelector('.hero-sub')
+  if (h1) {
+    h1.innerHTML = city?.name
+      ? `Banquetes y Catering para Eventos<br>en ${city.name}`
+      : 'Banquetes, Catering y Servicios<br>para Eventos en México'
+  }
+  if (sub) {
+    sub.textContent = city?.name
+      ? `Banquetes, catering gourmet y mobiliario elegante para eventos en ${city.name}. Cotiza sin compromiso.`
+      : 'Banquetes premium, catering gourmet y mobiliario elegante para bodas, quinceañeras, eventos corporativos y celebraciones en todo México'
   }
 }
 
 export function disableHomeStaticHero() {
   document.documentElement.classList.remove('home-lcp-live', 'home-lcp-pending')
   document.getElementById('lcp-hero-wrap')?.remove()
+  document.getElementById('static-hero-copy')?.remove()
 }
 
-/** Inline boot script source — keep in sync with index.html */
-export const LCP_SHELL_BOOT_SCRIPT = `(function(){var p=location.pathname.replace(/\\/+$/,'')||'/';if(p==='/')return;var s=p.split('/').filter(Boolean);if(s.length===1){var c=',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';if(c.indexOf(','+s[0]+',')>=0)return}document.documentElement.classList.add('no-lcp-hero')})();`
+/** Inline boot script source — keep in sync with index.html home/LCP path gate */
+export const LCP_SHELL_BOOT_SCRIPT = `(function(){var p=location.pathname.replace(/\\/+$/,'')||'/';var cities=',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';var segments=p.split('/').filter(Boolean);var isHome=p==='/'||(segments.length===1&&cities.indexOf(','+segments[0]+',')>=0);window.__BS_HOME_LCP=isHome;if(!isHome)document.documentElement.classList.add('no-lcp-hero')})();`

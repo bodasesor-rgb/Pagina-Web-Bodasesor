@@ -8,6 +8,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import Navbar from './components/Navbar'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath } from './utils/static-lcp-shell'
+import { syncLcpPreload } from './utils/lcp-preload'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
 import { prefetchProducts } from './data/products-loader'
@@ -176,8 +177,9 @@ function StaticLcpCleanup() {
   const [location] = useLocation()
   useLayoutEffect(() => {
     if (isHomePath(location)) {
+      // Keep #lcp-hero-wrap + #static-hero-copy — Home owns early LCP (image + H1).
       document.getElementById('static-nav-shell')?.remove()
-      document.getElementById('static-hero-copy')?.remove()
+      syncLcpPreload('/')
     } else {
       document.documentElement.classList.remove('home-lcp-live', 'home-lcp-pending')
       hideStaticHeroOnly()
@@ -185,6 +187,7 @@ function StaticLcpCleanup() {
       document.getElementById('static-nav-shell')?.remove()
       document.getElementById('lcp-hero-wrap')?.remove()
       document.getElementById('static-hero-copy')?.remove()
+      syncLcpPreload(location)
     }
   }, [location])
   useEffect(() => {
