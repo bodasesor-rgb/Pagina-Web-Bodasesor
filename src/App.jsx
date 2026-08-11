@@ -176,11 +176,10 @@ function StaticLcpCleanup() {
   const [location] = useLocation()
   useLayoutEffect(() => {
     if (isHomePath(location)) {
-      // Home.HeroMedia owns handoff; only clear static nav chrome here.
       document.getElementById('static-nav-shell')?.remove()
       document.getElementById('static-hero-copy')?.remove()
     } else {
-      document.documentElement.classList.remove('home-lcp-pending')
+      document.documentElement.classList.remove('home-lcp-live', 'home-lcp-pending')
       hideStaticHeroOnly()
       hideStaticLcpShell()
       document.getElementById('static-nav-shell')?.remove()
