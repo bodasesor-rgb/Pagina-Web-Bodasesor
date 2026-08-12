@@ -2,13 +2,15 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { WEDDING } from "../data/wedding-products";
 import type { WeddingProduct } from "../data/wedding-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa saber más sobre sus servicios de Wedding Planner. ¿Me pueden dar información?");
 
 export default function WeddingPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("wedding-planner", "Wedding Planner");
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
@@ -16,8 +18,14 @@ export default function WeddingPage() {
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#8a9bb5] mb-3">Bodasesor Eventos</p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">Wedding Planner{city ? ` en ${city.name}` : ''}</h1>
-            <p className="text-white/70 font-serif text-lg mb-4">Planeación, coordinación y creación total de tu evento. Para que tú solo disfrutes el momento más importante de tu vida.</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">{displayH1}</h1>
+            <p className="text-white/70 font-serif text-lg mb-4">
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Planeación, coordinación y creación total de tu evento. Para que tú solo disfrutes el momento más importante de tu vida."
+              )}
+            </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">{WEDDING.length} servicios disponibles. Desde asesoría puntual hasta la creación total de tu evento.</p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -39,6 +47,60 @@ export default function WeddingPage() {
           </div>
         </div>
       </section>
+
+      <section className="py-10 px-4 bg-white border-b border-gray-100">
+        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+          {cityCopy?.description?.length ? (
+            <>
+              {displaySectionTitle && (
+                <h2 className="text-xl font-serif font-bold text-[#162040]">{displaySectionTitle}</h2>
+              )}
+              {cityCopy.description.map((para) => (
+                <p key={para.slice(0, 24)}>
+                  <HighlightKeywords text={para} keywords={keywords} />
+                </p>
+              ))}
+              {cityCopy.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </>
+          ) : (
+            <p>
+              Servicio de <strong>wedding planner profesional</strong> con planeación, coordinación y creación total del evento.
+              {city ? (
+                <>
+                  {" "}Disponible en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana.
+                </>
+              ) : null}
+            </p>
+          )}
+        </div>
+      </section>
+
+      {cityCopy?.faqs?.length ? (
+        <section className="py-10 px-4 bg-[#faf7f2] border-b border-gray-100">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-4">Preguntas frecuentes</h2>
+            <div className="space-y-3">
+              {cityCopy.faqs.map((f) => (
+                <details key={f.q} className="group rounded-xl border border-[#162040]/10 bg-white px-5 py-4">
+                  <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
+                    <span>{f.q}</span>
+                    <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                  </summary>
+                  <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Catálogo */}
       <section className="py-14 px-4">
