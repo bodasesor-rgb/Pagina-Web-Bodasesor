@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 import CatalogEmbed, { ensureCatalogPreconnects } from "../components/CatalogEmbed";
-import { CATALOGO_CATEGORIES, getCatalogoBySlug } from "../data/catalogos-embeds";
+import { CATALOGO_CATEGORIES, getCatalogoBySlug, getCatalogoPdfHref } from "../data/catalogos-embeds";
 import NotFound from "./not-found";
 
 const Link = CityLink;
@@ -33,6 +33,7 @@ export default function CatalogoDetailPage({ slug }: { slug: string }) {
 
   const categoryLabel =
     CATALOGO_CATEGORIES.find((c) => c.id === catalog.category)?.label || catalog.category;
+  const pdfHref = getCatalogoPdfHref(catalog);
 
   return (
     <div className="min-h-screen bg-white">
@@ -66,6 +67,14 @@ export default function CatalogoDetailPage({ slug }: { slug: string }) {
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-lg font-bold font-serif transition-colors"
             >
               Cotizar por WhatsApp
+            </a>
+            <a
+              href={pdfHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 rounded-lg border border-white/30 text-white text-sm font-serif hover:bg-white/10 transition-colors"
+            >
+              Descargar PDF
             </a>
             <Link
               href={catalog.relatedHref}

@@ -4312,6 +4312,9 @@
 /banquete-mexicano/:menu  /index.html  200
 /banquete-navideno/:menu  /index.html  200
 
+# Catalog detail pages — SPA (open-in-new-tab / hard load must not hit /* → 404)
+/catalogos/:slug  /index.html  200
+
 # Fallback for unknown legacy pages
 /pages/:slug  /  301!
 

@@ -23,6 +23,7 @@ import { COMBINACIONES } from '../src/data/combinaciones-products.js'
 import { blogPosts } from '../src/data/blog-data.js'
 import { CITY_MAP } from '../src/data/city-data.js'
 import { SPA_SEO_HUBS } from '../src/data/spa-seo-hubs.js'
+import { CATALOGOS } from '../src/data/catalogos-embeds.js'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
 
@@ -189,6 +190,18 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
   for (const m of BANQUET_MENUS) {
     const href = `${m.parentHref}/${m.slug}`
     put(entry(href, m.seoTitle || m.name, m.seoDescription || m.headline || m.name, m.name))
+  }
+
+  for (const c of CATALOGOS) {
+    if (!c?.slug || !c?.title) continue
+    put(
+      entry(
+        `/catalogos/${c.slug}`,
+        `${c.title} | Catálogos Bodasesor`,
+        `Catálogo ${c.title} de Bodasesor 2026. Cotiza banquetes, barras, mobiliario y más por WhatsApp.`,
+        c.title,
+      ),
+    )
   }
 
   for (const s of SALAS_CATALOG) {
