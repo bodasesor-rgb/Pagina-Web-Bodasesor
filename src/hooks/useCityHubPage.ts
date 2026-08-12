@@ -9,7 +9,11 @@ import { toSpanishTitleCase, buildHighlightKeywords } from '../utils/spanish-tit
 /**
  * Shared city-hub SEO copy for standalone category pages + ServicePage-compatible fields.
  */
-export function useCityHubPage(hubSlug: string, fallbackTitle: string) {
+export function useCityHubPage(
+  hubSlug: string,
+  fallbackTitle: string,
+  extraKeywords: string[] = [],
+) {
   const { city } = useCity()
   const cityCopy = city ? getCityHubContent(hubSlug, city.slug) : null
 
@@ -30,7 +34,7 @@ export function useCityHubPage(hubSlug: string, fallbackTitle: string) {
     zones: cityCopy?.zones || [],
     cityName: city?.name || '',
     cityShort: city?.short || '',
-    extra: [fallbackTitle, 'Bodas', 'Eventos', 'Catering', 'Banquetes'],
+    extra: [fallbackTitle, 'Bodas', 'Eventos', 'Catering', 'Banquetes', ...extraKeywords],
   })
 
   useEffect(() => {
