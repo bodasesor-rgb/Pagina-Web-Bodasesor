@@ -56,7 +56,10 @@ function main() {
   const byHub = new Map()
 
   for (const key of keys) {
-    const [hub, city] = key.split('/')
+    // Nested hubs: banquetes/4-tiempos/leon → hub=banquetes/4-tiempos, city=leon
+    const parts = key.split('/')
+    const city = parts.pop()
+    const hub = parts.join('/')
     const name = cityName(city)
     const n = normalizeCityHubContent(store[key], { hub, city, cityName: name })
     const prefix = key
