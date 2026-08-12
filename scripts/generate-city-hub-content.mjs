@@ -24,6 +24,7 @@ import {
 import { geminiGenerate, parseGeminiJson } from './lib/gemini.mjs'
 import { GEMINI_TEXT_MODEL } from './lib/gemini-config.mjs'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
+import { toSpanishTitleCase } from '../src/utils/spanish-title-case.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -136,13 +137,13 @@ function validateContent(obj, city) {
 
   return {
     schemaVersion: CITY_HUB_SCHEMA_VERSION,
-    h1: clipTitle(obj.h1, L.h1Max),
-    sectionTitle: String(obj.sectionTitle).trim(),
-    headline: clipTitle(obj.headline, L.headlineMax),
+    h1: toSpanishTitleCase(clipTitle(obj.h1, L.h1Max)),
+    sectionTitle: toSpanishTitleCase(String(obj.sectionTitle).trim()),
+    headline: toSpanishTitleCase(clipTitle(obj.headline, L.headlineMax)),
     description: obj.description.map((s) => String(s).trim()).filter(Boolean).slice(0, 4),
-    seoTitle,
+    seoTitle: toSpanishTitleCase(seoTitle),
     seoDescription,
-    primaryKeyword: String(obj.primaryKeyword).trim(),
+    primaryKeyword: toSpanishTitleCase(String(obj.primaryKeyword).trim()),
     zones: obj.zones.map((s) => String(s).trim()).filter(Boolean).slice(0, L.zonesMax),
     localBullets: obj.localBullets.map((s) => String(s).trim()).filter(Boolean).slice(0, L.localBulletsMax),
     faqs: obj.faqs
