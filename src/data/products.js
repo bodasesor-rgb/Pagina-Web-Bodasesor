@@ -767,7 +767,7 @@ const PRODUCTS = [
       ],
       category: "catering",
       categoryLabel: "Catering",
-      categoryHref: "/pozole-tostadas",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Pozole y Tostadas",
@@ -961,7 +961,7 @@ const PRODUCTS = [
       ],
       category: "catering",
       categoryLabel: "Catering",
-      categoryHref: "/paella",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Pozole y Tostadas",
@@ -1155,7 +1155,7 @@ const PRODUCTS = [
         ],
         category: "catering",
         categoryLabel: "Catering",
-        categoryHref: "/comida-corrida",
+        categoryHref: "/banquetes-catering",
         related: [
           {
             name: "Pozole y Tostadas",
@@ -1349,7 +1349,7 @@ const PRODUCTS = [
         ],
         category: "catering",
         categoryLabel: "Catering",
-        categoryHref: "/coffee-break",
+        categoryHref: "/banquetes-catering",
         related: [
           {
             name: "Pozole y Tostadas",
@@ -1547,7 +1547,7 @@ const PRODUCTS = [
       ],
       category: "catering",
       categoryLabel: "Catering",
-      categoryHref: "/bocadillos",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Pozole y Tostadas",
@@ -1741,7 +1741,7 @@ const PRODUCTS = [
       ],
       category: "catering",
       categoryLabel: "Catering",
-      categoryHref: "/canapes-premium",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Pozole y Tostadas",
@@ -1935,7 +1935,7 @@ const PRODUCTS = [
       ],
       category: "catering",
       categoryLabel: "Catering",
-      categoryHref: "/desayuno-social",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Pozole y Tostadas",
@@ -2129,7 +2129,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-crepas",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -2327,7 +2327,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-sushi",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -2525,7 +2525,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-mariscos",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -2723,7 +2723,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-paninis",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -2929,7 +2929,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-pastas",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -3127,7 +3127,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-pizzas",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -3329,7 +3329,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-americana",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -3527,7 +3527,7 @@ const PRODUCTS = [
       ],
       category: "barras-alimentos",
       categoryLabel: "Barras de Alimentos",
-      categoryHref: "/barra-yucateca",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Barra de Crepas",
@@ -3765,7 +3765,7 @@ const PRODUCTS = [
       ],
       category: "estaciones",
       categoryLabel: "Estaciones de Comida",
-      categoryHref: "/parrillada-argentina",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Parrillada Argentina",
@@ -3955,7 +3955,7 @@ const PRODUCTS = [
       ],
       category: "estaciones",
       categoryLabel: "Estaciones de Comida",
-      categoryHref: "/parrillada-tradicional",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Parrillada Argentina",
@@ -4145,7 +4145,7 @@ const PRODUCTS = [
       ],
       category: "estaciones",
       categoryLabel: "Estaciones de Comida",
-      categoryHref: "/taquiza-guisados",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Parrillada Argentina",
@@ -4351,7 +4351,7 @@ const PRODUCTS = [
       ],
       category: "estaciones",
       categoryLabel: "Estaciones de Comida",
-      categoryHref: "/puestos-antojitos",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Parrillada Argentina",
@@ -4541,7 +4541,7 @@ const PRODUCTS = [
       ],
       category: "estaciones",
       categoryLabel: "Estaciones de Comida",
-      categoryHref: "/puestos-quesadillas",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Parrillada Argentina",
@@ -4731,7 +4731,7 @@ const PRODUCTS = [
       ],
       category: "estaciones",
       categoryLabel: "Estaciones de Comida",
-      categoryHref: "/carrito-snacks",
+      categoryHref: "/banquetes-catering",
       related: [
         {
           name: "Parrillada Argentina",
