@@ -1,0 +1,107 @@
+{
+  "banquetes/aguascalientes": {
+    "h1": "Banquetes para Bodas y Eventos en Aguascalientes",
+    "headline": "El sabor ideal para tu boda o XV años en las haciendas y salones de Aguascalientes.",
+    "description": [
+      "Organizar un banquete en Aguascalientes exige entender la dinámica de sus célebres haciendas hidrocálidas y salones campestres. Ya sea que planees una boda elegante cerca de la zona Campestre o unos XV años tradicionales al Norte de la ciudad, coordinamos menús por tiempos y banquetes tipo buffet que se adaptan al clima del Bajío. Aseguramos que la cocina mantenga la temperatura y sazón perfectas desde la recepción hasta el platillo trasnochado.",
+      "Nuestros proveedores locales cuentan con experiencia logística para montar banquetes tanto en recintos cerrados del Centro Histórico como en jardines abiertos rumbo a Villasunción. Ofrecemos servicio completo de meseros capacitados, loza, cristalería y montaje de estaciones de bebidas. Nos encargamos de la coordinación técnica en cocinas móviles para que la atención en recintos campestres sea impecable.",
+      "Desde banquetes formales de tres o cuatro tiempos hasta banquetes de gala regionales para grandes celebraciones, personalizamos cada menú según el perfil de tus invitados. Cada propuesta incluye degustación previa en la capital para garantizar la calidad en sazón, presentación y tiempos de servicio. Permítenos llevar una experiencia gastronómica memorable a tu evento en Aguascalientes."
+    ],
+    "seoTitle": "Banquetes en Aguascalientes | Bodas y Eventos | Bodasesor",
+    "seoDescription": "Banquetes en Aguascalientes para bodas y XV años. Menús de tiempos, buffet y servicio profesional en haciendas y salones del Bajío.",
+    "localBullets": [
+      "Cobertura en salones campestres y jardines de la zona Norte, Campestre y Villasunción.",
+      "Logística adaptada a haciendas al aire libre con equipamiento de cocina temporal.",
+      "Menús de tiempos, buffet y banquetes de trasnochados para bodas y XV años.",
+      "Degustación previa en Aguascalientes y servicio capacitado de meseros locales."
+    ],
+    "faqs": [
+      {
+        "q": "¿Cómo gestionan el banquete en haciendas o jardines campestres fuera del Centro de Aguascalientes?",
+        "a": "Las banqueteras integran equipo de conservación térmica y transporte especializado, garantizando que los platillos lleguen a la temperatura ideal a cualquier recinto de la periferia o zona Campestre."
+      },
+      {
+        "q": "¿Qué tipo de menú se recomienda para una boda o XV años en el clima de Aguascalientes?",
+        "a": "Para eventos en salones campestres o jardines, se recomiendan menús de 3 tiempos con entradas templadas o frescas y cortes de carne. Para la noche, las estaciones de trasnochado con bocadillos calientes son una opción muy solicitada."
+      },
+      {
+        "q": "¿Con cuánta anticipación debo contratar el servicio de banquete en Aguascalientes?",
+        "a": "Se aconseja reservar entre 6 y 9 meses antes de la fecha, especialmente para fechas de alta demanda en el Bajío durante los meses de clima templado."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "aguascalientes",
+    "generatedAt": "2026-08-12T03:56:46.368Z",
+    "model": "gemini-3.6-flash"
+  },
+  "banquetes/ciudad-de-mexico": {
+    "h1": "Banquetes para Bodas y Eventos en Ciudad de México",
+    "headline": "Catering de alta cocina y banquetes a la medida para tu evento en CDMX",
+    "description": [
+      "Planear un banquete en la Ciudad de México exige coordinar gastronomía de excelencia con la logística urbana de la capital. Ya sea que organices una boda boutique en una casona de la Roma Norte o una gran recepción en un jardín del Pedregal, adaptamos la propuesta culinaria a la infraestructura de cada espacio.",
+      "Diseñamos experiencias que van desde menús formales de tres o cuatro tiempos hasta propuestas contemporáneas de cocina de autor o buffet internacional. Consideramos los tiempos de traslado y el equipamiento técnico necesario para eventos en zonas como Polanco o Santa Fe, garantizando que cada platillo llegue a la temperatura ideal.",
+      "Además del menú, coordinamos al personal de meseros profesionales, la cristalería y la mantelería acorde al concepto visual de tu celebración. Nos encargamos del montaje operativo respetando los horarios y normativas de acceso de los principales salones y terrazas de la CDMX."
+    ],
+    "seoTitle": "Banquetes para Bodas en CDMX | Catering Bodasesor",
+    "seoDescription": "Cotiza banquetes en la Ciudad de México: menús por tiempos, buffet y catering para bodas o eventos en Polanco, Coyoacán y Santa Fe.",
+    "localBullets": [
+      "Servicio de banquetes adaptado a casonas históricas, salones y rooftops en Polanco, Roma Norte y Pedregal.",
+      "Logística con transporte térmico para superar las distancias y los tiempos de traslado en la CDMX.",
+      "Instalación de cocinas móviles equipadas para jardines y espacios al aire libre en Coyoacán y la zona metropolitana.",
+      "Personal de meseros profesional capacitado para banquetes masivos corporativos y bodas de alta gama."
+    ],
+    "faqs": [
+      {
+        "q": "¿Cómo coordinan el banquete considerando el tráfico de la CDMX?",
+        "a": "Planificamos rutas logísticas con horarios de holgura y utilizamos equipos de mantenimiento térmico para asegurar que la comida mantenga la temperatura y presentación óptimas al llegar al venue."
+      },
+      {
+        "q": "¿Ofrecen banquetes en terrazas o casonas sin cocina equipada en Roma Norte o Coyoacán?",
+        "a": "Sí, montamos cocinas móviles eficientes con equipo portátil de cocción y ensamble para operar sin inconvenientes en espacios que no cuentan con área de cocina propia."
+      },
+      {
+        "q": "¿Con cuánto tiempo de anticipación conviene cotizar un banquete en la Ciudad de México?",
+        "a": "Sugerimos reservar con 6 a 9 meses de anticipación, especialmente para fechas de alta demanda durante la temporada de bodas en primavera y otoño."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "ciudad-de-mexico",
+    "generatedAt": "2026-08-12T03:56:16.977Z",
+    "model": "gemini-3.6-flash"
+  },
+  "banquetes/estado-de-mexico": {
+    "h1": "Banquetes para Bodas y Eventos en Estado de México",
+    "headline": "Catering de alta cocina para tu gran día en Huixquilucan, Toluca y el Poniente del EdoMex.",
+    "description": [
+      "Organizar un banquete en el Estado de México exige entender la diversidad de sus locaciones, desde las exclusivas haciendas y salones en Interlomas y Huixquilucan hasta los amplios jardines en Metepec o Toluca. Diseñamos menús por tiempos y banquetes tipo buffet que se adaptan tanto al clima fresco del Valle de Toluca como al estilo elegante de la zona Poniente. Nos encargamos de coordinar una propuesta gastronómica a la medida para que tus invitados disfruten una experiencia culinaria memorable.",
+      "La logística de banquetes en el EdoMex requiere una planeación puntual, considerando los trayectos desde la Ciudad de México y los accesos a zonas residenciales o campestres en Naucalpan y Atizapán. Nuestro servicio contempla personal de meseros profesional, equipo de conservación térmica y cocina móvil para garantizar la máxima frescura en cada platillo. De este modo aseguramos un servicio fluido e impecable, sin importar la distancia del venue que elijas.",
+      "Ya sea que planees una boda íntima en las lomas de Naucalpan o una gran recepción de XV años en el Valle de Toluca, adaptamos la vajilla, el montaje y la cocina a tus necesidades. Ofrecemos degustaciones previas y menús personalizados que combinan insumos de alta calidad con técnicas contemporáneas. Déjanos la parte operativa y disfruta tu celebración con total tranquilidad."
+    ],
+    "seoTitle": "Banquetes para Bodas en Estado de México | Bodasesor",
+    "seoDescription": "Servicio de banquete y catering para bodas en EdoMex. Cobertura en Interlomas, Naucalpan, Metepec y Valle de Toluca. ¡Cotiza tu menú ideal!",
+    "localBullets": [
+      "Cobertura en la zona Poniente (Interlomas, Huixquilucan, Naucalpan, Atizapán) y el Valle de Toluca (Metepec).",
+      "Logística especializada para traslados y tiempos entre la CDMX y venues del Estado de México.",
+      "Menús y cadenas de temperatura adaptados al clima cambiante de la región.",
+      "Capacidad operativa para grandes jardines, haciendas y salones cerrados."
+    ],
+    "faqs": [
+      {
+        "q": "¿Tienen cobertura de banquetes tanto en el Valle de Toluca como en la zona Poniente del EdoMex?",
+        "a": "Sí, cubrimos eventos en Toluca, Metepec, Interlomas, Huixquilucan, Naucalpan y Atizapán, coordinando la logística de traslado e instalación de acuerdo con la ubicación de tu salón o jardín."
+      },
+      {
+        "q": "¿Cómo aseguran la temperatura e higiene de los alimentos en traslados largos dentro del Estado de México?",
+        "a": "Utilizamos transporte con control térmico y equipo de cocina portátil en el venue. Esto permite montar y emplatar al momento, garantizando que los banquetes mantengan su textura y temperatura ideal."
+      },
+      {
+        "q": "¿Ofrecen servicio de banquetes para bodas al aire libre en jardines de Metepec o Atizapán?",
+        "a": "Por supuesto. Contamos con montaje completo, vajilla, cristalería y servicio de meseros adaptado a espacios abiertos, considerando carpas de apoyo operativas para el correcto flujo del banquete."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "estado-de-mexico",
+    "generatedAt": "2026-08-12T03:56:34.999Z",
+    "model": "gemini-3.6-flash"
+  }
+}

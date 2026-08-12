@@ -2,6 +2,7 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { getCityHubContent } from "../data/city-hub-content";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import { Lightbox } from "../components/Lightbox";
 import OptimizedImage from "../components/OptimizedImage";
@@ -555,20 +556,36 @@ export default function ServicePage({ params }: ServicePageProps) {
   }, [rawSlug, slug]);
 
   const { city } = useCity();
+  const cityCopy = city ? getCityHubContent(slug, city.slug) : null;
+
   useEffect(() => {
     if (!product) return;
-    document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
-  }, [product?.seoTitle, city]);
+    document.title = cityCopy?.seoTitle
+      ? buildSeoTitle(cityCopy.seoTitle, null)
+      : buildSeoTitle(product.seoTitle, city?.short ?? null);
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta && (cityCopy?.seoDescription || product.seoDescription)) {
+      meta.setAttribute(
+        "content",
+        cityCopy?.seoDescription ||
+          (city
+            ? `${product.seoDescription} Disponible en ${city.name}.`
+            : product.seoDescription),
+      );
+    }
+  }, [product, city, cityCopy]);
 
   useEffect(() => {
     if (!product) return;
     const faqs =
-      Array.isArray(product.faqs) && product.faqs.length >= 2
-        ? product.faqs
-        : defaultServiceFaqs(product.title);
+      cityCopy?.faqs?.length >= 2
+        ? cityCopy.faqs
+        : Array.isArray(product.faqs) && product.faqs.length >= 2
+          ? product.faqs
+          : defaultServiceFaqs(product.title);
     upsertJsonLd('bodasesor-faq-jsonld', buildFaqPageJsonLd(faqs));
     return () => upsertJsonLd('bodasesor-faq-jsonld', null);
-  }, [product]);
+  }, [product, cityCopy]);
 
   if (!loaded) {
     return (
@@ -636,12 +653,14 @@ export default function ServicePage({ params }: ServicePageProps) {
               <div className="lg:col-span-3 px-4 sm:px-6 lg:px-12 py-10 md:py-16 flex flex-col justify-center min-h-[260px]">
                 <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
                 <h1 className="text-4xl md:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-                  {city
-                    ? `${product.title} para Bodas y Eventos en ${city.name}`
-                    : `${product.title} para Bodas y Eventos`}
+                  {cityCopy?.h1
+                    ? cityCopy.h1
+                    : city
+                      ? `${product.title} para Bodas y Eventos en ${city.name}`
+                      : `${product.title} para Bodas y Eventos`}
                 </h1>
                 <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-xl">
-                  {product.headline}
+                  {cityCopy?.headline || product.headline}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a href={waUrl} target="_blank" rel="noopener noreferrer"
@@ -683,12 +702,14 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-14">
             <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-              {city
-                ? `${product.title} para Bodas y Eventos en ${city.name}`
-                : `${product.title} para Bodas y Eventos`}
+              {cityCopy?.h1
+                ? cityCopy.h1
+                : city
+                  ? `${product.title} para Bodas y Eventos en ${city.name}`
+                  : `${product.title} para Bodas y Eventos`}
             </h1>
             <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-2xl">
-              {product.headline}
+              {cityCopy?.headline || product.headline}
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
@@ -733,25 +754,34 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-serif font-bold text-[#162040] mb-6">
-                {city
-                  ? `${product.title} para bodas y eventos en ${city.name}`
-                  : `${product.title} para bodas y eventos`}
+                {cityCopy?.h1
+                  ? cityCopy.h1
+                  : city
+                    ? `${product.title} para bodas y eventos en ${city.name}`
+                    : `${product.title} para bodas y eventos`}
               </h2>
               <div className="space-y-4">
-                {product.description.map((para, i) => (
+                {(cityCopy?.description?.length ? cityCopy.description : product.description).map((para, i) => (
                   <p key={i} className="text-gray-600 leading-relaxed font-serif text-lg">
                     {para}
                   </p>
                 ))}
-                {city && (
+                {cityCopy?.localBullets?.length ? (
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
+                    {cityCopy.localBullets.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
+                ) : city ? (
                   <p className="text-gray-600 leading-relaxed font-serif text-lg">
                     Servicio disponible en {city.name} y área metropolitana. Cotiza sin compromiso.
                   </p>
-                )}
+                ) : null}
               </div>
               <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
                 <p className="text-sm text-gray-600 font-serif italic">
-                  {city ? `${product.seoDescription} Disponible en ${city.name}.` : product.seoDescription}
+                  {cityCopy?.seoDescription ||
+                    (city ? `${product.seoDescription} Disponible en ${city.name}.` : product.seoDescription)}
                 </p>
               </div>
             </div>
