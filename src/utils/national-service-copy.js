@@ -12,6 +12,17 @@ export const NATIONAL_COVERAGE_ZONES = [
   'Cancún',
 ]
 
+function nationalH1(title) {
+  const t = String(title || '').trim()
+  if (!t) return 'Servicios para Bodas y Eventos en México'
+  if (/en\s+méxico/i.test(t)) return t
+  if (/para\s+bodas\s+y\s+eventos/i.test(t)) return `${t} en México`
+  if (/para\s+eventos(\s+corporativos)?/i.test(t)) {
+    return t.replace(/para\s+eventos(\s+corporativos)?/i, 'para Bodas y Eventos en México')
+  }
+  return `${t} para Bodas y Eventos en México`
+}
+
 /**
  * Build cityCopy-shaped content for national (no-city) product/service pages
  * so the layout matches hub×city landings: zones, bullets, FAQs, section title.
@@ -19,14 +30,18 @@ export const NATIONAL_COVERAGE_ZONES = [
 export function buildNationalServiceCopy(product) {
   if (!product?.title) return null
   const title = product.title
+  const h1 = nationalH1(title)
   const included = Array.isArray(product.included) ? product.included : []
   const localBullets =
     included.length > 0
-      ? included.slice(0, 5).map((item) => {
-          const name = item.title || item.text || ''
-          const desc = item.desc || ''
-          return desc ? `${name}: ${desc}` : name
-        }).filter(Boolean)
+      ? included
+          .slice(0, 5)
+          .map((item) => {
+            const name = item.title || item.text || ''
+            const desc = item.desc || ''
+            return desc ? `${name}: ${desc}` : name
+          })
+          .filter(Boolean)
       : [
           `Servicio de ${title} con montaje, personal y desmontaje incluidos.`,
           'Logística a nivel nacional con coordinación Bodasesor de punta a punta.',
@@ -41,10 +56,12 @@ export function buildNationalServiceCopy(product) {
       : defaultServiceFaqs(title)
 
   return {
-    h1: `${title} para Bodas y Eventos en México`,
+    h1,
     headline: product.headline || `${title} con servicio profesional Bodasesor`,
-    sectionTitle: `${title} para Bodas y Eventos en México`,
-    description: Array.isArray(product.description) ? product.description : [product.description].filter(Boolean),
+    sectionTitle: h1,
+    description: Array.isArray(product.description)
+      ? product.description
+      : [product.description].filter(Boolean),
     localBullets,
     zones: NATIONAL_COVERAGE_ZONES,
     faqs,
@@ -61,9 +78,11 @@ export function buildNationalServiceCopy(product) {
  */
 export function buildNationalHubCopy(hubSlug, fallbackTitle) {
   const title = fallbackTitle || 'Servicios Bodasesor'
+  const h1 = nationalH1(title)
   const byHub = {
     'banquetes-catering': {
-      headline: 'Banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas en un solo catálogo.',
+      headline:
+        'Banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas en un solo catálogo.',
       localBullets: [
         'Menús por tiempos, buffet y estaciones con chef y meseros.',
         'Barras de alimentos y puestos de antojitos cocinados al momento.',
@@ -86,7 +105,8 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       ],
     },
     'barras-de-bebidas': {
-      headline: 'Desde aguas frescas y mocteles hasta mixología premium, café de especialidad y carritos de helado.',
+      headline:
+        'Desde aguas frescas y mocteles hasta mixología premium, café de especialidad y carritos de helado.',
       localBullets: [
         'Opciones con y sin alcohol para todo tipo de evento.',
         'Bartenders y baristas certificados con montaje incluido.',
@@ -109,7 +129,8 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       ],
     },
     'mesas-personalizadas': {
-      headline: 'Mesas de dulces, postres, quesos, cupcakes y snacks decoradas a la temática de tu evento.',
+      headline:
+        'Mesas de dulces, postres, quesos, cupcakes y snacks decoradas a la temática de tu evento.',
       localBullets: [
         'Diseño acorde a colores y estilo de tu celebración.',
         'Surtido, montaje, decoración y desmontaje incluidos.',
@@ -144,9 +165,9 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
   }
 
   return {
-    h1: `${title} para Bodas y Eventos en México`,
+    h1,
     headline: extra.headline,
-    sectionTitle: `${title} para Bodas y Eventos en México`,
+    sectionTitle: h1,
     description: [],
     localBullets: extra.localBullets,
     zones: NATIONAL_COVERAGE_ZONES,
