@@ -4921,7 +4921,7 @@ const PRODUCTS = [
       ],
       category: "bebidas",
       categoryLabel: "Barras de Bebidas",
-      categoryHref: "/barra-bebidas",
+      categoryHref: "/barras-de-bebidas",
       related: [
         {
           name: "Barra de Bebidas",
@@ -5068,7 +5068,7 @@ const PRODUCTS = [
       ],
       category: "bebidas",
       categoryLabel: "Barras de Bebidas",
-      categoryHref: "/barra-mocteles",
+      categoryHref: "/barras-de-bebidas",
       related: [
         {
           name: "Barra de Bebidas",
@@ -5227,7 +5227,7 @@ const PRODUCTS = [
       ],
       category: "bebidas",
       categoryLabel: "Barras de Bebidas",
-      categoryHref: "/cocteles-mixologia",
+      categoryHref: "/barras-de-bebidas",
       related: [
         {
           name: "Barra de Bebidas",
@@ -5370,7 +5370,7 @@ const PRODUCTS = [
       ],
       category: "bebidas",
       categoryLabel: "Barras de Bebidas",
-      categoryHref: "/barra-cafe-premium",
+      categoryHref: "/barras-de-bebidas",
       related: [
         {
           name: "Barra de Bebidas",
@@ -5513,7 +5513,7 @@ const PRODUCTS = [
       ],
       category: "bebidas",
       categoryLabel: "Barras de Bebidas",
-      categoryHref: "/paletas-helados",
+      categoryHref: "/barras-de-bebidas",
       related: [
         {
           name: "Barra de Bebidas",
@@ -5656,7 +5656,7 @@ const PRODUCTS = [
       ],
       category: "mesas-personalizadas",
       categoryLabel: "Mesas Personalizadas",
-      categoryHref: "/mesa-dulces",
+      categoryHref: "/mesas-personalizadas",
       related: [
         {
           name: "Mesa de Dulces",
@@ -5842,7 +5842,7 @@ const PRODUCTS = [
       ],
       category: "mesas-personalizadas",
       categoryLabel: "Mesas Personalizadas",
-      categoryHref: "/mesa-postres",
+      categoryHref: "/mesas-personalizadas",
       related: [
         {
           name: "Mesa de Dulces",
@@ -6028,7 +6028,7 @@ const PRODUCTS = [
       ],
       category: "mesas-personalizadas",
       categoryLabel: "Mesas Personalizadas",
-      categoryHref: "/mesa-quesos",
+      categoryHref: "/mesas-personalizadas",
       related: [
         {
           name: "Mesa de Dulces",
@@ -6214,7 +6214,7 @@ const PRODUCTS = [
       ],
       category: "mesas-personalizadas",
       categoryLabel: "Mesas Personalizadas",
-      categoryHref: "/cupcakes-gourmet",
+      categoryHref: "/mesas-personalizadas",
       related: [
         {
           name: "Mesa de Dulces",

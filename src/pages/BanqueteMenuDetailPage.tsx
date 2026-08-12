@@ -178,7 +178,9 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
               <strong className="font-bold text-white">{city.name}</strong> y área metropolitana
             </p>
           ) : (
-            <div className="mb-8" />
+            <p className="text-white/65 font-serif text-sm mb-8">
+              Servicio a nivel nacional · CDMX · Estado de México · Guadalajara · Monterrey · León y más
+            </p>
           )}
           <div className="flex flex-wrap gap-4">
             <a
@@ -250,7 +252,28 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                     <strong className="font-bold text-[#162040]">{city.name}</strong> y área
                     metropolitana. Cotiza sin compromiso.
                   </p>
-                ) : null}
+                ) : (
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
+                    <li>
+                      <HighlightKeywords
+                        text="Chef, meseros, vajilla y montaje incluidos en el servicio."
+                        keywords={kw}
+                      />
+                    </li>
+                    <li>
+                      <HighlightKeywords
+                        text="Menú adaptable a restricciones alimenticias y estilo del evento."
+                        keywords={kw}
+                      />
+                    </li>
+                    <li>
+                      <HighlightKeywords
+                        text="Cotización personalizada por WhatsApp en menos de 24 horas."
+                        keywords={kw}
+                      />
+                    </li>
+                  </ul>
+                )}
               </div>
               <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
                 <p className="text-sm text-gray-600 font-serif italic">

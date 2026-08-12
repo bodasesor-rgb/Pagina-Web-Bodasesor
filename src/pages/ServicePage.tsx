@@ -456,9 +456,28 @@ export default function ServicePage({ params }: ServicePageProps) {
                 <h1 className="text-4xl md:text-5xl font-serif font-bold leading-tight mb-4 text-white">
                   {displayH1}
                 </h1>
-                <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-xl">
+                <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-xl">
                   <HighlightKeywords text={displayHeadline} keywords={kw} className="font-bold text-white" />
                 </p>
+                {cityCopy?.zones?.length ? (
+                  <p className="text-white/65 font-serif text-sm mb-8">
+                    Cobertura en {city?.name}:{" "}
+                    <HighlightKeywords
+                      text={cityCopy.zones.join(" · ")}
+                      keywords={kw}
+                      className="font-bold text-white"
+                    />
+                  </p>
+                ) : city ? (
+                  <p className="text-white/65 font-serif text-sm mb-8">
+                    Servicio disponible en{" "}
+                    <strong className="font-bold text-white">{city.name}</strong> y área metropolitana
+                  </p>
+                ) : (
+                  <p className="text-white/65 font-serif text-sm mb-8">
+                    Servicio a nivel nacional · CDMX · Estado de México · Guadalajara · Monterrey · León y más
+                  </p>
+                )}
                 <div className="flex flex-wrap gap-4">
                   <a href={waUrl} target="_blank" rel="noopener noreferrer"
                      className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg">
@@ -501,9 +520,28 @@ export default function ServicePage({ params }: ServicePageProps) {
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
               {displayH1}
             </h1>
-            <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-2xl">
+            <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-2xl">
               <HighlightKeywords text={displayHeadline} keywords={kw} className="font-bold text-white" />
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-white/65 font-serif text-sm mb-8">
+                Cobertura en {city?.name}:{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={kw}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : city ? (
+              <p className="text-white/65 font-serif text-sm mb-8">
+                Servicio disponible en{" "}
+                <strong className="font-bold text-white">{city.name}</strong> y área metropolitana
+              </p>
+            ) : (
+              <p className="text-white/65 font-serif text-sm mb-8">
+                Servicio a nivel nacional · CDMX · Estado de México · Guadalajara · Monterrey · León y más
+              </p>
+            )}
             <div className="flex flex-wrap gap-4">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
                  className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105 hover:shadow-lg">
@@ -568,12 +606,40 @@ export default function ServicePage({ params }: ServicePageProps) {
                     Servicio disponible en <strong className="font-bold text-[#162040]">{city.name}</strong> y área
                     metropolitana. Cotiza sin compromiso.
                   </p>
-                ) : null}
+                ) : (
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
+                    <li>
+                      <HighlightKeywords
+                        text="Servicio a nivel nacional con logística completa de montaje y desmontaje."
+                        keywords={kw}
+                      />
+                    </li>
+                    <li>
+                      <HighlightKeywords
+                        text="Personal profesional, equipo y presentación alineada a tu evento."
+                        keywords={kw}
+                      />
+                    </li>
+                    <li>
+                      <HighlightKeywords
+                        text="Cotización sin compromiso por WhatsApp en menos de 24 horas."
+                        keywords={kw}
+                      />
+                    </li>
+                  </ul>
+                )}
               </div>
               <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
                 <p className="text-sm text-gray-600 font-serif italic">
-                  {cityCopy?.seoDescription ||
-                    (city ? `${product.seoDescription} Disponible en ${city.name}.` : product.seoDescription)}
+                  <HighlightKeywords
+                    text={
+                      cityCopy?.seoDescription ||
+                      (city
+                        ? `${product.seoDescription} Disponible en ${city.name}.`
+                        : product.seoDescription)
+                    }
+                    keywords={kw}
+                  />
                 </p>
               </div>
             </div>
@@ -946,9 +1012,11 @@ export default function ServicePage({ params }: ServicePageProps) {
       {/* ── FAQ (visible + FAQPage schema) ── */}
       {(() => {
         const faqs =
-          Array.isArray(product.faqs) && product.faqs.length >= 2
-            ? product.faqs
-            : defaultServiceFaqs(product.title);
+          cityCopy?.faqs?.length >= 2
+            ? cityCopy.faqs
+            : Array.isArray(product.faqs) && product.faqs.length >= 2
+              ? product.faqs
+              : defaultServiceFaqs(product.title);
         return (
           <section className="py-14 bg-white border-t border-[#162040]/10" aria-labelledby="faq-heading">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -969,7 +1037,9 @@ export default function ServicePage({ params }: ServicePageProps) {
                       <span>{f.q}</span>
                       <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
                     </summary>
-                    <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">{f.a}</p>
+                    <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">
+                      <HighlightKeywords text={f.a} keywords={kw} />
+                    </p>
                   </details>
                 ))}
               </div>

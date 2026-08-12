@@ -2,11 +2,28 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import OptimizedImage from "../components/OptimizedImage";
 import HighlightKeywords from "../components/HighlightKeywords";
+import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar un servicio de banquetes o catering para mi evento. ¿Me pueden dar información?");
 const waLink = (name: string) => WA + encodeURIComponent(`Hola, me interesa cotizar "${name}" para mi evento.`);
+
+
+const DEFAULT_FAQS = [
+  {
+    q: "¿Qué servicios incluye Banquetes y Catering?",
+    a: "Banquetes formales por tiempos, catering gourmet, barras de alimentos y estaciones mexicanas. Cada propuesta incluye personal, montaje y logística.",
+  },
+  {
+    q: "¿Puedo combinar banquete con barras o estaciones?",
+    a: "Sí. Es muy común complementar un banquete formal con taquiza, barra de sushi o coffee break. Armamos un paquete coordinado.",
+  },
+  {
+    q: "¿Cotizan a nivel nacional?",
+    a: "Sí. Atendemos CDMX, Estado de México, Guadalajara, Monterrey, León y más ciudades. Cotización por WhatsApp en menos de 24 horas.",
+  },
+];
 
 const CATEGORIES = [
   {
@@ -76,6 +93,7 @@ export default function BanquetesCateringPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
     useCityHubPage("banquetes-catering", "Banquetes y Catering");
   const total = CATEGORIES.reduce((s, c) => s + c.items.length, 0);
+  const faqs = cityCopy?.faqs?.length ? cityCopy.faqs : DEFAULT_FAQS;
 
   return (
     <div className="min-h-screen bg-white">
@@ -100,7 +118,9 @@ export default function BanquetesCateringPage() {
               )}
             </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
-              {total} servicios disponibles. Banquetes formales, catering gourmet, barras de alimentos y estaciones temáticas.
+              {city
+                ? `${total} servicios disponibles en ${city.name}. Banquetes, catering, barras y estaciones.`
+                : `${total} servicios disponibles a nivel nacional · CDMX · Guadalajara · Monterrey · León y más`}
             </p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -108,19 +128,8 @@ export default function BanquetesCateringPage() {
               Cotizar Servicio de Alimentos
             </a>
           </div>
-          {/* Desktop-only collage — never mark priority (mobile LCP is the H1 text). */}
-          <div className="hidden lg:grid grid-cols-2 gap-3 h-64" aria-hidden="true">
-            {["/images/banquete-hero.png", "/images/banquete-mexicano-hero.png", "/images/instagram/ig1.jpg", "/images/instagram/ig18.jpg"].map((src, i) => (
-              <div key={i} className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <OptimizedImage
-                  src={src}
-                  alt=""
-                  width={300}
-                  height={128}
-                  className="w-full h-full object-cover opacity-80"
-                />
-              </div>
-            ))}
+          <div className="hidden lg:block">
+            <ProductGalleryCarousel slug="banquetes" title="Banquetes y Catering" />
           </div>
         </div>
       </section>
@@ -182,12 +191,11 @@ export default function BanquetesCateringPage() {
         </div>
       </section>
 
-      {cityCopy?.faqs?.length ? (
-        <section className="py-10 px-4 bg-[#faf7f2] border-b border-gray-100">
+      <section className="py-10 px-4 bg-[#faf7f2] border-b border-gray-100">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-xl font-serif font-bold text-[#162040] mb-4">Preguntas frecuentes</h2>
             <div className="space-y-3">
-              {cityCopy.faqs.map((f) => (
+              {faqs.map((f) => (
                 <details key={f.q} className="group rounded-xl border border-[#162040]/10 bg-white px-5 py-4">
                   <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
                     <span>{f.q}</span>
@@ -199,7 +207,6 @@ export default function BanquetesCateringPage() {
             </div>
           </div>
         </section>
-      ) : null}
 
       {/* Categorías quick-nav */}
       <section className="py-8 px-4 bg-white border-b border-gray-100">

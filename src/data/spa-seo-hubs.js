@@ -60,6 +60,13 @@ export const SPA_SEO_HUBS = [
   { path: '/mesa-dulces', title: 'Mesa de Dulces', desc: 'Mesa de dulces para bodas y eventos: macarons, chocolates y dulces artesanales en México.' },
   { path: '/mesa-postres', title: 'Mesa de Postres', desc: 'Mesa de postres para bodas y eventos: pasteles, tartaletas y repostería fina en México.' },
   { path: '/mesa-quesos', title: 'Mesa de Quesos', desc: 'Mesa de quesos y charcutería gourmet para bodas, cenas y eventos corporativos en México.' },
+  { path: '/cupcakes-gourmet', title: 'Cupcakes Gourmet', desc: 'Cupcakes gourmet decorados a mano para bodas, XV años y eventos en México.' },
+  // Barras de bebidas — city landings
+  { path: '/barra-bebidas', title: 'Barra de Bebidas', desc: 'Barra de bebidas con aguas frescas, refrescos y jugos para bodas y eventos en México.' },
+  { path: '/barra-mocteles', title: 'Barra de Mocteles', desc: 'Barra de mocteles sin alcohol con presentación elegante para bodas y eventos.' },
+  { path: '/cocteles-mixologia', title: 'Cócteles y Mixología', desc: 'Cócteles y mixología premium con bartenders profesionales para bodas y eventos.' },
+  { path: '/barra-cafe-premium', title: 'Barra de Café Premium', desc: 'Barra de café premium con barista y espresso profesional para eventos en México.' },
+  { path: '/paletas-helados', title: 'Paletas y Helados', desc: 'Carrito de paletas y helados artesanales para bodas, XV años y eventos.' },
   // Catering zone — city landings /{slug}/{city}
   { path: '/pozole-tostadas', title: 'Pozole y Tostadas', desc: 'Servicio de pozole y tostadas para bodas, fiestas y eventos en México.' },
   { path: '/paella', title: 'Paella para Eventos', desc: 'Paella española cocinada en vivo con mariscos para bodas y eventos en México.' },
