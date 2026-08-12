@@ -408,7 +408,8 @@ function Router() {
           {/* Blog */}
           <Route path="/blog" component={BlogPage} />
           <Route path="/blog/:slug">
-            {(params) => <BlogDetailPage slug={stripCityFromSlug(params.slug)} />}
+            {/* Keep full slug — blog titles often end in -cdmx/-mexico (not a city route). */}
+            {(params) => <BlogDetailPage slug={params.slug} />}
           </Route>
 
           {/* Búsqueda */}
