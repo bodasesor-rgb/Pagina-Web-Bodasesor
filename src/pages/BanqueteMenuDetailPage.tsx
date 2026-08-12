@@ -14,6 +14,7 @@ import {
 } from "../data/banquetes-menus";
 import { isCityLandingSlug } from "../utils/city-url";
 import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-title-case";
+import { NATIONAL_COVERAGE_ZONES } from "../utils/national-service-copy";
 import ServicePage from "./ServicePage";
 
 const WHATSAPP = "5215540080373";
@@ -116,6 +117,25 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
         `En Bodasesor diseñamos cada ${menu.label.toLowerCase()} con chef, meseros, vajilla y montaje para que tu banquete se sienta completo de principio a fin.`,
       ];
 
+  const nationalBullets = [
+    "Chef, meseros, vajilla y montaje incluidos en el servicio.",
+    "Menú adaptable a restricciones alimenticias y estilo del evento.",
+    "Cobertura nacional: CDMX, Guadalajara, Monterrey, León y más.",
+    "Cotización personalizada por WhatsApp en menos de 24 horas.",
+    "Formatos 4, 3 y 2 tiempos o buffet según el tipo de celebración.",
+  ];
+  // City pages use Gemini localBullets; national banquet menus use menu-specific bullets
+  const localBullets = city
+    ? cityCopy?.localBullets?.length
+      ? cityCopy.localBullets
+      : null
+    : nationalBullets;
+  const coverageZones = cityCopy?.zones?.length
+    ? cityCopy.zones
+    : city
+      ? null
+      : NATIONAL_COVERAGE_ZONES;
+
   const crumbItems = [
     { name: "Inicio", href: "/" },
     { name: "Banquetes y Catering", href: "/banquetes-catering" },
@@ -163,11 +183,11 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
           <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-2xl">
             <HighlightKeywords text={headline} keywords={kw} className="font-bold text-white" />
           </p>
-          {cityCopy?.zones?.length ? (
+          {coverageZones?.length ? (
             <p className="text-white/65 font-serif text-sm mb-8">
-              Cobertura en {city?.name}:{" "}
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
               <HighlightKeywords
-                text={cityCopy.zones.join(" · ")}
+                text={coverageZones.join(" · ")}
                 keywords={kw}
                 className="font-bold text-white"
               />
@@ -238,9 +258,9 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                     <HighlightKeywords text={para} keywords={kw} />
                   </p>
                 ))}
-                {cityCopy?.localBullets?.length ? (
+                {localBullets?.length ? (
                   <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
-                    {cityCopy.localBullets.map((b) => (
+                    {localBullets.map((b) => (
                       <li key={b}>
                         <HighlightKeywords text={b} keywords={kw} />
                       </li>
@@ -252,28 +272,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
                     <strong className="font-bold text-[#162040]">{city.name}</strong> y área
                     metropolitana. Cotiza sin compromiso.
                   </p>
-                ) : (
-                  <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
-                    <li>
-                      <HighlightKeywords
-                        text="Chef, meseros, vajilla y montaje incluidos en el servicio."
-                        keywords={kw}
-                      />
-                    </li>
-                    <li>
-                      <HighlightKeywords
-                        text="Menú adaptable a restricciones alimenticias y estilo del evento."
-                        keywords={kw}
-                      />
-                    </li>
-                    <li>
-                      <HighlightKeywords
-                        text="Cotización personalizada por WhatsApp en menos de 24 horas."
-                        keywords={kw}
-                      />
-                    </li>
-                  </ul>
-                )}
+                ) : null}
               </div>
               <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
                 <p className="text-sm text-gray-600 font-serif italic">

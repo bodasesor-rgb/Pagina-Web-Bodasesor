@@ -87,9 +87,20 @@ export default function BarrasBebidasPage() {
               )}
             </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
-              {city
-                ? `Servicio disponible en ${city.name} y área metropolitana.`
-                : "Servicio a nivel nacional · CDMX · Guadalajara · Monterrey · León y más"}
+              {cityCopy?.zones?.length ? (
+                <>
+                  {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                  <HighlightKeywords
+                    text={cityCopy.zones.join(" · ")}
+                    keywords={keywords}
+                    className="font-bold text-white"
+                  />
+                </>
+              ) : city ? (
+                `Servicio disponible en ${city.name} y área metropolitana.`
+              ) : (
+                "Servicio a nivel nacional · CDMX · Guadalajara · Monterrey · León y más"
+              )}
             </p>
             <a
               href={waGeneral}
@@ -103,7 +114,7 @@ export default function BarrasBebidasPage() {
               Cotizar barra de bebidas
             </a>
           </div>
-          <div className="hidden lg:block">
+          <div className="mt-6 lg:mt-0">
             <ProductGalleryCarousel slug="barra-bebidas" title="Barras de Bebidas" />
           </div>
         </div>
@@ -148,7 +159,7 @@ export default function BarrasBebidasPage() {
           ) : (
             <>
               <h2 className="text-xl font-serif font-bold text-[#162040]">
-                Barras de Bebidas para Bodas y Eventos
+                {displaySectionTitle || "Barras de Bebidas para Bodas y Eventos en México"}
               </h2>
               <p>
                 Las <strong>barras de bebidas para eventos</strong> son un elemento fundamental para la experiencia de tus invitados. Ofrecemos <strong>barra de aguas frescas artesanales</strong>, <strong>barra de mocteles sin alcohol</strong>, <strong>coctelería y mixología premium</strong> con bartenders certificados, <strong>café de especialidad con barista</strong> y <strong>carritos de paletas y helados artesanales</strong>. Cada barra incluye montaje, cristalería o vajilla desechable premium, decoración y desmontaje.
@@ -156,6 +167,15 @@ export default function BarrasBebidasPage() {
               <p>
                 Nuestro servicio de <strong>open bar para bodas</strong> y eventos sociales puede combinar diferentes barras en un solo paquete. Cotizamos sin costo en menos de 24 horas en toda la República Mexicana.
               </p>
+              {cityCopy?.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </>
           )}
         </div>
