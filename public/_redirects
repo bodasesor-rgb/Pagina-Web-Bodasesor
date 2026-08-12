@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4269 rules + fallback
+# 4305 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  /sillas/ghost  301
@@ -68,6 +68,52 @@
 /silla-antonellaciudad-de-mexico/  /sillas/antonella/ciudad-de-mexico  301
 /sillascuernavaca  /mesas-sillas/cuernavaca  301
 /sillascuernavaca/  /mesas-sillas/cuernavaca  301
+/blogs/noticias/banquete-de-boda-2024  /blog/banquetes-para-bodas-de-lujo  301
+/blogs/noticias/banquete-de-boda-2024/  /blog/banquetes-para-bodas-de-lujo  301
+/blog/banquete-de-boda-2024  /blog/banquetes-para-bodas-de-lujo  301
+/blog/banquete-de-boda-2024/  /blog/banquetes-para-bodas-de-lujo  301
+/blogs/noticias/arreglos-florales-2024  /blog/arreglos-florales-en-un-evento-2024  301
+/blogs/noticias/arreglos-florales-2024/  /blog/arreglos-florales-en-un-evento-2024  301
+/blog/arreglos-florales-2024  /blog/arreglos-florales-en-un-evento-2024  301
+/blog/arreglos-florales-2024/  /blog/arreglos-florales-en-un-evento-2024  301
+/blogs/noticias/mi-bautizo-2024  /blog/lugares-para-un-bautizo-2024  301
+/blogs/noticias/mi-bautizo-2024/  /blog/lugares-para-un-bautizo-2024  301
+/blog/mi-bautizo-2024  /blog/lugares-para-un-bautizo-2024  301
+/blog/mi-bautizo-2024/  /blog/lugares-para-un-bautizo-2024  301
+/blogs/noticias/pre-boda-2024  /blog/banquetes-para-bodas-de-lujo  301
+/blogs/noticias/pre-boda-2024/  /blog/banquetes-para-bodas-de-lujo  301
+/blog/pre-boda-2024  /blog/banquetes-para-bodas-de-lujo  301
+/blog/pre-boda-2024/  /blog/banquetes-para-bodas-de-lujo  301
+/blogs/noticias/eventos-en-espacios-pequenos-2024  /espacios-eventos  301
+/blogs/noticias/eventos-en-espacios-pequenos-2024/  /espacios-eventos  301
+/blog/eventos-en-espacios-pequenos-2024  /espacios-eventos  301
+/blog/eventos-en-espacios-pequenos-2024/  /espacios-eventos  301
+/blogs/noticias/fomentar-la-inclusion-y-la-diversidad-2024  /blog  301
+/blogs/noticias/fomentar-la-inclusion-y-la-diversidad-2024/  /blog  301
+/blog/fomentar-la-inclusion-y-la-diversidad-2024  /blog  301
+/blog/fomentar-la-inclusion-y-la-diversidad-2024/  /blog  301
+/products/cotiza-tu-evento  /banquetes-catering  301
+/products/cotiza-tu-evento/  /banquetes-catering  301
+/products/cisidat  /banquetes-catering  301
+/products/cisidat/  /banquetes-catering  301
+/products/cabo-cakery  /reposteria  301
+/products/cabo-cakery/  /reposteria  301
+/collections/margarita-cdmx  /barras-de-bebidas/ciudad-de-mexico  301
+/collections/margarita-cdmx/  /barras-de-bebidas/ciudad-de-mexico  301
+/collections/brindis-de-boda-cdmx  /barras-de-bebidas/ciudad-de-mexico  301
+/collections/brindis-de-boda-cdmx/  /barras-de-bebidas/ciudad-de-mexico  301
+/collections/presupuesto-para-bodas-economicas-cdmx  /wedding-planner/ciudad-de-mexico  301
+/collections/presupuesto-para-bodas-economicas-cdmx/  /wedding-planner/ciudad-de-mexico  301
+/collections/proveedores-de-souvenirs-para-bodas-cdmx  /wedding-planner/ciudad-de-mexico  301
+/collections/proveedores-de-souvenirs-para-bodas-cdmx/  /wedding-planner/ciudad-de-mexico  301
+/collections/proveedores-de-recuerdos-para-bodas-cdmx  /wedding-planner/ciudad-de-mexico  301
+/collections/proveedores-de-recuerdos-para-bodas-cdmx/  /wedding-planner/ciudad-de-mexico  301
+/sillas/silla-gamma  /sillas/gamma  301
+/sillas/silla-gamma/  /sillas/gamma  301
+/sillas/silla-gamma/acapulco  /sillas/gamma/acapulco  301
+/sillas/silla-gamma/acapulco/  /sillas/gamma/acapulco  301
+/b  /  301
+/b/  /  301
 
 /blogs/noticias?page=11  /blog  301
 /blogs/noticias?page=2  /blog  301
@@ -2959,8 +3005,6 @@
 /collections/proveedores-de-pirotecnia-para-bodas-cdmx/  /wedding-planner/ciudad-de-mexico  301
 /collections/proveedores-de-pistas-de-baile-cdmx  /pistas-tarimas/ciudad-de-mexico  301
 /collections/proveedores-de-pistas-de-baile-cdmx/  /pistas-tarimas/ciudad-de-mexico  301
-/collections/proveedores-de-recuerdos-para-bodas-cdmx  /wedding-planner/ciudad-de-mexico  301
-/collections/proveedores-de-recuerdos-para-bodas-cdmx/  /wedding-planner/ciudad-de-mexico  301
 /collections/proveedores-de-salas-lounge-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /collections/proveedores-de-salas-lounge-cdmx/  /mesas-sillas/ciudad-de-mexico  301
 /collections/proveedores-de-servilletas-personalizadas-cdmx  /buscar?q=proveedores%20de%20servilletas%20personalizadas  301
@@ -2977,8 +3021,6 @@
 /collections/proveedores-de-sillas-tiffany-cdmx/  /mesas-sillas/ciudad-de-mexico  301
 /collections/proveedores-de-sillas-versalles-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /collections/proveedores-de-sillas-versalles-cdmx/  /mesas-sillas/ciudad-de-mexico  301
-/collections/proveedores-de-souvenirs-para-bodas-cdmx  /wedding-planner/ciudad-de-mexico  301
-/collections/proveedores-de-souvenirs-para-bodas-cdmx/  /wedding-planner/ciudad-de-mexico  301
 /collections/proveedores-de-taquizas-cdmx  /taquiza-guisados/ciudad-de-mexico  301
 /collections/proveedores-de-taquizas-cdmx/  /taquiza-guisados/ciudad-de-mexico  301
 /collections/proveedores-de-tarimas-para-eventos-cdmx  /pistas-tarimas/ciudad-de-mexico  301
@@ -3649,8 +3691,6 @@
 /products/box-lunch-ejecutivo-capacitaciones/  /alimentos-empresas/box-lunch  301
 /products/cabina-de-fotos-para-eventos-cdmx  /fotografia/cabina-fotos/ciudad-de-mexico  301
 /products/cabina-de-fotos-para-eventos-cdmx/  /fotografia/cabina-fotos/ciudad-de-mexico  301
-/products/cabo-cakery  /buscar?q=cabo%20cakery  301
-/products/cabo-cakery/  /buscar?q=cabo%20cakery  301
 /products/camara-360-para-eventos-cdmx  /fotografia/camara-360/ciudad-de-mexico  301
 /products/camara-360-para-eventos-cdmx/  /fotografia/camara-360/ciudad-de-mexico  301
 /products/cap-bara-eventos-catering-cdmx  /banquetes-catering/ciudad-de-mexico  301
@@ -3749,8 +3789,6 @@
 /products/centros-de-mesa-para-eventos-cdmx/  /floreria/centros-de-mesa/ciudad-de-mexico  301
 /products/checoon-photographer-fotografos-cdmx  /fotografia/ciudad-de-mexico  301
 /products/checoon-photographer-fotografos-cdmx/  /fotografia/ciudad-de-mexico  301
-/products/cisidat  /buscar?q=cisidat  301
-/products/cisidat/  /buscar?q=cisidat  301
 /products/coctel-rosa-barra-libre-cdmx  /barras-de-bebidas/ciudad-de-mexico  301
 /products/coctel-rosa-barra-libre-cdmx/  /barras-de-bebidas/ciudad-de-mexico  301
 /products/cocteleria-cdmx  /barras-de-bebidas/ciudad-de-mexico  301
@@ -3773,8 +3811,6 @@
 /products/copia-de-renta-de-mobiliario-para-fiestas/  /mesas-sillas  301
 /products/copia-de-verbena-flores-cdmx  /floreria/ciudad-de-mexico  301
 /products/copia-de-verbena-flores-cdmx/  /floreria/ciudad-de-mexico  301
-/products/cotiza-tu-evento  /  301
-/products/cotiza-tu-evento/  /  301
 /products/crepas-para-eventos-cdmx  /barra-crepas/ciudad-de-mexico  301
 /products/crepas-para-eventos-cdmx/  /barra-crepas/ciudad-de-mexico  301
 /products/cupcakes-para-eventos-cdmx  /reposteria/cupcakes/ciudad-de-mexico  301
@@ -4209,8 +4245,8 @@
 /products/silla-crossback-cdmx/  /sillas/crossback/ciudad-de-mexico  301
 /products/silla-equipal-cdmx  /mesas-sillas/ciudad-de-mexico  301
 /products/silla-equipal-cdmx/  /mesas-sillas/ciudad-de-mexico  301
-/products/silla-gamma-cdmx  /silla-gamma/ciudad-de-mexico  301
-/products/silla-gamma-cdmx/  /silla-gamma/ciudad-de-mexico  301
+/products/silla-gamma-cdmx  /sillas/gamma/ciudad-de-mexico  301
+/products/silla-gamma-cdmx/  /sillas/gamma/ciudad-de-mexico  301
 /products/silla-ghost-cdmx  /sillas/ghost/ciudad-de-mexico  301
 /products/silla-ghost-cdmx/  /sillas/ghost/ciudad-de-mexico  301
 /products/silla-louis-xv-cdmx  /silla-louis-xv/ciudad-de-mexico  301

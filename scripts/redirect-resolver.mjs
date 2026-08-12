@@ -182,6 +182,21 @@ const PRODUCT_ALIASES = {
   'flores-frescas-cdmx': '/floreria/ciudad-de-mexico',
   'precio-de-decoracion-tematica-cdmx': '/floreria/ciudad-de-mexico',
   'video-de-bodas-cdmx': '/fotografia/ciudad-de-mexico',
+  'cotiza-tu-evento': '/banquetes-catering',
+  cisidat: '/banquetes-catering',
+  'cabo-cakery': '/reposteria',
+  'margarita-cdmx': '/barras-de-bebidas/ciudad-de-mexico',
+  margarita: '/barras-de-bebidas',
+  'brindis-de-boda-cdmx': '/barras-de-bebidas/ciudad-de-mexico',
+  'brindis-de-boda': '/barras-de-bebidas',
+  'presupuesto-para-bodas-economicas-cdmx': '/wedding-planner/ciudad-de-mexico',
+  'silla-gamma': '/sillas/gamma',
+  'banquete-de-boda-2024': '/blog/banquetes-para-bodas-de-lujo',
+  'arreglos-florales-2024': '/blog/arreglos-florales-en-un-evento-2024',
+  'mi-bautizo-2024': '/blog/lugares-para-un-bautizo-2024',
+  'pre-boda-2024': '/blog/banquetes-para-bodas-de-lujo',
+  'eventos-en-espacios-pequenos-2024': '/espacios-eventos',
+  'fomentar-la-inclusion-y-la-diversidad-2024': '/blog',
 }
 
 const SEO_TRAILING = [
@@ -462,7 +477,13 @@ export function resolveLegacyPath(fromPath) {
     if (slug.includes('tipos-de-banquetes')) {
       slug = 'tipos-de-banquetes'
     }
+    if (PRODUCT_ALIASES[slug]) return PRODUCT_ALIASES[slug]
     return `/blog/${slug}`
+  }
+
+  if (fromPath.startsWith('/blog/') && !fromPath.startsWith('/blogs/')) {
+    const slug = decodeURIComponent(fromPath.replace(/^\/blog\//, '').split('?')[0]).replace(/\/+$/, '')
+    if (slug && PRODUCT_ALIASES[slug]) return PRODUCT_ALIASES[slug]
   }
 
   if (fromPath.startsWith('/blogs/')) return '/blog'
