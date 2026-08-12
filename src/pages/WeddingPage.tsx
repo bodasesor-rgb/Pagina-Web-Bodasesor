@@ -109,9 +109,7 @@ export default function WeddingPage() {
             <span className="text-2xl text-[#162040]/30 font-serif">◈</span>
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75">Servicios</p>
-              <h2 className="text-2xl font-serif font-bold text-[#162040]">
-                {displaySectionTitle || "Nuestros Servicios de Wedding Planner"}
-              </h2>
+              <h2 className="text-2xl font-serif font-bold text-[#162040]">Nuestros Servicios de Wedding Planner</h2>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
