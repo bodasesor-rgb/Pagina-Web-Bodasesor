@@ -1,13 +1,12 @@
-import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 import {
   getBanquetMenu,
   getMenusForParent,
   getBanquetParent,
 } from "../data/banquetes-menus";
-import { buildSeoTitle } from "../utils/seo-title";
 import { isCityLandingSlug } from "../utils/city-url";
 import ServicePage from "./ServicePage";
 
@@ -29,23 +28,20 @@ type Props = {
 };
 
 export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) {
-  const { city } = useCity();
   const resolvedMenuSlug = menuSlug ?? "";
+  const isCityAsMenu = Boolean(resolvedMenuSlug && isCityLandingSlug(resolvedMenuSlug));
+  const menu = !isCityAsMenu ? getBanquetMenu(parentSlug, resolvedMenuSlug) : null;
+  const parent = getBanquetParent(parentSlug);
+  const siblings = parent ? getMenusForParent(parentSlug) : [];
+  const hubSlug =
+    !isCityAsMenu && resolvedMenuSlug ? `${parentSlug}/${resolvedMenuSlug}` : parentSlug;
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage(hubSlug, menu?.name || parent?.name || "Banquete");
 
   // /banquete-kosher/cuernavaca without city-aware strip → city mistaken as menu
-  if (resolvedMenuSlug && isCityLandingSlug(resolvedMenuSlug)) {
+  if (isCityAsMenu) {
     return <ServicePage params={{ slug: parentSlug }} />;
   }
-
-  const menu = getBanquetMenu(parentSlug, resolvedMenuSlug);
-  const parent = getBanquetParent(parentSlug);
-  const siblings = getMenusForParent(parentSlug);
-
-  useEffect(() => {
-    if (menu) {
-      document.title = buildSeoTitle(menu.seoTitle, city?.short ?? null);
-    }
-  }, [menu?.seoTitle, city]);
 
   if (!menu || !parent) {
     return (
@@ -79,9 +75,15 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
               {menu.duration}
             </div>
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight mb-3">
-              {city ? `${menu.name} en ${city.name}` : menu.name}
+              {displayH1}
             </h1>
-            <p className="text-white/75 font-serif leading-relaxed mb-6">{menu.headline}</p>
+            <p className="text-white/75 font-serif leading-relaxed mb-6">
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                menu.headline
+              )}
+            </p>
             <div className="flex flex-wrap gap-3">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all hover:scale-105">
@@ -102,19 +104,66 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
 
       {/* Description */}
       <section className="py-14 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          {menu.description.map((para, i) => (
-            <p key={i} className="text-gray-600 font-serif text-lg leading-relaxed mb-4">{para}</p>
-          ))}
+        <div className="max-w-3xl mx-auto space-y-4 font-serif text-gray-600 text-lg leading-relaxed">
+          {cityCopy?.description?.length ? (
+            <>
+              {displaySectionTitle && (
+                <h2 className="text-2xl font-serif font-bold text-[#162040] text-center mb-2">
+                  {displaySectionTitle}
+                </h2>
+              )}
+              {cityCopy.description.map((para) => (
+                <p key={para.slice(0, 28)} className="text-center">
+                  <HighlightKeywords text={para} keywords={keywords} />
+                </p>
+              ))}
+              {cityCopy.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1 text-left max-w-xl mx-auto text-base">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </>
+          ) : (
+            menu.description.map((para, i) => (
+              <p key={i} className="text-center mb-4">{para}</p>
+            ))
+          )}
         </div>
       </section>
 
-      {/* Menu */}
+      {cityCopy?.faqs?.length ? (
+        <section className="py-10 px-4 bg-[#faf7f2] border-y border-gray-100">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-4 text-center">Preguntas frecuentes</h2>
+            <div className="space-y-3">
+              {cityCopy.faqs.map((f) => (
+                <details key={f.q} className="group rounded-xl border border-[#162040]/10 bg-white px-5 py-4">
+                  <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
+                    <span>{f.q}</span>
+                    <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                  </summary>
+                  <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Menu — referential dishes (shared); city copy lives above */}
       <section className="py-14 px-4 bg-[#f5efe8]/40">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-serif font-bold text-[#162040]">Menú de Ejemplo</h2>
-            <p className="text-gray-600 mt-2 font-serif">Propuesta referencial — personalizamos cada menú a tu gusto</p>
+            <p className="text-gray-600 mt-2 font-serif">
+              {city
+                ? `Propuesta referencial para eventos en ${city.name} — personalizamos cada menú a tu gusto`
+                : "Propuesta referencial — personalizamos cada menú a tu gusto"}
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {menu.menuExample.map((item, i) => {

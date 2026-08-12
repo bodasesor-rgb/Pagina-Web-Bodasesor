@@ -94,13 +94,19 @@ function clipTitle(s, max = L.seoTitleMax) {
 function buildPrompt({ hub, city, local }) {
   const hubSlug = hub.path.replace(/^\//, '')
   const zones = (local?.zones || []).slice(0, 6).join(', ')
+  const menuHint = /tiempos|buffet/i.test(hubSlug)
+    ? `Enfócate en el formato de menú (${hub.title}): tiempos/servicio, logística local y por qué conviene en ${city.name}. El menú de platos es referencial (no inventes carta completa); describe el formato y el servicio.`
+    : `Cubre el servicio hub con ángulo local de ${city.name}.`
+
   return `Genera JSON schemaVersion=${CITY_HUB_SCHEMA_VERSION} para landing SEO única.
 
 hub=${hubSlug} title="${hub.title}"
+hubDesc=${hub.desc || ''}
 city=${city.slug} name="${city.name}" short="${city.short || ''}"
 state=${local?.state || 'México'}
 zones=${zones || 'área metropolitana'}
 notes=${local?.notes || 'Eventos sociales y corporativos'}
+${menuHint}
 
 Límites: seoTitle≤${L.seoTitleMax}c, seoDescription ${L.seoDescriptionMin}-${L.seoDescriptionMax}c, h1≤${L.h1Max}c.
 Reglas: español MX; sin precios/testimonios/venues inventados; copy no reusable con solo cambiar ciudad.
