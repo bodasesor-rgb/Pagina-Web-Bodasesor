@@ -59,6 +59,8 @@ export function shouldPreferGeminiOverOpenAI() {
   return Boolean(
     (process.env.GEMINI_API_KEY || '').trim() ||
       (process.env.GEMINI_IA || '').trim() ||
+      (process.env.gimini_IA || '').trim() ||
+      (process.env.GIMINI_IA || '').trim() ||
       (process.env.GOOGLE_API_KEY || '').trim() ||
       process.env.GOOGLE_SERVICE_ACCOUNT_JSON ||
       process.env.GOOGLE_APPLICATION_CREDENTIALS,

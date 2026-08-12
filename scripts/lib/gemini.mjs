@@ -43,6 +43,8 @@ export async function getGeminiAuth() {
   const apiKey = (
     process.env.GEMINI_API_KEY ||
     process.env.GEMINI_IA ||
+    process.env.gimini_IA || // typo alias (user secret name)
+    process.env.GIMINI_IA ||
     process.env.GOOGLE_API_KEY ||
     ''
   ).trim()
