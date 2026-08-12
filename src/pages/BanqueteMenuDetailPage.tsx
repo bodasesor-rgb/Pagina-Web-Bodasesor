@@ -4,6 +4,7 @@ const Link = CityLink;
 import Breadcrumbs from "../components/Breadcrumbs";
 import HighlightKeywords from "../components/HighlightKeywords";
 import OptimizedImage from "../components/OptimizedImage";
+import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import {
@@ -18,41 +19,6 @@ import ServicePage from "./ServicePage";
 const WHATSAPP = "5215540080373";
 const WA = (title: string) =>
   `https://api.whatsapp.com/send?phone=${WHATSAPP}&text=${encodeURIComponent(`Hola, me interesa cotizar: ${title}`)}`;
-
-const PARENT_GALLERY: Record<string, string[]> = {
-  banquetes: [
-    "/images/banquete-hero.png",
-    "/images/instagram/ig1.jpg",
-    "/images/instagram/ig2.jpg",
-    "/images/instagram/ig3.jpg",
-    "/images/instagram/ig4.jpg",
-    "/images/instagram/ig5.jpg",
-  ],
-  "banquete-kosher": [
-    "/images/banquete-kosher-hero.png",
-    "/images/instagram/ig31.jpg",
-    "/images/instagram/ig32.jpg",
-    "/images/instagram/ig33.jpg",
-    "/images/instagram/ig34.jpg",
-    "/images/instagram/ig35.jpg",
-  ],
-  "banquete-mexicano": [
-    "/images/banquete-mexicano-hero.png",
-    "/images/instagram/ig61.jpg",
-    "/images/instagram/ig62.jpg",
-    "/images/instagram/ig63.jpg",
-    "/images/instagram/ig64.jpg",
-    "/images/instagram/ig65.jpg",
-  ],
-  "banquete-navideno": [
-    "/images/banquete-navideno-hero.png",
-    "/images/instagram/ig91.jpg",
-    "/images/instagram/ig92.jpg",
-    "/images/instagram/ig93.jpg",
-    "/images/instagram/ig94.jpg",
-    "/images/instagram/ig95.jpg",
-  ],
-};
 
 function WaSvg() {
   return (
@@ -150,7 +116,6 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
         `En Bodasesor diseñamos cada ${menu.label.toLowerCase()} con chef, meseros, vajilla y montaje para que tu banquete se sienta completo de principio a fin.`,
       ];
 
-  const gallery = PARENT_GALLERY[parentSlug] || PARENT_GALLERY.banquetes;
   const crumbItems = [
     { name: "Inicio", href: "/" },
     { name: "Banquetes y Catering", href: "/banquetes-catering" },
@@ -302,25 +267,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
               </div>
             </div>
             <div className="lg:sticky lg:top-24">
-              <div className="grid grid-cols-2 gap-3">
-                {gallery.map((src, i) => (
-                  <div
-                    key={src}
-                    className={`overflow-hidden rounded-2xl border border-[#162040]/10 ${
-                      i === 0 ? "col-span-2 aspect-[16/9]" : "aspect-square"
-                    }`}
-                  >
-                    <OptimizedImage
-                      src={src}
-                      alt=""
-                      width={i === 0 ? 800 : 400}
-                      height={i === 0 ? 450 : 400}
-                      priority={i === 0}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
+              <ProductGalleryCarousel slug={parentSlug} title={menu.name} />
             </div>
           </div>
         </div>
