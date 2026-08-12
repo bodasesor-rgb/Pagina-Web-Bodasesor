@@ -2,7 +2,9 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { FLORERIA, FLORERIA_BY_CATEGORY } from "../data/floreria-products";
 import type { FloreriaProduct } from "../data/floreria-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar decoración floral o decoración para mi evento. ¿Me pueden dar información?");
@@ -14,7 +16,8 @@ const categoryConfig = {
 };
 
 export default function FloreriaPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("floreria", "Florería para Eventos");
   return (
     <div className="min-h-screen bg-white">
 
@@ -28,11 +31,25 @@ export default function FloreriaPage() {
               <span className="text-white/80">Florería y Decoración</span>
             </nav>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Florería y Decoración{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              Flores, globos y decoración integral para transformar cualquier espacio en el escenario perfecto para tu evento.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Flores, globos y decoración integral para transformar cualquier espacio en el escenario perfecto para tu evento."
+              )}
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               Desde centros de mesa y ramos de novia hasta photo opportunities, letras gigantes y decoración aérea. Todo diseñado a medida.
             </p>
@@ -69,20 +86,27 @@ export default function FloreriaPage() {
         </div>
       </div>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            Somos especialistas en <strong>decoración floral para eventos en México</strong>. Nuestros arreglos incluyen <strong>centros de mesa florales</strong>, <strong>ramos de novia</strong>, <strong>arcos de flores naturales</strong>, <strong>coronas florales</strong> y composiciones personalizadas con flores importadas de temporada. Cada diseño se elabora a medida para reflejar la personalidad y el estilo de tu evento.
+            Especialistas en <strong>florería y decoración para eventos</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : centros de mesa, ramos, globos, photo op y ambientación integral.
           </p>
-          <p>
-            También ofrecemos <strong>decoración con globos para eventos</strong>: <strong>aros de globos</strong>, <strong>paredes de globos</strong>, <strong>arcos de globos</strong> y estructuras temáticas. Para la decoración ambiental, contamos con <strong>letras gigantes luminosas</strong>, <strong>photo opportunities</strong>, <strong>marquesinas LED</strong>, <strong>decoración aérea</strong> y ambientación integral de salones, jardines y haciendas.
-          </p>
-          <p>
-            Nuestro servicio de <strong>florería para bodas</strong> es el más solicitado, aunque también atendemos quinceañeras, baby showers, bautizos, eventos corporativos y fiestas temáticas. Cada propuesta incluye instalación profesional, coordinación el día del evento y retiro al finalizar. Cotizamos sin costo con base en tu visión, el tipo de flores y el espacio a decorar.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       {/* Categorías */}
       <section className="py-10 px-4 bg-white border-b border-gray-100">

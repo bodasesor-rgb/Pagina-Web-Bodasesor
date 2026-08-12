@@ -1,9 +1,10 @@
-import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 import OptimizedImage from "../components/OptimizedImage";
 const Link = CityLink;
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -31,7 +32,8 @@ const CATEGORY_COLORS: Record<PistaTarimaCat, string> = {
 };
 
 export default function PistasTarimasPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("pistas-tarimas", "Pistas y Tarimas");
   const waGeneral = WA_BASE + encodeURIComponent('Hola, me gustaría cotizar una pista de baile o tarima para mi evento.');
 
   return (
@@ -46,11 +48,25 @@ export default function PistasTarimasPage() {
             <span className="text-white/80">Pistas y Tarimas</span>
           </nav>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
-            Pistas de Baile, Tarimas<br className="hidden sm:block" /> y Escenarios{city ? ` en ${city.name}` : ''}
+            {displayH1}
           </h1>
-          <p className="text-lg md:text-xl text-white/75 font-serif max-w-2xl mx-auto mb-8">
-            Diseñados a medida para transformar tu celebración en una experiencia inolvidable
+          <p className={`text-lg md:text-xl text-white/75 font-serif max-w-2xl mx-auto ${cityCopy?.zones?.length ? "mb-4" : "mb-8"}`}>
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              "Diseñados a medida para transformar tu celebración en una experiencia inolvidable"
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-[#8a9bb5] font-serif text-sm max-w-2xl mx-auto mb-8">
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+              <HighlightKeywords
+                text={cityCopy.zones.join(" · ")}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : null}
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -73,20 +89,27 @@ export default function PistasTarimasPage() {
         </div>
       </section>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            La <strong>pista de baile para eventos</strong> es el centro de la celebración. En Bodasesor ofrecemos <strong>pistas de madera lustrada</strong>, <strong>pistas espejadas</strong>, <strong>pistas LED RGB</strong>, <strong>pistas de parquet flotante</strong> y <strong>pistas personalizadas con vinil impreso</strong>. Cada pista se fabrica y ensambla a la medida del espacio disponible, sin restricciones de forma o tamaño.
+            <strong>Pistas de baile y tarimas</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : madera, LED, espejo y escenarios a medida con instalación profesional.
           </p>
-          <p>
-            También contamos con <strong>tarimas para escenario</strong>, <strong>tarimas para DJ y música en vivo</strong>, <strong>estrados para ceremonia civil</strong>, <strong>escenarios telescópicos</strong> y <strong>sets completos con cabina de DJ y barra coordinada</strong>. Todos los materiales son de alta resistencia y soportan el peso de equipos pesados, artistas y público.
-          </p>
-          <p>
-            Nuestro servicio incluye <strong>diseño personalizado de pista</strong> según la estética de tu evento, instalación profesional con técnicos certificados, iluminación bajo la pista y desmontaje al concluir. Atendemos bodas, quinceañeras, graduaciones, eventos corporativos y festivales en toda la República Mexicana. Solicita tu cotización sin compromiso hoy mismo.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       {/* ¿Por qué elegirnos? */}
       <section className="py-12 px-4">

@@ -2,21 +2,40 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { FOTOGRAFIA } from "../data/fotografia-products";
 import type { FotografiaProduct } from "../data/fotografia-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar fotografía y video para mi evento. ¿Me pueden dar información?");
 
 export default function FotografiaPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("fotografia", "Fotografía y Video");
   return (
     <div className="min-h-screen bg-white">
       <section className="bg-[#162040] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#8a9bb5] mb-3">Bodasesor Eventos</p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">Fotografía y Video{city ? ` en ${city.name}` : ''}</h1>
-            <p className="text-white/70 font-serif text-lg mb-4">Fotógrafo, cámara 360°, cabinas de fotos, Magic Mirror, Vogue, pantalla verde, Hollywood Photo Booth y producción de video.</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">{displayH1}</h1>
+            <p className="text-white/70 font-serif text-lg mb-4">
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Fotógrafo, cámara 360°, cabinas de fotos, Magic Mirror, Vogue, pantalla verde, Hollywood Photo Booth y producción de video."
+              )}
+            </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">{FOTOGRAFIA.length} opciones disponibles. Para que cada momento quede capturado a la perfección.</p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -38,6 +57,28 @@ export default function FotografiaPage() {
           </div>
         </div>
       </section>
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            Servicios de <strong>fotografía y video para eventos</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : fotógrafo, cabinas, cámara 360° y producción audiovisual.
+          </p>
+        }
+      />
 
       <section className="py-14 px-4">
         <div className="max-w-7xl mx-auto">

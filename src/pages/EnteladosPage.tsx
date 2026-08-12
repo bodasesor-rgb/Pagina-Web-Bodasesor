@@ -1,13 +1,16 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { ENTELADOS } from "../data/entelados-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un entelado para techo para mi evento. ¿Me pueden dar información?");
 
 export default function EnteladosPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("entelados", "Entelados para Eventos");
   return (
     <div className="min-h-screen bg-white">
 
@@ -21,11 +24,25 @@ export default function EnteladosPage() {
               <span className="text-white/80">Entelados para Techo</span>
             </nav>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Entelados para Techo{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              Decoración que transforma espacios. Tela tensada o drapeada con diferentes técnicas artísticas que crean ambientes únicos de alto impacto visual.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Decoración que transforma espacios. Tela tensada o drapeada con diferentes técnicas artísticas que crean ambientes únicos de alto impacto visual."
+              )}
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               Se adapta a salones, haciendas, jardines y espacios al aire libre. Cotizado por metro cuadrado del área a cubrir.
             </p>
@@ -62,6 +79,28 @@ export default function EnteladosPage() {
           <span>Instalación profesional incluida</span>
         </div>
       </div>
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            <strong>Entelados para eventos</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : tela tensada o drapeada cotizada por m², con instalación profesional.
+          </p>
+        }
+      />
 
       {/* ¿Qué es? */}
       <section className="py-12 px-4 bg-white">

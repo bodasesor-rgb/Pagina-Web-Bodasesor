@@ -1,7 +1,9 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { CARPAS } from "../data/carpas-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 import OptimizedImage from "../components/OptimizedImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -16,7 +18,8 @@ function WaSvg() {
 }
 
 export default function CarpasPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("carpas", "Carpas para Eventos");
 
   return (
     <div className="min-h-screen bg-white">
@@ -31,11 +34,25 @@ export default function CarpasPage() {
               <span className="text-white/80">Carpas para Eventos</span>
             </nav>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Carpas para Eventos{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              Protección y elegancia para tus eventos al aire libre. Carpas de todos los estilos y tamaños, instaladas y retiradas por profesionales.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Protección y elegancia para tus eventos al aire libre. Carpas de todos los estilos y tamaños, instaladas y retiradas por profesionales."
+              )}
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               Desde carpas blancas clásicas hasta domos geodésicos de vanguardia. Cotizamos por metro cuadrado según el área a cubrir.
             </p>
@@ -71,20 +88,27 @@ export default function CarpasPage() {
         </div>
       </div>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            Las <strong>carpas para eventos en México</strong> son la solución ideal cuando quieres celebrar al aire libre sin depender del clima. Nuestro catálogo incluye <strong>carpas blancas clásicas</strong>, <strong>carpas transparentes de cristal</strong>, <strong>domos geodésicos</strong>, <strong>carpas árabe o beduina</strong> y <strong>estructuras tensionadas de diseño</strong>. Todas se instalan en jardines, haciendas, terrenos baldíos y estacionamientos.
+            Renta de <strong>carpas para eventos</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : clásicas, transparentes, domos y estructuras tensionadas con instalación incluida.
           </p>
-          <p>
-            Cada <strong>carpa para boda</strong> o evento social puede personalizarse con entelados, iluminación interior, piso de madera, cortinas, cristales laterales y climatización. Cotizamos por metro cuadrado según el área a cubrir y el número de invitados. Nuestros técnicos realizan el montaje y desmontaje completo, cumpliendo con normas de seguridad estructural.
-          </p>
-          <p>
-            También atendemos <strong>renta de carpas para eventos corporativos</strong>, ferias, exposiciones, graduaciones y fiestas infantiles. Tenemos presencia en Ciudad de México, Estado de México, Morelos, Puebla y toda la República Mexicana. Solicita tu cotización sin costo y recibe atención personalizada en menos de 24 horas.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       {/* Catálogo */}
       <section className="py-16">

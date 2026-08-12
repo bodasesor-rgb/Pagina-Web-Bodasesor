@@ -1,7 +1,9 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { VAJILLAS, VajillaCat } from "../data/vajillas-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar vajillas para mi evento. ¿Me pueden dar información?");
@@ -18,7 +20,8 @@ const CATEGORIES: { key: VajillaCat; label: string; desc: string }[] = [
 ];
 
 export default function VajillasPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("vajillas", "Vajillas para Eventos");
   return (
     <div className="min-h-screen bg-white">
 
@@ -31,11 +34,25 @@ export default function VajillasPage() {
             <span className="text-white/80">Vajillas y Estilo</span>
           </nav>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-            Vajillas y Estilo{city ? ` en ${city.name}` : ''}
+            {displayH1}
           </h1>
-          <p className="text-white/70 font-serif text-lg md:text-xl max-w-2xl mx-auto mb-8">
-            Más de 40 colecciones de vajilla, cubiertos y cristalería para hacer de tu mesa un elemento central de tu celebración.
+          <p className={`text-white/70 font-serif text-lg md:text-xl max-w-2xl mx-auto ${cityCopy?.zones?.length ? "mb-4" : "mb-8"}`}>
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              "Más de 40 colecciones de vajilla, cubiertos y cristalería para hacer de tu mesa un elemento central de tu celebración."
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-[#8a9bb5] font-serif text-sm max-w-2xl mx-auto mb-8">
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+              <HighlightKeywords
+                text={cityCopy.zones.join(" · ")}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : null}
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -58,6 +75,28 @@ export default function VajillasPage() {
           <span>Sin mínimo de piezas</span>
         </div>
       </div>
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            Renta de <strong>vajillas para eventos</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : lozas, cerámica, cubiertos y cristalería con entrega e instalación.
+          </p>
+        }
+      />
 
       {/* Category quick-nav */}
       <section className="py-10 px-4 bg-white">
