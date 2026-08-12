@@ -1,5 +1,12 @@
 # Buscadores: acceso total (tu SEO los necesita)
+# Google-Extended abajo = bloquea entrenamiento Gemini, NO indexación Search.
 User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
 Allow: /
 
 User-agent: Bingbot
