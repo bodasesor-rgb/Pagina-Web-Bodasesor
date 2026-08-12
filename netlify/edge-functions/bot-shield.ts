@@ -49,26 +49,38 @@ function isProbePath(pathname: string): boolean {
 
 // ═══════════════════════════════════════════════════════════════
 // CAPA 1 — SIEMPRE PERMITIR (SEO + previews sociales)
+// Order matters: ALLOW runs BEFORE Netlify category / BLOCK / heuristics.
+// Never put a JS challenge or "human-like" gate in front of these UAs.
 // ═══════════════════════════════════════════════════════════════
 const ALLOW = [
-  /googlebot/i,
+  // Google Search / Ads / tooling (indexing ≠ Google-Extended training)
+  /googlebot/i, // Googlebot, Googlebot-Image, Googlebot-Video
   /google-inspectiontool/i,
   /storebot-google/i,
   /adsbot-google/i,
   /apis-google/i,
   /mediapartners-google/i,
+  /googleother/i,
+  /google-site-verification/i,
+  /feedfetcher-google/i,
+  /google-read-aloud/i,
+  /google-favicon/i,
+  /googleproducer/i,
+  /google-safety/i,
   // PageSpeed Insights / Lighthouse lab (otherwise Netlify marks tooling → 403)
   /chrome-lighthouse/i,
-  /googleother/i,
   /pagespeed.?insights/i,
+  // Bing / Yahoo / DuckDuckGo / Yandex / Baidu / Apple (search, not Applebot-Extended)
   /bingbot/i,
   /bingpreview/i,
   /adidxbot/i,
+  /msnbot/i,
   /duckduckbot/i,
   /yandex(bot|images)/i,
   /baiduspider/i,
   /applebot(?!-extended)/i,
   /slurp/i,
+  // Social link previews
   /facebookexternalhit/i,
   /facebookcatalog/i,
   /twitterbot/i,
@@ -212,10 +224,16 @@ function parseAgentCategory(header: string | null): { category: string; subcateg
  * Block non-human Netlify categories after ALLOW list.
  * Legacy `ai` / `ads` kept in case older edge metadata still appears.
  * Never block tooling;netlify-service (Netlify internals).
+ * Search crawlers must match ALLOW by UA first — do not rely on category alone.
  */
 function shouldBlockCategory(category: string, subcategory: string): string | null {
   if (!category) return null
   if (category === 'tooling' && subcategory === 'netlify-service') return null
+  // Netlify may tag Google/Bing as crawler;search — only block unknown crawlers.
+  // Known search engines already returned via ALLOW UA match above.
+  if (category === 'crawler' && /^(search|seo)$/i.test(subcategory)) {
+    return null
+  }
 
   if (category === 'none') return 'categoria:none'
   if (category === 'ai-agent' || category === 'ai') return `categoria:${category}`

@@ -13,6 +13,7 @@
     "audit:ga": "node scripts/audit-ga-tagging.mjs",
     "check:glued-city": "node scripts/check-glued-city-canonical.mjs",
     "guard:redirects": "node scripts/guard-redirects.mjs",
+    "verify:bot-shield": "node scripts/verify-bot-shield-allowlist.mjs",
     "check:redirects": "node scripts/check-production-redirects.mjs",
     "verify:nexus": "node scripts/verify-nexus-production.mjs",
     "verify:dist-bundle": "node scripts/verify-dist-spa-and-nexus.mjs",
