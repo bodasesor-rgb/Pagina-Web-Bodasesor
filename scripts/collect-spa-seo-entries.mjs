@@ -24,6 +24,7 @@ import { blogPosts } from '../src/data/blog-data.js'
 import { CITY_MAP } from '../src/data/city-data.js'
 import { SPA_SEO_HUBS } from '../src/data/spa-seo-hubs.js'
 import { CATALOGOS } from '../src/data/catalogos-embeds.js'
+import { getCityHubContent } from './lib/load-city-hub-content.mjs'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
 
@@ -148,15 +149,18 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
   for (const h of HUBS) {
     put(entry(h.path, h.title, h.desc, h.title))
     if (isCityExemptPath(h.path)) continue
+    const hubSlug = h.path.replace(/^\//, '')
     for (const citySlug of CITY_SLUGS) {
       const city = CITY_MAP[citySlug]
       const cityName = city?.name || citySlug
-      const headline = cityHeadline(h.title, cityName)
+      const local = getCityHubContent(hubSlug, citySlug)
+      const headline = local?.h1 || cityHeadline(h.title, cityName)
+      const desc = local?.seoDescription || `${h.desc} Cotiza en ${cityName} y área metropolitana.`
       put(
         entry(
           `${h.path}/${citySlug}`,
-          headline,
-          `${h.desc} Cotiza en ${cityName} y área metropolitana.`,
+          local?.seoTitle || headline,
+          desc,
           headline,
           usefulCityShort(city),
         ),

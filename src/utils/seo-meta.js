@@ -53,6 +53,42 @@ export function buildFaqPageJsonLd(faqs) {
   }
 }
 
+/**
+ * Service JSON-LD for hub×city landings (areaServed + optional zones).
+ */
+export function buildServiceCityJsonLd({
+  name,
+  description,
+  url,
+  cityName,
+  zones = [],
+}) {
+  if (!name || !url) return null
+  const area = {
+    '@type': 'City',
+    name: cityName || 'México',
+  }
+  if (zones?.length) {
+    area.containsPlace = zones.slice(0, 6).map((z) => ({
+      '@type': 'Place',
+      name: z,
+    }))
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    description: description || name,
+    url,
+    provider: {
+      '@type': 'Organization',
+      name: 'Bodasesor',
+      url: 'https://bodasesor.com',
+    },
+    areaServed: area,
+  }
+}
+
 /** Sensible default FAQs when a product has none (real ops info, no fake prices). */
 export function defaultServiceFaqs(title) {
   const name = title || 'este servicio'
