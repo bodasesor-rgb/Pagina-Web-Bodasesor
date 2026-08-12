@@ -8,6 +8,7 @@ import {
   CATALOGO_CATEGORIES,
   CATALOGOS,
   getCatalogoPagePath,
+  getCatalogoPdfHref,
 } from "../data/catalogos-embeds";
 
 const Link = CityLink;
@@ -162,6 +163,14 @@ export default function CatalogosPage() {
                     onPointerEnter={() => setWarmSrc(catalog.embedSrc)}
                   >
                     Abrir en nueva pestaña
+                  </a>
+                  <a
+                    href={getCatalogoPdfHref(catalog)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={btnSecondary}
+                  >
+                    Descargar PDF
                   </a>
                   <Link href={catalog.relatedHref} className={btnSecondary}>
                     Ver servicio

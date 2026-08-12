@@ -80,6 +80,10 @@ export function guardRedirectsFile(filePath, label, minRules = MIN_RULES) {
     }
   }
 
+  if (!text.includes('/catalogos/:slug  /index.html  200')) {
+    fail(`${label} missing SPA rewrite for /catalogos/:slug`)
+  }
+
   if (!text.includes('/products/:slug')) {
     fail(`${label} missing /products/:slug fallback rule`)
   }

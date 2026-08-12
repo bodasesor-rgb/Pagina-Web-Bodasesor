@@ -7,6 +7,7 @@
   embedSrc: string,
   slug: string,
   services: string[],
+  pdfUrl?: string,
 }} Catalogo */
 
 /** Auto-built from Bodasesor catalogs spreadsheet — one entry per unique Gamma/Canva catalog. */
@@ -546,4 +547,20 @@ export function getCatalogoBySlug(slug) {
 /** Bodasesor page for a catalog — never expose Gamma/Canva edit URLs. */
 export function getCatalogoPagePath(slug) {
   return `/catalogos/${slug}`
+}
+
+const WA_BASE = 'https://api.whatsapp.com/send/?phone=5215540080373&text='
+
+/**
+ * PDF files are not hosted on-site (catalogs are Gamma/Canva embeds).
+ * This opens WhatsApp so the team can send the PDF of that catalog.
+ * Pass optional pdfUrl on a catalog entry later for a direct download.
+ */
+export function getCatalogoPdfHref(catalog) {
+  if (catalog?.pdfUrl) return catalog.pdfUrl
+  const title = catalog?.title || 'catálogo'
+  return (
+    WA_BASE +
+    encodeURIComponent(`Hola, quiero que me envíen el PDF del catálogo "${title}".`)
+  )
 }
