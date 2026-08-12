@@ -4,6 +4,16 @@ import { parseCityFromPath, toCanonicalCityPath } from '../utils/city-url'
 
 const CityContext = createContext({ city: null, setCity: () => {} })
 
+/** Read city from the real browser URL on first paint (avoid national flash). */
+function cityFromWindow() {
+  if (typeof window === 'undefined') return null
+  try {
+    return parseCityFromPath(window.location.pathname).city || null
+  } catch {
+    return null
+  }
+}
+
 /** Keeps CityContext in sync with the current URL and normalizes legacy city URLs */
 export function CityUrlSync() {
   const [fullPath, setFullPath] = useBrowserLocation()
@@ -24,7 +34,7 @@ export function CityUrlSync() {
 }
 
 export function CityProvider({ children }) {
-  const [city, setCity] = useState(null)
+  const [city, setCity] = useState(cityFromWindow)
   return (
     <CityContext.Provider value={{ city, setCity }}>
       {children}

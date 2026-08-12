@@ -77,13 +77,25 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight mb-3">
               {displayH1}
             </h1>
-            <p className="text-white/75 font-serif leading-relaxed mb-6">
+            <p className="text-white/75 font-serif leading-relaxed mb-4">
               {displayHeadline ? (
                 <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
               ) : (
                 menu.headline
               )}
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-6">
+                Cobertura en {city?.name}:{" "}
+                <span className="text-white/90">{cityCopy.zones.join(" · ")}</span>
+              </p>
+            ) : city ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-6">
+                Servicio disponible en {city.name} y área metropolitana
+              </p>
+            ) : (
+              <div className="mb-6" />
+            )}
             <div className="flex flex-wrap gap-3">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-6 py-3 rounded-xl font-bold font-serif transition-all hover:scale-105">
@@ -158,12 +170,22 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
       <section className="py-14 px-4 bg-[#f5efe8]/40">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-serif font-bold text-[#162040]">Menú de Ejemplo</h2>
+            <h2 className="text-3xl font-serif font-bold text-[#162040]">
+              {city
+                ? `Menú de Ejemplo ${menu.label} en ${city.name}`
+                : "Menú de Ejemplo"}
+            </h2>
             <p className="text-gray-600 mt-2 font-serif">
               {city
-                ? `Propuesta referencial para eventos en ${city.name} — personalizamos cada menú a tu gusto`
+                ? `Propuesta referencial para eventos en ${city.name} — personalizamos cada tiempo a tu gusto y al estilo de tu celebración`
                 : "Propuesta referencial — personalizamos cada menú a tu gusto"}
             </p>
+            {cityCopy?.primaryKeyword ? (
+              <p className="mt-3 text-sm font-serif text-[#162040]/80">
+                Enfoque local:{" "}
+                <HighlightKeywords text={cityCopy.primaryKeyword} keywords={keywords} className="font-bold" />
+              </p>
+            ) : null}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {menu.menuExample.map((item, i) => {

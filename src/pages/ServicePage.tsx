@@ -898,20 +898,41 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
-                Variedades y opciones
+                {city
+                  ? toSpanishTitleCase(`Menús por tiempos en ${city.name}`)
+                  : "Variedades y opciones"}
               </h2>
-              <p className="text-gray-600 mt-3 font-serif">Elige la que mejor se adapte a tu evento y tus invitados</p>
+              <p className="text-gray-600 mt-3 font-serif">
+                {city
+                  ? `Elige el formato ideal para tu evento en ${city.name}: 4, 3 o 2 tiempos, o buffet`
+                  : "Elige la que mejor se adapte a tu evento y tus invitados"}
+              </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {product.varieties.map((v, i) => {
+                const menuHubSlug = v.href?.replace(/^\//, "") || "";
+                const menuCityCopy =
+                  city && menuHubSlug ? getCityHubContent(menuHubSlug, city.slug) : null;
+                const cardTitle = menuCityCopy?.h1
+                  ? toSpanishTitleCase(menuCityCopy.h1)
+                  : city
+                    ? `${v.name} en ${city.name}`
+                    : v.name;
+                const cardDesc = menuCityCopy?.headline || menuCityCopy?.description?.[0] || v.desc;
                 const card = (
                   <>
                     <div className="flex-shrink-0 w-8 h-8 bg-[#162040] text-white rounded-full flex items-center justify-center text-sm font-bold font-serif mt-0.5">
                       {i + 1}
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-serif font-bold text-[#162040] text-lg mb-1">{v.name}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed font-serif">{v.desc}</p>
+                      <h3 className="font-serif font-bold text-[#162040] text-lg mb-1">{cardTitle}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed font-serif">
+                        {menuCityCopy ? (
+                          <HighlightKeywords text={cardDesc} keywords={kw} />
+                        ) : (
+                          cardDesc
+                        )}
+                      </p>
                       {v.href && (
                         <span className="inline-block mt-2 text-[#162040] text-sm font-serif font-semibold underline underline-offset-2">
                           Ver menú completo →
