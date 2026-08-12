@@ -1,7 +1,8 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
-import { useCity } from "../context/CityContext";
 import OptimizedImage from "../components/OptimizedImage";
+import HighlightKeywords from "../components/HighlightKeywords";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar una barra de bebidas para mi evento. ¿Me pueden dar información?");
@@ -45,7 +46,8 @@ const ITEMS = [
 ];
 
 export default function BarrasBebidasPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("barras-de-bebidas", "Barras de Bebidas");
 
   return (
     <div className="min-h-screen bg-white">
@@ -60,10 +62,14 @@ export default function BarrasBebidasPage() {
               <span className="text-white/80">Barras de Bebidas</span>
             </nav>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Barras de Bebidas{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              Desde barras de aguas frescas hasta bartenders de mixología premium — todo para mantener a tus invitados bien servidos durante tu evento.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Desde barras de aguas frescas hasta bartenders de mixología premium — todo para mantener a tus invitados bien servidos durante tu evento."
+              )}
             </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               {ITEMS.length} opciones disponibles. Con y sin alcohol, café de especialidad y carritos de helado.
@@ -101,17 +107,65 @@ export default function BarrasBebidasPage() {
       {/* SEO Description */}
       <section className="py-10 px-4 bg-white border-b border-gray-100">
         <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
-          <p>
-            Las <strong>barras de bebidas para eventos</strong> son un elemento fundamental para la experiencia de tus invitados. Ofrecemos <strong>barra de aguas frescas artesanales</strong>, <strong>barra de mocteles sin alcohol</strong>, <strong>coctelería y mixología premium</strong> con bartenders certificados, <strong>café de especialidad con barista</strong> y <strong>carritos de paletas y helados artesanales</strong>. Cada barra incluye montaje, cristalería o vajilla desechable premium, decoración y desmontaje.
-          </p>
-          <p>
-            Nuestro servicio de <strong>open bar para bodas</strong> y eventos sociales puede combinar diferentes barras en un solo paquete: bebidas sin alcohol para niños y conductores, coctelería para adultos y café para los postres. El <strong>show de flair bartending</strong> es una opción espectacular que entretiene a tus invitados mientras disfrutan de sus bebidas.
-          </p>
-          <p>
-            También atendemos <strong>barras de café para eventos corporativos</strong>, desayunos de trabajo y coffee breaks. Nuestros baristasutilizan máquinas de espresso profesionales y café de especialidad de origen. Solicita tu cotización y dinos el número de invitados, la duración del evento y los tipos de bebida que prefieres.
-          </p>
+          {cityCopy?.description?.length ? (
+            <>
+              {displaySectionTitle && (
+                <h2 className="text-xl font-serif font-bold text-[#162040]">{displaySectionTitle}</h2>
+              )}
+              {cityCopy.description.map((para) => (
+                <p key={para.slice(0, 24)}>
+                  <HighlightKeywords text={para} keywords={keywords} />
+                </p>
+              ))}
+              {cityCopy.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <p>
+                Las <strong>barras de bebidas para eventos</strong> son un elemento fundamental para la experiencia de tus invitados. Ofrecemos <strong>barra de aguas frescas artesanales</strong>, <strong>barra de mocteles sin alcohol</strong>, <strong>coctelería y mixología premium</strong> con bartenders certificados, <strong>café de especialidad con barista</strong> y <strong>carritos de paletas y helados artesanales</strong>. Cada barra incluye montaje, cristalería o vajilla desechable premium, decoración y desmontaje.
+              </p>
+              <p>
+                Nuestro servicio de <strong>open bar para bodas</strong> y eventos sociales puede combinar diferentes barras en un solo paquete: bebidas sin alcohol para niños y conductores, coctelería para adultos y café para los postres. El <strong>show de flair bartending</strong> es una opción espectacular que entretiene a tus invitados mientras disfrutan de sus bebidas.
+              </p>
+              <p>
+                También atendemos <strong>barras de café para eventos corporativos</strong>, desayunos de trabajo y coffee breaks. Nuestros baristas utilizan máquinas de espresso profesionales y café de especialidad de origen. Solicita tu cotización y dinos el número de invitados, la duración del evento y los tipos de bebida que prefieres.
+                {city ? (
+                  <>
+                    {" "}Disponible en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana.
+                  </>
+                ) : null}
+              </p>
+            </>
+          )}
         </div>
       </section>
+
+      {cityCopy?.faqs?.length ? (
+        <section className="py-10 px-4 bg-[#faf7f2] border-b border-gray-100">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-4">Preguntas frecuentes</h2>
+            <div className="space-y-3">
+              {cityCopy.faqs.map((f) => (
+                <details key={f.q} className="group rounded-xl border border-[#162040]/10 bg-white px-5 py-4">
+                  <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
+                    <span>{f.q}</span>
+                    <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                  </summary>
+                  <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Quick nav */}
       <section className="py-8 px-4 bg-white border-b border-gray-100">

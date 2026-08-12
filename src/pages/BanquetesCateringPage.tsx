@@ -1,7 +1,8 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
-import { useCity } from "../context/CityContext";
 import OptimizedImage from "../components/OptimizedImage";
+import HighlightKeywords from "../components/HighlightKeywords";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar un servicio de banquetes o catering para mi evento. ¿Me pueden dar información?");
@@ -72,7 +73,8 @@ const CATEGORIES = [
 ];
 
 export default function BanquetesCateringPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("banquetes-catering", "Banquetes y Catering");
   const total = CATEGORIES.reduce((s, c) => s + c.items.length, 0);
 
   return (
@@ -88,10 +90,14 @@ export default function BanquetesCateringPage() {
               <span className="text-white/80">Banquetes y Catering</span>
             </nav>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Banquetes y Catering{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              Desde banquetes formales de alta cocina hasta estaciones de antojitos mexicanos — todo el servicio de alimentos para tu evento en un solo catálogo.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Desde banquetes formales de alta cocina hasta estaciones de antojitos mexicanos — todo el servicio de alimentos para tu evento en un solo catálogo."
+              )}
             </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               {total} servicios disponibles. Banquetes formales, catering gourmet, barras de alimentos y estaciones temáticas.
@@ -135,17 +141,65 @@ export default function BanquetesCateringPage() {
       {/* SEO Description */}
       <section className="py-10 px-4 bg-white border-b border-gray-100">
         <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
-          <p>
-            Nuestro servicio de <strong>banquetes y catering en México</strong> está diseñado para todo tipo de celebración: desde una íntima boda civil hasta una convención corporativa con cientos de comensales. Contamos con <strong>chefs ejecutivos certificados</strong>, menús personalizados y logística completa de alimentos y bebidas para que tu evento sea perfecto desde el primer bocado hasta el último.
-          </p>
-          <p>
-            Ofrecemos <strong>banquetes formales de alta cocina</strong>, <strong>catering gourmet servido en sitio</strong>, <strong>barras de alimentos temáticas</strong> y <strong>estaciones de comida mexicana</strong>. Cada propuesta incluye vajilla, meseros, chefs, montaje y desmontaje. Nuestros servicios de <strong>banquete para boda</strong>, <strong>banquete kosher</strong>, <strong>paella española</strong> y <strong>taquiza de guisados</strong> son los más solicitados en la Ciudad de México, Estado de México, Guadalajara y Monterrey.
-          </p>
-          <p>
-            Ya sea que busques un <strong>catering para evento corporativo</strong>, un <strong>coffee break empresarial</strong>, una <strong>barra de sushi</strong> o una <strong>parrillada argentina</strong> para tu fiesta, tenemos la solución ideal. Cotizamos sin costo en menos de 24 horas con menú adaptado a tu número de invitados, tipo de evento y presupuesto.
-          </p>
+          {cityCopy?.description?.length ? (
+            <>
+              {displaySectionTitle && (
+                <h2 className="text-xl font-serif font-bold text-[#162040]">{displaySectionTitle}</h2>
+              )}
+              {cityCopy.description.map((para) => (
+                <p key={para.slice(0, 24)}>
+                  <HighlightKeywords text={para} keywords={keywords} />
+                </p>
+              ))}
+              {cityCopy.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <p>
+                Nuestro servicio de <strong>banquetes y catering en México</strong> está diseñado para todo tipo de celebración: desde una íntima boda civil hasta una convención corporativa con cientos de comensales. Contamos con <strong>chefs ejecutivos certificados</strong>, menús personalizados y logística completa de alimentos y bebidas para que tu evento sea perfecto desde el primer bocado hasta el último.
+              </p>
+              <p>
+                Ofrecemos <strong>banquetes formales de alta cocina</strong>, <strong>catering gourmet servido en sitio</strong>, <strong>barras de alimentos temáticas</strong> y <strong>estaciones de comida mexicana</strong>. Cada propuesta incluye vajilla, meseros, chefs, montaje y desmontaje. Nuestros servicios de <strong>banquete para boda</strong>, <strong>banquete kosher</strong>, <strong>paella española</strong> y <strong>taquiza de guisados</strong> son los más solicitados en la Ciudad de México, Estado de México, Guadalajara y Monterrey.
+              </p>
+              <p>
+                Ya sea que busques un <strong>catering para evento corporativo</strong>, un <strong>coffee break empresarial</strong>, una <strong>barra de sushi</strong> o una <strong>parrillada argentina</strong> para tu fiesta, tenemos la solución ideal. Cotizamos sin costo en menos de 24 horas con menú adaptado a tu número de invitados, tipo de evento y presupuesto.
+                {city ? (
+                  <>
+                    {" "}Disponible en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana.
+                  </>
+                ) : null}
+              </p>
+            </>
+          )}
         </div>
       </section>
+
+      {cityCopy?.faqs?.length ? (
+        <section className="py-10 px-4 bg-[#faf7f2] border-b border-gray-100">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl font-serif font-bold text-[#162040] mb-4">Preguntas frecuentes</h2>
+            <div className="space-y-3">
+              {cityCopy.faqs.map((f) => (
+                <details key={f.q} className="group rounded-xl border border-[#162040]/10 bg-white px-5 py-4">
+                  <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
+                    <span>{f.q}</span>
+                    <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                  </summary>
+                  <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Categorías quick-nav */}
       <section className="py-8 px-4 bg-white border-b border-gray-100">
