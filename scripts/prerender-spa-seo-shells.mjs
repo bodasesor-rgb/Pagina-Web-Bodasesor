@@ -409,10 +409,11 @@ async function main() {
     }
   }
 
-  // Hub × city stays indexable (including banquet menu-by-course hubs)
+  // Hub × city stays indexable (including banquet menu-by-course hubs + product hubs in SPA_SEO_HUBS)
   const hubCityRels = [
     'banquetes/ciudad-de-mexico',
     'banquetes/3-tiempos/ciudad-de-mexico',
+    'cupcakes-gourmet/ciudad-de-mexico',
   ]
   for (const rel of hubCityRels) {
     const html = await readFile(join(DIST, rel, 'index.html'), 'utf8')
@@ -421,9 +422,9 @@ async function main() {
       process.exit(1)
     }
   }
+  // Thin product×city shells (NOT in SPA_SEO_HUBS) must stay noindex
   const thinCityRels = [
     'desayunos/puerto-vallarta',
-    'cupcakes-gourmet/ciudad-de-mexico',
   ]
   for (const rel of thinCityRels) {
     const html = await readFile(join(DIST, rel, 'index.html'), 'utf8')
