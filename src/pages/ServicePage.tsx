@@ -15,6 +15,7 @@ import { stripCityFromSlug } from "../utils/city-url";
 import { buildSeoTitle } from "../utils/seo-title";
 import { upsertJsonLd } from "../utils/seo-head";
 import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
+import { buildNationalServiceCopy } from "../utils/national-service-copy";
 import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-title-case";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
@@ -319,43 +320,46 @@ export default function ServicePage({ params }: ServicePageProps) {
 
   const { city } = useCity();
   const cityCopy = city ? getCityHubContent(slug, city.slug) : null;
+  const pageCopy = cityCopy || (product ? buildNationalServiceCopy(product) : null);
 
   useEffect(() => {
     if (!product) return;
-    document.title = cityCopy?.seoTitle
-      ? buildSeoTitle(cityCopy.seoTitle, null)
+    document.title = pageCopy?.seoTitle
+      ? buildSeoTitle(pageCopy.seoTitle, null)
       : buildSeoTitle(product.seoTitle, city?.short ?? null);
     const meta = document.querySelector('meta[name="description"]');
-    if (meta && (cityCopy?.seoDescription || product.seoDescription)) {
+    if (meta && (pageCopy?.seoDescription || product.seoDescription)) {
       meta.setAttribute(
         "content",
-        cityCopy?.seoDescription ||
+        pageCopy?.seoDescription ||
           (city
             ? `${product.seoDescription} Disponible en ${city.name}.`
             : product.seoDescription),
       );
     }
-  }, [product, city, cityCopy]);
+  }, [product, city, pageCopy]);
 
   useEffect(() => {
     if (!product) return;
     const faqs =
-      cityCopy?.faqs?.length >= 2
-        ? cityCopy.faqs
+      pageCopy?.faqs?.length >= 2
+        ? pageCopy.faqs
         : Array.isArray(product.faqs) && product.faqs.length >= 2
           ? product.faqs
           : defaultServiceFaqs(product.title);
     upsertJsonLd('bodasesor-faq-jsonld', buildFaqPageJsonLd(faqs));
 
-    if (city && cityCopy) {
+    if (pageCopy) {
       upsertJsonLd(
         'bodasesor-service-city-jsonld',
         buildServiceCityJsonLd({
-          name: cityCopy.h1 || `${product.title} en ${city.name}`,
-          description: cityCopy.seoDescription || product.seoDescription,
-          url: `https://bodasesor.com/${slug}/${city.slug}`,
-          cityName: city.name,
-          zones: cityCopy.zones || [],
+          name: pageCopy.h1 || `${product.title}${city ? ` en ${city.name}` : ' en México'}`,
+          description: pageCopy.seoDescription || product.seoDescription,
+          url: city
+            ? `https://bodasesor.com/${slug}/${city.slug}`
+            : `https://bodasesor.com/${slug}`,
+          cityName: city?.name || 'México',
+          zones: pageCopy.zones || [],
         }),
       );
     } else {
@@ -366,7 +370,7 @@ export default function ServicePage({ params }: ServicePageProps) {
       upsertJsonLd('bodasesor-faq-jsonld', null);
       upsertJsonLd('bodasesor-service-city-jsonld', null);
     };
-  }, [product, cityCopy, city, slug]);
+  }, [product, pageCopy, city, slug]);
 
   if (!loaded) {
     return (
@@ -410,23 +414,23 @@ export default function ServicePage({ params }: ServicePageProps) {
     HERO_IMAGES[slug]?.startsWith('/images/barras/') ||
     false;
 
-  const displayH1 = cityCopy?.h1
-    ? toSpanishTitleCase(cityCopy.h1)
+  const displayH1 = pageCopy?.h1
+    ? toSpanishTitleCase(pageCopy.h1)
     : city
       ? toSpanishTitleCase(`${product.title} para Bodas y Eventos en ${city.name}`)
-      : toSpanishTitleCase(`${product.title} para Bodas y Eventos`);
-  const displayHeadline = toSpanishTitleCase(cityCopy?.headline || product.headline || '');
-  const displaySectionTitle = cityCopy?.sectionTitle
-    ? toSpanishTitleCase(cityCopy.sectionTitle)
+      : toSpanishTitleCase(`${product.title} para Bodas y Eventos en México`);
+  const displayHeadline = toSpanishTitleCase(pageCopy?.headline || product.headline || '');
+  const displaySectionTitle = pageCopy?.sectionTitle
+    ? toSpanishTitleCase(pageCopy.sectionTitle)
     : city
       ? toSpanishTitleCase(`${product.title} para Bodas y Eventos en ${city.name}`)
-      : toSpanishTitleCase(`${product.title} para Bodas y Eventos`);
+      : toSpanishTitleCase(`${product.title} para Bodas y Eventos en México`);
   const kw = buildHighlightKeywords({
-    primaryKeyword: cityCopy?.primaryKeyword || '',
-    zones: cityCopy?.zones || [],
-    cityName: city?.name || '',
+    primaryKeyword: pageCopy?.primaryKeyword || '',
+    zones: pageCopy?.zones || [],
+    cityName: city?.name || 'México',
     cityShort: city?.short || '',
-    extra: ['Banquetes', 'Catering', 'Bodas', 'Eventos', 'Mobiliario', 'Wedding Planner'],
+    extra: ['Banquetes', 'Catering', 'Bodas', 'Eventos', 'Mobiliario', 'Wedding Planner', 'México'],
   });
 
   const heroAlt = city
@@ -459,11 +463,11 @@ export default function ServicePage({ params }: ServicePageProps) {
                 <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-xl">
                   <HighlightKeywords text={displayHeadline} keywords={kw} className="font-bold text-white" />
                 </p>
-                {cityCopy?.zones?.length ? (
+                {pageCopy?.zones?.length ? (
                   <p className="text-white/65 font-serif text-sm mb-8">
-                    Cobertura en {city?.name}:{" "}
+                    {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
                     <HighlightKeywords
-                      text={cityCopy.zones.join(" · ")}
+                      text={pageCopy.zones.join(" · ")}
                       keywords={kw}
                       className="font-bold text-white"
                     />
@@ -523,11 +527,11 @@ export default function ServicePage({ params }: ServicePageProps) {
             <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-2xl">
               <HighlightKeywords text={displayHeadline} keywords={kw} className="font-bold text-white" />
             </p>
-            {cityCopy?.zones?.length ? (
+            {pageCopy?.zones?.length ? (
               <p className="text-white/65 font-serif text-sm mb-8">
-                Cobertura en {city?.name}:{" "}
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
                 <HighlightKeywords
-                  text={cityCopy.zones.join(" · ")}
+                  text={pageCopy.zones.join(" · ")}
                   keywords={kw}
                   className="font-bold text-white"
                 />
@@ -588,14 +592,14 @@ export default function ServicePage({ params }: ServicePageProps) {
                 {displaySectionTitle}
               </h2>
               <div className="space-y-4">
-                {(cityCopy?.description?.length ? cityCopy.description : product.description).map((para, i) => (
+                {(pageCopy?.description?.length ? pageCopy.description : product.description).map((para, i) => (
                   <p key={i} className="text-gray-600 leading-relaxed font-serif text-lg">
                     <HighlightKeywords text={para} keywords={kw} />
                   </p>
                 ))}
-                {cityCopy?.localBullets?.length ? (
+                {pageCopy?.localBullets?.length ? (
                   <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
-                    {cityCopy.localBullets.map((b) => (
+                    {pageCopy.localBullets.map((b) => (
                       <li key={b}>
                         <HighlightKeywords text={b} keywords={kw} />
                       </li>
@@ -606,34 +610,13 @@ export default function ServicePage({ params }: ServicePageProps) {
                     Servicio disponible en <strong className="font-bold text-[#162040]">{city.name}</strong> y área
                     metropolitana. Cotiza sin compromiso.
                   </p>
-                ) : (
-                  <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
-                    <li>
-                      <HighlightKeywords
-                        text="Servicio a nivel nacional con logística completa de montaje y desmontaje."
-                        keywords={kw}
-                      />
-                    </li>
-                    <li>
-                      <HighlightKeywords
-                        text="Personal profesional, equipo y presentación alineada a tu evento."
-                        keywords={kw}
-                      />
-                    </li>
-                    <li>
-                      <HighlightKeywords
-                        text="Cotización sin compromiso por WhatsApp en menos de 24 horas."
-                        keywords={kw}
-                      />
-                    </li>
-                  </ul>
-                )}
+                ) : null}
               </div>
               <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
                 <p className="text-sm text-gray-600 font-serif italic">
                   <HighlightKeywords
                     text={
-                      cityCopy?.seoDescription ||
+                      pageCopy?.seoDescription ||
                       (city
                         ? `${product.seoDescription} Disponible en ${city.name}.`
                         : product.seoDescription)
@@ -1012,8 +995,8 @@ export default function ServicePage({ params }: ServicePageProps) {
       {/* ── FAQ (visible + FAQPage schema) ── */}
       {(() => {
         const faqs =
-          cityCopy?.faqs?.length >= 2
-            ? cityCopy.faqs
+          pageCopy?.faqs?.length >= 2
+            ? pageCopy.faqs
             : Array.isArray(product.faqs) && product.faqs.length >= 2
               ? product.faqs
               : defaultServiceFaqs(product.title);

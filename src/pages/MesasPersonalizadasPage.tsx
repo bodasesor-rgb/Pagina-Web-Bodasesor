@@ -102,9 +102,20 @@ export default function MesasPersonalizadasPage() {
               )}
             </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
-              {city
-                ? `Servicio disponible en ${city.name} y área metropolitana.`
-                : "Servicio a nivel nacional · CDMX · Guadalajara · Monterrey · León y más"}
+              {cityCopy?.zones?.length ? (
+                <>
+                  {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                  <HighlightKeywords
+                    text={cityCopy.zones.join(" · ")}
+                    keywords={keywords}
+                    className="font-bold text-white"
+                  />
+                </>
+              ) : city ? (
+                `Servicio disponible en ${city.name} y área metropolitana.`
+              ) : (
+                "Servicio a nivel nacional · CDMX · Guadalajara · Monterrey · León y más"
+              )}
             </p>
             <a
               href={waGeneral}
@@ -115,7 +126,7 @@ export default function MesasPersonalizadasPage() {
               Cotizar mesa personalizada
             </a>
           </div>
-          <div className="hidden lg:block">
+          <div className="mt-6 lg:mt-0">
             <ProductGalleryCarousel slug="mesa-dulces" title="Mesas Personalizadas" />
           </div>
         </div>
@@ -160,7 +171,7 @@ export default function MesasPersonalizadasPage() {
           ) : (
             <>
               <h2 className="text-xl font-serif font-bold text-[#162040]">
-                Mesas Personalizadas para Bodas y Eventos
+                {displaySectionTitle || "Mesas Personalizadas para Bodas y Eventos en México"}
               </h2>
               <p>
                 Las <strong>mesas personalizadas</strong> elevan la experiencia visual y gastronómica de tu celebración. Ofrecemos <strong>mesa de dulces</strong>, <strong>mesa de postres gourmet</strong>, <strong>mesa de quesos y charcutería</strong>, <strong>cupcakes gourmet</strong> y <strong>carrito de snacks</strong>, todas decoradas con la paleta de tu evento.
@@ -168,6 +179,15 @@ export default function MesasPersonalizadasPage() {
               <p>
                 Cada propuesta incluye diseño, surtido, montaje y desmontaje. Cotizamos sin costo en menos de 24 horas para bodas, XV años y eventos corporativos en toda México.
               </p>
+              {cityCopy?.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </>
           )}
         </div>

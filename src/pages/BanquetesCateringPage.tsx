@@ -118,9 +118,20 @@ export default function BanquetesCateringPage() {
               )}
             </p>
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
-              {city
-                ? `${total} servicios disponibles en ${city.name}. Banquetes, catering, barras y estaciones.`
-                : `${total} servicios disponibles a nivel nacional · CDMX · Guadalajara · Monterrey · León y más`}
+              {cityCopy?.zones?.length ? (
+                <>
+                  {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                  <HighlightKeywords
+                    text={cityCopy.zones.join(" · ")}
+                    keywords={keywords}
+                    className="font-bold text-white"
+                  />
+                </>
+              ) : city ? (
+                `${total} servicios disponibles en ${city.name}. Banquetes, catering, barras y estaciones.`
+              ) : (
+                `${total} servicios disponibles a nivel nacional · CDMX · Guadalajara · Monterrey · León y más`
+              )}
             </p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -128,7 +139,7 @@ export default function BanquetesCateringPage() {
               Cotizar Servicio de Alimentos
             </a>
           </div>
-          <div className="hidden lg:block">
+          <div className="mt-6 lg:mt-0">
             <ProductGalleryCarousel slug="banquetes" title="Banquetes y Catering" />
           </div>
         </div>
@@ -172,6 +183,9 @@ export default function BanquetesCateringPage() {
             </>
           ) : (
             <>
+              <h2 className="text-xl font-serif font-bold text-[#162040]">
+                {displaySectionTitle || "Banquetes y Catering para Bodas y Eventos en México"}
+              </h2>
               <p>
                 Nuestro servicio de <strong>banquetes y catering en México</strong> está diseñado para todo tipo de celebración: desde una íntima boda civil hasta una convención corporativa con cientos de comensales. Contamos con <strong>chefs ejecutivos certificados</strong>, menús personalizados y logística completa de alimentos y bebidas para que tu evento sea perfecto desde el primer bocado hasta el último.
               </p>
@@ -186,6 +200,15 @@ export default function BanquetesCateringPage() {
                   </>
                 ) : null}
               </p>
+              {cityCopy?.localBullets?.length ? (
+                <ul className="list-disc pl-5 space-y-1">
+                  {cityCopy.localBullets.map((b) => (
+                    <li key={b}>
+                      <HighlightKeywords text={b} keywords={keywords} />
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </>
           )}
         </div>

@@ -4,10 +4,12 @@ import { getCityHubContent } from '../data/city-hub-content'
 import { buildSeoTitle } from '../utils/seo-title'
 import { upsertJsonLd } from '../utils/seo-head'
 import { buildFaqPageJsonLd, buildServiceCityJsonLd } from '../utils/seo-meta'
+import { buildNationalHubCopy } from '../utils/national-service-copy'
 import { toSpanishTitleCase, buildHighlightKeywords } from '../utils/spanish-title-case'
 
 /**
  * Shared city-hub SEO copy for standalone category pages + ServicePage-compatible fields.
+ * National (no-city) pages get the same structure via buildNationalHubCopy.
  */
 export function useCityHubPage(
   hubSlug: string,
@@ -15,11 +17,15 @@ export function useCityHubPage(
   extraKeywords: string[] = [],
 ) {
   const { city } = useCity()
-  const cityCopy = city ? getCityHubContent(hubSlug, city.slug) : null
+  const cityCopy = city
+    ? getCityHubContent(hubSlug, city.slug)
+    : buildNationalHubCopy(hubSlug, fallbackTitle)
 
   const displayH1 = cityCopy?.h1
     ? toSpanishTitleCase(cityCopy.h1)
-    : toSpanishTitleCase(city ? `${fallbackTitle} en ${city.name}` : fallbackTitle)
+    : toSpanishTitleCase(
+        city ? `${fallbackTitle} en ${city.name}` : `${fallbackTitle} para Bodas y Eventos en México`,
+      )
 
   const displayHeadline = cityCopy?.headline
     ? toSpanishTitleCase(cityCopy.headline)
@@ -32,9 +38,9 @@ export function useCityHubPage(
   const keywords = buildHighlightKeywords({
     primaryKeyword: cityCopy?.primaryKeyword || '',
     zones: cityCopy?.zones || [],
-    cityName: city?.name || '',
+    cityName: city?.name || 'México',
     cityShort: city?.short || '',
-    extra: [fallbackTitle, 'Bodas', 'Eventos', 'Catering', 'Banquetes', ...extraKeywords],
+    extra: [fallbackTitle, 'Bodas', 'Eventos', 'Catering', 'Banquetes', 'México', ...extraKeywords],
   })
 
   useEffect(() => {
@@ -43,35 +49,38 @@ export function useCityHubPage(
     } else if (city) {
       document.title = buildSeoTitle(`${fallbackTitle} en ${city.short || city.name}`, null)
     } else {
-      document.title = buildSeoTitle(fallbackTitle, null)
+      document.title = buildSeoTitle(`${fallbackTitle} para Bodas y Eventos en México`, null)
     }
     const meta = document.querySelector('meta[name="description"]')
-    if (meta && (cityCopy?.seoDescription || city)) {
+    if (meta && (cityCopy?.seoDescription || city || true)) {
       meta.setAttribute(
         'content',
         cityCopy?.seoDescription ||
-          `${fallbackTitle} para bodas y eventos${city ? ` en ${city.name}` : ''}. Cotiza con Bodasesor.`,
+          `${fallbackTitle} para bodas y eventos${city ? ` en ${city.name}` : ' en México'}. Cotiza con Bodasesor.`,
       )
     }
   }, [city, cityCopy, fallbackTitle])
 
   useEffect(() => {
-    if (city && cityCopy) {
-      if (cityCopy.faqs?.length >= 2) {
-        upsertJsonLd('bodasesor-faq-jsonld', buildFaqPageJsonLd(cityCopy.faqs))
-      }
+    if (cityCopy?.faqs?.length >= 2) {
+      upsertJsonLd('bodasesor-faq-jsonld', buildFaqPageJsonLd(cityCopy.faqs))
+    } else {
+      upsertJsonLd('bodasesor-faq-jsonld', null)
+    }
+    if (cityCopy) {
       upsertJsonLd(
         'bodasesor-service-city-jsonld',
         buildServiceCityJsonLd({
           name: displayH1,
           description: cityCopy.seoDescription || displayHeadline || displayH1,
-          url: `https://bodasesor.com/${hubSlug}/${city.slug}`,
-          cityName: city.name,
+          url: city
+            ? `https://bodasesor.com/${hubSlug}/${city.slug}`
+            : `https://bodasesor.com/${hubSlug}`,
+          cityName: city?.name || 'México',
           zones: cityCopy.zones || [],
         }),
       )
     } else {
-      upsertJsonLd('bodasesor-faq-jsonld', null)
       upsertJsonLd('bodasesor-service-city-jsonld', null)
     }
     return () => {
