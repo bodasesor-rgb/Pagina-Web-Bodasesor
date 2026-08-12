@@ -2,21 +2,40 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { EMPRESAS } from "../data/empresas-products";
 import type { EmpresasProduct } from "../data/empresas-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar servicio de alimentación para mi empresa. ¿Me pueden dar información?");
 
 export default function EmpresasPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("alimentos-empresas", "Alimentos para Empresas");
   return (
     <div className="min-h-screen bg-white">
       <section className="bg-[#162040] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#8a9bb5] mb-3">Bodasesor Eventos</p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">Alimentos para Empresas{city ? ` en ${city.name}` : ''}</h1>
-            <p className="text-white/70 font-serif text-lg mb-4">Comedores industriales, banquetes de fin de año, coffee break, box lunch, comida corrida y más. Soluciones de alimentación para tu organización.</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">{displayH1}</h1>
+            <p className="text-white/70 font-serif text-lg mb-4">
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Comedores industriales, banquetes de fin de año, coffee break, box lunch, comida corrida y más. Soluciones de alimentación para tu organización."
+              )}
+            </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">{EMPRESAS.length} servicios disponibles. Para empresas de cualquier tamaño, desde 10 hasta miles de colaboradores.</p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -39,20 +58,27 @@ export default function EmpresasPage() {
         </div>
       </section>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            Nuestros <strong>servicios de alimentación para empresas</strong> cubren todas las necesidades de tu organización: desde el <strong>comedor industrial diario</strong> hasta el <strong>banquete de fin de año corporativo</strong>. Trabajamos con empresas de todos los tamaños, garantizando calidad, higiene bajo normas <strong>HACCP</strong> y puntualidad en cada servicio.
+            <strong>Alimentación para empresas</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : comedores, coffee break, box lunch y banquetes corporativos con facturación.
           </p>
-          <p>
-            Ofrecemos <strong>coffee break para reuniones de negocios</strong>, <strong>box lunch para eventos al aire libre</strong>, <strong>comida corrida para comedores</strong>, <strong>catering para convenciones</strong> y <strong>bocadillos para presentaciones de producto</strong>. Todos nuestros servicios incluyen vajilla desechable premium o loza según el tipo de evento, meseros y montaje completo.
-          </p>
-          <p>
-            También gestionamos <strong>banquetes de gala para fin de año</strong>, <strong>cenas de premiación</strong> y <strong>eventos de integración con estaciones de comida</strong>. Emitimos factura electrónica y ofrecemos contratos de servicio continuo para comedores fijos. Solicita tu propuesta personalizada con menú, cotización y referencias de clientes empresariales.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       <section className="py-14 px-4">
         <div className="max-w-7xl mx-auto">

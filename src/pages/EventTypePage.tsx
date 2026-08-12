@@ -17,7 +17,9 @@ import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import type { ProductData } from "../data/products";
 import { buildSeoTitle } from "../utils/seo-title";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   '🍽️': Utensils, '🥂': Wine, '🍹': Wine, '🍸': Wine, '🧃': Droplets,
@@ -809,7 +811,8 @@ interface EventTypePageProps {
 }
 
 export default function EventTypePage({ product }: EventTypePageProps) {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage(product.slug, product.title);
   const waUrl = WA_MSG(product.title);
   const groups = EVENT_SERVICES[product.slug] ?? [];
   const shortName = product.title.replace(/^Servicios para\s+/i, '');
@@ -827,8 +830,10 @@ export default function EventTypePage({ product }: EventTypePageProps) {
   ];
 
   useEffect(() => {
-    document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
-  }, [product.seoTitle, city]);
+    if (!cityCopy?.seoTitle) {
+      document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
+    }
+  }, [product.seoTitle, city, cityCopy]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -847,13 +852,27 @@ export default function EventTypePage({ product }: EventTypePageProps) {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
           <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
           <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-            {city
-              ? `${product.title} en ${city.name}`
-              : product.title}
+            {displayH1}
           </h1>
-          <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-2xl">
-            {product.headline}
+          <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-2xl">
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              product.headline
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-white/65 font-serif text-sm mb-8">
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+              <HighlightKeywords
+                text={cityCopy.zones.join(" · ")}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : (
+            <div className="mb-8" />
+          )}
           <div className="flex flex-wrap gap-4">
             <a
               href={waUrl}
@@ -892,6 +911,28 @@ export default function EventTypePage({ product }: EventTypePageProps) {
           </div>
         </section>
       )}
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            Servicios completos para <strong>{shortName}</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            . Combina banquetes, barras, mobiliario y producción con un solo coordinador Bodasesor.
+          </p>
+        }
+      />
 
       {/* ── 3. DESCRIPCIÓN + GALERÍA ── */}
       <section className="py-16 md:py-20">

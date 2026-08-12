@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
-import { useCity } from '../context/CityContext'
 import CityLink from '../components/CityLink'
 import OptimizedImage from '../components/OptimizedImage'
+import HighlightKeywords from '../components/HighlightKeywords'
+import CityHubSeoSections from '../components/CityHubSeoSections'
+import { useCityHubPage } from '../hooks/useCityHubPage'
 import { buildSeoTitle } from '../utils/seo-title'
 
 const Link = CityLink
@@ -39,7 +41,8 @@ const BARRAS = [
 ]
 
 export default function BarrasMobiliarioPage() {
-  const { city } = useCity()
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage('barras', 'Barras de Mobiliario')
 
   useEffect(() => {
     document.title = buildSeoTitle('Barras de Mobiliario para Eventos | Renta | Bodasesor', city?.short ?? null)
@@ -57,13 +60,49 @@ export default function BarrasMobiliarioPage() {
             <span className="text-white/80">Barras</span>
           </nav>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-            Barras{city ? ` en ${city.name}` : ''}
+            {displayH1}
           </h1>
-          <p className="text-lg md:text-xl text-white/80 font-serif max-w-2xl mx-auto leading-relaxed">
-            Mobiliario de barra para estaciones de bebidas, recepción y open bar. Cuatro estilos listos para montar.
+          <p className={`text-lg md:text-xl text-white/80 font-serif max-w-2xl mx-auto leading-relaxed ${cityCopy?.zones?.length ? 'mb-4' : ''}`}>
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              'Mobiliario de barra para estaciones de bebidas, recepción y open bar. Cuatro estilos listos para montar.'
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-[#8a9bb5] font-serif text-sm max-w-2xl mx-auto">
+              {city ? `Cobertura en ${city.name}:` : 'Cobertura nacional:'}{' '}
+              <HighlightKeywords
+                text={cityCopy.zones.join(' · ')}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : null}
         </div>
       </section>
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            Renta de <strong>barras de mobiliario</strong>
+            {city ? (
+              <>
+                {' '}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : estilos clásico, XL, rústico e industrial para recepción y open bar.
+          </p>
+        }
+      />
 
       <section className="py-16 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -2,21 +2,40 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { MUSICA } from "../data/musica-products";
 import type { MusicaProduct } from "../data/musica-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar música en vivo para mi evento. ¿Me pueden dar información?");
 
 export default function MusicaPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("musica", "Música para Eventos");
   return (
     <div className="min-h-screen bg-white">
       <section className="bg-[#162040] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#8a9bb5] mb-3">Bodasesor Eventos</p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">Música para Eventos{city ? ` en ${city.name}` : ''}</h1>
-            <p className="text-white/70 font-serif text-lg mb-4">DJ, grupo versátil, saxofón, orquesta, mariachi, banda y dueto. La música perfecta para cada momento de tu evento.</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">{displayH1}</h1>
+            <p className="text-white/70 font-serif text-lg mb-4">
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "DJ, grupo versátil, saxofón, orquesta, mariachi, banda y dueto. La música perfecta para cada momento de tu evento."
+              )}
+            </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">{MUSICA.length} opciones musicales. Artistas profesionales con experiencia en bodas, quinceañeras y eventos corporativos.</p>
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -39,20 +58,27 @@ export default function MusicaPage() {
         </div>
       </section>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            La <strong>música en vivo para eventos</strong> transforma cualquier celebración en una experiencia memorable. En Bodasesor ofrecemos <strong>DJ profesional para bodas</strong>, <strong>grupo versátil</strong>, <strong>saxofón para evento</strong>, <strong>orquesta de baile</strong>, <strong>mariachi</strong>, <strong>banda de viento</strong> y <strong>dueto de cuerdas</strong>. Cada artista cuenta con equipo de sonido propio y repertorio personalizado según el tipo de evento.
+            <strong>Música en vivo para eventos</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : DJ, grupos, orquesta, mariachi y más con equipo de sonido incluido.
           </p>
-          <p>
-            Para bodas recomendamos el <strong>grupo versátil con solista</strong> o la <strong>orquesta tropical</strong> para los tiempos de fiesta, y el <strong>dueto de violín y guitarra</strong> para la recepción y cena. En eventos corporativos, el <strong>DJ de eventos empresariales</strong> o el <strong>saxofonista de lounge</strong> son opciones elegantes y versátiles.
-          </p>
-          <p>
-            También contamos con <strong>mariachi para quinceañeras</strong>, <strong>banda sinaloense</strong> para fiestas norteñas, <strong>música regional mexicana</strong> y <strong>conjunto de jazz</strong> para cócteles. Todos nuestros artistas tienen experiencia comprobada en eventos de gran formato. Cotiza la combinación perfecta de géneros y formatos musicales para tu celebración.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       <section className="py-14 px-4">
         <div className="max-w-7xl mx-auto">

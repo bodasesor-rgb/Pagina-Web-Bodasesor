@@ -1,7 +1,9 @@
-import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { COLGANTES, ColganteCat } from "../data/colgantes-products";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un colgante premium para mi evento. ¿Me pueden dar información?");
@@ -14,7 +16,8 @@ const CATEGORIES: { key: ColganteCat; label: string; desc: string }[] = [
 ];
 
 export default function ColgantesPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("colgantes", "Colgantes Decorativos");
   return (
     <div className="min-h-screen bg-white">
 
@@ -27,11 +30,25 @@ export default function ColgantesPage() {
             <span className="text-white/80">Colgantes Premium</span>
           </nav>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-            Colgantes Premium{city ? ` en ${city.name}` : ''}
+            {displayH1}
           </h1>
-          <p className="text-white/70 font-serif text-lg md:text-xl max-w-2xl mx-auto mb-8">
-            Instalaciones de techo que transforman cualquier espacio en un escenario mágico. Diseños únicos para bodas, galas y eventos de alto nivel.
+          <p className={`text-white/70 font-serif text-lg md:text-xl max-w-2xl mx-auto ${cityCopy?.zones?.length ? "mb-4" : "mb-8"}`}>
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              "Instalaciones de techo que transforman cualquier espacio en un escenario mágico. Diseños únicos para bodas, galas y eventos de alto nivel."
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-[#8a9bb5] font-serif text-sm max-w-2xl mx-auto mb-8">
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+              <HighlightKeywords
+                text={cityCopy.zones.join(" · ")}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : null}
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -54,6 +71,28 @@ export default function ColgantesPage() {
           <span>Cobertura CDMX y área metropolitana</span>
         </div>
       </div>
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            <strong>Colgantes decorativos</strong> para techo
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : florales, luminosos y estructuras de gran formato con instalación incluida.
+          </p>
+        }
+      />
 
       {/* Category quick-nav */}
       <section className="py-10 px-4 bg-white">

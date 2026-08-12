@@ -2,7 +2,9 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { SHOWS, SHOWS_BY_CATEGORY } from "../data/shows-products";
 import type { ShowsProduct } from "../data/shows-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 import { Drum, Sparkles, Zap, CircleDot, CheckCircle2 } from "lucide-react";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -16,7 +18,8 @@ const categoryConfig = {
 };
 
 export default function ShowsPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("shows", "Shows y Entretenimiento");
   return (
     <div className="min-h-screen bg-white">
 
@@ -30,11 +33,25 @@ export default function ShowsPage() {
               <span className="text-white/80">Shows</span>
             </nav>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Shows y Entretenimiento{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              El espectáculo que hace que tu evento sea irrepetible. Percusión, danza, circo y tecnología — todo bajo un mismo catálogo.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "El espectáculo que hace que tu evento sea irrepetible. Percusión, danza, circo y tecnología — todo bajo un mismo catálogo."
+              )}
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               28 shows disponibles. Percusión, danza, tecnología, circo, Blue Man, estatuas vivientes y más — cada acto diseñado para crear el momento que todos recordarán.
             </p>
@@ -67,20 +84,27 @@ export default function ShowsPage() {
         </div>
       </div>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            Nuestro catálogo de <strong>shows y entretenimiento para eventos</strong> en México es el más completo del mercado. Contamos con <strong>batucada brasileña</strong>, <strong>tambores LED</strong>, <strong>Laser Man</strong>, <strong>robot de luz</strong>, <strong>show de fuego</strong> y <strong>bailarinas de Las Vegas</strong>. Cada acto está diseñado para crear un momento inolvidable en tu boda, quinceañera, fiesta o evento corporativo.
+            Catálogo de <strong>shows y entretenimiento</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : percusión, danza, circo y tecnología para bodas y eventos.
           </p>
-          <p>
-            En la categoría de circo ofrecemos <strong>acrobacias en telas aéreas</strong>, <strong>aro aéreo</strong>, <strong>Cyr Wheel</strong>, <strong>contorsionistas</strong>, <strong>malabares</strong>, <strong>hula hula</strong>, <strong>mástil chino</strong> y <strong>pole dance artístico</strong>. Cada número dura aproximadamente 6 minutos y puede combinarse con otros actos para crear un espectáculo a medida.
-          </p>
-          <p>
-            También disponemos de <strong>shows de tecnología e iluminación</strong>: <strong>Illuminates Pixel</strong>, <strong>hologramas</strong>, <strong>danza regional mexicana</strong> y <strong>Krystal Dance</strong>. Contratamos artistas profesionales con experiencia en grandes eventos, incluyendo transmisiones en vivo. Solicita tu cotización personalizada y elige los shows que mejor se adapten a tu celebración.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       {/* Categorías */}
       <section className="py-10 px-4 bg-white border-b border-gray-100">

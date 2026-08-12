@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { COMBINACIONES } from "../data/combinaciones-products";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -17,7 +19,8 @@ function WaSvg() {
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
 
 export default function CombinacionesPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("combinaciones-mesas-sillas", "Combinaciones de Mesas y Sillas");
   useEffect(() => {
     document.title = 'Catálogo de Combinaciones de Mesas y Sillas | Bodasesor';
   }, []);
@@ -38,11 +41,25 @@ export default function CombinacionesPage() {
             <span className="text-white/80">Combinaciones</span>
           </nav>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
-            Catálogo de Combinaciones{city ? ` en ${city.name}` : ''}
+            {displayH1}
           </h1>
-          <p className="text-lg md:text-xl text-white/75 font-serif max-w-2xl mx-auto mb-8">
-            Las combinaciones de mesa y silla más elegantes y solicitadas — selecciona la que más te guste y cotiza al instante
+          <p className={`text-lg md:text-xl text-white/75 font-serif max-w-2xl mx-auto ${cityCopy?.zones?.length ? "mb-4" : "mb-8"}`}>
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              "Las combinaciones de mesa y silla más elegantes y solicitadas — selecciona la que más te guste y cotiza al instante"
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-[#8a9bb5] font-serif text-sm max-w-2xl mx-auto mb-8">
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+              <HighlightKeywords
+                text={cityCopy.zones.join(" · ")}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : null}
           <div className="flex flex-wrap gap-4 justify-center">
             <a
               href={waGeneral}
@@ -71,6 +88,28 @@ export default function CombinacionesPage() {
           <span>+1,000 eventos realizados</span>
         </div>
       </section>
+
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
+          <p>
+            <strong>Combinaciones de mesas y sillas</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : sets listos para cotizar con entrega, armado y retiro incluidos.
+          </p>
+        }
+      />
 
       {/* Grid de combinaciones */}
       <section className="py-14 px-4">

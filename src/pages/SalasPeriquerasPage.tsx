@@ -1,7 +1,9 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { SALAS_CATALOG, PERIQUERAS_CATALOG } from "../data/salas-periqueras-products";
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -39,7 +41,8 @@ function ProductCard({ name, img, href, waMsg }: { name: string; img: string; hr
 }
 
 export default function SalasPeriquerasPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("salas-periqueras", "Salas y Periqueras");
   const waGeneral = WA_BASE + encodeURIComponent('Hola, me gustaría cotizar salas o periqueras para mi evento.');
 
   return (
@@ -54,11 +57,25 @@ export default function SalasPeriquerasPage() {
             <span className="text-white/80">Salas y Periqueras</span>
           </nav>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
-            Salas y Periqueras{city ? ` en ${city.name}` : ''}
+            {displayH1}
           </h1>
-          <p className="text-lg md:text-xl text-white/75 font-serif max-w-2xl mx-auto mb-8">
-            Transforma cualquier espacio con nuestro catálogo completo de salas de estar y periqueras — estilo, comodidad y elegancia para tu evento
+          <p className={`text-lg md:text-xl text-white/75 font-serif max-w-2xl mx-auto ${cityCopy?.zones?.length ? "mb-4" : "mb-8"}`}>
+            {displayHeadline ? (
+              <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+            ) : (
+              "Transforma cualquier espacio con nuestro catálogo completo de salas de estar y periqueras — estilo, comodidad y elegancia para tu evento"
+            )}
           </p>
+          {cityCopy?.zones?.length ? (
+            <p className="text-[#8a9bb5] font-serif text-sm max-w-2xl mx-auto mb-8">
+              {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+              <HighlightKeywords
+                text={cityCopy.zones.join(" · ")}
+                keywords={keywords}
+                className="font-bold text-white"
+              />
+            </p>
+          ) : null}
           <div className="flex flex-wrap gap-4 justify-center">
             <a href={waGeneral} target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#0d6849] hover:bg-[#0a5740] text-white px-7 py-3 rounded-xl font-bold font-serif transition-all duration-300 hover:scale-105">
@@ -85,20 +102,27 @@ export default function SalasPeriquerasPage() {
         </div>
       </section>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            Las <strong>salas de estar para eventos</strong> y las <strong>periqueras para eventos</strong> son el complemento perfecto para cualquier celebración. Nuestro catálogo incluye <strong>salas lounge elegantes</strong>, <strong>salas industriales estilo loft</strong>, <strong>salas minimalistas en blanco</strong>, <strong>salas capitonadas vintage</strong> y <strong>salas de terciopelo premium</strong>. Cada conjunto está disponible en diferentes colores y configuraciones para adaptarse a la paleta de tu evento.
+            Renta de <strong>salas y periqueras</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : lounge, industrial, minimalista y periqueras de cóctel con entrega y armado.
           </p>
-          <p>
-            Las <strong>periqueras para boda y quinceañera</strong> que ofrecemos van desde modelos clásicos de madera hasta <strong>periqueras de mármol</strong>, <strong>periqueras industriales de metal negro</strong>, <strong>periqueras transparentes de acrílico</strong> y <strong>periqueras doradas de lujo</strong>. Son ideales para zonas de coctel, áreas de descanso y espacios de conversación durante el evento.
-          </p>
-          <p>
-            Todos nuestros <strong>muebles para renta de eventos</strong> incluyen entrega, armado y retiro sin costo adicional. Atendemos la Ciudad de México, Estado de México, Querétaro, Puebla y toda la República Mexicana. Disponemos de inventario suficiente para eventos con más de 500 invitados. Solicita tu cotización y recibe propuesta de ambientación completa.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       {/* Jump nav */}
       <section className="bg-white border-b border-gray-100 sticky top-0 z-10">

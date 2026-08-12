@@ -1,6 +1,8 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
-import { useCity } from "../context/CityContext";
+import HighlightKeywords from "../components/HighlightKeywords";
+import CityHubSeoSections from "../components/CityHubSeoSections";
+import { useCityHubPage } from "../hooks/useCityHubPage";
 import { AUDIO_ILUMINACION } from "../data/audio-iluminacion-products";
 import type { AudioIluminacionProduct, AudioIluminacionCategory } from "../data/audio-iluminacion-products";
 
@@ -53,7 +55,8 @@ function ProductCard({ product }: { product: AudioIluminacionProduct }) {
 }
 
 export default function AudioIluminacionPage() {
-  const { city } = useCity();
+  const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
+    useCityHubPage("audio-iluminacion-video", "Audio, Iluminación y Video");
   const categories: AudioIluminacionCategory[] = ['audio', 'iluminacion', 'video'];
 
   return (
@@ -64,11 +67,25 @@ export default function AudioIluminacionPage() {
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#8a9bb5] mb-3">Bodasesor Eventos</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-              Audio, Iluminación y Video{city ? ` en ${city.name}` : ''}
+              {displayH1}
             </h1>
             <p className="text-white/70 font-serif text-lg mb-4">
-              Transformamos cada celebración en una experiencia sensorial inolvidable con tecnología de punta y equipo profesional.
+              {displayHeadline ? (
+                <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
+              ) : (
+                "Transformamos cada celebración en una experiencia sensorial inolvidable con tecnología de punta y equipo profesional."
+              )}
             </p>
+            {cityCopy?.zones?.length ? (
+              <p className="text-[#8a9bb5] font-serif text-sm mb-4">
+                {city ? `Cobertura en ${city.name}:` : "Cobertura nacional:"}{" "}
+                <HighlightKeywords
+                  text={cityCopy.zones.join(" · ")}
+                  keywords={keywords}
+                  className="font-bold text-white"
+                />
+              </p>
+            ) : null}
             <p className="text-[#8a9bb5] font-serif text-sm mb-8">
               {AUDIO_ILUMINACION.length} servicios disponibles. Técnicos especializados con experiencia en bodas, corporativos y eventos de gran formato.
             </p>
@@ -97,20 +114,27 @@ export default function AudioIluminacionPage() {
         </div>
       </section>
 
-      {/* SEO Description */}
-      <section className="py-10 px-4 bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 font-serif text-gray-600 text-sm leading-relaxed">
+      <CityHubSeoSections
+        cityName={city?.name}
+        displaySectionTitle={displaySectionTitle}
+        keywords={keywords}
+        description={cityCopy?.description}
+        localBullets={cityCopy?.localBullets}
+        faqs={cityCopy?.faqs}
+        fallback={
           <p>
-            El <strong>audio profesional para eventos</strong> es el pilar de cualquier celebración memorable. Contamos con <strong>sistemas de sonido Line Array</strong>, <strong>consolas digitales</strong>, <strong>micrófonos inalámbricos de solapa y diadema</strong> y <strong>monitores de escenario</strong> para artistas en vivo. Nuestros técnicos de sonido tienen experiencia en bodas, congresos, conciertos y festivales.
+            Producción de <strong>audio, iluminación y video</strong>
+            {city ? (
+              <>
+                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
+              </>
+            ) : (
+              <> en México</>
+            )}
+            : sonido profesional, iluminación de impacto y pantallas con técnicos certificados.
           </p>
-          <p>
-            En <strong>iluminación para eventos</strong> ofrecemos desde <strong>guirnaldas Edison vintage</strong>, <strong>cascadas LED</strong>, <strong>uplighting de salón</strong> y <strong>gobos de iniciales</strong> hasta <strong>cabezas móviles robóticas</strong>, <strong>efectos láser</strong>, <strong>máquinas de humo bajo</strong>, <strong>cañones de confeti</strong> y <strong>iluminación arquitectónica de fachadas</strong>. Cada diseño de iluminación se programa a medida para tu paleta de colores y estilo de evento.
-          </p>
-          <p>
-            Para <strong>video y pantallas en eventos</strong> contamos con <strong>pantallas LED gigantes</strong>, <strong>proyectores de alta luminosidad</strong>, <strong>transmisión en vivo para bodas</strong>, <strong>camarografía profesional</strong> y <strong>video mapping</strong>. Todos los servicios incluyen transporte, montaje, operación técnica durante el evento y desmontaje al finalizar.
-          </p>
-        </div>
-      </section>
+        }
+      />
 
       {/* ── Categorías índice ── */}
       <section className="bg-[#f5efe8] border-b border-[#162040]/10 py-6 px-4 sticky top-0 z-10">
