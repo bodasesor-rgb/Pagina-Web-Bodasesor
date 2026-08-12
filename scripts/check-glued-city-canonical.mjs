@@ -33,6 +33,8 @@ function stripCityFromSegment(segment) {
 
 function toCanonical(pathname) {
   const normalized = pathname.replace(/\/+$/, '') || '/'
+  // Match edge skip: blog slugs are never city-canonicalized.
+  if (normalized === '/blog' || normalized.startsWith('/blog/')) return normalized
   const segments = normalized.split('/').filter(Boolean)
   if (!segments.length) return normalized
   const last = segments[segments.length - 1]
@@ -61,6 +63,9 @@ const cases = [
   ['/bodas/ciudad-de-mexico', '/bodas/ciudad-de-mexico'],
   ['/carpas/morelia', '/carpas/morelia'],
   ['/blog', '/blog'],
+  // Must NOT become /blog/.../ciudad-de-mexico
+  ['/blog/salon-de-eventos-consejos-para-elegir-salon-de-bodas-cdmx', '/blog/salon-de-eventos-consejos-para-elegir-salon-de-bodas-cdmx'],
+  ['/blog/bodasesor-fechas-y-preventas-de-conciertos-en-cdmx', '/blog/bodasesor-fechas-y-preventas-de-conciertos-en-cdmx'],
 ]
 
 let failed = 0

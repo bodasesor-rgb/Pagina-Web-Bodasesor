@@ -51,12 +51,24 @@ const SKIP_PREFIXES = [
   '/products/',
   '/collections/',
   '/blogs/',
+  // Static blog posts keep city words in the slug (e.g. ...-bodas-cdmx).
+  // Never rewrite /blog/* into /blog/.../ciudad-de-mexico.
+  '/blog/',
+  '/blog',
   '/pages/',
+  '/buscar',
+  '/galeria',
+  '/catalogos',
+  '/aviso-de-privacidad',
+  '/terminos-y-condiciones',
+  '/quienes-somos',
 ]
 
 function shouldSkip(pathname: string): boolean {
   if (pathname === '/' || pathname === '') return true
-  if (SKIP_PREFIXES.some((p) => pathname.startsWith(p))) return true
+  // Blog slugs are never city routes (…-bodas-cdmx must stay intact).
+  if (pathname === '/blog' || pathname.startsWith('/blog/')) return true
+  if (SKIP_PREFIXES.some((p) => pathname === p || pathname.startsWith(p))) return true
   const last = pathname.split('/').pop() || ''
   if (last.includes('.') && !last.startsWith('.')) return true
   return false
@@ -146,7 +158,12 @@ export default async function handler(request: Request, context: Context) {
     const ct = response.headers.get('content-type') || ''
     if (ct.includes('text/html')) {
       const html = await response.clone().text()
-      if (html.includes('seo-service-hero')) {
+      // Preserve Nexus landings AND static blog HTML (blogs use seo-blog-*, not seo-service-hero).
+      if (
+        html.includes('seo-service-hero') ||
+        html.includes('seo-blog-') ||
+        html.includes('seo-blog-conversion')
+      ) {
         return response
       }
     }
