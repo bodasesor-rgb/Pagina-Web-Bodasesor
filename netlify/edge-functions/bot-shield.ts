@@ -229,9 +229,9 @@ function parseAgentCategory(header: string | null): { category: string; subcateg
 function shouldBlockCategory(category: string, subcategory: string): string | null {
   if (!category) return null
   if (category === 'tooling' && subcategory === 'netlify-service') return null
-  // Netlify may tag Google/Bing as crawler;search — only block unknown crawlers.
-  // Known search engines already returned via ALLOW UA match above.
-  if (category === 'crawler' && /^(search|seo)$/i.test(subcategory)) {
+  // Netlify may tag Google/Bing as crawler;search — allow that subcategory.
+  // Do NOT blanket-allow crawler;seo (Ahrefs/etc. still hit BLOCK via UA).
+  if (category === 'crawler' && /^search$/i.test(subcategory)) {
     return null
   }
 

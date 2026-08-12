@@ -24,6 +24,9 @@ jobs:
       - name: Guard redirect config (pre-build)
         run: node scripts/guard-redirects.mjs
 
+      - name: Verify bot-shield allows Googlebot / blocks AI crawlers
+        run: npm run verify:bot-shield
+
       - name: Build with redirect verification
         run: npm run build
         env:
