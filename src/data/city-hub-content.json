@@ -1,107 +1,893 @@
 {
-  "banquetes/aguascalientes": {
-    "h1": "Banquetes para Bodas y Eventos en Aguascalientes",
-    "headline": "El sabor ideal para tu boda o XV años en las haciendas y salones de Aguascalientes.",
+  "banquetes/acapulco": {
+    "h1": "Banquetes para eventos en Acapulco",
+    "headline": "Gastronomía de alta calidad frente al mar para tu evento especial",
     "description": [
-      "Organizar un banquete en Aguascalientes exige entender la dinámica de sus célebres haciendas hidrocálidas y salones campestres. Ya sea que planees una boda elegante cerca de la zona Campestre o unos XV años tradicionales al Norte de la ciudad, coordinamos menús por tiempos y banquetes tipo buffet que se adaptan al clima del Bajío. Aseguramos que la cocina mantenga la temperatura y sazón perfectas desde la recepción hasta el platillo trasnochado.",
-      "Nuestros proveedores locales cuentan con experiencia logística para montar banquetes tanto en recintos cerrados del Centro Histórico como en jardines abiertos rumbo a Villasunción. Ofrecemos servicio completo de meseros capacitados, loza, cristalería y montaje de estaciones de bebidas. Nos encargamos de la coordinación técnica en cocinas móviles para que la atención en recintos campestres sea impecable.",
-      "Desde banquetes formales de tres o cuatro tiempos hasta banquetes de gala regionales para grandes celebraciones, personalizamos cada menú según el perfil de tus invitados. Cada propuesta incluye degustación previa en la capital para garantizar la calidad en sazón, presentación y tiempos de servicio. Permítenos llevar una experiencia gastronómica memorable a tu evento en Aguascalientes."
+      "En Bodasesor entendemos que un evento en Acapulco requiere una propuesta culinaria que armonice con su entorno costero, desde cenas formales en elegantes salones hasta recepciones al aire libre. Nos especializamos en banquetes que integran ingredientes frescos de la región, diseñados específicamente para el clima cálido y las necesidades de los eventos destination.",
+      "Nuestra logística está preparada para operar con excelencia en zonas estratégicas como Diamante, Punta Diamante y Puerto Marqués, donde el montaje y la coordinación son fundamentales para el éxito de tu celebración. Ya sea que planees una boda íntima o un gran banquete corporativo, cuidamos cada detalle del servicio, desde el emplatado hasta la atención impecable de nuestro personal.",
+      "Olvídate de las complicaciones técnicas del entorno playero y confía en nuestra experiencia profesional. Adaptamos nuestros menús de tiempos, bufetes y estaciones de alimentos para mantener la calidad y temperatura ideales, garantizando que tus invitados disfruten de una experiencia gastronómica memorable bajo el sol o a la luz de la luna."
     ],
-    "seoTitle": "Banquetes en Aguascalientes | Bodas y Eventos | Bodasesor",
-    "seoDescription": "Banquetes en Aguascalientes para bodas y XV años. Menús de tiempos, buffet y servicio profesional en haciendas y salones del Bajío.",
+    "seoTitle": "Banquetes en Acapulco | Bodasesor para Eventos y Bodas",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Acapulco. Menús personalizados, servicio profesional en Diamante, Punta Diamante y toda la zona costera.",
     "localBullets": [
-      "Cobertura en salones campestres y jardines de la zona Norte, Campestre y Villasunción.",
-      "Logística adaptada a haciendas al aire libre con equipamiento de cocina temporal.",
-      "Menús de tiempos, buffet y banquetes de trasnochados para bodas y XV años.",
-      "Degustación previa en Aguascalientes y servicio capacitado de meseros locales."
+      "Menús diseñados para eventos en playa y climas tropicales.",
+      "Logística especializada en hoteles y residencias en zona Diamante.",
+      "Servicio de meseros capacitados para eventos de alto perfil.",
+      "Gestión de banquetes formales en terrazas con vista al mar.",
+      "Opciones de catering adaptadas a la infraestructura de Puerto Marqués."
     ],
     "faqs": [
       {
-        "q": "¿Cómo gestionan el banquete en haciendas o jardines campestres fuera del Centro de Aguascalientes?",
-        "a": "Las banqueteras integran equipo de conservación térmica y transporte especializado, garantizando que los platillos lleguen a la temperatura ideal a cualquier recinto de la periferia o zona Campestre."
+        "q": "¿Es posible realizar banquetes en villas privadas de Punta Diamante?",
+        "a": "Sí, contamos con la logística y el equipo necesario para montar servicios de banquete de alta calidad en residencias privadas, asegurando el mismo estándar profesional que en un hotel."
       },
       {
-        "q": "¿Qué tipo de menú se recomienda para una boda o XV años en el clima de Aguascalientes?",
-        "a": "Para eventos en salones campestres o jardines, se recomiendan menús de 3 tiempos con entradas templadas o frescas y cortes de carne. Para la noche, las estaciones de trasnochado con bocadillos calientes son una opción muy solicitada."
+        "q": "¿Cómo garantizan la frescura de los alimentos en el clima de Acapulco?",
+        "a": "Utilizamos equipo de refrigeración y transporte especializado para asegurar que cada platillo mantenga la temperatura y calidad óptima desde nuestra cocina hasta tu mesa, sin importar el calor."
       },
       {
-        "q": "¿Con cuánta anticipación debo contratar el servicio de banquete en Aguascalientes?",
-        "a": "Se aconseja reservar entre 6 y 9 meses antes de la fecha, especialmente para fechas de alta demanda en el Bajío durante los meses de clima templado."
+        "q": "¿Puedo incluir menús con mariscos locales en mi evento?",
+        "a": "Absolutamente. Podemos diseñar propuestas gastronómicas que resalten la frescura de los productos de Guerrero, adaptando las recetas a los tiempos formales o estaciones de comida que elijas."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "acapulco",
+    "generatedAt": "2026-08-12T04:17:27.470Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/aguascalientes": {
+    "h1": "Banquetes en Aguascalientes: Calidad y Tradición para tus Eventos",
+    "headline": "Creamos experiencias gastronómicas memorables en el corazón del Bajío, adaptadas al estilo y elegancia que tu celebración merece.",
+    "description": [
+      "En Bodasesor entendemos que la cocina es el alma de cualquier festejo en Aguascalientes. Diseñamos menús a la medida, desde banquetes formales por tiempos hasta estaciones gourmet, cuidando cada detalle de la presentación y el servicio para eventos en zonas emblemáticas como el Campestre o el Centro.",
+      "La logística en nuestra ciudad requiere precisión, especialmente si tu evento se celebra en las hermosas haciendas de la zona Norte o en espacios versátiles cerca de Villasunción. Coordinamos el montaje integral, asegurando que el banquete armonice perfectamente con el mobiliario y la atmósfera de tu boda o XV años.",
+      "Contamos con una amplia experiencia adaptando el servicio de catering a los espacios más representativos de la región. Nuestro equipo se encarga de la gestión total del banquete para que tú solo disfrutes de tu día rodeado de tus invitados en cualquier punto del estado."
+    ],
+    "seoTitle": "Banquetes en Aguascalientes | Bodas, XV años y Eventos",
+    "seoDescription": "Expertos en banquetes y catering en Aguascalientes. Menús personalizados para bodas y XV años en las mejores haciendas y salones de la región.",
+    "localBullets": [
+      "Menús diseñados con ingredientes de alta calidad locales",
+      "Servicio especializado para haciendas en la zona del Bajío",
+      "Montaje y logística en colonias como Campestre y el Centro",
+      "Atención personalizada para bodas de destino y eventos sociales",
+      "Coordinación integral con proveedores de mobiliario y vajilla"
+    ],
+    "faqs": [
+      {
+        "q": "¿Pueden realizar el banquete en una hacienda fuera de la ciudad de Aguascalientes?",
+        "a": "Sí, tenemos cobertura en todo el estado de Aguascalientes; la logística y transporte se cotizan de acuerdo a la ubicación exacta de tu evento."
+      },
+      {
+        "q": "¿Ofrecen opciones para menús vegetarianos o con restricciones alimenticias?",
+        "a": "Totalmente. Nuestro equipo de cocina puede diseñar un menú alternativo que se integre perfectamente con la propuesta principal, garantizando que todos tus invitados disfruten."
+      },
+      {
+        "q": "¿Cuál es el siguiente paso para cotizar un banquete con ustedes?",
+        "a": "Te invitamos a enviarnos un mensaje vía WhatsApp al +52 55 4008 0373 con la fecha tentativa, número de invitados y tipo de evento para brindarte una asesoría personalizada."
       }
     ],
     "hub": "banquetes",
     "city": "aguascalientes",
-    "generatedAt": "2026-08-12T03:56:46.368Z",
-    "model": "gemini-3.6-flash"
+    "generatedAt": "2026-08-12T04:17:23.863Z",
+    "model": "gemini-3.1-flash-lite"
   },
-  "banquetes/ciudad-de-mexico": {
-    "h1": "Banquetes para Bodas y Eventos en Ciudad de México",
-    "headline": "Catering de alta cocina y banquetes a la medida para tu evento en CDMX",
+  "banquetes/cancun": {
+    "h1": "Banquetes en Cancún para eventos inolvidables",
+    "headline": "Gastronomía de altura frente al Caribe para tus invitados",
     "description": [
-      "Planear un banquete en la Ciudad de México exige coordinar gastronomía de excelencia con la logística urbana de la capital. Ya sea que organices una boda boutique en una casona de la Roma Norte o una gran recepción en un jardín del Pedregal, adaptamos la propuesta culinaria a la infraestructura de cada espacio.",
-      "Diseñamos experiencias que van desde menús formales de tres o cuatro tiempos hasta propuestas contemporáneas de cocina de autor o buffet internacional. Consideramos los tiempos de traslado y el equipamiento técnico necesario para eventos en zonas como Polanco o Santa Fe, garantizando que cada platillo llegue a la temperatura ideal.",
-      "Además del menú, coordinamos al personal de meseros profesionales, la cristalería y la mantelería acorde al concepto visual de tu celebración. Nos encargamos del montaje operativo respetando los horarios y normativas de acceso de los principales salones y terrazas de la CDMX."
+      "Organizar un evento en Cancún requiere de una propuesta gastronómica a la altura del entorno paradisíaco que ofrece el Caribe mexicano. En Bodasesor diseñamos menús que integran sabores locales con técnicas internacionales, garantizando una experiencia culinaria impecable desde la Zona Hotelera hasta los desarrollos exclusivos de Puerto Cancún.",
+      "Entendemos la logística particular de los eventos 'destination' y las necesidades de los grupos que viajan a la Riviera Maya. Nuestro servicio de banquetes se adapta a la perfección tanto para recepciones íntimas en el Centro como para grandes celebraciones frente al mar, asegurando siempre puntualidad, frescura en los insumos y un servicio de meseros altamente capacitado.",
+      "Más allá de la comida, nos encargamos de la coordinación integral de la experiencia, cuidando cada detalle de la presentación para que tú solo disfrutes de tu día especial. Si planeas una boda o evento corporativo en la región, permítenos llevar nuestra calidad profesional a tu venue elegido, garantizando un montaje espectacular que armonice con la brisa marina."
     ],
-    "seoTitle": "Banquetes para Bodas en CDMX | Catering Bodasesor",
-    "seoDescription": "Cotiza banquetes en la Ciudad de México: menús por tiempos, buffet y catering para bodas o eventos en Polanco, Coyoacán y Santa Fe.",
+    "seoTitle": "Banquetes en Cancún | Bodas y Eventos en el Caribe",
+    "seoDescription": "Servicio profesional de banquetes en Cancún. Menús personalizados para bodas y eventos en Zona Hotelera, Puerto Cancún y Riviera Maya. Cotiza ahora.",
     "localBullets": [
-      "Servicio de banquetes adaptado a casonas históricas, salones y rooftops en Polanco, Roma Norte y Pedregal.",
-      "Logística con transporte térmico para superar las distancias y los tiempos de traslado en la CDMX.",
-      "Instalación de cocinas móviles equipadas para jardines y espacios al aire libre en Coyoacán y la zona metropolitana.",
-      "Personal de meseros profesional capacitado para banquetes masivos corporativos y bodas de alta gama."
+      "Menús diseñados para eventos destination y bodas internacionales.",
+      "Logística especializada en hoteles y salones de la Zona Hotelera.",
+      "Propuestas gastronómicas que fusionan lo mejor de la cocina mexicana y caribeña.",
+      "Capacidad de atención para eventos locales en el Centro y zonas aledañas.",
+      "Servicio integral que incluye montaje, mobiliario y personal de meseros."
     ],
     "faqs": [
       {
-        "q": "¿Cómo coordinan el banquete considerando el tráfico de la CDMX?",
-        "a": "Planificamos rutas logísticas con horarios de holgura y utilizamos equipos de mantenimiento térmico para asegurar que la comida mantenga la temperatura y presentación óptimas al llegar al venue."
+        "q": "¿Pueden realizar el banquete en cualquier hotel o venue de Cancún?",
+        "a": "Sí, contamos con la experiencia y logística necesaria para trabajar en diversos espacios de Cancún, desde complejos en la Zona Hotelera hasta haciendas y salones en la Riviera Maya cercana."
       },
       {
-        "q": "¿Ofrecen banquetes en terrazas o casonas sin cocina equipada en Roma Norte o Coyoacán?",
-        "a": "Sí, montamos cocinas móviles eficientes con equipo portátil de cocción y ensamble para operar sin inconvenientes en espacios que no cuentan con área de cocina propia."
+        "q": "¿Qué opciones de menú manejan para invitados internacionales?",
+        "a": "Diseñamos propuestas versátiles que combinan sabores locales auténticos con estándares internacionales, asegurando que todos tus invitados disfruten de una experiencia culinaria de primer nivel."
       },
       {
-        "q": "¿Con cuánto tiempo de anticipación conviene cotizar un banquete en la Ciudad de México?",
-        "a": "Sugerimos reservar con 6 a 9 meses de anticipación, especialmente para fechas de alta demanda durante la temporada de bodas en primavera y otoño."
+        "q": "¿Cómo puedo solicitar una cotización para mi evento en Cancún?",
+        "a": "Es muy sencillo; contáctanos vía WhatsApp al +52 55 4008 0373 con los detalles de tu fecha, número de invitados y tipo de evento para brindarte una atención personalizada."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "cancun",
+    "generatedAt": "2026-08-12T04:17:31.044Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/ciudad-de-mexico": {
+    "h1": "Banquetes para Eventos en Ciudad de México",
+    "headline": "Experiencia gastronómica y servicio de excelencia para tus eventos en CDMX",
+    "description": [
+      "La planeación de un evento en la Ciudad de México requiere precisión, desde la elegancia de un banquete formal en Polanco hasta una recepción contemporánea en un rooftop de la Roma Norte. En Bodasesor diseñamos propuestas gastronómicas que se adaptan a la sofisticación de la metrópoli, garantizando que la calidad del servicio sea impecable sin importar el número de invitados.",
+      "Entendemos la logística que implica organizar celebraciones en zonas de alta movilidad como Santa Fe o el Pedregal. Por ello, nos encargamos de toda la gestión operativa del banquete, permitiéndote disfrutar de tu boda o evento corporativo con la tranquilidad de contar con expertos en el manejo de tiempos, montaje y servicio de meseros altamente capacitados.",
+      "Nuestras opciones de menú son personalizables y reflejan las tendencias actuales de la capital, combinando técnicas de alta cocina con una presentación impecable. Ya sea que busques un banquete por tiempos, un buffet versátil o estaciones de comida gourmet, adaptamos nuestra propuesta al estilo de tu evento para crear recuerdos memorables en cada detalle."
+    ],
+    "seoTitle": "Banquetes para Eventos en CDMX | Catering y Menús | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos corporativos en CDMX. Menús personalizados, servicio profesional y logística impecable en toda la ciudad.",
+    "localBullets": [
+      "Servicio especializado para salones, jardines y espacios exclusivos en Polanco y Condesa.",
+      "Logística eficiente para eventos corporativos en el área de Santa Fe e Interlomas.",
+      "Coordinación de montaje para casonas históricas y espacios culturales en Coyoacán.",
+      "Propuestas gastronómicas adaptadas a la versatilidad de los venues en el Pedregal."
+    ],
+    "faqs": [
+      {
+        "q": "¿Cuentan con capacidad para eventos de gran formato en la CDMX?",
+        "a": "Sí, tenemos la infraestructura necesaria para gestionar banquetes de gran escala en la capital, asegurando la misma calidad y frescura en cada platillo."
+      },
+      {
+        "q": "¿Cómo manejan la logística de banquete en zonas con tráfico complicado como Santa Fe o Polanco?",
+        "a": "Nuestra experiencia logística en CDMX nos permite planificar los tiempos de carga, montaje y servicio con anticipación, evitando contratiempos en zonas de alta movilidad."
+      },
+      {
+        "q": "¿Puedo solicitar una prueba de menú antes de contratar para mi boda en CDMX?",
+        "a": "Claro, una vez que iniciamos el proceso de cotización por WhatsApp, podemos programar una degustación para que valides la calidad de nuestros servicios."
       }
     ],
     "hub": "banquetes",
     "city": "ciudad-de-mexico",
-    "generatedAt": "2026-08-12T03:56:16.977Z",
-    "model": "gemini-3.6-flash"
+    "generatedAt": "2026-08-12T04:17:16.442Z",
+    "model": "gemini-3.1-flash-lite"
   },
-  "banquetes/estado-de-mexico": {
-    "h1": "Banquetes para Bodas y Eventos en Estado de México",
-    "headline": "Catering de alta cocina para tu gran día en Huixquilucan, Toluca y el Poniente del EdoMex.",
+  "banquetes/cozumel": {
+    "h1": "Banquetes para Eventos en Cozumel",
+    "headline": "Experiencias gastronómicas memorables frente al Caribe",
     "description": [
-      "Organizar un banquete en el Estado de México exige entender la diversidad de sus locaciones, desde las exclusivas haciendas y salones en Interlomas y Huixquilucan hasta los amplios jardines en Metepec o Toluca. Diseñamos menús por tiempos y banquetes tipo buffet que se adaptan tanto al clima fresco del Valle de Toluca como al estilo elegante de la zona Poniente. Nos encargamos de coordinar una propuesta gastronómica a la medida para que tus invitados disfruten una experiencia culinaria memorable.",
-      "La logística de banquetes en el EdoMex requiere una planeación puntual, considerando los trayectos desde la Ciudad de México y los accesos a zonas residenciales o campestres en Naucalpan y Atizapán. Nuestro servicio contempla personal de meseros profesional, equipo de conservación térmica y cocina móvil para garantizar la máxima frescura en cada platillo. De este modo aseguramos un servicio fluido e impecable, sin importar la distancia del venue que elijas.",
-      "Ya sea que planees una boda íntima en las lomas de Naucalpan o una gran recepción de XV años en el Valle de Toluca, adaptamos la vajilla, el montaje y la cocina a tus necesidades. Ofrecemos degustaciones previas y menús personalizados que combinan insumos de alta calidad con técnicas contemporáneas. Déjanos la parte operativa y disfruta tu celebración con total tranquilidad."
+      "Organizar un banquete en la isla requiere precisión logística y un conocimiento profundo del entorno. En Cozumel, coordinamos desde eventos íntimos en el Centro hasta celebraciones espectaculares en las playas del Sur, asegurando que cada detalle llegue a su destino a tiempo.",
+      "Nuestros menús están diseñados para adaptarse a la frescura de la región, integrando ingredientes locales con técnicas de cocina formal. Ya sea una boda destino o una celebración corporativa, nos encargamos de que la calidad del servicio se mantenga impecable a pesar de las condiciones tropicales.",
+      "Entendemos que los eventos en la isla dependen de una cadena de suministro eficiente. Por ello, gestionamos toda la operación para que no tengas que preocuparte por la logística del ferry o el transporte de equipos especializados a las zonas Norte y Sur."
     ],
-    "seoTitle": "Banquetes para Bodas en Estado de México | Bodasesor",
-    "seoDescription": "Servicio de banquete y catering para bodas en EdoMex. Cobertura en Interlomas, Naucalpan, Metepec y Valle de Toluca. ¡Cotiza tu menú ideal!",
+    "seoTitle": "Banquetes en Cozumel para Bodas y Eventos | Bodasesor",
+    "seoDescription": "Organizamos banquetes de alta calidad en Cozumel. Experiencia en logística para eventos frente al mar, desde el Centro hasta las mejores playas.",
     "localBullets": [
-      "Cobertura en la zona Poniente (Interlomas, Huixquilucan, Naucalpan, Atizapán) y el Valle de Toluca (Metepec).",
-      "Logística especializada para traslados y tiempos entre la CDMX y venues del Estado de México.",
-      "Menús y cadenas de temperatura adaptados al clima cambiante de la región.",
-      "Capacidad operativa para grandes jardines, haciendas y salones cerrados."
+      "Logística especializada para eventos en zona hotelera y playas privadas.",
+      "Menús personalizados con ingredientes frescos y locales de la isla.",
+      "Servicio integral de banquetes para eventos tipo destino.",
+      "Gestión de equipo y mobiliario adaptado al clima de Quintana Roo.",
+      "Coordinación de personal capacitado para eventos en el Centro y zonas costeras."
     ],
     "faqs": [
       {
-        "q": "¿Tienen cobertura de banquetes tanto en el Valle de Toluca como en la zona Poniente del EdoMex?",
-        "a": "Sí, cubrimos eventos en Toluca, Metepec, Interlomas, Huixquilucan, Naucalpan y Atizapán, coordinando la logística de traslado e instalación de acuerdo con la ubicación de tu salón o jardín."
+        "q": "¿Cómo coordinan el transporte de mobiliario y equipo a la isla?",
+        "a": "Contamos con una logística probada para el traslado seguro de todo lo necesario a Cozumel, garantizando que el mobiliario y equipo lleguen en perfectas condiciones para tu fecha."
       },
       {
-        "q": "¿Cómo aseguran la temperatura e higiene de los alimentos en traslados largos dentro del Estado de México?",
-        "a": "Utilizamos transporte con control térmico y equipo de cocina portátil en el venue. Esto permite montar y emplatar al momento, garantizando que los banquetes mantengan su textura y temperatura ideal."
+        "q": "¿Pueden realizar banquetes en playas privadas o haciendas locales?",
+        "a": "Sí, tenemos experiencia trabajando en diversos puntos de la isla, desde zonas hoteleras hasta locaciones privadas en el Sur o Norte de Cozumel, adaptando nuestro montaje al espacio elegido."
       },
       {
-        "q": "¿Ofrecen servicio de banquetes para bodas al aire libre en jardines de Metepec o Atizapán?",
-        "a": "Por supuesto. Contamos con montaje completo, vajilla, cristalería y servicio de meseros adaptado a espacios abiertos, considerando carpas de apoyo operativas para el correcto flujo del banquete."
+        "q": "¿Cómo puedo solicitar una cotización para mi evento en Cozumel?",
+        "a": "Para brindarte un presupuesto preciso, contáctanos vía WhatsApp al +52 55 4008 0373 con los detalles de tu evento; así podremos considerar la logística específica de la isla."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "cozumel",
+    "generatedAt": "2026-08-12T04:17:34.374Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/cuernavaca": {
+    "h1": "Banquetes en Cuernavaca para Bodas y Eventos",
+    "headline": "Catering profesional en el corazón de la Ciudad de la Eterna Primavera",
+    "description": [
+      "Organizar un evento en Cuernavaca requiere una logística impecable que aproveche sus icónicos jardines y haciendas. En Bodasesor diseñamos propuestas gastronómicas que armonizan con el clima templado de la zona, asegurando que cada platillo mantenga su temperatura y calidad, ya sea en un evento al aire libre o bajo una estructura elegante.",
+      "Nuestra experiencia en la región nos permite coordinar banquetes de alto nivel tanto en zonas residenciales como Delicias y Ahuatepec, como en las amplias extensiones de Jiutepec o Temixco. Entendemos el ritmo de las celebraciones en Morelos, donde la frescura de los ingredientes locales y una presentación impecable son fundamentales para una experiencia inolvidable.",
+      "Desde el Centro histórico hasta los espacios privados más exclusivos, ofrecemos un servicio integral que incluye desde la planeación del menú hasta el montaje y atención de meseros. Nos encargamos de todos los detalles operativos, permitiendo que disfrutes al máximo de tu boda o evento social sin preocuparte por la logística del banquete."
+    ],
+    "seoTitle": "Banquetes en Cuernavaca | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Cuernavaca. Servicio profesional con menús personalizados, logística en jardines y haciendas de Morelos.",
+    "localBullets": [
+      "Menús diseñados para eventos en exteriores y jardines.",
+      "Logística especializada en haciendas de Cuernavaca y municipios aledaños.",
+      "Servicio de meseros con experiencia en eventos de etiqueta y sociales.",
+      "Propuestas gastronómicas adaptadas al clima de la Ciudad de la Eterna Primavera."
+    ],
+    "faqs": [
+      {
+        "q": "¿Atienden banquetes en jardines de Cuernavaca si no tienen cocina instalada?",
+        "a": "Sí, contamos con el equipo necesario para montar cocinas temporales de alta eficiencia en cualquier hacienda o jardín, garantizando la frescura y calidad de cada tiempo."
+      },
+      {
+        "q": "¿El servicio de banquete incluye el mobiliario y la mantelería?",
+        "a": "Podemos integrar el mobiliario, vajilla y mantelería dentro de tu cotización personalizada, asegurando que el estilo visual se adapte perfectamente al espacio elegido en Morelos."
+      },
+      {
+        "q": "¿Cómo puedo agendar una prueba de menú para mi boda en Cuernavaca?",
+        "a": "Para coordinar degustaciones y revisar propuestas detalladas, te invitamos a contactarnos vía WhatsApp al +52 55 4008 0373 donde definiremos los detalles logísticos de tu evento."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "cuernavaca",
+    "generatedAt": "2026-08-12T04:17:37.734Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/estado-de-mexico": {
+    "h1": "Banquetes en el Estado de México: Experiencias Gastronómicas",
+    "headline": "Catering profesional para eventos inolvidables en todo el Estado de México",
+    "description": [
+      "Organizar un evento en el Estado de México requiere un servicio de banquetes a la altura de la diversidad de sus espacios, desde las modernas residencias en Interlomas y Huixquilucan hasta los elegantes salones en Metepec. En Bodasesor nos especializamos en diseñar menús que se adaptan a la logística de cada zona, garantizando frescura y puntualidad en cada montaje.",
+      "Entendemos que la conectividad entre Naucalpan, Atizapán y la capital exige una ejecución impecable para que tus invitados disfruten sin preocupaciones. Nuestro equipo gestiona banquetes formales, estaciones de alimentos y buffets, cuidando cada detalle del servicio de meseros para que el protocolo de tu boda o XV años luzca impecable en cualquier recinto del Valle de Toluca.",
+      "Ya sea que busques una propuesta de cocina mexicana contemporánea o un banquete internacional, nuestra asesoría técnica asegura que la distribución del mobiliario y el servicio de bebidas complementen perfectamente tu menú. Nos enfocamos en transformar tu visión en una experiencia gastronómica que resalte la hospitalidad característica de los eventos en el EdoMex."
+    ],
+    "seoTitle": "Banquetes en el Estado de México | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y XV años en el Estado de México. Menús personalizados, servicio profesional y logística impecable en toda la entidad.",
+    "localBullets": [
+      "Logística especializada para eventos en Interlomas, Huixquilucan y Naucalpan.",
+      "Montajes personalizados para salones y jardines en el área de Metepec y Toluca.",
+      "Menús diseñados para eventos de alto perfil en zonas residenciales de Atizapán.",
+      "Gestión integral de personal de servicio y mobiliario para bodas en el EdoMex.",
+      "Propuestas de catering adaptables a las distancias de la zona metropolitana."
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en salones privados de Interlomas y Huixquilucan?",
+        "a": "Sí, contamos con amplia experiencia operando en los principales recintos y residencias de estas zonas, adaptándonos siempre a las normas y logística específica de cada espacio."
+      },
+      {
+        "q": "¿El servicio de banquete incluye el personal de meseros para eventos en Metepec o Toluca?",
+        "a": "Así es, nuestro servicio de banquete integral incluye personal altamente capacitado, desde meseros y capitanes hasta personal de cocina, para asegurar que la atención sea excelente durante todo tu evento."
+      },
+      {
+        "q": "¿Cómo coordinan la logística si mi evento es en una zona apartada del Estado de México?",
+        "a": "Realizamos una planeación detallada basada en la ubicación exacta de tu evento. Evaluamos las necesidades de traslado y tiempos de montaje para garantizar que el banquete llegue con la calidad y frescura necesarias, sin importar el punto del Estado de México donde se realice."
       }
     ],
     "hub": "banquetes",
     "city": "estado-de-mexico",
-    "generatedAt": "2026-08-12T03:56:34.999Z",
-    "model": "gemini-3.6-flash"
+    "generatedAt": "2026-08-12T04:17:20.479Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/guadalajara": {
+    "h1": "Banquetes para eventos en Guadalajara: Experiencia Gastronómica",
+    "headline": "Creamos banquetes memorables que celebran la tradición y el buen gusto tapatío.",
+    "description": [
+      "En Guadalajara, la cultura de la celebración exige excelencia. En Bodasesor diseñamos propuestas gastronómicas que integran los sabores locales con un toque contemporáneo, adaptándonos al estilo de cada evento desde una boda íntima hasta un gran festejo.",
+      "Nuestra logística abarca desde las elegantes residencias en Providencia y Puerta de Hierro hasta las emblemáticas quintas en los alrededores de Zapopan. Nos encargamos de que cada tiempo sea impecable, coordinando desde el montaje del mobiliario hasta la atención detallada de nuestro equipo de servicio.",
+      "Ya sea que busques un banquete formal por tiempos o un concepto de estaciones dinámicas en Tlaquepaque, nuestro equipo ajusta la experiencia a tus necesidades. La calidad en el servicio y la frescura de nuestros insumos son la base para que tus invitados disfruten de una experiencia culinaria superior."
+    ],
+    "seoTitle": "Banquetes en Guadalajara | Bodasesor para Eventos y Bodas",
+    "seoDescription": "Servicio profesional de banquetes en Guadalajara. Menús personalizados para bodas y eventos en Zapopan, Providencia y toda la zona metropolitana.",
+    "localBullets": [
+      "Menús personalizados con esencia de la cocina jalisciense",
+      "Logística especializada para jardines y salones en Zapopan",
+      "Servicio integral de meseros y capitán de eventos",
+      "Barras de bebidas con opciones de coctelería regional"
+    ],
+    "faqs": [
+      {
+        "q": "¿Pueden realizar el servicio de banquete en una quinta fuera de la zona urbana de Guadalajara?",
+        "a": "Sí, tenemos amplia experiencia trabajando en diversas locaciones del estado. Contáctanos por WhatsApp para revisar la logística específica y requerimientos técnicos de tu venue."
+      },
+      {
+        "q": "¿Es posible adaptar el menú a preferencias vegetarianas o restricciones dietéticas?",
+        "a": "Absolutamente. Diseñamos el menú considerando las necesidades de tus invitados para que todos disfruten de una experiencia gastronómica de alta calidad."
+      },
+      {
+        "q": "¿Qué servicios adicionales al banquete ofrecen en GDL?",
+        "a": "Además del catering, ofrecemos mobiliario, audio, iluminación, pistas de baile y la coordinación integral a través de nuestro equipo de wedding planners."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "guadalajara",
+    "generatedAt": "2026-08-12T04:17:40.899Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/leon": {
+    "h1": "Banquetes en León: Servicio Integral para tus Eventos",
+    "headline": "Creamos experiencias gastronómicas memorables en el corazón del Bajío",
+    "description": [
+      "En Bodasesor entendemos la elegancia que define a los eventos en León. Diseñamos banquetes a la medida, ya sea una boda clásica en los jardines de la zona del Campestre o una recepción de XV años en salones exclusivos de Valle del Campestre.",
+      "Nuestra propuesta culinaria fusiona técnicas contemporáneas con la riqueza de los ingredientes locales, garantizando un servicio de catering impecable. Nos encargamos de la logística completa, asegurando que cada detalle en La Martinica o el área de Las Trojes cumpla con los más altos estándares de calidad.",
+      "Más que alimentos, ofrecemos una experiencia de hospitalidad profesional adaptada a la dinámica de esta ciudad industrial y cosmopolita. Permítenos ser tus aliados en la producción de ese evento especial, cuidando desde el montaje hasta la atención personalizada de tus invitados."
+    ],
+    "seoTitle": "Banquetes en León | Catering para Bodas y Eventos | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y XV años en León, Guanajuato. Menús gourmet, servicio profesional y logística impecable en Campestre y toda la ciudad.",
+    "localBullets": [
+      "Menús personalizados con especialidades del Bajío",
+      "Logística integral para salones y haciendas locales",
+      "Servicio de meseros, capitanes y sommeliers",
+      "Montaje elegante adaptado a tendencias 2026",
+      "Atención en zonas clave como Campestre y La Martinica"
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en haciendas cercanas a León?",
+        "a": "Sí, tenemos amplia experiencia coordinando la logística y el servicio de catering en diversas haciendas y recintos campestres dentro y en los alrededores de León."
+      },
+      {
+        "q": "¿Qué tipo de menús ofrecen para bodas en León?",
+        "a": "Diseñamos menús desde banquetes formales por tiempos hasta estaciones de comida gourmet y propuestas tipo buffet, siempre ajustándonos al estilo de tu evento y presupuesto."
+      },
+      {
+        "q": "¿Cómo puedo solicitar una cotización para mi evento?",
+        "a": "Es muy sencillo, puedes contactarnos directamente vía WhatsApp al +52 55 4008 0373 para detallar el número de invitados, lugar y fecha, y así brindarte una propuesta a la medida."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "leon",
+    "generatedAt": "2026-08-12T04:17:44.162Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/los-cabos": {
+    "h1": "Banquetes para Eventos en Los Cabos",
+    "headline": "Gastronomía de alta gama para tus eventos frente al Mar de Cortés",
+    "description": [
+      "La magia de celebrar en Los Cabos exige una propuesta gastronómica a la altura de sus paisajes. Diseñamos menús exclusivos que aprovechan la frescura de los productos locales y mariscos de Baja California Sur, ideales para elevar la experiencia de una destination wedding o una celebración corporativa de alto nivel.",
+      "Desde cenas íntimas en el Corridor hasta grandes banquetes en resorts de lujo en Cabo San Lucas, nuestro equipo gestiona cada detalle técnico y de servicio. Entendemos las particularidades de los eventos al aire libre bajo el sol del desierto y la brisa marina, asegurando que el montaje y la temperatura de los platillos sean impecables.",
+      "Ya sea que planees un evento en Puerto Los Cabos o una recepción privada en San José del Cabo, te acompañamos en la curaduría de sabores. Nos adaptamos al estilo de tu celebración, desde banquetes formales por tiempos hasta estaciones gourmet con toques mexicanos contemporáneos."
+    ],
+    "seoTitle": "Banquetes para Bodas y Eventos en Los Cabos | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Los Cabos. Menús personalizados, servicio de lujo y logística especializada para eventos frente al mar.",
+    "localBullets": [
+      "Menús personalizados con ingredientes frescos de la región",
+      "Logística integral para eventos en playa y terrazas de hotel",
+      "Servicio de banquetes kosher y opciones gourmet a medida",
+      "Staff profesional capacitado para locaciones de alta gama",
+      "Coordinación de mobiliario y montaje resistente al entorno costero"
+    ],
+    "faqs": [
+      {
+        "q": "Cuentan con experiencia en banquetes para bodas en la playa?",
+        "a": "Sí, conocemos las necesidades logísticas de los eventos en playa en Los Cabos, asegurando la calidad de los alimentos y un montaje resistente al entorno marino."
+      },
+      {
+        "q": "Se pueden realizar eventos en el Corridor o zonas alejadas?",
+        "a": "Contamos con capacidad operativa en toda la zona del Corridor, Cabo San Lucas y San José del Cabo; la logística de traslado se define en tu cotización personalizada."
+      },
+      {
+        "q": "Manejan opciones de menú para eventos con invitados internacionales?",
+        "a": "Absolutamente. Diseñamos propuestas gastronómicas que fusionan la cocina mexicana con estándares internacionales, incluyendo opciones vegetarianas o kosher bajo solicitud previa."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "los-cabos",
+    "generatedAt": "2026-08-12T04:17:47.702Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/merida": {
+    "h1": "Banquetes en Mérida: Elegancia en Haciendas y Casonas",
+    "headline": "Transformamos tu evento en una experiencia gastronómica inolvidable en el corazón de Yucatán.",
+    "description": [
+      "En Bodasesor entendemos que cada celebración en Mérida merece un sello distintivo, fusionando la sofisticación de los banquetes formales con la riqueza de la cocina yucateca. Ya sea en una histórica casona del Centro Histórico o en un jardín privado en Cholul, diseñamos menús a medida que deleitan a tus invitados con la esencia regional.",
+      "Nuestra logística se adapta a las particularidades del clima yucateco, garantizando que el servicio de alimentos y bebidas mantenga la frescura y calidad necesaria. Desde el montaje en zonas como Temozón o Montes de Amé, nos encargamos de que cada detalle técnico y de mobiliario cree el ambiente ideal para tu boda o XV años.",
+      "Más que solo banquetes, ofrecemos una planeación integral que contempla desde la selección de vajillas hasta la operación impecable en eventos de alta gama. Contamos con amplia experiencia trabajando en la arquitectura única de la región, asegurando que el despliegue del servicio sea fluido y profesional en cualquier punto de la ciudad."
+    ],
+    "seoTitle": "Banquetes en Mérida | Bodas, XV años y Eventos | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Mérida. Menús personalizados, servicio profesional y logística en haciendas y casonas. ¡Cotiza hoy!",
+    "localBullets": [
+      "Menús con fusión de cocina yucateca contemporánea.",
+      "Logística especializada en haciendas y jardines de Cholul y Temozón.",
+      "Montajes elegantes para casonas en el Centro Histórico y García Ginerés.",
+      "Servicio de meseros con alta capacidad de respuesta en eventos masivos.",
+      "Barras de coctelería con ingredientes regionales."
+    ],
+    "faqs": [
+      {
+        "q": "¿Pueden realizar el banquete dentro de una hacienda fuera de la ciudad?",
+        "a": "Sí, contamos con capacidad operativa para trasladar nuestros servicios a haciendas en los alrededores de Mérida; la logística se define según la ubicación específica y el número de invitados."
+      },
+      {
+        "q": "¿Incluyen platillos típicos yucatecos en sus menús formales?",
+        "a": "Es posible integrar la gastronomía local en versiones gourmet, diseñando tiempos que respeten la tradición yucateca con una presentación de alta cocina adecuada para eventos sociales."
+      },
+      {
+        "q": "¿Cómo coordinan el servicio si mi evento es al aire libre?",
+        "a": "Consideramos las condiciones climáticas de Yucatán para planificar la infraestructura necesaria, asegurando que la calidad del banquete y la temperatura de los alimentos se mantengan impecables durante todo el evento."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "merida",
+    "generatedAt": "2026-08-12T04:17:51.285Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/monterrey": {
+    "h1": "Banquetes en Monterrey: Diseño Gastronómico para tu Evento",
+    "headline": "Creamos experiencias culinarias memorables en Nuevo León",
+    "description": [
+      "En Bodasesor entendemos que Monterrey exige excelencia, ya sea en un evento corporativo de alto perfil en San Pedro o una boda elegante con vistas a las montañas. Adaptamos nuestro servicio de banquetes a la sofisticación de Valle Oriente, garantizando una logística impecable que cuida cada detalle de tu menú y servicio de meseros.",
+      "Nuestra propuesta gastronómica en Nuevo León integra desde banquetes formales por tiempos hasta estaciones de comida gourmet, ideales para celebraciones en quintas de Santiago o salones de eventos en Cumbres. Nos especializamos en personalizar cada elemento del banquete para que refleje el estilo y la importancia de tu ocasión especial, manteniendo siempre estándares de calidad superiores.",
+      "Más allá de la alta cocina, nos integramos con el entorno urbano y natural de Monterrey. Ya sea que busques un concepto minimalista para una gala o una propuesta cálida y tradicional para un evento social, nuestro equipo se encarga de la producción integral, asegurando que el banquete sea el corazón de tu celebración."
+    ],
+    "seoTitle": "Banquetes en Monterrey | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Monterrey. Menús personalizados, servicio profesional y logística impecable en San Pedro, Cumbres y más.",
+    "localBullets": [
+      "Menús diseñados para eventos corporativos y sociales en San Pedro.",
+      "Logística especializada para quintas en Santiago y zonas aledañas.",
+      "Servicio de banquetes adaptado a salones de alta gama en Valle Oriente.",
+      "Propuestas gastronómicas a medida para bodas en el área metropolitana de Monterrey."
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en quintas fuera de la zona urbana de Monterrey?",
+        "a": "Sí, contamos con la infraestructura necesaria para trasladar nuestro servicio de banquetes y catering a quintas en Santiago y otros puntos del área metropolitana, asegurando siempre la misma calidad."
+      },
+      {
+        "q": "¿Pueden coordinar el banquete para un evento corporativo en San Pedro?",
+        "a": "Definitivamente. Tenemos amplia experiencia atendiendo las necesidades del mercado corporativo en San Pedro y Valle Oriente, ofreciendo desde desayunos ejecutivos hasta cenas de gala formal."
+      },
+      {
+        "q": "¿Cómo puedo cotizar mi banquete para una boda en Monterrey?",
+        "a": "Para brindarte una propuesta precisa, contáctanos vía WhatsApp al +52 55 4008 0373 con la fecha, número de invitados y el tipo de venue que tienes en mente."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "monterrey",
+    "generatedAt": "2026-08-12T04:17:54.670Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/morelia": {
+    "h1": "Banquetes en Morelia: Gastronomía de Autor para Eventos",
+    "headline": "Creamos experiencias culinarias inolvidables en el corazón de Michoacán.",
+    "description": [
+      "Organizar un evento en Morelia requiere un toque especial que honre su riqueza cultural. En Bodasesor diseñamos banquetes que fusionan la técnica formal con la esencia de la cocina michoacana, adaptándonos al estilo de tu boda o XV años.",
+      "Nuestra logística abarca desde los recintos históricos del Centro, donde cuidamos cada detalle arquitectónico, hasta las zonas modernas como Camelinas o Tres Marías. Nos encargamos del montaje, mobiliario y servicio impecable para que disfrutes de tu celebración sin preocupaciones.",
+      "Si buscas un banquete con identidad, integramos ingredientes locales en menús por tiempos o estaciones gourmet. Colaboramos contigo para definir una propuesta que sorprenda a tus invitados y armonice con el clima templado y acogedor de la ciudad."
+    ],
+    "seoTitle": "Banquetes en Morelia | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y XV años en Morelia. Menús personalizados, servicio profesional y logística impecable en Centro, Camelinas y Tres Marías.",
+    "localBullets": [
+      "Menús con toques de gastronomía michoacana.",
+      "Logística especializada en casonas del Centro histórico.",
+      "Montajes elegantes para jardines en Altos y Tres Marías.",
+      "Servicio integral de banquetes, mobiliario y equipo técnico.",
+      "Atención personalizada a domicilio o en el recinto de tu elección."
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en las haciendas de los alrededores de Morelia?",
+        "a": "Sí, contamos con la infraestructura necesaria para trasladar nuestro servicio de banquetes y mobiliario a cualquier recinto o hacienda dentro y en las cercanías de Morelia."
+      },
+      {
+        "q": "¿Puedo incluir platillos tradicionales michoacanos en mi menú?",
+        "a": "Por supuesto. Podemos diseñar una propuesta que integre la riqueza culinaria local con la formalidad que requiere tu evento, asegurando siempre la calidad en la preparación."
+      },
+      {
+        "q": "¿Cómo puedo solicitar una cotización para mi evento en Morelia?",
+        "a": "Para ofrecerte una propuesta detallada según tu número de invitados y tipo de evento, contáctanos vía WhatsApp al +52 55 4008 0373."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "morelia",
+    "generatedAt": "2026-08-12T04:17:57.925Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/oaxaca": {
+    "h1": "Banquetes para Eventos en Oaxaca: Tradición y Excelencia",
+    "headline": "Transformamos tu evento en una experiencia gastronómica inolvidable con el toque auténtico de Oaxaca.",
+    "description": [
+      "En Bodasesor entendemos que un banquete en Oaxaca es una celebración de la riqueza culinaria local. Diseñamos menús que honran la tradición oaxaqueña, integrando ingredientes de la región en presentaciones formales de alta calidad para bodas y eventos especiales.",
+      "Nuestra experiencia abarca desde el corazón del Centro Histórico hasta las hermosas vistas en las zonas de San Felipe y Reforma. Nos encargamos de toda la logística de montaje, servicio de meseros y mobiliario, permitiendo que disfrutes de tu evento en el venue colonial o de valle que hayas elegido.",
+      "Ya sea un evento elegante en una hacienda cerca de Etla o una recepción íntima, nuestro equipo garantiza puntualidad y un servicio impecable. Adaptamos cada detalle del banquete para que la esencia de Oaxaca esté presente en cada plato y estación servida a tus invitados."
+    ],
+    "seoTitle": "Banquetes en Oaxaca | Bodas y Eventos | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Oaxaca. Menús auténticos, servicio profesional y logística impecable en Centro Histórico, San Felipe y más.",
+    "localBullets": [
+      "Menús con identidad gastronómica oaxaqueña",
+      "Servicio especializado en venues coloniales y haciendas",
+      "Logística integral en Centro Histórico y alrededores",
+      "Montajes personalizados en valles y zonas residenciales",
+      "Atención a requerimientos especiales y dietas específicas"
+    ],
+    "faqs": [
+      {
+        "q": "¿Pueden realizar banquetes en haciendas ubicadas fuera de la ciudad de Oaxaca?",
+        "a": "Sí, contamos con capacidad operativa para llevar nuestros servicios de banquetes a diversas zonas y municipios cercanos, incluyendo la región de los Valles Centrales."
+      },
+      {
+        "q": "¿Es posible incluir platillos tradicionales oaxaqueños en el menú del evento?",
+        "a": "Por supuesto. Diseñamos propuestas personalizadas que integran la riqueza de la cocina oaxaqueña con estándares de servicio profesional, adaptándonos al estilo de tu celebración."
+      },
+      {
+        "q": "¿Cómo puedo agendar una cotización para mi evento en Oaxaca?",
+        "a": "Es muy sencillo. Solo escríbenos por WhatsApp al +52 55 4008 0373 con la fecha tentativa, el número de invitados y el tipo de evento para brindarte una propuesta detallada."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "oaxaca",
+    "generatedAt": "2026-08-12T04:18:01.129Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/pachuca": {
+    "h1": "Banquetes en Pachuca para eventos inolvidables",
+    "headline": "Gastronomía de excelencia con el toque distintivo de Bodasesor en Hidalgo.",
+    "description": [
+      "La organización de banquetes en Pachuca requiere un profundo conocimiento de los espacios hidalguenses, desde el encanto histórico del Centro hasta la sofisticación de las nuevas áreas en Plateado. En Bodasesor diseñamos experiencias culinarias que se adaptan a la perfección, ya sea en un salón privado o en una hacienda con la arquitectura tradicional de la región.",
+      "Nos especializamos en crear menús que integran ingredientes de alta calidad con técnicas de vanguardia, asegurando un servicio impecable tanto en bodas elegantes como en eventos sociales en colonias emblemáticas como Periodistas. Entendemos que cada celebración en el Valle de México norte es única, por lo que adaptamos nuestro montaje y logística para superar las expectativas de tus invitados.",
+      "Si planeas un evento cerca de la atmósfera mágica de Mineral del Monte o en cualquier punto estratégico de la capital, nuestra oferta gastronómica es el sello de distinción que buscas. Desde la planeación hasta el último servicio de mesa, nuestro equipo garantiza profesionalismo y calidez para que tú disfrutes de cada momento importante junto a tus seres queridos."
+    ],
+    "seoTitle": "Banquetes en Pachuca: Catering para Bodas y Eventos | Bodasesor",
+    "seoDescription": "Expertos en banquetes en Pachuca, Hidalgo. Menús personalizados, servicio de meseros y logística impecable para eventos en Plateado, Centro y alrededores.",
+    "localBullets": [
+      "Menús diseñados para eventos en haciendas hidalguenses.",
+      "Logística especializada en zonas como Plateado y Periodistas.",
+      "Servicio de catering integral con personal altamente capacitado.",
+      "Opción de menús temáticos y cocina regional adaptada.",
+      "Atención personalizada para eventos en Mineral del Monte cercano."
+    ],
+    "faqs": [
+      {
+        "q": "¿Cuentan con experiencia realizando banquetes en haciendas de los alrededores de Pachuca?",
+        "a": "Sí, tenemos amplia experiencia coordinando la logística y el servicio de alimentos en diversas haciendas y recintos de la zona hidalguense, garantizando siempre la frescura y calidad de cada platillo."
+      },
+      {
+        "q": "¿Puedo solicitar un menú que incluya platillos típicos de Hidalgo para mi evento?",
+        "a": "Por supuesto. Podemos diseñar una propuesta culinaria que combine alta gastronomía con toques regionales, ideal para darle un sello único y auténtico a tu celebración en Pachuca."
+      },
+      {
+        "q": "¿Cuál es el siguiente paso para cotizar un banquete en Pachuca?",
+        "a": "Para brindarte una propuesta a la medida, por favor contáctanos vía WhatsApp al +52 55 4008 0373 con la fecha tentativa, número de invitados y el tipo de evento que deseas realizar."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "pachuca",
+    "generatedAt": "2026-08-12T04:18:04.782Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/puebla": {
+    "h1": "Banquetes en Puebla para Eventos Inolvidables",
+    "headline": "Gastronomía de alta calidad con el toque tradicional y elegante que tu celebración en Puebla merece.",
+    "description": [
+      "Organizar un evento en Puebla requiere un equilibrio perfecto entre la tradición culinaria local y la logística moderna. En Bodasesor, diseñamos experiencias gastronómicas que honran el legado poblano, adaptándonos tanto a la arquitectura colonial del Centro Histórico como a la infraestructura vanguardista de Angelópolis.",
+      "Nuestros servicios de banquetes están pensados para bodas y XV años que buscan destacar por su buen gusto. Ya sea que prefieras una recepción formal de varios tiempos o un esquema de estaciones gourmet, nuestro equipo coordina cada detalle de montaje, servicio y calidad de insumos en toda la zona metropolitana.",
+      "Entendemos que la puntualidad y el servicio impecable son fundamentales en una ciudad con tanta vida social como Puebla. Desde Lomas de Angelópolis hasta los espacios con vista a las iglesias de Cholula, nos encargamos de que cada platillo llegue a tus invitados con la excelencia técnica que caracteriza a nuestros eventos."
+    ],
+    "seoTitle": "Banquetes en Puebla: Bodas y XV Años | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y XV años en Puebla. Menús personalizados con calidad profesional en Angelópolis, Cholula y todo el estado. ¡Cotiza hoy!",
+    "localBullets": [
+      "Menús con fusión de cocina poblana y tendencias internacionales",
+      "Logística integral en salones y jardines de Angelópolis y Cholula",
+      "Servicio de meseros profesional para eventos en el Centro Histórico",
+      "Montajes personalizados adaptados al estilo de tu evento"
+    ],
+    "faqs": [
+      {
+        "q": "¿Cuentan con opciones de menú tradicional poblano?",
+        "a": "Sí, podemos integrar platillos emblemáticos de la gastronomía local en tu banquete, ajustándolos al formato de tu evento y al número de invitados."
+      },
+      {
+        "q": "¿Brindan servicio de banquetes en Cholula y Lomas de Angelópolis?",
+        "a": "Cubrimos toda la zona metropolitana de Puebla, incluyendo salones y espacios privados en Cholula, Lomas de Angelópolis y las principales zonas de la capital."
+      },
+      {
+        "q": "¿Cómo puedo recibir una cotización formal para mi boda en Puebla?",
+        "a": "Para ofrecerte una propuesta detallada, envíanos un mensaje vía WhatsApp al +52 55 4008 0373 con la fecha tentativa, número de invitados y el lugar de tu evento."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "puebla",
+    "generatedAt": "2026-08-12T04:18:08.070Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/puerto-vallarta": {
+    "h1": "Banquetes en Puerto Vallarta: Experiencias Gastronómicas frente al Mar",
+    "headline": "Creamos momentos inolvidables con una propuesta culinaria a la altura de tu celebración en la bahía.",
+    "description": [
+      "En Bodasesor entendemos que un evento en Puerto Vallarta requiere una propuesta gastronómica que armonice con la espectacular vista al Pacífico. Diseñamos banquetes personalizados que capturan la frescura del destino, adaptándonos perfectamente tanto a la sofisticación de la Zona Hotelera como a la calidez de un evento íntimo en el Centro o Marina.",
+      "Nuestra logística está preparada para llevar la excelencia de nuestro catering a cualquier punto de la bahía, incluyendo Nuevo Vallarta y las playas de Bucerías. Ya sea que busques un banquete formal de varios tiempos, una cena tipo buffet o estaciones gourmet, aseguramos el montaje impecable que tu boda o evento especial demanda frente al mar.",
+      "La coordinación en un destino de playa exige precisión y experiencia técnica. Nos encargamos de que cada detalle, desde la temperatura de los platillos hasta el servicio de meseros, fluya con naturalidad bajo el clima cálido de Jalisco, garantizando una experiencia memorable para tus invitados sin preocupaciones operativas."
+    ],
+    "seoTitle": "Banquetes en Puerto Vallarta para Bodas y Eventos | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Puerto Vallarta. Menús personalizados, logística en Zona Hotelera, Marina y más. ¡Cotiza tu evento con nosotros!",
+    "localBullets": [
+      "Menús diseñados para eventos en playa y climas cálidos",
+      "Logística especializada en hoteles y haciendas de la bahía",
+      "Servicio de catering profesional en Zona Hotelera, Marina y Bucerías",
+      "Opciones de banquete formal, buffet y estaciones de especialidad",
+      "Gestión integral de montaje y personal de servicio en destino"
+    ],
+    "faqs": [
+      {
+        "q": "¿Pueden realizar el banquete en una playa privada o jardín en Puerto Vallarta?",
+        "a": "Sí, contamos con la infraestructura necesaria para trasladar nuestro servicio de banquetes a diversos venues, jardines y locaciones frente al mar en la región de Puerto Vallarta y sus alrededores."
+      },
+      {
+        "q": "¿Qué tipo de menús ofrecen para bodas destino en la bahía?",
+        "a": "Diseñamos propuestas a la medida que incluyen desde cocina internacional hasta opciones de mariscos frescos y platillos regionales de Jalisco, adaptándonos siempre al estilo de tu evento y restricciones dietéticas."
+      },
+      {
+        "q": "¿Cómo es la logística de servicio en zonas como Nuevo Vallarta o Bucerías?",
+        "a": "Contamos con una logística probada para cubrir toda la zona de la bahía. Coordinamos el transporte, equipo y personal necesario para asegurar que el banquete llegue con la máxima calidad a cualquier punto de Puerto Vallarta."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "puerto-vallarta",
+    "generatedAt": "2026-08-12T04:18:11.810Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/queretaro": {
+    "h1": "Banquetes en Querétaro para Bodas y Eventos Sociales",
+    "headline": "Experiencia gastronómica de alto nivel para tus eventos en el corazón del Bajío.",
+    "description": [
+      "En Querétaro, la organización de eventos exige una mezcla entre tradición y modernidad. En Bodasesor diseñamos banquetes que resaltan la calidad de los insumos locales, adaptándonos perfectamente a los espacios únicos que ofrece la región, desde las elegantes haciendas en Corregidora hasta los salones contemporáneos en Juriquilla.",
+      "Entendemos que cada celebración es distinta, por lo que nuestras propuestas de catering incluyen desde menús formales por tiempos hasta estaciones de comida que sorprenden a tus invitados. Ya sea una boda de fin de semana o un evento corporativo en las nuevas zonas de Milán o El Refugio, coordinamos cada detalle de logística y servicio para que tú solo disfrutes el momento.",
+      "Nuestro equipo se especializa en crear experiencias integrales que van más allá del plato. Nos encargamos de la coordinación, el montaje de mobiliario y la atención impecable de nuestro personal, asegurando que el ambiente de tu evento en el Centro Histórico o cualquier punto de la ciudad sea inolvidable y profesional."
+    ],
+    "seoTitle": "Banquetes en Querétaro | Bodasesor para Eventos y Bodas",
+    "seoDescription": "Servicio profesional de banquetes en Querétaro. Menús personalizados para bodas, XV años y eventos corporativos en Juriquilla, Centro Histórico y más.",
+    "localBullets": [
+      "Menús diseñados para eventos en haciendas y salones de Querétaro.",
+      "Logística especializada en zonas de alta plusvalía como Juriquilla y El Refugio.",
+      "Coordinación de banquetes para bodas destino en la región del Bajío.",
+      "Servicio integral que incluye mobiliario, meseros y montaje profesional.",
+      "Opciones gastronómicas adaptables a cualquier estilo de venue en Corregidora."
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en las haciendas ubicadas en los alrededores de Querétaro?",
+        "a": "Sí, tenemos amplia experiencia trabajando en diversas haciendas y jardines de eventos en Querétaro y sus zonas aledañas, adaptando nuestra logística a las características de cada espacio."
+      },
+      {
+        "q": "¿Puedo solicitar un menú que combine cocina tradicional queretana con toques gourmet?",
+        "a": "Totalmente. Nuestro equipo de chefs puede diseñar propuestas personalizadas que integren ingredientes locales de alta calidad con técnicas de alta cocina para sorprender a tus invitados."
+      },
+      {
+        "q": "¿Cómo puedo agendar una degustación o recibir una cotización para mi evento en Juriquilla?",
+        "a": "Para recibir una propuesta detallada o consultar sobre disponibilidad de fechas, te invitamos a escribirnos por WhatsApp al +52 55 4008 0373 donde coordinaremos tu solicitud."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "queretaro",
+    "generatedAt": "2026-08-12T04:18:15.553Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/san-luis-potosi": {
+    "h1": "Banquetes en San Luis Potosí: Eventos con Estilo Potosino",
+    "headline": "Creamos experiencias gastronómicas memorables para tus celebraciones en SLP",
+    "description": [
+      "En Bodasesor entendemos la calidez de las celebraciones en San Luis Potosí, desde elegantes banquetes en el Centro Histórico hasta recepciones relajadas en las inmediaciones de Lomas y Tangamanga. Adaptamos nuestra propuesta culinaria para resaltar los sabores locales con un toque de sofisticación que sorprenderá a tus invitados en cada tiempo.",
+      "Nuestra logística está diseñada para las necesidades del Altiplano, asegurando que tu montaje, vajilla y servicio de meseros luzcan impecables en salones, haciendas o quintas potosinas. Nos encargamos de la coordinación técnica para que tú solo disfrutes de tu evento, ya sea una boda íntima o un gran banquete de XV años sobre la avenida Himno Nacional.",
+      "Cada menú es diseñado a medida para garantizar calidad y frescura en cada platillo. Contamos con amplia experiencia en la coordinación de eventos en todo el estado, siempre cuidando los detalles que hacen de una reunión familiar o corporativa una ocasión especial e inolvidable para todos."
+    ],
+    "seoTitle": "Banquetes en San Luis Potosí | Bodasesor Eventos",
+    "seoDescription": "Organizamos banquetes de alta calidad en San Luis Potosí para bodas y XV años. Menús personalizados, servicio profesional y logística impecable. ¡Cotiza hoy!",
+    "localBullets": [
+      "Menús diseñados para eventos en salones y quintas de SLP",
+      "Servicio especializado en zonas como Lomas y Tangamanga",
+      "Logística integral para eventos en el Altiplano potosino",
+      "Atención personalizada en el Centro Histórico y alrededores"
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en quintas a las afueras de San Luis Potosí?",
+        "a": "Sí, tenemos amplia experiencia en logística para eventos en quintas y haciendas fuera de la zona urbana de SLP, asegurando el mismo estándar de calidad en el servicio y montaje."
+      },
+      {
+        "q": "¿Pueden incluir opciones de comida tradicional potosina en el banquete?",
+        "a": "Podemos integrar elementos de la cocina regional en nuestros menús formales para darle un toque auténtico y distintivo a tu evento, siempre bajo el esquema de alta cocina de Bodasesor."
+      },
+      {
+        "q": "¿Cómo puedo agendar una degustación o cotizar un servicio?",
+        "a": "Puedes solicitar tu cotización personalizada directamente a través de nuestro WhatsApp al +52 55 4008 0373, donde un asesor te guiará en el proceso para tu fecha y número de invitados."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "san-luis-potosi",
+    "generatedAt": "2026-08-12T04:18:19.060Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/san-miguel-allende": {
+    "h1": "Banquetes para Eventos en San Miguel de Allende",
+    "headline": "Gastronomía de altura para tu celebración colonial",
+    "description": [
+      "Planear un evento en San Miguel de Allende requiere una curaduría gastronómica que esté a la altura de su arquitectura colonial y su prestigio como destino internacional. En Bodasesor diseñamos propuestas culinarias que integran la riqueza de los ingredientes locales con técnicas de alta cocina para sorprender a tus invitados, ya sea en un rooftop con vista a la Parroquia o en una hacienda cercana a Atotonilco.",
+      "Entendemos la logística particular de una destination wedding en el Bajío, donde la calidad del servicio de meseros y la impecable presentación de los platillos son fundamentales. Desde eventos íntimos en el Centro Histórico hasta recepciones de gran escala en zonas como Los Frailes o La Lejona, nuestro equipo asegura que cada tiempo del banquete sea servido con puntualidad y estilo.",
+      "Nuestra especialidad es adaptar el menú al formato de tu celebración, garantizando que el flujo de servicio complemente la experiencia de tus asistentes. Trabajamos de la mano contigo para definir un estilo que refleje la esencia de San Miguel, cuidando siempre los detalles técnicos y la coordinación necesaria para que la cena sea el punto culminante de tu evento."
+    ],
+    "seoTitle": "Banquetes en San Miguel de Allende | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en San Miguel de Allende. Menús de alta cocina adaptados a terrazas, haciendas y espacios coloniales. ¡Cotiza hoy!",
+    "localBullets": [
+      "Diseño de menús para terrazas y rooftops con vistas icónicas",
+      "Logística integral para eventos en haciendas de Atotonilco",
+      "Propuestas gastronómicas para invitados nacionales e internacionales",
+      "Servicio de banquetes adaptado a espacios en Centro y Los Frailes"
+    ],
+    "faqs": [
+      {
+        "q": "¿Pueden realizar el servicio de banquete en haciendas a las afueras de San Miguel?",
+        "a": "Sí, contamos con la experiencia y equipo necesario para trasladar nuestra logística de banquetes a las haciendas y jardines más exclusivos en la periferia de San Miguel de Allende y sus alrededores."
+      },
+      {
+        "q": "¿Qué opciones tienen para eventos con invitados extranjeros?",
+        "a": "Diseñamos menús que combinan lo mejor de la cocina mexicana con estándares internacionales, asegurando que los sabores y la presentación sean del agrado de todos tus invitados, independientemente de su origen."
+      },
+      {
+        "q": "¿Cómo es la logística de montaje en el Centro Histórico?",
+        "a": "Conocemos bien los retos de acceso y logística en el Centro Histórico de SMA. Coordinamos todos los detalles técnicos para realizar montajes impecables respetando la normativa y los espacios únicos de la zona."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "san-miguel-allende",
+    "generatedAt": "2026-08-12T04:18:22.706Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/tijuana": {
+    "h1": "Banquetes en Tijuana para Eventos Especiales",
+    "headline": "Experiencia gastronómica y logística impecable para tu evento en la frontera.",
+    "description": [
+      "En Bodasesor diseñamos banquetes que celebran la esencia de Tijuana, adaptándonos al dinamismo de la región fronteriza. Entendemos que un evento en esta zona requiere precisión, desde la logística en Zona Río hasta recepciones con vista al mar en Playas de Tijuana.",
+      "Nuestros menús fusionan la tradición mexicana con tendencias internacionales para satisfacer a invitados locales y visitantes. Ofrecemos desde banquetes formales por tiempos hasta estaciones gourmet, garantizando siempre ingredientes de primera calidad y un servicio de meseros profesional.",
+      "Sabemos que los eventos en Tijuana suelen integrar dinámicas binacionales y una estética moderna muy marcada. Nos encargamos de coordinar cada detalle de tu banquete, permitiéndote disfrutar de tu celebración con la tranquilidad de trabajar con expertos en logística local."
+    ],
+    "seoTitle": "Banquetes en Tijuana: Bodas y Eventos | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Tijuana. Diseñamos menús de alta calidad con logística profesional en Zona Río, Playas y toda la ciudad.",
+    "localBullets": [
+      "Menús personalizados para eventos binacionales.",
+      "Logística especializada en salones y venues de Zona Río y Centro.",
+      "Servicio de catering adaptado a montajes modernos y vanguardistas.",
+      "Coordinación fluida para eventos de alto perfil en Baja California."
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan servicios de banquetes en salones de Zona Río o Playas de Tijuana?",
+        "a": "Sí, tenemos experiencia operando en las zonas más importantes de Tijuana, incluyendo Zona Río y Playas, garantizando el montaje y servicio sin contratiempos."
+      },
+      {
+        "q": "¿Puedo solicitar un menú con estilo binacional para mis invitados?",
+        "a": "Claro, nuestros chefs pueden diseñar propuestas gastronómicas que integren sabores locales de Baja California con estándares internacionales, ideales para eventos con invitados de ambos lados de la frontera."
+      },
+      {
+        "q": "¿Qué debo hacer para cotizar mi banquete en Tijuana?",
+        "a": "Es muy sencillo: contáctanos por WhatsApp al +52 55 4008 0373 con la fecha, número de invitados y tipo de evento para ofrecerte una propuesta detallada a la medida."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "tijuana",
+    "generatedAt": "2026-08-12T04:18:26.023Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/toluca": {
+    "h1": "Banquetes en Toluca y Metepec: Calidad para tu Evento",
+    "headline": "Soluciones integrales de catering en el Valle de Toluca",
+    "description": [
+      "En Bodasesor entendemos que organizar un banquete en el clima templado del Valle de Toluca requiere precisión y calidez. Nos especializamos en diseñar menús que se adaptan tanto a los jardines de Metepec como a los salones empresariales en el Centro de Toluca, garantizando que cada platillo llegue con la temperatura y presentación ideal.",
+      "Nuestra logística en el Estado de México permite cubrir eventos desde pequeñas reuniones en Zinacantepec hasta grandes celebraciones en los alrededores de Lerma. Contamos con experiencia en el montaje de banquetes formales, buffets y estaciones de alimentos, siempre respaldados por un equipo de meseros profesionales y capacitados para el servicio de etiqueta.",
+      "Más allá de la comida, integramos mobiliario, cristalería y mantelería fina para que el estilo de tu evento sea impecable. Nos encargamos de coordinar los tiempos de servicio para que tú solo disfrutes de tu boda, XV años o evento corporativo en una de las zonas con mayor tradición del estado."
+    ],
+    "seoTitle": "Banquetes en Toluca y Metepec | Servicios Bodasesor",
+    "seoDescription": "Expertos en banquetes y catering en Toluca, Metepec, Zinacantepec y Lerma. Creamos experiencias gastronómicas para bodas y eventos con servicio profesional.",
+    "localBullets": [
+      "Menús diseñados para climas frescos y templados.",
+      "Servicio de banquetes en salones de Metepec y Toluca Centro.",
+      "Logística especializada para jardines y haciendas en la zona.",
+      "Montaje profesional con mobiliario de alta gama.",
+      "Opciones de catering para eventos corporativos en parques industriales de Lerma."
+    ],
+    "faqs": [
+      {
+        "q": "¿Cómo manejan la temperatura de los platillos en el clima de Toluca?",
+        "a": "Utilizamos equipo de mantenimiento térmico especializado y personal capacitado para asegurar que los tiempos del banquete se cumplan con la temperatura exacta, sin importar las condiciones climáticas del exterior."
+      },
+      {
+        "q": "¿Realizan banquetes en jardines de Metepec?",
+        "a": "Sí, tenemos amplia experiencia trabajando en jardines y terrazas de Metepec. Coordinamos la logística de cocina móvil y montaje para que el espacio elegido luzca perfecto y el servicio sea eficiente."
+      },
+      {
+        "q": "¿Atienden eventos corporativos en la zona industrial de Lerma?",
+        "a": "Así es, contamos con servicios de catering, box lunch y banquetes ejecutivos diseñados específicamente para el entorno corporativo de Lerma y sus alrededores."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "toluca",
+    "generatedAt": "2026-08-12T04:18:29.413Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/torreon": {
+    "h1": "Banquetes en Torreón para Eventos Especiales",
+    "headline": "Catering profesional y servicios de banquete para todo tipo de celebración en la Comarca Lagunera.",
+    "description": [
+      "En Bodasesor entendemos la importancia de cada detalle en tus eventos en Torreón. Diseñamos menús a la medida que resaltan la calidad gastronómica regional, asegurando que desde una boda formal hasta un evento corporativo en el sector del Residencial Campestre cuenten con un servicio impecable y puntual.",
+      "Nuestra logística está perfectamente adaptada a las necesidades de la zona, cubriendo desde los recintos tradicionales en el Centro hasta las celebraciones privadas en La Rosita. Coordinamos el montaje, el personal de servicio y la selección de platillos para que el banquete sea el punto de encuentro memorable que tus invitados esperan.",
+      "La cultura de hospitalidad en Torreón es fundamental para nosotros. Por ello, ofrecemos una planeación detallada que considera las variantes climáticas de la región lagunera, garantizando mobiliario y equipo de producción que se integren armoniosamente con el estilo de tu evento, ya sea al aire libre o en salón cerrado."
+    ],
+    "seoTitle": "Banquetes en Torreón: Catering para Bodas y Eventos",
+    "seoDescription": "Servicio profesional de banquetes en Torreón. Menús personalizados para bodas, XV años y eventos corporativos con la calidad y experiencia de Bodasesor.",
+    "localBullets": [
+      "Menús diseñados para eventos en Residencial Campestre y La Rosita",
+      "Servicio especializado para salones y quintas en la zona de las Nazas",
+      "Logística integral para eventos empresariales en el sector Centro",
+      "Gestión de mobiliario y equipo para el clima característico de La Laguna"
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en quintas o salones privados en Torreón?",
+        "a": "Sí, tenemos experiencia coordinando el servicio de banquetes en diversos recintos y espacios privados a lo largo de la Comarca Lagunera."
+      },
+      {
+        "q": "¿Puedo solicitar un menú con ingredientes regionales?",
+        "a": "Claro, nuestros chefs pueden diseñar propuestas gastronómicas que incluyan toques locales, siempre manteniendo los estándares de calidad de Bodasesor."
+      },
+      {
+        "q": "¿Cómo puedo cotizar mi banquete si mi evento es en Torreón?",
+        "a": "Para recibir una asesoría personalizada y una cotización detallada, por favor contáctanos vía WhatsApp al +52 55 4008 0373 con los datos de tu evento."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "torreon",
+    "generatedAt": "2026-08-12T04:18:32.674Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/valle-de-bravo": {
+    "h1": "Banquetes para eventos en Valle de Bravo",
+    "headline": "Gastronomía de altura para tus celebraciones frente al lago",
+    "description": [
+      "Planear un evento en Valle de Bravo requiere un servicio de catering que sepa integrar la calidez de un destino de fin de semana con la exigencia de una boda o evento social. Desde los espacios boscosos de Avándaro hasta las vistas panorámicas en el Centro, diseñamos menús que complementan el entorno natural de la zona.",
+      "Nuestra logística está preparada para operar en terrenos diversos, asegurando que el montaje de banquetes, estaciones de comida y barras de bebidas se realice con puntualidad y elegancia. Trabajamos para ofrecer platillos de alta calidad que conviertan tu celebración en una experiencia inolvidable para todos tus invitados.",
+      "Entendemos que cada evento en el Estado de México es único, por lo que adaptamos nuestro servicio de meseros y cocina a las necesidades específicas de tu fecha. Ya sea en una terraza privada en La Herradura o una hacienda con vista al lago, nuestro equipo garantiza una ejecución impecable para que tú solo disfrutes el momento."
+    ],
+    "seoTitle": "Banquetes para Bodas y Eventos en Valle de Bravo | Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Valle de Bravo. Menús personalizados, servicio profesional y logística impecable en Avándaro, Centro y lago.",
+    "localBullets": [
+      "Menús diseñados para eventos en clima de montaña y bosque",
+      "Logística especializada para venues con acceso complejo",
+      "Servicio de banquetes adaptado a bodas de destino",
+      "Barras de coctelería premium con ingredientes locales",
+      "Montaje profesional con mobiliario apto para exteriores"
+    ],
+    "faqs": [
+      {
+        "q": "¿Realizan banquetes en casas privadas o jardines en Avándaro?",
+        "a": "Sí, tenemos la capacidad logística para llevar nuestro servicio de banquete a cualquier propiedad privada, respetando las normas de cada zona y asegurando una presentación impecable."
+      },
+      {
+        "q": "¿Cómo manejan la logística de banquetes si mi evento es al aire libre?",
+        "a": "Contamos con equipo especializado para garantizar la temperatura y calidad de los alimentos en condiciones de exterior, adaptándonos al clima característico de Valle de Bravo."
+      },
+      {
+        "q": "¿Puedo solicitar una degustación antes de contratar mi boda en Valle?",
+        "a": "Claro, una vez que iniciamos el proceso de cotización y definimos el estilo de tu evento, podemos coordinar una prueba de menú para ajustar cada detalle a tu gusto personal."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "valle-de-bravo",
+    "generatedAt": "2026-08-12T04:18:36.006Z",
+    "model": "gemini-3.1-flash-lite"
+  },
+  "banquetes/veracruz": {
+    "h1": "Banquetes en Veracruz: Calidad y Sabor para tu Evento",
+    "headline": "Creamos experiencias culinarias memorables en la costa veracruzana.",
+    "description": [
+      "En Bodasesor entendemos que un banquete en Veracruz exige frescura y un servicio impecable. Adaptamos nuestros menús a las condiciones del clima cálido y húmedo de la zona, asegurando que cada platillo mantenga su calidad desde el montaje hasta el servicio final.",
+      "Nuestra experiencia nos permite coordinar eventos tanto en el vibrante Centro Histórico como en los elegantes salones de Boca del Río. Nos especializamos en banquetes formales y estilo buffet que resaltan la riqueza gastronómica regional, ideal para bodas frente al mar o celebraciones de XV años.",
+      "Gestionamos toda la logística de montaje, mobiliario y personal de servicio en colonias como Costa de Oro y Mocambo. Deja en nuestras manos la ejecución técnica para que tú disfrutes de tu evento con la tranquilidad de un equipo profesional que conoce los retos logísticos de la región."
+    ],
+    "seoTitle": "Banquetes en Veracruz | Organización y Catering Bodasesor",
+    "seoDescription": "Expertos en banquetes para bodas y eventos en Veracruz. Servicio profesional en Boca del Río, Centro y Costa de Oro. Cotiza tu banquete con nosotros.",
+    "localBullets": [
+      "Menús diseñados para eventos costeros",
+      "Servicio especializado en Boca del Río y Costa de Oro",
+      "Logística adaptada al clima húmedo de Veracruz",
+      "Capacidad de montaje en salones y espacios abiertos",
+      "Personal de servicio profesional y capacitado"
+    ],
+    "faqs": [
+      {
+        "q": "¿Cómo manejan el clima húmedo de Veracruz en el montaje del banquete?",
+        "a": "Seleccionamos ingredientes y técnicas de montaje resistentes a la humedad, además de coordinar el equipo de refrigeración y transporte necesario para mantener la temperatura ideal de cada alimento."
+      },
+      {
+        "q": "¿Pueden realizar banquetes en salones de Boca del Río o Mocambo?",
+        "a": "Sí, tenemos experiencia trabajando en los principales salones y recintos de Boca del Río, Mocambo y el Centro, asegurando un servicio puntual y de alta calidad en estas zonas."
+      },
+      {
+        "q": "¿Qué opciones de menú ofrecen para bodas en la costa?",
+        "a": "Ofrecemos desde banquetes formales por tiempos hasta buffets especializados. Podemos adaptar el menú para incluir especialidades locales o cocina internacional, siempre bajo los estándares de Bodasesor."
+      }
+    ],
+    "hub": "banquetes",
+    "city": "veracruz",
+    "generatedAt": "2026-08-12T04:18:39.130Z",
+    "model": "gemini-3.1-flash-lite"
   }
 }
