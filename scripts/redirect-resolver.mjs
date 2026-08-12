@@ -65,7 +65,13 @@ const COLLECTION_PREFIX_MAP = [
 /** Specific rules first — avoid dumping everything into /banquetes-catering */
 const KEYWORD_RULES = [
   [/cabina|photobooth|photo.?booth|\bfotos?\b/i, '/fotografia/cabina-fotos'],
-  [/fotograf|videograf|video.?mapping|video.?bodas|filmaci|streaming/i, '/fotografia'],
+  // Catering for film sets is food service — not photography.
+  [/catering.?para.?filmaci|catering.?filmaci|catering.?para.?filmacion/i, '/banquetes-catering'],
+  [/fotograf|videograf|video.?mapping|video.?bodas|video-de-bodas|streaming/i, '/fotografia'],
+  [/ensaladas?/i, '/banquetes-catering'],
+  [/bancos?(-de-bar|-vintage|-para)?/i, '/mesas-sillas'],
+  [/coordinacion|event.?host|logistica.?de.?eventos|bautizos?/i, '/wedding-planner'],
+  [/mole\b/i, '/banquetes-catering'],
   [/batucada/i, '/shows/batucada-brasilena'],
   [/robot.?de.?led|led.?robot|robots?-led/i, '/shows'],
   [/stand.?up|comedy|comedia|teatro|circo|danza|bailarines?/i, '/shows'],
@@ -151,8 +157,31 @@ const PRODUCT_ALIASES = {
   'robot-de-leds': '/shows',
   'silla-phoenix': '/mesas-sillas',
   'silla-tiffany': '/sillas/tiffany',
+  'silla-ghost': '/sillas/ghost',
+  'silla-crossback': '/sillas/crossback',
+  'silla-basket': '/sillas/basket',
+  'silla-tolix': '/sillas/tolix',
+  'silla-camila': '/sillas/camila',
+  'silla-antonella': '/sillas/antonella',
+  'silla-tiffany-infantil': '/sillas/tiffany-infantil',
+  periqueras: '/salas-periqueras',
+  sillas: '/mesas-sillas',
+  mesas: '/mesas-sillas',
   'periquera-parota': '/periqueras/periquera-parota-nogal',
   'tipos-de-banquetes': '/blog/tipos-de-banquetes',
+  'catering-para-filmaciones-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'catering-para-filmaciones': '/banquetes-catering',
+  'ensaladas-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  ensaladas: '/banquetes-catering',
+  'inflables-pachuca': '/inflables/pachuca',
+  'precio-de-mobiliario-moderno-cdmx': '/mesas-sillas/ciudad-de-mexico',
+  'mesas-de-proyeccion-cdmx-1': '/mesas-sillas/ciudad-de-mexico',
+  'mesas-de-proyeccion-cdmx': '/mesas-sillas/ciudad-de-mexico',
+  'el-gran-mobiliario-sillas-y-mesas-cdmx': '/mesas-sillas/ciudad-de-mexico',
+  'arcos-florales-para-ceremonias-cdmx': '/floreria/ciudad-de-mexico',
+  'flores-frescas-cdmx': '/floreria/ciudad-de-mexico',
+  'precio-de-decoracion-tematica-cdmx': '/floreria/ciudad-de-mexico',
+  'video-de-bodas-cdmx': '/fotografia/ciudad-de-mexico',
 }
 
 const SEO_TRAILING = [
@@ -404,6 +433,25 @@ export function resolveLegacyPath(fromPath) {
   if (fromPath.startsWith('/pages/quienes-somos')) return '/quienes-somos'
   if (fromPath.startsWith('/pages/contact')) return '/'
   if (fromPath.startsWith('/pages/contacto')) return '/'
+
+  // Bare legacy slugs still in GSC (e.g. /silla-ghost, /periqueras, /silla-tiffany/ciudad-de-mexico)
+  {
+    const bare = fromPath.split('?')[0].replace(/\/+$/, '') || '/'
+    const parts = bare.split('/').filter(Boolean).map((p) => decodeURIComponent(p).toLowerCase())
+    if (parts.length === 1) {
+      const { base, city } = stripCitySuffix(parts[0])
+      if (PRODUCT_ALIASES[base]) return withCity(PRODUCT_ALIASES[base], city)
+      if (PRODUCT_ALIASES[parts[0]]) return PRODUCT_ALIASES[parts[0]]
+    }
+    if (parts.length === 2 && PRODUCT_ALIASES[parts[0]]) {
+      const { base: cityBase, city: glued } = stripCitySuffix(parts[1])
+      // /silla-tiffany/ciudad-de-mexico or /silla-tiffany/cdmx
+      if (CITY_SUFFIXES.includes(parts[1]) || CITY_SUFFIXES.includes(cityBase)) {
+        const city = CITY_SUFFIXES.includes(parts[1]) ? parts[1] : glued || cityBase
+        return withCity(PRODUCT_ALIASES[parts[0]], city === 'cdmx' ? 'ciudad-de-mexico' : city)
+      }
+    }
+  }
 
   if (fromPath.startsWith('/blogs/noticias/')) {
     let slug = decodeURIComponent(fromPath.split('/').pop() || '')
