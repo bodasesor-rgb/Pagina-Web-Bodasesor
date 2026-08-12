@@ -8,11 +8,13 @@ import { Lightbox } from "../components/Lightbox";
 import OptimizedImage from "../components/OptimizedImage";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import Breadcrumbs from "../components/Breadcrumbs";
+import HighlightKeywords from "../components/HighlightKeywords";
 import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildSeoTitle } from "../utils/seo-title";
 import { upsertJsonLd } from "../utils/seo-head";
 import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
+import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-title-case";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
@@ -647,6 +649,26 @@ export default function ServicePage({ params }: ServicePageProps) {
     HERO_IMAGES[slug]?.startsWith('/images/mesas/') ||
     HERO_IMAGES[slug]?.startsWith('/images/barras/') ||
     false;
+
+  const displayH1 = cityCopy?.h1
+    ? toSpanishTitleCase(cityCopy.h1)
+    : city
+      ? toSpanishTitleCase(`${product.title} para Bodas y Eventos en ${city.name}`)
+      : toSpanishTitleCase(`${product.title} para Bodas y Eventos`);
+  const displayHeadline = toSpanishTitleCase(cityCopy?.headline || product.headline || '');
+  const displaySectionTitle = cityCopy?.sectionTitle
+    ? toSpanishTitleCase(cityCopy.sectionTitle)
+    : city
+      ? toSpanishTitleCase(`${product.title} para Bodas y Eventos en ${city.name}`)
+      : toSpanishTitleCase(`${product.title} para Bodas y Eventos`);
+  const kw = buildHighlightKeywords({
+    primaryKeyword: cityCopy?.primaryKeyword || '',
+    zones: cityCopy?.zones || [],
+    cityName: city?.name || '',
+    cityShort: city?.short || '',
+    extra: ['Banquetes', 'Catering', 'Bodas', 'Eventos', 'Mobiliario', 'Wedding Planner'],
+  });
+
   const heroAlt = city
     ? `${product.title} para eventos en ${city.name}`
     : `${product.title} para eventos y banquetes`;
@@ -672,14 +694,10 @@ export default function ServicePage({ params }: ServicePageProps) {
               <div className="lg:col-span-3 px-4 sm:px-6 lg:px-12 py-10 md:py-16 flex flex-col justify-center min-h-[260px]">
                 <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
                 <h1 className="text-4xl md:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-                  {cityCopy?.h1
-                    ? cityCopy.h1
-                    : city
-                      ? `${product.title} para Bodas y Eventos en ${city.name}`
-                      : `${product.title} para Bodas y Eventos`}
+                  {displayH1}
                 </h1>
                 <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-xl">
-                  {cityCopy?.headline || product.headline}
+                  <HighlightKeywords text={displayHeadline} keywords={kw} className="font-bold text-white" />
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a href={waUrl} target="_blank" rel="noopener noreferrer"
@@ -721,14 +739,10 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-14">
             <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
             <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
-              {cityCopy?.h1
-                ? cityCopy.h1
-                : city
-                  ? `${product.title} para Bodas y Eventos en ${city.name}`
-                  : `${product.title} para Bodas y Eventos`}
+              {displayH1}
             </h1>
             <p className="text-lg md:text-xl text-white/80 font-serif mb-8 leading-relaxed max-w-2xl">
-              {cityCopy?.headline || product.headline}
+              <HighlightKeywords text={displayHeadline} keywords={kw} className="font-bold text-white" />
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={waUrl} target="_blank" rel="noopener noreferrer"
@@ -773,27 +787,26 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-serif font-bold text-[#162040] mb-6">
-                {cityCopy?.sectionTitle
-                  ? cityCopy.sectionTitle
-                  : city
-                    ? `${product.title} para bodas y eventos en ${city.name}`
-                    : `${product.title} para bodas y eventos`}
+                {displaySectionTitle}
               </h2>
               <div className="space-y-4">
                 {(cityCopy?.description?.length ? cityCopy.description : product.description).map((para, i) => (
                   <p key={i} className="text-gray-600 leading-relaxed font-serif text-lg">
-                    {para}
+                    <HighlightKeywords text={para} keywords={kw} />
                   </p>
                 ))}
                 {cityCopy?.localBullets?.length ? (
                   <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
                     {cityCopy.localBullets.map((b) => (
-                      <li key={b}>{b}</li>
+                      <li key={b}>
+                        <HighlightKeywords text={b} keywords={kw} />
+                      </li>
                     ))}
                   </ul>
                 ) : city ? (
                   <p className="text-gray-600 leading-relaxed font-serif text-lg">
-                    Servicio disponible en {city.name} y área metropolitana. Cotiza sin compromiso.
+                    Servicio disponible en <strong className="font-bold text-[#162040]">{city.name}</strong> y área
+                    metropolitana. Cotiza sin compromiso.
                   </p>
                 ) : null}
               </div>
@@ -937,8 +950,20 @@ export default function ServicePage({ params }: ServicePageProps) {
         <section className="py-16 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">Ejemplo de menú</h2>
-              <p className="text-gray-600 mt-3 font-serif">Propuesta referencial — adaptamos el menú a tus gustos y preferencias</p>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
+                {toSpanishTitleCase('Ejemplo de menú')}
+              </h2>
+              <p className="text-gray-600 mt-3 font-serif">
+                Propuesta referencial
+                {city ? (
+                  <>
+                    {' '}
+                    para eventos en <strong className="font-bold text-[#162040]">{city.name}</strong>
+                  </>
+                ) : null}
+                {' '}
+                — adaptamos el menú a tus gustos y preferencias
+              </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {product.menuExample.map((item, i) => {
