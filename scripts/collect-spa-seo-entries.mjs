@@ -24,7 +24,7 @@ import { blogPosts } from '../src/data/blog-data.js'
 import { CITY_MAP } from '../src/data/city-data.js'
 import { SPA_SEO_HUBS } from '../src/data/spa-seo-hubs.js'
 import { CATALOGOS } from '../src/data/catalogos-embeds.js'
-import { getCityHubContent } from '../src/data/city-hub-content.js'
+import { getCityHubContent } from './lib/load-city-hub-content.mjs'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
 

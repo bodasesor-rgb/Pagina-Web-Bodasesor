@@ -12,7 +12,7 @@ import { getProductBySlugAsync } from "../data/products-loader";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildSeoTitle } from "../utils/seo-title";
 import { upsertJsonLd } from "../utils/seo-head";
-import { buildFaqPageJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
+import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
@@ -584,8 +584,27 @@ export default function ServicePage({ params }: ServicePageProps) {
           ? product.faqs
           : defaultServiceFaqs(product.title);
     upsertJsonLd('bodasesor-faq-jsonld', buildFaqPageJsonLd(faqs));
-    return () => upsertJsonLd('bodasesor-faq-jsonld', null);
-  }, [product, cityCopy]);
+
+    if (city && cityCopy) {
+      upsertJsonLd(
+        'bodasesor-service-city-jsonld',
+        buildServiceCityJsonLd({
+          name: cityCopy.h1 || `${product.title} en ${city.name}`,
+          description: cityCopy.seoDescription || product.seoDescription,
+          url: `https://bodasesor.com/${slug}/${city.slug}`,
+          cityName: city.name,
+          zones: cityCopy.zones || [],
+        }),
+      );
+    } else {
+      upsertJsonLd('bodasesor-service-city-jsonld', null);
+    }
+
+    return () => {
+      upsertJsonLd('bodasesor-faq-jsonld', null);
+      upsertJsonLd('bodasesor-service-city-jsonld', null);
+    };
+  }, [product, cityCopy, city, slug]);
 
   if (!loaded) {
     return (
@@ -754,8 +773,8 @@ export default function ServicePage({ params }: ServicePageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-serif font-bold text-[#162040] mb-6">
-                {cityCopy?.h1
-                  ? cityCopy.h1
+                {cityCopy?.sectionTitle
+                  ? cityCopy.sectionTitle
                   : city
                     ? `${product.title} para bodas y eventos en ${city.name}`
                     : `${product.title} para bodas y eventos`}

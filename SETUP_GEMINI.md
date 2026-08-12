@@ -51,10 +51,29 @@ npm run generate:city-content -- --hub=banquetes
 npm run verify:gemini-cost
 ```
 
-## Verificar
+## Estructura de contenido hub×ciudad (schema v2)
 
+Archivo: `src/data/city-hub-schema.js` + `src/data/city-hub-content.json`
+
+Campos: `h1`, `sectionTitle` (≠ h1), `headline`, `description[3]`, `seoTitle`≤60,
+`seoDescription` 120–155, `primaryKeyword`, `zones[]`, `localBullets[]`, `faqs[3]`.
+
+### Dónde se verifica
 ```bash
-node scripts/verify-gemini-cost-optim.mjs
+npm run verify:city-hub-seo           # longitudes + unicidad + FAQs
+npm run verify:city-hub-seo -- --require-v2   # exige schemaVersion ≥ 2
 ```
 
-Esperado: turno1 `cached:true`; turno2 `cacheReused:true`; con imagen `imageCompressed:true` y ≥70% menos bytes.
+Lighthouse SEO 100 (técnico) ya lo dan title/meta/canonical/robots/H1 en prerender.
+Este schema suma **contenido único + FAQ/Service JSON-LD** (ranking), no solo el score Lighthouse.
+
+### Sobrescribir todo tras mejorar estructura
+```bash
+npm run generate:city-content -- --hub=banquetes --force
+# o varios hubs
+npm run generate:city-content -- --hub=banquetes,barras-de-bebidas,mesas-sillas --force
+npm run verify:city-hub-seo -- --require-v2
+```
+
+Entradas v1 se regeneran automáticamente (schemaVersion < 2) sin `--force`.
+`--force` regenera aunque ya estén en v2.

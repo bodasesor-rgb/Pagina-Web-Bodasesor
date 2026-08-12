@@ -16,6 +16,7 @@
     "verify:bot-shield": "node scripts/verify-bot-shield-allowlist.mjs",
     "generate:city-content": "node scripts/generate-city-hub-content.mjs",
     "verify:gemini-cost": "node scripts/verify-gemini-cost-optim.mjs",
+    "verify:city-hub-seo": "node scripts/verify-city-hub-seo.mjs",
     "check:redirects": "node scripts/check-production-redirects.mjs",
     "verify:nexus": "node scripts/verify-nexus-production.mjs",
     "verify:dist-bundle": "node scripts/verify-dist-spa-and-nexus.mjs",
