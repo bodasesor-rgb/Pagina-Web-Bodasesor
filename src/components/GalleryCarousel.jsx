@@ -1,11 +1,8 @@
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { img } from "../data/site"
+import { getSectionGallerySlides } from "../data/product-galleries"
 
-const gallerySlides = [
-  [101,102,103],[104,105,106],[107,108,109],[110,111,112],[113,114,115],
-  [116,117,118],[119,120,121],[122,123,124],[125,126,127],[128,129,130],
-].map(group => group.map(n => img(`/images/instagram/ig${n}.jpg`)))
+const gallerySlides = getSectionGallerySlides(3)
 
 function Carousel() {
   const [slide, setSlide] = useState(0)
@@ -25,7 +22,7 @@ function Carousel() {
               src={src}
               alt={`Evento real Bodasesor ${slide * 3 + i + 1}`}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              onError={e => { e.target.src = img('/images/instagram/ig101.jpg') }}
+              onError={e => { e.target.src = '/images/instagram/ig101.jpg' }}
             />
             <div className="absolute inset-0 bg-[#162040]/0 group-hover:bg-[#162040]/30 transition-all duration-300 flex items-center justify-center">
               <svg className="w-16 h-16 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
