@@ -384,6 +384,8 @@ async function main() {
     'desayunos/puerto-vallarta',
     'cupcakes-gourmet/ciudad-de-mexico',
     'bodas/ciudad-de-mexico',
+    'cenas/ciudad-de-mexico',
+    'mesa-redonda/puerto-vallarta',
     // Hubs previously forced to /index.html 200! (home soft-404)
     'banquete-kosher',
     'banquete-mexicano',
@@ -414,6 +416,9 @@ async function main() {
     'banquetes/ciudad-de-mexico',
     'banquetes/3-tiempos/ciudad-de-mexico',
     'cupcakes-gourmet/ciudad-de-mexico',
+    'desayunos/puerto-vallarta',
+    'bodas/ciudad-de-mexico',
+    'cenas/ciudad-de-mexico',
   ]
   for (const rel of hubCityRels) {
     const html = await readFile(join(DIST, rel, 'index.html'), 'utf8')
@@ -424,7 +429,7 @@ async function main() {
   }
   // Thin product×city shells (NOT in SPA_SEO_HUBS) must stay noindex
   const thinCityRels = [
-    'desayunos/puerto-vallarta',
+    'mesa-redonda/puerto-vallarta',
   ]
   for (const rel of thinCityRels) {
     const html = await readFile(join(DIST, rel, 'index.html'), 'utf8')

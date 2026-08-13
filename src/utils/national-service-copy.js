@@ -73,6 +73,32 @@ export function buildNationalServiceCopy(product) {
   }
 }
 
+function eventTypeNational(label, servicesHint) {
+  return {
+    headline: `Organización integral de ${label.toLowerCase()} con un solo coordinador Bodasesor.`,
+    localBullets: [
+      `Paquete completo para ${label.toLowerCase()}: ${servicesHint}.`,
+      'Un solo contacto para banquete, mobiliario, música y producción.',
+      'Cobertura nacional con logística y montaje incluidos.',
+      'Cotización personalizada por WhatsApp en menos de 24 horas.',
+    ],
+    faqs: [
+      {
+        q: `¿Qué incluye el servicio de ${label}?`,
+        a: `Coordinamos ${servicesHint} según tu presupuesto e invitados. Armamos un paquete único con un solo coordinador Bodasesor.`,
+      },
+      {
+        q: '¿Atienden a nivel nacional?',
+        a: 'Sí. Operamos en CDMX, Estado de México, Guadalajara, Monterrey, León y principales ciudades de México.',
+      },
+      {
+        q: '¿Cuánto tarda la cotización?',
+        a: 'Te enviamos propuesta por WhatsApp normalmente en menos de una hora, sin compromiso.',
+      },
+    ],
+  }
+}
+
 /**
  * National defaults for category hub pages (banquetes-catering, barras-de-bebidas, mesas-personalizadas).
  */
@@ -152,6 +178,17 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
         },
       ],
     },
+    bodas: eventTypeNational('Bodas', 'banquetes, florería, música, fotografía y wedding planner'),
+    corporativos: eventTypeNational('Eventos Corporativos', 'coffee break, catering, audio e iluminación'),
+    'xv-anos': eventTypeNational('XV Años', 'banquete, decoración, música, shows y mesa de dulces'),
+    graduaciones: eventTypeNational('Graduaciones', 'catering, música, decoración y fotografía'),
+    'baby-shower': eventTypeNational('Baby Shower', 'decoración, catering, mesa de dulces y fotografía'),
+    cumpleanos: eventTypeNational('Cumpleaños', 'catering, música, inflables y mesa de dulces'),
+    'primera-comunion': eventTypeNational('Primera Comunión', 'banquete, decoración y mesa de dulces'),
+    cenas: eventTypeNational('Cenas', 'menús de gala, protocolo y ambientación'),
+    comidas: eventTypeNational('Comidas', 'catering de mediodía y almuerzos'),
+    desayunos: eventTypeNational('Desayunos', 'brunch, estaciones en vivo y café premium'),
+    lanzamientos: eventTypeNational('Lanzamientos', 'canapés, cócteles y branding gastronómico'),
   }
 
   const extra = byHub[hubSlug] || {
