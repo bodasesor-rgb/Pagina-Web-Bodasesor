@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Lightbox } from "./Lightbox";
-import { getProductGalleryImages } from "../data/product-galleries";
+import { getProductGalleryImages, padGalleryToTarget } from "../data/product-galleries";
 
 type ProductGalleryCarouselProps = {
   /** Product / service slug used to resolve gallery images */
@@ -15,6 +15,7 @@ type ProductGalleryCarouselProps = {
  * Main product gallery carousel (arrows, counter, dots, lightbox).
  * Shared by ServicePage and BanqueteMenuDetailPage so banquet tiempos,
  * catering, barras and estaciones all behave the same.
+ * Always pads to the same photo count (GALLERY_TARGET).
  */
 export default function ProductGalleryCarousel({
   slug,
@@ -23,7 +24,7 @@ export default function ProductGalleryCarousel({
 }: ProductGalleryCarouselProps) {
   const images =
     imagesProp && imagesProp.length > 0
-      ? imagesProp
+      ? padGalleryToTarget(imagesProp, slug || title || "gallery")
       : getProductGalleryImages(slug || "");
 
   const [idx, setIdx] = useState(0);
