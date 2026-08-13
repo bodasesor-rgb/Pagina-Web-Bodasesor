@@ -171,14 +171,50 @@ const PRODUCT_GALLERY = {
 };
 const DEFAULT_GALLERY = ['/images/instagram/ig1.jpg','/images/instagram/ig2.jpg','/images/instagram/ig3.jpg','/images/instagram/ig4.jpg','/images/instagram/ig5.jpg','/images/instagram/ig6.jpg','/images/instagram/ig7.jpg','/images/instagram/ig8.jpg','/images/instagram/ig9.jpg','/images/instagram/ig10.jpg','/images/instagram/ig11.jpg','/images/instagram/ig12.jpg','/images/instagram/ig13.jpg','/images/instagram/ig14.jpg','/images/instagram/ig15.jpg','/images/instagram/ig16.jpg','/images/instagram/ig17.jpg','/images/instagram/ig18.jpg','/images/instagram/ig19.jpg','/images/instagram/ig20.jpg','/images/instagram/ig21.jpg','/images/instagram/ig22.jpg','/images/instagram/ig23.jpg','/images/instagram/ig24.jpg','/images/instagram/ig25.jpg','/images/instagram/ig26.jpg','/images/instagram/ig27.jpg','/images/instagram/ig28.jpg','/images/instagram/ig29.jpg','/images/instagram/ig30.jpg'];
 
+/** Same length for every product carousel (hero + gallery, or padded from IG pool). */
+export const GALLERY_TARGET = 31
+
+const IG_POOL = Array.from({ length: 200 }, (_, i) => `/images/instagram/ig${i + 1}.jpg`)
+
+function slugSeed(slug) {
+  let h = 0
+  for (let i = 0; i < String(slug || '').length; i++) {
+    h = (h * 31 + String(slug).charCodeAt(i)) >>> 0
+  }
+  return h
+}
+
+/** Pad/trim any image list to GALLERY_TARGET with unique IG photos. */
+export function padGalleryToTarget(images, slug = 'default') {
+  const out = []
+  const seen = new Set()
+  for (const img of images || []) {
+    if (!img || seen.has(img)) continue
+    seen.add(img)
+    out.push(img)
+    if (out.length >= GALLERY_TARGET) return out.slice(0, GALLERY_TARGET)
+  }
+  let i = slugSeed(slug) % IG_POOL.length
+  let guard = 0
+  while (out.length < GALLERY_TARGET && guard < IG_POOL.length * 2) {
+    const img = IG_POOL[i % IG_POOL.length]
+    i += 1
+    guard += 1
+    if (seen.has(img)) continue
+    seen.add(img)
+    out.push(img)
+  }
+  return out
+}
 
 export function getProductGalleryImages(slug) {
   const gallery = PRODUCT_GALLERY[slug] ?? DEFAULT_GALLERY
   const heroImg = HERO_IMAGES[slug]
-  if (typeof heroImg === 'string' && heroImg && gallery[0] !== heroImg) {
-    return [heroImg, ...gallery]
-  }
-  return gallery
+  const base =
+    typeof heroImg === 'string' && heroImg && gallery[0] !== heroImg
+      ? [heroImg, ...gallery]
+      : [...gallery]
+  return padGalleryToTarget(base, slug || 'default')
 }
 
 export { HERO_IMAGES, PRODUCT_GALLERY, DEFAULT_GALLERY }
