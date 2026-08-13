@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Lightbox } from "../components/Lightbox";
+import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import {
@@ -13,12 +12,12 @@ import {
 } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
+import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import type { ProductData } from "../data/products";
 import { buildSeoTitle } from "../utils/seo-title";
 import HighlightKeywords from "../components/HighlightKeywords";
-import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -60,77 +59,9 @@ const EVENT_GALLERY: Record<string, number[]> = {
 };
 const DEFAULT_GALLERY = [5,10,15,20,25,30,35,40,45,50];
 
-function EventGalleryCarousel({ slug }: { slug: string }) {
+function eventGalleryImages(slug: string) {
   const imgs = EVENT_GALLERY[slug] ?? DEFAULT_GALLERY;
-  const imagePaths = imgs.map(n => `/images/instagram/ig${n}.jpg`);
-  const [active, setActive] = useState(0);
-  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-
-  useEffect(() => {
-    const t = setInterval(() => setActive(i => (i + 1) % imgs.length), 3500);
-    return () => clearInterval(t);
-  }, [imgs.length]);
-
-  return (
-    <>
-      <div
-        className="relative rounded-2xl overflow-hidden shadow-lg bg-gray-100 cursor-zoom-in group"
-        style={{ aspectRatio: '4/3' }}
-        onClick={() => setLightboxIdx(active)}
-      >
-        <img
-          key={imagePaths[active]}
-          src={imagePaths[active]}
-          alt="Evento realizado por Bodasesor"
-          width={800}
-          height={600}
-          className="w-full h-full object-contain bg-[#f5efe8]"
-          onError={e => { (e.target as HTMLImageElement).src = '/images/galeria/g1.jpg'; }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#162040]/40 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-all duration-300 flex items-center justify-center pointer-events-none">
-          <svg className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-        </div>
-        <button
-          onClick={e => { e.stopPropagation(); setActive(i => (i - 1 + imgs.length) % imgs.length); }}
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#162040] p-2 rounded-full shadow transition-all duration-200 hover:scale-110"
-          aria-label="Anterior"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-        <button
-          onClick={e => { e.stopPropagation(); setActive(i => (i + 1) % imgs.length); }}
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#162040] p-2 rounded-full shadow transition-all duration-200 hover:scale-110"
-          aria-label="Siguiente"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 pointer-events-none">
-          {imgs.map((_, i) => (
-            <div
-              key={i}
-              className={`rounded-full transition-all duration-200 ${i === active ? 'bg-white w-5 h-2' : 'bg-white/50 w-2 h-2'}`}
-            />
-          ))}
-        </div>
-      </div>
-      {lightboxIdx !== null && (
-        <Lightbox
-          images={imagePaths}
-          index={lightboxIdx}
-          onClose={() => setLightboxIdx(null)}
-          onPrev={() => setLightboxIdx(i => ((i ?? 0) - 1 + imagePaths.length) % imagePaths.length)}
-          onNext={() => setLightboxIdx(i => ((i ?? 0) + 1) % imagePaths.length)}
-        />
-      )}
-    </>
-  );
+  return imgs.map((n) => `/images/instagram/ig${n}.jpg`);
 }
 
 const WaSvg = () => (
@@ -912,44 +843,53 @@ export default function EventTypePage({ product }: EventTypePageProps) {
         </section>
       )}
 
-      <CityHubSeoSections
-        cityName={city?.name}
-        displaySectionTitle={displaySectionTitle}
-        keywords={keywords}
-        description={cityCopy?.description}
-        localBullets={cityCopy?.localBullets}
-        faqs={cityCopy?.faqs}
-        fallback={
-          <p>
-            Servicios completos para <strong>{shortName}</strong>
-            {city ? (
-              <>
-                {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
-              </>
-            ) : (
-              <> en México</>
-            )}
-            . Combina banquetes, barras, mobiliario y producción con un solo coordinador Bodasesor.
-          </p>
-        }
-      />
-
-      {/* ── 3. DESCRIPCIÓN + GALERÍA ── */}
+      {/* ── 3. DESCRIPCIÓN + GALERÍA (mismo patrón que ServicePage) ── */}
       <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-serif font-bold text-[#162040] mb-6">
-                {product.headline}
+                {displaySectionTitle || product.headline}
               </h2>
               <div className="space-y-4">
-                {(product.description ?? []).map((para, i) => (
-                  <p key={i} className="text-gray-600 leading-relaxed font-serif text-lg">{para}</p>
+                {(cityCopy?.description?.length
+                  ? cityCopy.description
+                  : product.description ?? []
+                ).map((para, i) => (
+                  <p key={i} className="text-gray-600 leading-relaxed font-serif text-lg">
+                    <HighlightKeywords text={para} keywords={keywords} />
+                  </p>
                 ))}
+                {cityCopy?.localBullets?.length ? (
+                  <ul className="list-disc pl-5 space-y-2 text-gray-600 font-serif text-lg">
+                    {cityCopy.localBullets.map((b) => (
+                      <li key={b}>
+                        <HighlightKeywords text={b} keywords={keywords} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+              <div className="mt-8 p-4 bg-[#f5efe8]/60 rounded-xl border border-[#162040]/10">
+                <p className="text-sm text-gray-600 font-serif italic">
+                  <HighlightKeywords
+                    text={
+                      cityCopy?.seoDescription ||
+                      (city
+                        ? `${product.seoDescription} Disponible en ${city.name}.`
+                        : product.seoDescription)
+                    }
+                    keywords={keywords}
+                  />
+                </p>
               </div>
             </div>
             <div className="lg:sticky lg:top-24">
-              <EventGalleryCarousel slug={product.slug} />
+              <ProductGalleryCarousel
+                slug={product.slug}
+                images={eventGalleryImages(product.slug)}
+                title={shortName}
+              />
             </div>
           </div>
         </div>
@@ -999,6 +939,7 @@ export default function EventTypePage({ product }: EventTypePageProps) {
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#162040]">
                 Servicios disponibles para {shortName}
+                {city ? ` en ${city.name}` : ""}
               </h2>
               <p className="text-gray-600 mt-3 font-serif max-w-2xl mx-auto">
                 Un solo proveedor para coordinar todos los servicios de tu evento. Sin estrés, sin intermediarios.
@@ -1080,7 +1021,40 @@ export default function EventTypePage({ product }: EventTypePageProps) {
         </div>
       </section>
 
-      {/* ── 6. CTA FINAL ── */}
+      {/* ── FAQ ── */}
+      {cityCopy?.faqs?.length ? (
+        <section className="py-14 bg-white border-t border-[#162040]/10" aria-labelledby="event-faq-heading">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="event-faq-heading" className="text-2xl md:text-3xl font-serif font-bold text-[#162040] mb-2">
+              Preguntas frecuentes
+            </h2>
+            <p className="text-gray-600 font-serif text-sm mb-8">
+              Respuestas claras sobre {shortName}
+              {city ? ` en ${city.name}` : " en México"}.
+            </p>
+            <div className="space-y-4">
+              {cityCopy.faqs.map((f) => (
+                <details
+                  key={f.q}
+                  className="group rounded-xl border border-[#162040]/10 bg-[#faf7f2] px-5 py-4"
+                >
+                  <summary className="cursor-pointer font-serif font-bold text-[#162040] list-none flex items-start justify-between gap-3">
+                    <span>{f.q}</span>
+                    <span className="text-[#162040]/50 group-open:rotate-45 transition-transform text-xl leading-none">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-gray-700 font-serif text-sm leading-relaxed">
+                    <HighlightKeywords text={f.a} keywords={keywords} />
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ── CTA FINAL ── */}
       <GalleryCarouselSection />
 
       <SeoRelatedLinks
