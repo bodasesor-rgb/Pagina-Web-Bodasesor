@@ -12,7 +12,7 @@ import {
   applySocialMeta,
   applyPageSeo,
 } from '../utils/seo-head'
-import { SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
+import { SPA_SEO_HUBS, SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
 import { absoluteOgImage } from '../utils/seo-social'
@@ -73,10 +73,8 @@ function breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo) {
     items.push({ name: labelFromSlug(segs[segs.length - 1]) })
   }
   if (activeCity && path !== basePath) {
-    // City is last segment of the full path
     const last = items[items.length - 1]
     if (last && !last.href) {
-      // keep leaf as service; append city
       items[items.length - 1] = { name: last.name, href: basePath }
       items.push({ name: activeCity.name })
     }
@@ -84,91 +82,19 @@ function breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo) {
   return items
 }
 
+/** Full hub inventory (SPA_SEO_HUBS) + home/search overrides — every indexed route. */
 const SEO_MAP = {
   '/': {
     title: 'Banquetes y Catering para Eventos en México',
-    desc: 'Banquetes, catering, mobiliario y servicios premium para bodas, quinceañeras y eventos corporativos en México.',
-  },
-  '/galeria': {
-    title: 'Galería de Banquetes y Eventos Reales',
-    desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor en México.',
-  },
-  '/banquetes-catering': {
-    title: 'Banquetes y Catering',
-    desc: 'Catálogo completo de banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas para eventos.',
-  },
-  '/barras-de-bebidas': {
-    title: 'Barras de Bebidas',
-    desc: 'Barras de bebidas con y sin alcohol para eventos: mocteles, mixología, café premium y carritos de helado.',
-  },
-  '/wedding-planner': {
-    title: 'Wedding Planner',
-    desc: 'Servicio de wedding planner profesional. Planeación, coordinación y asesoría para tu boda.',
-  },
-  '/audio-iluminacion-video': {
-    title: 'Audio, Iluminación y Video',
-    desc: 'Sonido, iluminación y video profesional para eventos, bodas y corporativos en México.',
-  },
-  '/salas-periqueras': {
-    title: 'Salas y Periqueras',
-    desc: 'Renta de salas lounge y periqueras para eventos, bodas y recepciones en México.',
-  },
-  '/fotografia': {
-    title: 'Fotografía y Video',
-    desc: 'Fotografía profesional, video, cámara 360, cabina de fotos y más para tu evento.',
-  },
-  '/quienes-somos': {
-    title: 'Quiénes Somos',
-    desc: 'Conoce al equipo de Bodasesor Eventos. Más de 10 años organizando eventos en México.',
-  },
-  '/bodas': {
-    title: 'Bodas',
-    desc: 'Servicios completos para bodas: catering, decoración, música, fotografía y más.',
-  },
-  '/corporativos': {
-    title: 'Eventos Corporativos',
-    desc: 'Catering, mobiliario y servicios para eventos corporativos en México.',
-  },
-  '/xv-anos': {
-    title: 'XV Años',
-    desc: 'Servicios completos para XV años: banquete, decoración, música, shows y más.',
-  },
-  '/baby-shower': {
-    title: 'Baby Shower',
-    desc: 'Servicios para baby shower: mesa de dulces, decoración, catering y más.',
-  },
-  '/cumpleanos': {
-    title: 'Cumpleaños',
-    desc: 'Servicios para fiestas de cumpleaños: catering, decoración, shows e inflables.',
-  },
-  '/primera-comunion': {
-    title: 'Primera Comunión',
-    desc: 'Servicios completos para primera comunión: banquete, decoración y más.',
-  },
-  '/mesas-sillas': {
-    title: 'Mesas y Sillas',
-    desc: 'Renta de mesas y sillas para bodas, XV años y eventos en México.',
-  },
-  '/parrillada': {
-    title: 'Parrillada para Eventos',
-    desc: 'Servicio de parrillada para bodas y eventos en México. Tradicional mexicana o argentina.',
-  },
-  '/blog': {
-    title: 'Blog de Eventos y Bodas',
-    desc: 'Consejos, tendencias y guías para planear bodas, XV años y eventos corporativos en México.',
+    desc: 'Banquetes, catering, mobiliario y servicios premium para bodas, quinceañeras y eventos corporativos en México. Cotiza con Bodasesor por WhatsApp.',
   },
   '/buscar': {
     title: 'Buscar servicios',
-    desc: 'Busca banquetes, catering, mobiliario y servicios para eventos en Bodasesor.',
+    desc: 'Busca banquetes, catering, mobiliario y servicios para eventos en Bodasesor. Cotiza por WhatsApp sin compromiso.',
   },
-  '/aviso-de-privacidad': {
-    title: 'Aviso de Privacidad',
-    desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales, contacto y derechos ARCO.',
-  },
-  '/terminos-y-condiciones': {
-    title: 'Términos y Condiciones',
-    desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos en México.',
-  },
+  ...Object.fromEntries(
+    SPA_SEO_HUBS.map((h) => [h.path, { title: h.title, desc: h.desc }]),
+  ),
 }
 
 const NOINDEX_PREFIXES = ['/buscar']
@@ -306,33 +232,32 @@ export default function GlobalSEO() {
           })
         }
       } else if (path !== '/' && !path.startsWith('/buscar')) {
-        // Product / banquet / detail pages own title+OG via applyPageSeo when available.
-        // Always keep absolute canonical + og:url; re-sync social after page effects.
-        upsertLink('canonical', canonical)
-        upsertMeta('property', 'og:url', canonical)
-        upsertJsonLd(PAGE_JSONLD_ID, null)
-        applyPageIdentityMeta({
+        // Every non-hub route still gets full page SEO immediately (absolute OG/canonical).
+        // Lazy pages refine with richer copy via applyPageSeo / useCityHubPage.
+        const slugPart = basePath.split('/').filter(Boolean).pop() || 'servicio'
+        const label = labelFromSlug(slugPart)
+        const headline = activeCity ? `${label} en ${activeCity.short || activeCity.name}` : label
+        const desc = clampMetaDescription(
+          activeCity
+            ? `${label} para bodas y eventos en ${activeCity.name}. Cotiza con Bodasesor por WhatsApp.`
+            : `${label} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp.`,
+        )
+        applyPageSeo({
+          title: headline,
+          description: desc,
           path,
-          title: labelFromSlug(basePath.split('/').filter(Boolean).pop() || 'servicio'),
+          h1: headline,
           cityName: activeCity?.name,
         })
-        const syncSocialFromDocument = () => {
-          if (cancelled) return
-          const title = document.title
-          const desc = document
-            .querySelector('meta[name="description"]')
-            ?.getAttribute('content')
-          if (!title) return
-          applySocialMeta({
-            title,
-            description:
-              desc ||
-              `${title.replace(/\s*\|\s*Bodasesor.*$/i, '')}. Cotiza con Bodasesor por WhatsApp.`,
+        upsertJsonLd(
+          PAGE_JSONLD_ID,
+          buildServiceJsonLd({
+            name: headline,
+            description: desc,
             url: canonical,
-          })
-        }
-        requestAnimationFrame(() => requestAnimationFrame(syncSocialFromDocument))
-        setTimeout(syncSocialFromDocument, 80)
+            city: activeCity,
+          }),
+        )
       } else {
         applySocialMeta({
           title: document.title || 'Bodasesor',
