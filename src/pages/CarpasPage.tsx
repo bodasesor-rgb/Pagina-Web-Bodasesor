@@ -4,6 +4,7 @@ import { CARPAS } from "../data/carpas-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 import OptimizedImage from "../components/OptimizedImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -19,7 +20,7 @@ function WaSvg() {
 
 export default function CarpasPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("carpas", "Carpas para Eventos");
+    useCityHubPage("carpas", PRIORITY_HUB_SERP.carpas.h1, [], hubPageSeo("carpas"));
 
   return (
     <div className="min-h-screen bg-white">

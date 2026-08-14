@@ -6391,8 +6391,8 @@ const PRODUCTS = [
       slug: "mesas-sillas",
       title: "Renta de Mesas y Sillas para Eventos",
       headline: "El mobiliario que transforma cualquier espacio en un evento memorable",
-      seoTitle: "Renta de Mesas y Sillas para Eventos en México | Bodasesor",
-      seoDescription: "Renta de mesas y sillas para eventos, bodas, XV años y corporativos. Más de 20 modelos de sillas y mesas en múltiples estilos. Entrega, montaje y retiro incluidos.",
+      seoTitle: "Renta de Mesas y Sillas para Eventos",
+      seoDescription: "Renta de mesas y sillas y mobiliario para eventos: Tiffany, Ghost, Crossback y más. Entrega y montaje en México. Cotiza por WhatsApp.",
       description: [
         "La elección correcta de mesas y sillas puede transformar radicalmente la percepción de cualquier espacio. En Bodasesor contamos con el catálogo más amplio de mobiliario para eventos de México: desde la clásica silla Tiffany hasta diseños de autor que marcan tendencia.",
         "Ofrecemos más de 20 modelos de sillas y 10 tipos de mesas para adaptarnos a cualquier estilo: bodas románticas, eventos corporativos modernos, fiestas temáticas o reuniones íntimas. Todo el mobiliario es mantenido en estado perfecto entre cada evento.",

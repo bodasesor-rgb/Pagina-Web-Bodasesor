@@ -4,6 +4,7 @@ import OptimizedImage from "../components/OptimizedImage";
 import HighlightKeywords from "../components/HighlightKeywords";
 import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar un servicio de banquetes o catering para mi evento. ¿Me pueden dar información?");
@@ -91,7 +92,12 @@ const CATEGORIES = [
 
 export default function BanquetesCateringPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("banquetes-catering", "Banquetes y Catering");
+    useCityHubPage(
+      "banquetes-catering",
+      PRIORITY_HUB_SERP["banquetes-catering"].h1,
+      [],
+      hubPageSeo("banquetes-catering"),
+    );
   const total = CATEGORIES.reduce((s, c) => s + c.items.length, 0);
   const faqs = cityCopy?.faqs?.length ? cityCopy.faqs : DEFAULT_FAQS;
 

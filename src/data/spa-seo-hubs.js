@@ -1,9 +1,11 @@
+import { PRIORITY_HUB_SERP } from './priority-hub-serp.js'
+
 /**
  * SPA hub routes that stay indexable with /{hub}/{city} shells.
  * Product/detail × city thin shells are prerendered with noindex.
  */
 export const SPA_SEO_HUBS = [
-  { path: '/banquetes-catering', title: 'Banquetes y Catering', desc: 'Catálogo completo de banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas para eventos.' },
+  { path: '/banquetes-catering', title: PRIORITY_HUB_SERP['banquetes-catering'].title, desc: PRIORITY_HUB_SERP['banquetes-catering'].desc },
   { path: '/barras-de-bebidas', title: 'Barras de Bebidas', desc: 'Barras de bebidas con y sin alcohol para eventos: mocteles, mixología, café premium y carritos de helado.' },
   { path: '/mesas-personalizadas', title: 'Mesas Personalizadas', desc: 'Mesas temáticas para eventos: dulces, botanas, sushi, charcutería, frutas y más.' },
   { path: '/combinaciones-mesas-sillas', title: 'Combinaciones de Mesas y Sillas', desc: 'Paquetes de mesas y sillas coordinadas para bodas, XV años y eventos corporativos en México.' },
@@ -11,19 +13,19 @@ export const SPA_SEO_HUBS = [
   { path: '/colgantes', title: 'Colgantes Decorativos', desc: 'Colgantes florales, de luces y decorativos para bodas, quinceañeras y eventos especiales.' },
   { path: '/barras', title: 'Barras de Mobiliario', desc: 'Renta de barras de mobiliario para estaciones de bebidas, recepción y open bar.' },
   { path: '/entelados', title: 'Entelados para Eventos', desc: 'Entelados y decoración de mesas para bodas, XV años y eventos sociales en México.' },
-  { path: '/floreria', title: 'Florería para Eventos', desc: 'Arreglos florales, centros de mesa y decoración floral para bodas y eventos en México.' },
+  { path: '/floreria', title: PRIORITY_HUB_SERP.floreria.title, desc: PRIORITY_HUB_SERP.floreria.desc },
   { path: '/shows', title: 'Shows y Entretenimiento', desc: 'Shows en vivo, artistas y entretenimiento para bodas, XV años y eventos corporativos.' },
-  { path: '/pistas-tarimas', title: 'Pistas y Tarimas', desc: 'Renta de pistas de baile, tarimas y escenarios para eventos en México.' },
+  { path: '/pistas-tarimas', title: PRIORITY_HUB_SERP['pistas-tarimas'].title, desc: PRIORITY_HUB_SERP['pistas-tarimas'].desc },
   { path: '/salas-periqueras', title: 'Salas y Periqueras', desc: 'Renta de salas lounge y periqueras para eventos, bodas y recepciones en México.' },
   { path: '/reposteria', title: 'Repostería para Eventos', desc: 'Pasteles, mesas de postres, cupcakes y repostería artesanal para bodas y celebraciones.' },
   { path: '/wedding-planner', title: 'Wedding Planner', desc: 'Servicio de wedding planner profesional. Planeación, coordinación y asesoría para tu boda.' },
   { path: '/musica', title: 'Música para Eventos', desc: 'DJ, grupos versátiles, mariachi, saxofonista y música en vivo para bodas y eventos.' },
   { path: '/fotografia', title: 'Fotografía y Video', desc: 'Fotografía profesional, video, cámara 360, cabina de fotos y más para tu evento.' },
   { path: '/espacios-eventos', title: 'Espacios para Eventos', desc: 'Salones, jardines y espacios para bodas, XV años y eventos corporativos en México.' },
-  { path: '/carpas', title: 'Carpas para Eventos', desc: 'Renta de carpas para bodas, eventos corporativos y celebraciones al aire libre.' },
+  { path: '/carpas', title: PRIORITY_HUB_SERP.carpas.title, desc: PRIORITY_HUB_SERP.carpas.desc },
   { path: '/alimentos-empresas', title: 'Alimentos para Empresas', desc: 'Coffee break, box lunch, desayunos ejecutivos y catering corporativo en México.' },
   { path: '/audio-iluminacion-video', title: 'Audio, Iluminación y Video', desc: 'Sonido, iluminación y video profesional para eventos, bodas y corporativos en México.' },
-  { path: '/mesas-sillas', title: 'Mesas y Sillas', desc: 'Renta de mesas y sillas para bodas, XV años y eventos en México.' },
+  { path: '/mesas-sillas', title: PRIORITY_HUB_SERP['mesas-sillas'].title, desc: PRIORITY_HUB_SERP['mesas-sillas'].desc },
   { path: '/galeria', title: 'Galería de Banquetes y Eventos Reales', desc: 'Fotos reales de bodas, banquetes, quinceañeras y eventos corporativos organizados por Bodasesor.' },
   { path: '/catalogos', title: 'Catálogos 2026', desc: 'Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más.' },
   { path: '/quienes-somos', title: 'Quiénes Somos', desc: 'Conoce al equipo de Bodasesor Eventos. Más de 10 años organizando eventos en México.' },

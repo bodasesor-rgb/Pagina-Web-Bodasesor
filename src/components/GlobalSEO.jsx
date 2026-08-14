@@ -13,6 +13,7 @@ import {
   applyPageSeo,
 } from '../utils/seo-head'
 import { SPA_SEO_HUBS, SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
+import { HOME_SERP } from '../data/priority-hub-serp.js'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
 import { absoluteOgImage } from '../utils/seo-social'
@@ -82,11 +83,13 @@ function breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo) {
   return items
 }
 
+import { HOME_SERP } from '../data/priority-hub-serp.js'
+
 /** Full hub inventory (SPA_SEO_HUBS) + home/search overrides — every indexed route. */
 const SEO_MAP = {
   '/': {
-    title: 'Banquetes y Catering para Eventos en México',
-    desc: 'Banquetes, catering, mobiliario y servicios premium para bodas, quinceañeras y eventos corporativos en México. Cotiza con Bodasesor por WhatsApp.',
+    title: HOME_SERP.title,
+    desc: HOME_SERP.desc,
   },
   '/buscar': {
     title: 'Buscar servicios',
