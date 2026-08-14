@@ -208,7 +208,7 @@ async function main() {
 
   const body = paths
     .map((p) => {
-      const loc = `${SITE_BASE}${p === '/' ? '' : p}`
+      const loc = p === '/' ? `${SITE_BASE}/` : `${SITE_BASE}${p}/`
       return `  <url>
     <loc>${escapeXml(loc)}</loc>
     <lastmod>${today}</lastmod>

@@ -14,16 +14,20 @@ const SOCIAL_DESC_KEYS = new Set([
   'twitter:description',
 ])
 
-/** Normalize pathname for canonical URLs (no trailing slash except home). */
+/** Normalize pathname for canonical URLs.
+ * Netlify Pretty URLs serves directory shells as /path/ (301 from /path).
+ * Canonicals must match the 200 URL to consolidate GSC slash duplicates.
+ */
 export function canonicalPath(pathname) {
   const raw = String(pathname || '/').split(/[?#]/)[0] || '/'
   const clean = raw.replace(/\/+$/, '') || '/'
-  return clean
+  if (clean === '/') return '/'
+  return `${clean}/`
 }
 
 export function absoluteUrl(pathname) {
   const path = canonicalPath(pathname)
-  return path === '/' ? `${SITE_BASE}/` : `${SITE_BASE}${path}`
+  return `${SITE_BASE}${path === '/' ? '/' : path}`
 }
 
 export function upsertLink(rel, href) {

@@ -129,7 +129,8 @@ const paths = collectPaths()
 const today = new Date().toISOString().slice(0, 10)
 
 const body = paths.map((p) => {
-  const loc = `${SITE_BASE}${p === '/' ? '' : p}`
+  // Trailing slash matches Netlify Pretty URLs (except home `/`)
+  const loc = p === '/' ? `${SITE_BASE}/` : `${SITE_BASE}${p}/`
   return `  <url>
     <loc>${escapeXml(loc)}</loc>
     <lastmod>${today}</lastmod>
