@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import CityLink from "../components/CityLink";
+import { usePageSeo } from "../hooks/usePageSeo";
 const Link = CityLink;
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -14,9 +14,13 @@ function WaSvg() {
 }
 
 export default function CatalogoPistasTarimasPage() {
-  useEffect(() => {
-    document.title = 'Catálogo Pistas y Tarimas 2026 | Bodasesor';
-  }, []);
+  usePageSeo({
+    title: "Catálogo Pistas y Tarimas 2026",
+    description:
+      "Consulta modelos, medidas y acabados en nuestro catálogo interactivo de pistas de baile y tarimas.",
+    path: "/catalogo/pistas-tarimas",
+    h1: "Catálogo de Pistas y Tarimas 2026",
+  });
 
   const waMsg = WA_BASE + encodeURIComponent('Hola, vi el catálogo de Pistas y Tarimas y me gustaría recibir una cotización personalizada para mi evento.');
 

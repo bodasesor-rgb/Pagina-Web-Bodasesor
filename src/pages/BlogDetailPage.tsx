@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getBlogPostBySlug, blogPosts } from "../data/blog-data";
 import Breadcrumbs from "../components/Breadcrumbs";
 import OptimizedImage from "../components/OptimizedImage";
+import { usePageSeo } from "../hooks/usePageSeo";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -27,10 +28,18 @@ export default function BlogDetailPage({ slug }: Props) {
   const post = getBlogPostBySlug(slug);
   const related = blogPosts.filter(p => p.slug !== slug).slice(0, 3);
 
+  usePageSeo({
+    title: post?.title ?? "",
+    description: post?.excerpt,
+    path: post ? `/blog/${post.slug}` : undefined,
+    h1: post?.title,
+    image: post?.image,
+    enabled: Boolean(post),
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (post) document.title = `${post.title} | Bodasesor Blog`;
-  }, [slug, post]);
+  }, [slug]);
 
   if (!post) {
     return (

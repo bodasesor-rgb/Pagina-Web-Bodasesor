@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { usePageSeo } from "../hooks/usePageSeo";
 import { COMBINACIONES } from "../data/combinaciones-products";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -21,9 +21,15 @@ export default function CombinacionDetailPage({ slug }: Props) {
   const { city } = useCity();
   const combo = COMBINACIONES.find(c => c.slug === slug);
 
-  useEffect(() => {
-    if (combo) document.title = `${combo.label} | Bodasesor`;
-  }, [combo]);
+  usePageSeo({
+    title: combo?.label ?? "",
+    description: combo?.desc || combo?.detail,
+    path: combo ? `/combinaciones/${combo.slug}` : undefined,
+    h1: combo ? `${combo.label}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: combo?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(combo),
+  });
 
   if (!combo) {
     return (

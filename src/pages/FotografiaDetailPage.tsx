@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { FOTOGRAFIA } from "../data/fotografia-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -8,6 +9,17 @@ const WA_BASE = "https://wa.me/5215540080373?text=";
 export default function FotografiaDetailPage({ slug }: { slug?: string }) {
   const { city } = useCity();
   const product = FOTOGRAFIA.find(p => p.slug === slug);
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.tagline,
+    path: product ? `/fotografia/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
+
   if (!product) return <div className="min-h-screen flex items-center justify-center font-serif text-[#162040]">Servicio no encontrado.</div>;
 
   const others = FOTOGRAFIA.filter(p => p.slug !== slug).slice(0, 3);

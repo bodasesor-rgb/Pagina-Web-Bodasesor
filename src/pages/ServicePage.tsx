@@ -45,7 +45,12 @@ function ServicioNoEncontrado() {
       document.head.appendChild(el)
     }
     el.setAttribute('content', 'noindex, follow')
-    document.title = 'Servicio no encontrado | Bodasesor'
+    applyPageSeo({
+      title: 'Servicio no encontrado',
+      description: 'La página de servicio que buscas aún no está disponible. Cotiza con Bodasesor por WhatsApp.',
+      path: '/',
+      h1: 'Servicio no encontrado',
+    })
     return () => {
       if (el && prev) el.setAttribute('content', prev)
     }

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { usePageSeo } from "../hooks/usePageSeo";
 import { SALAS_CATALOG } from "../data/salas-periqueras-products";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -19,9 +19,14 @@ type Props = { salaSlug?: string };
 export default function SalaDetailPage({ salaSlug }: Props) {
   const sala = SALAS_CATALOG.find(s => s.slug === salaSlug);
 
-  useEffect(() => {
-    if (sala) document.title = `${sala.name} | Bodasesor`;
-  }, [sala]);
+  usePageSeo({
+    title: sala?.name ?? "",
+    description: sala?.desc,
+    path: sala ? `/salas/${sala.slug}` : undefined,
+    h1: sala?.name,
+    image: sala?.img,
+    enabled: Boolean(sala),
+  });
 
   if (!sala) {
     return (

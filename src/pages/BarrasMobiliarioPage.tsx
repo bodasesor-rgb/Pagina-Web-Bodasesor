@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
 import CityLink from '../components/CityLink'
 import OptimizedImage from '../components/OptimizedImage'
 import HighlightKeywords from '../components/HighlightKeywords'
 import CityHubSeoSections from '../components/CityHubSeoSections'
 import { useCityHubPage } from '../hooks/useCityHubPage'
-import { buildSeoTitle } from '../utils/seo-title'
 
 const Link = CityLink
 
@@ -43,10 +41,6 @@ const BARRAS = [
 export default function BarrasMobiliarioPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
     useCityHubPage('barras', 'Barras de Mobiliario')
-
-  useEffect(() => {
-    document.title = buildSeoTitle('Barras de Mobiliario para Eventos | Renta | Bodasesor', city?.short ?? null)
-  }, [city])
 
   return (
     <div className="min-h-screen bg-white">

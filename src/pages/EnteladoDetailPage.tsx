@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { ENTELADOS, EnteladoSlug } from "../data/entelados-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -18,6 +19,16 @@ interface Props { slug: string | undefined; }
 export default function EnteladoDetailPage({ slug }: Props) {
   const { city } = useCity();
   const estilo = ENTELADOS.find(e => e.slug === (slug as EnteladoSlug));
+
+  usePageSeo({
+    title: estilo?.name ?? "",
+    description: estilo?.desc || estilo?.short || estilo?.tagline,
+    path: estilo ? `/entelados/${estilo.slug}` : undefined,
+    h1: estilo ? `${estilo.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: estilo?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(estilo),
+  });
 
   if (!estilo) {
     return (

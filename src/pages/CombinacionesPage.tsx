@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { COMBINACIONES } from "../data/combinaciones-products";
@@ -21,9 +20,6 @@ const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
 export default function CombinacionesPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
     useCityHubPage("combinaciones-mesas-sillas", "Combinaciones de Mesas y Sillas");
-  useEffect(() => {
-    document.title = 'Catálogo de Combinaciones de Mesas y Sillas | Bodasesor';
-  }, []);
 
   const waGeneral = WA_BASE + encodeURIComponent('Hola, me gustaría cotizar una combinación de mesas y sillas para mi evento.');
 

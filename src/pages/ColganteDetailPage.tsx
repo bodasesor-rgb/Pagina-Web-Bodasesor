@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { COLGANTES } from "../data/colgantes-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -18,6 +19,16 @@ function WaSvg() {
 export default function ColganteDetailPage({ slug }: Props) {
   const { city } = useCity();
   const product = COLGANTES.find(c => c.slug === slug);
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.short,
+    path: product ? `/colgantes/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
 
   if (!product) {
     return (

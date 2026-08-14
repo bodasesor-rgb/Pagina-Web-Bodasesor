@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { FLORERIA, FloreriaSlug, FLORERIA_BY_CATEGORY } from "../data/floreria-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -18,6 +19,16 @@ interface Props { slug: string | undefined; }
 export default function FloreriaDetailPage({ slug }: Props) {
   const { city } = useCity();
   const product = FLORERIA.find(p => p.slug === (slug as FloreriaSlug));
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.short || product?.tagline,
+    path: product ? `/floreria/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
 
   if (!product) {
     return (

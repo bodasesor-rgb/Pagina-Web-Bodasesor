@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { AUDIO_ILUMINACION } from "../data/audio-iluminacion-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -20,6 +21,17 @@ const WaSvg = () => (
 export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) {
   const { city } = useCity();
   const product = AUDIO_ILUMINACION.find(p => p.slug === slug);
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.tagline,
+    path: product ? `/audio-iluminacion-video/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
+
   if (!product) return (
     <div className="min-h-screen flex items-center justify-center font-serif text-[#162040]">
       Servicio no encontrado. <Link href="/audio-iluminacion-video" className="ml-2 underline">Ver Catálogo</Link>

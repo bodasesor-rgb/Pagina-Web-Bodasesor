@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import CityLink from "../components/CityLink";
 import CatalogEmbed, { ensureCatalogPreconnects } from "../components/CatalogEmbed";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { CATALOGO_CATEGORIES, getCatalogoBySlug } from "../data/catalogos-embeds";
 import NotFound from "./not-found";
 
@@ -12,21 +13,19 @@ const WA =
 export default function CatalogoDetailPage({ slug }: { slug: string }) {
   const catalog = getCatalogoBySlug(slug);
 
+  usePageSeo({
+    title: catalog?.title ?? "",
+    description: catalog
+      ? `Catálogo ${catalog.title} de Bodasesor 2026. Cotiza banquetes, barras, mobiliario y más por WhatsApp.`
+      : undefined,
+    path: catalog ? `/catalogos/${catalog.slug}` : undefined,
+    h1: catalog?.title,
+    enabled: Boolean(catalog),
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
     ensureCatalogPreconnects();
-    if (!catalog) {
-      document.title = "Catálogo no encontrado | Bodasesor";
-      return;
-    }
-    document.title = `${catalog.title} | Catálogos Bodasesor`;
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        `Catálogo ${catalog.title} de Bodasesor 2026. Cotiza banquetes, barras, mobiliario y más por WhatsApp.`,
-      );
-    }
   }, [catalog]);
 
   if (!catalog) return <NotFound />;
