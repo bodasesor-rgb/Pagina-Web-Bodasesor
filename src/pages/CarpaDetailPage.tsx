@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { CARPAS, CarpaSlug } from "../data/carpas-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -18,6 +19,16 @@ interface Props { slug: string | undefined; }
 export default function CarpaDetailPage({ slug }: Props) {
   const { city } = useCity();
   const carpa = CARPAS.find(c => c.slug === (slug as CarpaSlug));
+
+  usePageSeo({
+    title: carpa?.name ?? "",
+    description: carpa?.desc || carpa?.short || carpa?.tagline,
+    path: carpa ? `/carpas/${carpa.slug}` : undefined,
+    h1: carpa ? `${carpa.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: carpa?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(carpa),
+  });
 
   if (!carpa) {
     return (

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { useLocation } from "wouter";
 import CityLink from "../components/CityLink";
+import { usePageSeo } from "../hooks/usePageSeo";
 const Link = CityLink;
 
 const WA_MSG = "https://wa.me/5215540080373?text=" + encodeURIComponent("Hola, me interesa cotizar un colgante premium para mi evento. ¿Pueden enviarme más información?");
@@ -8,9 +8,13 @@ const WA_MSG = "https://wa.me/5215540080373?text=" + encodeURIComponent("Hola, m
 export default function CatalogoColgantesPage() {
   const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    document.title = "Catálogo Colgantes 2026 | Bodasesor";
-  }, []);
+  usePageSeo({
+    title: "Catálogo Colgantes 2026",
+    description:
+      "Descubre nuestra colección de colgantes premium para transformar cualquier espacio en tu evento.",
+    path: "/catalogo/colgantes",
+    h1: "Catálogo de Colgantes 2026",
+  });
 
   return (
     <div className="min-h-screen bg-[#f5efe8] flex flex-col">

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { useLocation } from "wouter";
 import CityLink from "../components/CityLink";
+import { usePageSeo } from "../hooks/usePageSeo";
 const Link = CityLink;
 
 const WA_MSG = "https://wa.me/5215540080373?text=" + encodeURIComponent("Hola, me interesa cotizar vajillas para mi evento. ¿Pueden enviarme más información?");
@@ -8,9 +8,13 @@ const WA_MSG = "https://wa.me/5215540080373?text=" + encodeURIComponent("Hola, m
 export default function CatalogoVajillasPage() {
   const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    document.title = "Catálogo Vajillas 2026 | Bodasesor";
-  }, []);
+  usePageSeo({
+    title: "Catálogo Vajillas 2026",
+    description:
+      "Explora más de 40 colecciones de vajilla, cubiertos y cristalería en nuestro catálogo interactivo.",
+    path: "/catalogo/vajillas",
+    h1: "Catálogo de Vajillas 2026",
+  });
 
   return (
     <div className="min-h-screen bg-[#f5efe8] flex flex-col">

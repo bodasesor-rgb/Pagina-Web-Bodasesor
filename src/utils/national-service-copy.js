@@ -210,7 +210,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
     zones: NATIONAL_COVERAGE_ZONES,
     faqs: extra.faqs,
     seoTitle: `${title} | Bodasesor`,
-    seoDescription: `${title} para bodas y eventos en México. Cotiza con Bodasesor.`,
+    seoDescription: `${title} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp sin compromiso.`,
     primaryKeyword: title,
   }
 }

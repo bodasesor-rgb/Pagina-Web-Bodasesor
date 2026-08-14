@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useMemo } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import {
@@ -16,7 +16,6 @@ import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import type { ProductData } from "../data/products";
-import { buildSeoTitle } from "../utils/seo-title";
 import HighlightKeywords from "../components/HighlightKeywords";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 
@@ -721,8 +720,17 @@ interface EventTypePageProps {
 }
 
 export default function EventTypePage({ product }: EventTypePageProps) {
+  const pageSeo = useMemo(
+    () => ({
+      seoTitle: product.seoTitle,
+      seoDescription: product.seoDescription,
+      h1: product.title?.replace(/^Servicios para\s+/i, '') || product.title,
+      image: EVENT_HERO_IMAGES[product.slug],
+    }),
+    [product],
+  );
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage(product.slug, product.title);
+    useCityHubPage(product.slug, product.title, [], pageSeo);
   const waUrl = WA_MSG(product.title);
   const groups = EVENT_SERVICES[product.slug] ?? [];
   const shortName = product.title.replace(/^Servicios para\s+/i, '');
@@ -738,12 +746,6 @@ export default function EventTypePage({ product }: EventTypePageProps) {
         : shortName,
     },
   ];
-
-  useEffect(() => {
-    if (!cityCopy?.seoTitle) {
-      document.title = buildSeoTitle(product.seoTitle, city?.short ?? null);
-    }
-  }, [product.seoTitle, city, cityCopy]);
 
   return (
     <div className="min-h-screen bg-white">

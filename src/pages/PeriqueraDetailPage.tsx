@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { usePageSeo } from "../hooks/usePageSeo";
 import { PERIQUERAS_CATALOG } from "../data/salas-periqueras-products";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -21,9 +21,15 @@ export default function PeriqueraDetailPage({ perSlug }: Props) {
   const { city } = useCity();
   const per = PERIQUERAS_CATALOG.find(p => p.slug === perSlug);
 
-  useEffect(() => {
-    if (per) document.title = `${per.name} | Bodasesor`;
-  }, [per]);
+  usePageSeo({
+    title: per?.name ?? "",
+    description: per?.desc,
+    path: per ? `/periqueras/${per.slug}` : undefined,
+    h1: per ? `${per.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: per?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(per),
+  });
 
   if (!per) {
     return (

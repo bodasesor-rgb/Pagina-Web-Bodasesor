@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useEffect } from "react";
 import { Trophy, Handshake, Sparkles, Lightbulb, Mail, Phone, Camera } from "lucide-react";
+import { usePageSeo } from "../hooks/usePageSeo";
 
 const WA = "https://api.whatsapp.com/send/?phone=5215540080373&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento";
 
@@ -29,9 +30,16 @@ const pillars = [
 ];
 
 export default function QuienesSomosPage() {
+  usePageSeo({
+    title: "Quiénes somos",
+    description:
+      "Somos Bodasesor Eventos, una empresa especializada en la organización y producción de celebraciones sociales en la Ciudad de México. Con más de diez años de experiencia.",
+    path: "/quienes-somos",
+    h1: "Creamos Eventos Que Se Convierten en Recuerdos",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Quiénes somos | Bodasesor Eventos";
   }, []);
 
   return (

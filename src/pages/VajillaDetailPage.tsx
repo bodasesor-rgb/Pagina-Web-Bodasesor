@@ -1,5 +1,6 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
+import { usePageSeo } from "../hooks/usePageSeo";
 import { VAJILLAS } from "../data/vajillas-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -16,6 +17,15 @@ function WaSvg() {
 
 export default function VajillaDetailPage({ slug }: Props) {
   const product = VAJILLAS.find(v => v.slug === slug);
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.short,
+    path: product ? `/vajillas/${product.slug}` : undefined,
+    h1: product?.name,
+    image: product?.img,
+    enabled: Boolean(product),
+  });
 
   if (!product) {
     return (

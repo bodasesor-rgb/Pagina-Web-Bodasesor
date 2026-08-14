@@ -4,6 +4,7 @@ import CatalogEmbed, {
   CatalogEmbedWarmer,
   ensureCatalogPreconnects,
 } from "../components/CatalogEmbed";
+import { usePageSeo } from "../hooks/usePageSeo";
 import {
   CATALOGO_CATEGORIES,
   CATALOGOS,
@@ -25,17 +26,17 @@ export default function CatalogosPage() {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
   const [warmSrc, setWarmSrc] = useState<string | null>(null);
 
+  usePageSeo({
+    title: "Catálogos 2026",
+    description:
+      "Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más. Cotiza por WhatsApp.",
+    path: "/catalogos",
+    h1: "Catálogos Bodasesor 2026",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Catálogos 2026 | Bodasesor";
     ensureCatalogPreconnects();
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "Explora los catálogos 2026 de Bodasesor: banquetes, barras, mobiliario, audio e iluminación y más. Cotiza por WhatsApp.",
-      );
-    }
   }, []);
 
   useEffect(() => {

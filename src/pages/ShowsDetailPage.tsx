@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { SHOWS, ShowsSlug, SHOWS_BY_CATEGORY } from "../data/shows-products";
 import { Drum, Sparkles, Zap, CircleDot } from "lucide-react";
 
@@ -26,6 +27,16 @@ interface Props { slug: string | undefined; }
 export default function ShowsDetailPage({ slug }: Props) {
   const { city } = useCity();
   const product = SHOWS.find(p => p.slug === (slug as ShowsSlug));
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.short || product?.tagline,
+    path: product ? `/shows/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
 
   if (!product) {
     return (

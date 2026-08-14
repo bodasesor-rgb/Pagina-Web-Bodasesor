@@ -193,7 +193,11 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
 
   for (const m of BANQUET_MENUS) {
     const href = `${m.parentHref}/${m.slug}`
-    put(entry(href, m.seoTitle || m.name, m.seoDescription || m.headline || m.name, m.name))
+    // Force menu-specific SEO over SPA_SEO_HUBS first-write (richer title/desc + matching H1).
+    const e = entry(href, m.seoTitle || m.name, m.seoDescription || m.headline || m.name, m.name, null, {
+      image: m.parentImg || null,
+    })
+    if (e?.path) map.set(e.path, e)
   }
 
   for (const c of CATALOGOS) {

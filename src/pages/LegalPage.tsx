@@ -1,5 +1,6 @@
 import CityLink from '../components/CityLink'
 import Breadcrumbs from '../components/Breadcrumbs'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 const Link = CityLink
 
@@ -7,10 +8,11 @@ type LegalKind = 'privacidad' | 'terminos'
 
 const CONTENT: Record<
   LegalKind,
-  { title: string; updated: string; sections: Array<{ h: string; p: string[] }> }
+  { title: string; path: string; updated: string; sections: Array<{ h: string; p: string[] }> }
 > = {
   privacidad: {
     title: 'Aviso de Privacidad',
+    path: '/aviso-de-privacidad',
     updated: '23 de julio de 2026',
     sections: [
       {
@@ -44,6 +46,7 @@ const CONTENT: Record<
   },
   terminos: {
     title: 'Términos y Condiciones',
+    path: '/terminos-y-condiciones',
     updated: '23 de julio de 2026',
     sections: [
       {
@@ -78,6 +81,16 @@ const CONTENT: Record<
 
 export default function LegalPage({ kind }: { kind: LegalKind }) {
   const data = CONTENT[kind]
+
+  usePageSeo({
+    title: data.title,
+    description:
+      kind === 'privacidad'
+        ? 'Aviso de privacidad de Bodasesor: tratamiento de datos personales y derechos ARCO.'
+        : 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos.',
+    path: data.path,
+    h1: data.title,
+  })
 
   return (
     <div className="min-h-screen bg-white">

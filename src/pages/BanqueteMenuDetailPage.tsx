@@ -1,4 +1,5 @@
 import { Phone, CheckCircle2 } from "lucide-react";
+import { useMemo } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -43,29 +44,52 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
   const hubSlug =
     !isCityAsMenu && resolvedMenuSlug ? `${parentSlug}/${resolvedMenuSlug}` : parentSlug;
 
-  const menuKeywordExtras = [
-    menu?.name || "",
-    menu?.label || "",
-    parent?.name || "",
-    parent?.shortName || "",
-    "4 Tiempos",
-    "3 Tiempos",
-    "2 Tiempos",
-    "Buffet",
-    "Menú por tiempos",
-    "Banquete formal",
-    "Meseros",
-    "Vajilla",
-    "Sopa",
-    "Entrada",
-    "Plato fuerte",
-    "Postre",
-    "Chef",
-    "Cotización",
-  ].filter(Boolean);
+  // Stabilize extras so useCityHubPage effects don't re-fire every render
+  const menuKeywordExtras = useMemo(
+    () =>
+      [
+        menu?.name || "",
+        menu?.label || "",
+        parent?.name || "",
+        parent?.shortName || "",
+        "4 Tiempos",
+        "3 Tiempos",
+        "2 Tiempos",
+        "Buffet",
+        "Menú por tiempos",
+        "Banquete formal",
+        "Meseros",
+        "Vajilla",
+        "Sopa",
+        "Entrada",
+        "Plato fuerte",
+        "Postre",
+        "Chef",
+        "Cotización",
+      ].filter(Boolean),
+    [menu, parent],
+  );
+
+  const menuSeo = useMemo(
+    () =>
+      menu
+        ? {
+            seoTitle: menu.seoTitle,
+            seoDescription: menu.seoDescription,
+            h1: menu.name,
+            image: menu.parentImg,
+          }
+        : null,
+    [menu],
+  );
 
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage(hubSlug, menu?.name || parent?.name || "Banquete", menuKeywordExtras);
+    useCityHubPage(
+      hubSlug,
+      menu?.name || parent?.name || "Banquete",
+      menuKeywordExtras,
+      menuSeo,
+    );
 
   // National pages still need bold keywords even without cityCopy
   const kw =

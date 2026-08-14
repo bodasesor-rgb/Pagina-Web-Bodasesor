@@ -1,9 +1,10 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useLocation } from 'wouter'
 import CityLink from '../components/CityLink'
 const Link = CityLink
 import SearchBar from '../components/SearchBar'
 import { searchProductsAll } from '../data/search-index'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 function getQueryParam(search: string) {
   return new URLSearchParams(search.startsWith('?') ? search : `?${search}`).get('q')?.trim() || ''
@@ -18,11 +19,14 @@ export default function SearchPage() {
 
   const results = useMemo(() => (query ? searchProductsAll(query) : []), [query])
 
-  useEffect(() => {
-    document.title = query
-      ? `Buscar: ${query} | Bodasesor Eventos`
-      : 'Buscar servicios | Bodasesor Eventos'
-  }, [query])
+  usePageSeo({
+    title: query ? `Buscar: ${query}` : 'Buscar servicios',
+    description: query
+      ? `Resultados de búsqueda para “${query}” en Bodasesor Eventos.`
+      : 'Busca banquetes, mobiliario, shows y más servicios para tu evento en Bodasesor.',
+    path: '/buscar',
+    h1: 'Buscar Servicios',
+  })
 
   return (
     <div className="min-h-screen bg-[#f5efe8]/30">

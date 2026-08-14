@@ -2,6 +2,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { blogPosts } from "../data/blog-data";
 import { useEffect } from "react";
+import { usePageSeo } from "../hooks/usePageSeo";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -20,9 +21,16 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 export default function BlogPage() {
+  usePageSeo({
+    title: "Blog de Eventos y Bodas",
+    description:
+      "Consejos, tendencias y guías para que tu evento sea perfecto. Todo lo que necesitas saber antes de contratar.",
+    path: "/blog",
+    h1: "Blog de Eventos y Bodas",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Blog de Eventos y Bodas | Bodasesor';
   }, []);
 
   const featured = blogPosts[0];

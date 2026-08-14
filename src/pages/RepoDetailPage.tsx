@@ -1,6 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
+import { usePageSeo } from "../hooks/usePageSeo";
 import { REPOSTERIA } from "../data/reposteria-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -8,6 +9,17 @@ const WA_BASE = "https://wa.me/5215540080373?text=";
 export default function RepoDetailPage({ slug }: { slug?: string }) {
   const { city } = useCity();
   const product = REPOSTERIA.find(p => p.slug === slug);
+
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.tagline,
+    path: product ? `/reposteria/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
+
   if (!product) return <div className="min-h-screen flex items-center justify-center font-serif text-[#162040]">Producto no encontrado.</div>;
 
   const others = REPOSTERIA.filter(p => p.slug !== slug).slice(0, 3);

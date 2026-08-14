@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import { useCity } from "../context/CityContext";
 import CityLink from "../components/CityLink";
 import OptimizedImage from "../components/OptimizedImage";
 const Link = CityLink;
+import { usePageSeo } from "../hooks/usePageSeo";
 import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -29,9 +29,15 @@ export default function PistaTarimaDetailPage({ slug }: Props) {
   const { city } = useCity();
   const product = PISTAS_TARIMAS.find(p => p.slug === slug);
 
-  useEffect(() => {
-    if (product) document.title = `${product.name} | Bodasesor`;
-  }, [product]);
+  usePageSeo({
+    title: product?.name ?? "",
+    description: product?.desc || product?.short,
+    path: product ? `/pistas-tarimas/${product.slug}` : undefined,
+    h1: product ? `${product.name}${city ? ` en ${city.name}` : ""}` : undefined,
+    image: product?.img,
+    cityName: city?.name ?? "",
+    enabled: Boolean(product),
+  });
 
   if (!product) {
     return (
