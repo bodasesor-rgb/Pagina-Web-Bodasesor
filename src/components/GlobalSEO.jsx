@@ -83,8 +83,6 @@ function breadcrumbsFromPath(path, basePath, activeCity, blogPost, hubSeo) {
   return items
 }
 
-import { HOME_SERP } from '../data/priority-hub-serp.js'
-
 /** Full hub inventory (SPA_SEO_HUBS) + home/search overrides — every indexed route. */
 const SEO_MAP = {
   '/': {
