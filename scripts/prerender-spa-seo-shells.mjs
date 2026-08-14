@@ -404,7 +404,7 @@ async function main() {
       console.error(`prerender-spa-seo-shells: ${rel} still has home canonical (soft-404)`)
       process.exit(1)
     }
-    const expectedCanon = `rel="canonical" href="https://bodasesor.com/${rel}"`
+    const expectedCanon = `rel="canonical" href="https://bodasesor.com/${rel}/"`
     if (!html.includes(expectedCanon)) {
       console.error(`prerender-spa-seo-shells: ${rel} missing canonical ${expectedCanon}`)
       process.exit(1)

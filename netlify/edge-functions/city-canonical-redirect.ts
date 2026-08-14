@@ -2,13 +2,15 @@ import type { Context } from '@netlify/edge-functions'
 
 /**
  * Edge redirects for Bodasesor:
- * 1) Trailing slash consolidation: /path/ → /path (site-wide, matches canonicals)
- * 2) 301 glued/legacy city URLs to slash-canonical form
+ * 301 glued/legacy city URLs to slash-canonical form.
+ *
+ * NOTE: Do NOT strip trailing slashes here. Netlify Pretty URLs 301
+ * /path → /path/ for directory index.html shells; stripping the other way
+ * causes an infinite redirect loop.
  *
  * Keep CITY_CANONICAL in sync with src/data/city-data.js
  *
  * Examples:
- *   /mesas-sillas/ → /mesas-sillas
  *   /bodasciudad-de-mexico → /bodas/ciudad-de-mexico
  *   /banquetes/2-tiemposmorelia → /banquetes/2-tiempos/morelia
  *   /bodas/cdmx → /bodas/ciudad-de-mexico
@@ -129,20 +131,6 @@ export function toCanonicalCityPath(pathname: string): string | null {
 
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
-  const method = request.method.toUpperCase()
-
-  // Site-wide: /path/ → /path (matches sitemap + canonicalPath). Keeps GSC from
-  // splitting signals across slash/no-slash duplicates.
-  if ((method === 'GET' || method === 'HEAD') && url.pathname.length > 1 && /\/+$/.test(url.pathname)) {
-    const lastSeg = url.pathname.split('/').filter(Boolean).pop() || ''
-    const looksLikeFile = lastSeg.includes('.') && !lastSeg.startsWith('.')
-    if (!looksLikeFile) {
-      const dest = new URL(url)
-      dest.pathname = url.pathname.replace(/\/+$/, '') || '/'
-      return Response.redirect(dest.toString(), 301)
-    }
-  }
-
   const pathname = url.pathname.replace(/\/+$/, '') || '/'
   const canonical = toCanonicalCityPath(url.pathname)
 

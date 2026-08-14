@@ -103,7 +103,8 @@ function entry(path, headline, description, h1, cityShort = null, opts = {}) {
     title: buildSeoTitle(headline, cityShort),
     description: clipDesc(description),
     h1: h1 || headline,
-    canonical: `${SITE_BASE}${cleanPath}`,
+    // Trailing slash matches Netlify Pretty URLs 200 URL (/path/)
+    canonical: `${SITE_BASE}${cleanPath}/`,
     noindex: Boolean(opts?.noindex),
     image: opts?.image || null,
   }
