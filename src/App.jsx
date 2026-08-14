@@ -189,14 +189,17 @@ function StaticLcpCleanup() {
     }
   }, [location])
   useEffect(() => {
+    // Warm product catalog only on home — avoids pulling the heavy products chunk
+    // into unrelated service/menu pages during idle time.
+    if (location !== '/' && !location.startsWith('/#') && location !== '') return
     const warm = () => prefetchProducts()
     if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(warm, { timeout: 4500 })
+      const id = window.requestIdleCallback(warm, { timeout: 8000 })
       return () => window.cancelIdleCallback(id)
     }
-    const t = setTimeout(warm, 2500)
+    const t = setTimeout(warm, 4000)
     return () => clearTimeout(t)
-  }, [])
+  }, [location])
   return null
 }
 

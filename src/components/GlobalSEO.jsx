@@ -9,11 +9,13 @@ import {
   upsertLink,
   upsertMeta,
   applyPageIdentityMeta,
+  applySocialMeta,
+  applyPageSeo,
 } from '../utils/seo-head'
 import { SPA_SEO_HUB_PATHS } from '../data/spa-seo-hubs'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
-import { absoluteOgImage, DEFAULT_OG_IMAGE_ALT } from '../utils/seo-social'
+import { absoluteOgImage } from '../utils/seo-social'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
@@ -171,22 +173,6 @@ const SEO_MAP = {
 
 const NOINDEX_PREFIXES = ['/buscar']
 
-function applySocialMeta({ title, description, url, image, type = 'website' }) {
-  const ogImage = absoluteOgImage(image)
-  upsertMeta('property', 'og:title', title)
-  upsertMeta('property', 'og:description', description)
-  upsertMeta('property', 'og:url', url)
-  upsertMeta('property', 'og:type', type)
-  upsertMeta('property', 'og:site_name', 'Bodasesor Eventos')
-  upsertMeta('property', 'og:locale', 'es_MX')
-  upsertMeta('property', 'og:image', ogImage)
-  upsertMeta('property', 'og:image:alt', title || DEFAULT_OG_IMAGE_ALT)
-  upsertMeta('name', 'twitter:card', 'summary_large_image')
-  upsertMeta('name', 'twitter:title', title)
-  upsertMeta('name', 'twitter:description', description)
-  upsertMeta('name', 'twitter:image', ogImage)
-}
-
 /** Thin SPA shells: /{product|detail}/{city} — hubs × city stay indexable. */
 function isThinCityProductShell(path, basePath, pathCity) {
   if (!pathCity || basePath === '/' || path.startsWith('/blog')) return false
@@ -278,21 +264,19 @@ export default function GlobalSEO() {
       )
 
       if (hubSeo && basePath !== '/') {
-        const title = activeCity
-          ? `${hubSeo.title} para Bodas y Eventos en ${activeCity.name} | Bodasesor`
-          : `${hubSeo.title} para Bodas y Eventos | Bodasesor`
+        const headline = activeCity
+          ? `${hubSeo.title} en ${activeCity.short || activeCity.name}`
+          : hubSeo.title
         const desc = clampMetaDescription(
           activeCity
             ? `${hubSeo.desc} Cotiza en ${activeCity.name} y área metropolitana.`
             : hubSeo.desc,
         )
-        document.title = title
-        upsertMeta('name', 'description', desc)
-        applySocialMeta({ title, description: desc, url: canonical })
-        applyPageIdentityMeta({
+        applyPageSeo({
+          title: headline,
+          description: desc,
           path,
-          title: hubSeo.title,
-          h1: hubSeo.title,
+          h1: headline,
           cityName: activeCity?.name,
         })
         upsertJsonLd(
@@ -310,51 +294,54 @@ export default function GlobalSEO() {
         upsertJsonLd(PAGE_JSONLD_ID, null)
         upsertJsonLd(BREADCRUMB_JSONLD_ID, null)
         if (SEO_MAP['/']) {
-          const title = activeCity
-            ? `Banquetes y Catering para Bodas y Eventos en ${activeCity.name} | Bodasesor`
-            : `${SEO_MAP['/'].title} | Bodasesor`
-          document.title = title
-          const desc = clampMetaDescription(SEO_MAP['/'].desc)
-          upsertMeta('name', 'description', desc)
-          applySocialMeta({ title, description: desc, url: canonical })
-          applyPageIdentityMeta({
+          const headline = activeCity
+            ? `Banquetes y Catering en ${activeCity.short || activeCity.name}`
+            : SEO_MAP['/'].title
+          applyPageSeo({
+            title: headline,
+            description: SEO_MAP['/'].desc,
             path: '/',
-            title: SEO_MAP['/'].title,
             h1: 'Banquetes, catering y servicios para eventos en México',
             cityName: activeCity?.name,
           })
         }
       } else if (path !== '/' && !path.startsWith('/buscar')) {
-        const slugPart = basePath.split('/').filter(Boolean).pop() || 'servicio'
-        const label = labelFromSlug(slugPart)
-        const name = activeCity ? `${label} en ${activeCity.name}` : label
-        const desc =
-          document.querySelector('meta[name="description"]')?.getAttribute('content') ||
-          `${name}. Cotiza banquetes, catering y servicios para eventos con Bodasesor.`
-        const title = document.title || `${name} | Bodasesor`
-        applySocialMeta({ title, description: desc, url: canonical })
+        // Product / banquet / detail pages own title+OG via applyPageSeo when available.
+        // Always keep absolute canonical + og:url; re-sync social after page effects.
+        upsertLink('canonical', canonical)
+        upsertMeta('property', 'og:url', canonical)
+        upsertJsonLd(PAGE_JSONLD_ID, null)
         applyPageIdentityMeta({
           path,
-          title: name,
-          h1: name,
+          title: labelFromSlug(basePath.split('/').filter(Boolean).pop() || 'servicio'),
           cityName: activeCity?.name,
         })
-        upsertJsonLd(
-          PAGE_JSONLD_ID,
-          buildServiceJsonLd({
-            name,
-            description: desc,
+        const syncSocialFromDocument = () => {
+          if (cancelled) return
+          const title = document.title
+          const desc = document
+            .querySelector('meta[name="description"]')
+            ?.getAttribute('content')
+          if (!title) return
+          applySocialMeta({
+            title,
+            description:
+              desc ||
+              `${title.replace(/\s*\|\s*Bodasesor.*$/i, '')}. Cotiza con Bodasesor por WhatsApp.`,
             url: canonical,
-            city: activeCity,
-          }),
-        )
+          })
+        }
+        requestAnimationFrame(() => requestAnimationFrame(syncSocialFromDocument))
+        setTimeout(syncSocialFromDocument, 80)
       } else {
-        const title = document.title || 'Bodasesor'
-        const desc =
-          document.querySelector('meta[name="description"]')?.getAttribute('content') ||
-          SEO_MAP['/']?.desc ||
-          title
-        applySocialMeta({ title, description: desc, url: canonical })
+        applySocialMeta({
+          title: document.title || 'Bodasesor',
+          description:
+            document.querySelector('meta[name="description"]')?.getAttribute('content') ||
+            SEO_MAP['/']?.desc ||
+            'Bodasesor',
+          url: canonical,
+        })
         applyPageIdentityMeta({
           path,
           title: document.title,

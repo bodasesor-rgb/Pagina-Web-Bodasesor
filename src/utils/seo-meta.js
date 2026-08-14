@@ -1,5 +1,5 @@
-/** Ideal Google meta description length. */
-export const META_DESC_MIN = 120
+/** Ideal Google meta description length (CTA-friendly sweet spot). */
+export const META_DESC_MIN = 130
 export const META_DESC_MAX = 155
 
 /**

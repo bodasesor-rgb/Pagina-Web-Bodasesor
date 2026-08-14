@@ -11,12 +11,11 @@ import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import HighlightKeywords from "../components/HighlightKeywords";
 import { getProductBySlugAsync } from "../data/products-loader";
-import { stripCityFromSlug } from "../utils/city-url";
-import { buildSeoTitle } from "../utils/seo-title";
-import { upsertJsonLd } from "../utils/seo-head";
-import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
 import { buildNationalServiceCopy } from "../utils/national-service-copy";
 import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-title-case";
+import { applyPageSeo, upsertJsonLd, absoluteUrl } from "../utils/seo-head";
+import { stripCityFromSlug } from "../utils/city-url";
+import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 import {
   Utensils, UtensilsCrossed, Wine, Beer, Coffee, Mic, Music, Headphones, Volume2,
@@ -324,20 +323,22 @@ export default function ServicePage({ params }: ServicePageProps) {
 
   useEffect(() => {
     if (!product) return;
-    document.title = pageCopy?.seoTitle
-      ? buildSeoTitle(pageCopy.seoTitle, null)
-      : buildSeoTitle(product.seoTitle, city?.short ?? null);
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta && (pageCopy?.seoDescription || product.seoDescription)) {
-      meta.setAttribute(
-        "content",
-        pageCopy?.seoDescription ||
-          (city
-            ? `${product.seoDescription} Disponible en ${city.name}.`
-            : product.seoDescription),
-      );
-    }
-  }, [product, city, pageCopy]);
+    const titleSource = pageCopy?.seoTitle || product.seoTitle || product.title;
+    const descSource =
+      pageCopy?.seoDescription ||
+      (city && product.seoDescription
+        ? `${product.seoDescription} Disponible en ${city.name}. Cotiza con Bodasesor por WhatsApp.`
+        : product.seoDescription) ||
+      `${product.title} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp.`;
+    applyPageSeo({
+      title: titleSource,
+      description: descSource,
+      path: city ? `/${slug}/${city.slug}` : `/${slug}`,
+      h1: pageCopy?.h1 || `${product.title}${city ? ` en ${city.name}` : ''}`,
+      cityName: city?.name || '',
+      image: HERO_IMAGES[slug] || product.img || product.image,
+    });
+  }, [product, city, pageCopy, slug]);
 
   useEffect(() => {
     if (!product) return;
@@ -356,8 +357,8 @@ export default function ServicePage({ params }: ServicePageProps) {
           name: pageCopy.h1 || `${product.title}${city ? ` en ${city.name}` : ' en México'}`,
           description: pageCopy.seoDescription || product.seoDescription,
           url: city
-            ? `https://bodasesor.com/${slug}/${city.slug}`
-            : `https://bodasesor.com/${slug}`,
+            ? absoluteUrl(`/${slug}/${city.slug}`)
+            : absoluteUrl(`/${slug}`),
           cityName: city?.name || 'México',
           zones: pageCopy.zones || [],
         }),

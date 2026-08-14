@@ -71,6 +71,16 @@ function deferNonCriticalPreloadsPlugin() {
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/products-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/search-index-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/blog-data-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/city-hub-content-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/banquetes-menus-[^"]+">\n?/g, '')
+          // Route-level page chunks — loaded on demand by the router
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/BanqueteMenuDetailPage-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/ServicePage-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/EventTypePage-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/HomeBelowFold-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/GaleriaPage-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/BlogDetailPage-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/BlogPage-[^"]+">\n?/g, '')
 
         // Move main stylesheet before module scripts so first paint isn't unstyled.
         const cssLink = out.match(/<link\s+rel="stylesheet"[^>]*href="\/assets\/[^"]+\.css"[^>]*>/i)
