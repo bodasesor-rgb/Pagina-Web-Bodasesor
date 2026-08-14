@@ -1,4 +1,5 @@
 import { defaultServiceFaqs } from './seo-meta.js'
+import { PRIORITY_HUB_SERP } from '../data/priority-hub-serp.js'
 
 /** Zones shown on national (no-city) service pages — same UI slot as city zones. */
 export const NATIONAL_COVERAGE_ZONES = [
@@ -107,8 +108,10 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
   const h1 = nationalH1(title)
   const byHub = {
     'banquetes-catering': {
-      headline:
-        'Banquetes formales, catering gourmet, barras de alimentos y estaciones mexicanas en un solo catálogo.',
+      headline: PRIORITY_HUB_SERP['banquetes-catering'].headline,
+      seoTitle: PRIORITY_HUB_SERP['banquetes-catering'].title,
+      seoDescription: PRIORITY_HUB_SERP['banquetes-catering'].desc,
+      h1: PRIORITY_HUB_SERP['banquetes-catering'].h1,
       localBullets: [
         'Menús por tiempos, buffet y estaciones con chef y meseros.',
         'Barras de alimentos y puestos de antojitos cocinados al momento.',
@@ -129,6 +132,45 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
           a: 'Sí. Atendemos CDMX, Estado de México, Guadalajara, Monterrey, León y más ciudades. Cotización por WhatsApp en menos de 24 horas.',
         },
       ],
+    },
+    carpas: {
+      headline: PRIORITY_HUB_SERP.carpas.headline,
+      seoTitle: PRIORITY_HUB_SERP.carpas.title,
+      seoDescription: PRIORITY_HUB_SERP.carpas.desc,
+      h1: PRIORITY_HUB_SERP.carpas.h1,
+      localBullets: [
+        'Carpas para fiestas, bodas y eventos al aire libre.',
+        'Instalación, anclaje y retiro por equipo profesional.',
+        'Opciones de tamaño y estilo según invitados y venue.',
+        'Cotización por WhatsApp en menos de 24 horas.',
+      ],
+      faqs: defaultServiceFaqs('Carpas para Fiestas y Eventos'),
+    },
+    floreria: {
+      headline: PRIORITY_HUB_SERP.floreria.headline,
+      seoTitle: PRIORITY_HUB_SERP.floreria.title,
+      seoDescription: PRIORITY_HUB_SERP.floreria.desc,
+      h1: PRIORITY_HUB_SERP.floreria.h1,
+      localBullets: [
+        'Centros de mesa, ramos y arreglos florales a la temática.',
+        'Decoración con globos, photo ops y ambientación integral.',
+        'Montaje y desmontaje incluidos en la propuesta.',
+        'Cotización por WhatsApp en menos de 24 horas.',
+      ],
+      faqs: defaultServiceFaqs('Florería y Decoración para Eventos'),
+    },
+    'pistas-tarimas': {
+      headline: PRIORITY_HUB_SERP['pistas-tarimas'].headline,
+      seoTitle: PRIORITY_HUB_SERP['pistas-tarimas'].title,
+      seoDescription: PRIORITY_HUB_SERP['pistas-tarimas'].desc,
+      h1: PRIORITY_HUB_SERP['pistas-tarimas'].h1,
+      localBullets: [
+        'Pistas de baile, tarimas y escenarios a medida.',
+        'Sets completos con barras y cabinas coordinadas.',
+        'Montaje, nivelación y retiro incluidos.',
+        'Cotización por WhatsApp en menos de 24 horas.',
+      ],
+      faqs: defaultServiceFaqs('Pistas de Baile y Tarimas'),
     },
     'barras-de-bebidas': {
       headline:
@@ -202,15 +244,17 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
   }
 
   return {
-    h1,
+    h1: extra.h1 || h1,
     headline: extra.headline,
-    sectionTitle: h1,
+    sectionTitle: extra.h1 || h1,
     description: [],
     localBullets: extra.localBullets,
     zones: NATIONAL_COVERAGE_ZONES,
     faqs: extra.faqs,
-    seoTitle: `${title} | Bodasesor`,
-    seoDescription: `${title} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp sin compromiso.`,
+    seoTitle: extra.seoTitle || `${title} | Bodasesor`,
+    seoDescription:
+      extra.seoDescription ||
+      `${title} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp sin compromiso.`,
     primaryKeyword: title,
   }
 }

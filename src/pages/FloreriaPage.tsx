@@ -5,6 +5,7 @@ import type { FloreriaProduct } from "../data/floreria-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar decoración floral o decoración para mi evento. ¿Me pueden dar información?");
@@ -17,7 +18,7 @@ const categoryConfig = {
 
 export default function FloreriaPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("floreria", "Florería para Eventos");
+    useCityHubPage("floreria", PRIORITY_HUB_SERP.floreria.h1, [], hubPageSeo("floreria"));
   return (
     <div className="min-h-screen bg-white">
 

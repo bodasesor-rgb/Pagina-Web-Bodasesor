@@ -5,6 +5,7 @@ import { PISTAS_TARIMAS, PistaTarimaCat } from "../data/pistas-tarimas-products"
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -33,7 +34,12 @@ const CATEGORY_COLORS: Record<PistaTarimaCat, string> = {
 
 export default function PistasTarimasPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("pistas-tarimas", "Pistas y Tarimas");
+    useCityHubPage(
+      "pistas-tarimas",
+      PRIORITY_HUB_SERP["pistas-tarimas"].h1,
+      [],
+      hubPageSeo("pistas-tarimas"),
+    );
   const waGeneral = WA_BASE + encodeURIComponent('Hola, me gustaría cotizar una pista de baile o tarima para mi evento.');
 
   return (
