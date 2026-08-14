@@ -9,7 +9,7 @@ export const PRIORITY_HUB_SERP = {
     desc: 'Renta de mesas y sillas y mobiliario para eventos: Tiffany, Ghost, Crossback y más. Entrega y montaje en México. Cotiza por WhatsApp.',
     h1: 'Renta de Mesas y Sillas para Eventos',
     headline:
-      'Mobiliario para bodas y eventos: más de 20 modelos de sillas y mesas con entrega, montaje y retiro incluidos.',
+      'Mobiliario para eventos: más de 20 modelos de sillas y mesas con entrega, montaje y retiro incluidos.',
   },
   'banquetes-catering': {
     title: 'Banquetes y Catering para Eventos',
