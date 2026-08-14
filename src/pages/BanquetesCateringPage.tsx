@@ -13,16 +13,16 @@ const waLink = (name: string) => WA + encodeURIComponent(`Hola, me interesa coti
 
 const DEFAULT_FAQS = [
   {
-    q: "¿Qué servicios incluye Banquetes y Catering?",
-    a: "Banquetes formales por tiempos, catering gourmet, barras de alimentos y estaciones mexicanas. Cada propuesta incluye personal, montaje y logística.",
+    q: "¿Qué incluye un banquete para eventos con Bodasesor?",
+    a: "Menú (tiempos, buffet o estaciones), chef, meseros, vajilla, montaje y desmontaje. Puedes combinar el banquete con barras de alimentos o taquiza en un solo paquete.",
   },
   {
-    q: "¿Puedo combinar banquete con barras o estaciones?",
-    a: "Sí. Es muy común complementar un banquete formal con taquiza, barra de sushi o coffee break. Armamos un paquete coordinado.",
+    q: "¿Ofrecen catering para bodas y eventos corporativos?",
+    a: "Sí. Tenemos banquetes formales, catering gourmet, coffee break, canapés y estaciones mexicanas para bodas, XV años, graduaciones y corporativos en todo México.",
   },
   {
-    q: "¿Cotizan a nivel nacional?",
-    a: "Sí. Atendemos CDMX, Estado de México, Guadalajara, Monterrey, León y más ciudades. Cotización por WhatsApp en menos de 24 horas.",
+    q: "¿Cómo cotizo un banquete o servicio de banquetes?",
+    a: "Escríbenos por WhatsApp al 55 4008 0373 con fecha, ciudad e invitados. Te enviamos propuesta personalizada, normalmente en menos de 24 horas y sin compromiso.",
   },
 ];
 

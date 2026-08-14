@@ -112,24 +112,31 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP['banquetes-catering'].title,
       seoDescription: PRIORITY_HUB_SERP['banquetes-catering'].desc,
       h1: PRIORITY_HUB_SERP['banquetes-catering'].h1,
+      sectionTitle: 'Banquetes para Eventos: Menús, Catering y Estaciones',
+      description: [
+        'Buscas un banquete o catering para eventos en México: menús por tiempos, buffet y estaciones con chef, meseros y vajilla incluidos. Bodasesor arma la propuesta completa para bodas, XV años y corporativos.',
+        'Ofrecemos banquetes formales de alta cocina, banquete mexicano, kosher y navideño, además de catering gourmet, barras de alimentos y puestos de antojitos cocinados al momento.',
+        'Cotiza tu banquete por WhatsApp sin compromiso: te enviamos opciones de menú según invitados, venue y presupuesto, normalmente en menos de 24 horas.',
+      ],
       localBullets: [
-        'Menús por tiempos, buffet y estaciones con chef y meseros.',
+        'Banquetes por tiempos, buffet y estaciones con chef y meseros.',
+        'Catering para bodas, XV años, graduaciones y eventos corporativos.',
         'Barras de alimentos y puestos de antojitos cocinados al momento.',
-        'Logística completa: montaje, vajilla, personal y desmontaje.',
-        'Cobertura nacional con cotización en menos de 24 horas.',
+        'Montaje, vajilla, personal y desmontaje en un solo paquete.',
+        'Cobertura nacional con cotización por WhatsApp en menos de 24 horas.',
       ],
       faqs: [
         {
-          q: '¿Qué servicios incluye Banquetes y Catering?',
-          a: 'Banquetes formales por tiempos, catering gourmet, barras de alimentos y estaciones mexicanas. Cada propuesta incluye personal, montaje y logística.',
+          q: '¿Qué incluye un banquete para eventos con Bodasesor?',
+          a: 'Menú (tiempos, buffet o estaciones), chef, meseros, vajilla, montaje y desmontaje. Puedes combinar el banquete con barras de alimentos o taquiza en un solo paquete.',
         },
         {
-          q: '¿Puedo combinar banquete con barras o estaciones?',
-          a: 'Sí. Es muy común complementar un banquete formal con taquiza, barra de sushi o coffee break. Armamos un paquete coordinado.',
+          q: '¿Ofrecen catering para bodas y eventos corporativos?',
+          a: 'Sí. Tenemos banquetes formales, catering gourmet, coffee break, canapés y estaciones mexicanas para bodas, XV años, graduaciones y corporativos en todo México.',
         },
         {
-          q: '¿Cotizan a nivel nacional?',
-          a: 'Sí. Atendemos CDMX, Estado de México, Guadalajara, Monterrey, León y más ciudades. Cotización por WhatsApp en menos de 24 horas.',
+          q: '¿Cómo cotizo un banquete o servicio de banquetes?',
+          a: 'Escríbenos por WhatsApp al 55 4008 0373 con fecha, ciudad e invitados. Te enviamos propuesta personalizada, normalmente en menos de 24 horas y sin compromiso.',
         },
       ],
     },
@@ -138,39 +145,99 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP.carpas.title,
       seoDescription: PRIORITY_HUB_SERP.carpas.desc,
       h1: PRIORITY_HUB_SERP.carpas.h1,
+      sectionTitle: 'Carpas para Fiestas y Eventos al Aire Libre',
+      description: [
+        'Renta de carpas para fiestas y eventos al aire libre: bodas, XV años, corporativos y celebraciones en jardines, haciendas o terrenos. Instalación, anclaje y retiro a cargo de nuestro equipo.',
+        'Elige carpas clásicas, transparentes, domos o estructuras tensionadas según invitados, clima y estilo. Adaptamos tamaño y montaje al venue de tu evento.',
+        'Cotiza tu carpa para eventos por WhatsApp: te confirmamos disponibilidad, medidas y logística en CDMX y principales ciudades de México.',
+      ],
       localBullets: [
         'Carpas para fiestas, bodas y eventos al aire libre.',
         'Instalación, anclaje y retiro por equipo profesional.',
         'Opciones de tamaño y estilo según invitados y venue.',
+        'Compatible con mobiliario, iluminación y ambientación Bodasesor.',
         'Cotización por WhatsApp en menos de 24 horas.',
       ],
-      faqs: defaultServiceFaqs('Carpas para Fiestas y Eventos'),
+      faqs: [
+        {
+          q: '¿Rentan carpas para eventos y fiestas?',
+          a: 'Sí. Ofrecemos renta de carpas para fiestas, bodas, XV años y eventos corporativos al aire libre, con instalación y retiro incluidos.',
+        },
+        {
+          q: '¿Qué tipos de carpa para eventos tienen?',
+          a: 'Carpas clásicas, transparentes, domos y estructuras tensionadas en varios tamaños. Te asesoramos según invitados, terreno y clima.',
+        },
+        {
+          q: '¿La instalación de la carpa está incluida?',
+          a: 'Sí. El paquete incluye traslado, instalación, anclaje seguro y retiro. Cotizamos por WhatsApp con medidas y fecha de tu evento.',
+        },
+      ],
     },
     floreria: {
       headline: PRIORITY_HUB_SERP.floreria.headline,
       seoTitle: PRIORITY_HUB_SERP.floreria.title,
       seoDescription: PRIORITY_HUB_SERP.floreria.desc,
       h1: PRIORITY_HUB_SERP.floreria.h1,
+      sectionTitle: 'Florería y Decoración para Bodas y Eventos',
+      description: [
+        'Florería y decoración para bodas y eventos: centros de mesa, ramos nupciales, arreglos florales, globos y ambientación integral según la temática de tu celebración.',
+        'Diseñamos la decoración de eventos con flores, plantas, photo ops y estructuras que transforman el venue — desde bodas íntimas hasta XV años y corporativos.',
+        'Cotiza arreglos florales y decoración por WhatsApp: montaje y desmontaje incluidos, con cobertura en CDMX y principales ciudades de México.',
+      ],
       localBullets: [
         'Centros de mesa, ramos y arreglos florales a la temática.',
         'Decoración con globos, photo ops y ambientación integral.',
+        'Opciones con plantas y florales para bodas y eventos.',
         'Montaje y desmontaje incluidos en la propuesta.',
         'Cotización por WhatsApp en menos de 24 horas.',
       ],
-      faqs: defaultServiceFaqs('Florería y Decoración para Eventos'),
+      faqs: [
+        {
+          q: '¿Qué incluye el servicio de florería para eventos?',
+          a: 'Centros de mesa, ramos, arreglos florales y ambientación según tu paleta. También combinamos flores con globos y photo ops en un solo montaje.',
+        },
+        {
+          q: '¿Hacen decoración de eventos con plantas y flores?',
+          a: 'Sí. Diseñamos decoración floral y con plantas para bodas, XV años y eventos sociales, alineada a la temática y al espacio del venue.',
+        },
+        {
+          q: '¿El montaje floral está incluido?',
+          a: 'Sí. Incluimos diseño, montaje y desmontaje. Cotiza por WhatsApp con fecha, ciudad y estilo deseado.',
+        },
+      ],
     },
     'pistas-tarimas': {
       headline: PRIORITY_HUB_SERP['pistas-tarimas'].headline,
       seoTitle: PRIORITY_HUB_SERP['pistas-tarimas'].title,
       seoDescription: PRIORITY_HUB_SERP['pistas-tarimas'].desc,
       h1: PRIORITY_HUB_SERP['pistas-tarimas'].h1,
+      sectionTitle: 'Pistas de Baile y Tarimas para Eventos',
+      description: [
+        'Renta de pistas de baile y tarimas para bodas, XV años y eventos: madera, LED, espejo, escenarios y estrados a medida con instalación profesional.',
+        'Una pista de baile bien dimensionada es el centro de la celebración. También montamos tarimas, escenarios y sets completos con barras y cabinas coordinadas.',
+        'Cotiza pistas de baile o tarimas por WhatsApp: te proponemos medidas, acabados y logística según tu venue en México.',
+      ],
       localBullets: [
-        'Pistas de baile, tarimas y escenarios a medida.',
+        'Pistas de baile en madera, LED, espejo y acabados premium.',
+        'Tarimas, escenarios y estrados a la medida del venue.',
         'Sets completos con barras y cabinas coordinadas.',
         'Montaje, nivelación y retiro incluidos.',
         'Cotización por WhatsApp en menos de 24 horas.',
       ],
-      faqs: defaultServiceFaqs('Pistas de Baile y Tarimas'),
+      faqs: [
+        {
+          q: '¿Rentan pistas de baile para eventos?',
+          a: 'Sí. Ofrecemos pistas de baile a medida (madera, LED, espejo y más) con instalación, nivelación y retiro incluidos para bodas y fiestas.',
+        },
+        {
+          q: '¿También rentan tarimas para eventos?',
+          a: 'Sí. Tarimas básicas, escenarios y estrados según el tamaño de tu espacio. Puedes combinar pista de baile y tarima en un solo set.',
+        },
+        {
+          q: '¿Cómo cotizo una pista de baile o tarima?',
+          a: 'Escríbenos por WhatsApp con medidas aproximadas del venue, fecha y ciudad. Te enviamos opciones y disponibilidad sin compromiso.',
+        },
+      ],
     },
     'barras-de-bebidas': {
       headline:
@@ -246,8 +313,8 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
   return {
     h1: extra.h1 || h1,
     headline: extra.headline,
-    sectionTitle: extra.h1 || h1,
-    description: [],
+    sectionTitle: extra.sectionTitle || extra.h1 || h1,
+    description: Array.isArray(extra.description) ? extra.description : [],
     localBullets: extra.localBullets,
     zones: NATIONAL_COVERAGE_ZONES,
     faqs: extra.faqs,
