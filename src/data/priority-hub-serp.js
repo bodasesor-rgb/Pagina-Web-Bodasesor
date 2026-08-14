@@ -13,7 +13,7 @@ export const PRIORITY_HUB_SERP = {
   },
   'banquetes-catering': {
     title: 'Banquetes y Catering para Eventos',
-    desc: 'Banquetes y catering para eventos en México: menús por tiempos, buffet, barras y estaciones mexicanas. Cotiza por WhatsApp hoy.',
+    desc: 'Banquetes y catering para eventos en México: menús por tiempos, buffet, barras y estaciones mexicanas. Cotiza ya por WhatsApp.',
     h1: 'Banquetes y Catering para Eventos',
     headline:
       'Banquetes formales, catering gourmet y estaciones mexicanas — cotiza por WhatsApp en menos de 24 horas.',
