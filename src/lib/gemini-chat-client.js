@@ -1,9 +1,10 @@
 /**
  * Browser/client helper for Gemini chat.
  * Persists mediaDescription; NEVER re-sends past image/audio bytes.
- *
- * Models are server-side (`scripts/lib/gemini-config.mjs`).
+ * Trims history client-side (default 6) to match server LUCY_CHAT_HISTORY_MAX.
  */
+
+const HISTORY_MAX = 6
 
 /**
  * @typedef {{ role: 'user'|'model', text: string, mediaDescription?: string }} ChatTurn
@@ -14,11 +15,12 @@
  * @param {ChatTurn[]} turns
  */
 export function toApiHistory(turns) {
-  return (turns || []).map((t) => ({
+  const mapped = (turns || []).map((t) => ({
     role: t.role === 'model' ? 'model' : 'user',
     text: t.text || '',
     ...(t.mediaDescription ? { mediaDescription: t.mediaDescription } : {}),
   }))
+  return mapped.length > HISTORY_MAX ? mapped.slice(-HISTORY_MAX) : mapped
 }
 
 /**

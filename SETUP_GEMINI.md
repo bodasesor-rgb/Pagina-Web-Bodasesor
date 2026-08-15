@@ -20,20 +20,28 @@ Overrides opcionales por env (secrets del Cloud Agent / Netlify):
 | `GEMINI_MODEL` | Override texto (default flash-lite) |
 | `GEMINI_IMAGE_MODEL` | Override imagen |
 | `GEMINI_CACHE_TTL` | Segundos (default 3600) |
+| `GEMINI_CONTEXT_CACHE` | `0` default — no `cachedContents` |
+| `LUCY_UNIFIED_LLM_TURN` | `1` default — 1 call/turn |
+| `LUCY_CHAT_HISTORY_MAX` | `6` default |
+| `LUCY_FEW_SHOT_MAX` | `0` default |
 
 Si hay `GEMINI_API_KEY` / `GEMINI_IA`, **no** uses OpenAI.
 
-## Optimizaciones de costo (obligatorias)
+## Optimizaciones de costo (V9.32-web / Lucy parity)
 
-1. **Explicit context caching** — `getOrCreateSystemCache()` en `scripts/lib/gemini.mjs`  
-   Corpus: `scripts/lib/gemini-brand-corpus.mjs` (≥ ~4096 tokens).  
-   Mismo modelo que `generateContent` (`gemini-3.1-flash-lite`).  
-   Fallback: `systemInstruction` **corto** (no se reenvía el corpus).  
-   **Nota:** en free tier a veces `TotalCachedContentStorageTokensPerModelFreeTier limit=0`.  
-   Activa facturación en el proyecto GCP / usa key con cuota de cache para ver `cached:true` / `cacheReused:true`.
-2. **Historial limpio** — `sanitizeHistoryForApi()` + `src/lib/gemini-chat-client.js`  
+1. **Explicit context caching OFF por defecto** — `GEMINI_CONTEXT_CACHE=0`  
+   `getOrCreateSystemCache()` solo crea `cachedContents` si `=1` **y** el system es estático  
+   (`buildStaticSystemPrompt()`). Catálogo/CRM/“CONTEXTO DEL TURNO” → nunca cachear.
+2. **1 llamada por turno de chat** — `geminiChat()` = un solo `generateContent`.  
+   Contador `cost.callsThisTurn: 1`.
+3. **Historial limpio + trim** — `sanitizeHistoryForApi()` + `LUCY_CHAT_HISTORY_MAX=6`  
    Solo texto + `mediaDescription`; nunca reenviar `inlineData` viejo.
-3. **Imágenes** — `compressImageForGemini()` max 1024² JPEG q80 antes del HTTP.
+4. **Imágenes** — `compressImageForGemini()` max 1024² JPEG q80; gen de imagen bloqueada  
+   salvo `GEMINI_ALLOW_IMAGE_GEN=1`.
+5. **Modelo** — solo `gemini-3.1-flash-lite`. Pro / Imagen / Nano Banana bloqueados.
+
+Health: `GET /.netlify/functions/gemini-health`  
+(`unified_llm_turn`, `chat_history_max`, `few_shot_max`, `context_cache_env`, `gemini_call_stats`).
 
 ## Chat endpoint
 

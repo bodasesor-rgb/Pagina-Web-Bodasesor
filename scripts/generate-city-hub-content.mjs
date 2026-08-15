@@ -194,7 +194,9 @@ async function main() {
         const text = await geminiGenerate(buildPrompt({ hub, city, local }), {
           json: true,
           temperature: 0.85,
-          useCache: true,
+          // V9.32-web: cache OFF by default; only when GEMINI_CONTEXT_CACHE=1
+          useCache: process.env.GEMINI_CONTEXT_CACHE === '1',
+          purpose: 'city-hub',
           model: GEMINI_TEXT_MODEL,
         })
         const parsed = validateContent(parseGeminiJson(text), city)

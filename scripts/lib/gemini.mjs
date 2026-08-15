@@ -1,7 +1,8 @@
 /**
- * Gemini client — cost-optimized (cache + history sanitize + image compress).
+ * Gemini client — cost-optimized (Lucy V9.32 patterns for Pagina Web).
  *
  * Models/params live in `gemini-config.mjs` (edit there).
+ * Defaults: context cache OFF, history ≤6, flash-lite only, 1 call/chat turn.
  */
 import sharp from 'sharp'
 import { loadGoogleCredentials, getGoogleAccessToken } from './google-service-account.mjs'
@@ -12,9 +13,16 @@ import {
   GEMINI_CACHE_TTL_SECONDS,
   GEMINI_IMAGE_MAX_EDGE,
   GEMINI_IMAGE_JPEG_QUALITY,
-  GEMINI_SHORT_SYSTEM_FALLBACK,
+  GEMINI_COST_CUT_VERSION,
   resolveTextModel,
   shouldPreferGeminiOverOpenAI,
+  isGeminiContextCacheEnabled,
+  getGeminiChatHistoryMax,
+  getGeminiFewShotMax,
+  isGeminiUnifiedLlmTurn,
+  geminiCostControlsSummary,
+  buildStaticSystemPrompt,
+  buildDynamicTurnContext,
 } from './gemini-config.mjs'
 import {
   BODASESOR_BRAND_CORPUS,
@@ -26,7 +34,15 @@ export {
   GEMINI_TEXT_MODEL,
   GEMINI_IMAGE_MODEL,
   DEFAULT_GEMINI_MODEL,
+  GEMINI_COST_CUT_VERSION,
   shouldPreferGeminiOverOpenAI,
+  isGeminiContextCacheEnabled,
+  getGeminiChatHistoryMax,
+  getGeminiFewShotMax,
+  isGeminiUnifiedLlmTurn,
+  geminiCostControlsSummary,
+  buildStaticSystemPrompt,
+  buildDynamicTurnContext,
 } from './gemini-config.mjs'
 
 export const GEMINI_SCOPES = [
@@ -39,11 +55,60 @@ const cacheMemo = new Map()
 /** @type {Map<string, { expireAt: number, error: string }>} */
 const cacheFailMemo = new Map()
 
+const geminiCallStats = {
+  total: 0,
+  byPurpose: /** @type {Record<string, number>} */ ({}),
+  lastModel: /** @type {string|null} */ (null),
+  lastAt: /** @type {string|null} */ (null),
+  contextCacheCreates: 0,
+  contextCacheHits: 0,
+  contextCacheSkipped: 0,
+  contextCacheDisabled: 0,
+  blockedOverrides: 0,
+}
+
+export function getGeminiCallStats() {
+  return {
+    total: geminiCallStats.total,
+    byPurpose: { ...geminiCallStats.byPurpose },
+    lastModel: geminiCallStats.lastModel,
+    lastAt: geminiCallStats.lastAt,
+    contextCacheCreates: geminiCallStats.contextCacheCreates,
+    contextCacheHits: geminiCallStats.contextCacheHits,
+    contextCacheSkipped: geminiCallStats.contextCacheSkipped,
+    contextCacheDisabled: geminiCallStats.contextCacheDisabled,
+    blockedOverrides: geminiCallStats.blockedOverrides,
+    cost_controls: geminiCostControlsSummary(),
+  }
+}
+
+export function resetGeminiCallStatsForTests() {
+  geminiCallStats.total = 0
+  geminiCallStats.byPurpose = {}
+  geminiCallStats.lastModel = null
+  geminiCallStats.lastAt = null
+  geminiCallStats.contextCacheCreates = 0
+  geminiCallStats.contextCacheHits = 0
+  geminiCallStats.contextCacheSkipped = 0
+  geminiCallStats.contextCacheDisabled = 0
+  geminiCallStats.blockedOverrides = 0
+  cacheMemo.clear()
+  cacheFailMemo.clear()
+}
+
+function noteCall(purpose, model) {
+  geminiCallStats.total += 1
+  const p = purpose || 'other'
+  geminiCallStats.byPurpose[p] = (geminiCallStats.byPurpose[p] || 0) + 1
+  geminiCallStats.lastModel = model
+  geminiCallStats.lastAt = new Date().toISOString()
+}
+
 export async function getGeminiAuth() {
   const apiKey = (
     process.env.GEMINI_API_KEY ||
     process.env.GEMINI_IA ||
-    process.env.gimini_IA || // typo alias (user secret name)
+    process.env.gimini_IA ||
     process.env.GIMINI_IA ||
     process.env.GOOGLE_API_KEY ||
     ''
@@ -73,12 +138,46 @@ function modelResource(model) {
   return m.startsWith('models/') ? m : `models/${m}`
 }
 
+function systemLooksDynamic(text) {
+  return /CONTEXTO DEL TURNO|ESTADO ACTUAL|CAT[AÁ]LOGO|BRIEFING INTERNO|CRM:/i.test(
+    String(text || ''),
+  )
+}
+
 /**
- * Create or reuse explicit context cache on the SAME model used for generateContent.
- * @returns {Promise<{ name: string|null, cached: boolean, cacheReused: boolean, model: string, error?: string }>}
+ * Create or reuse explicit context cache — ONLY when GEMINI_CONTEXT_CACHE=1
+ * and system is static (no catalog/CRM/turn context).
  */
 export async function getOrCreateSystemCache(opts = {}) {
   const model = resolveTextModel(opts.model || GEMINI_TEXT_MODEL)
+  const systemText = opts.systemInstruction || BODASESOR_SYSTEM_INSTRUCTION
+
+  if (!isGeminiContextCacheEnabled()) {
+    geminiCallStats.contextCacheDisabled += 1
+    return {
+      name: null,
+      cached: false,
+      cacheReused: false,
+      cacheFallback: true,
+      model,
+      error: 'GEMINI_CONTEXT_CACHE=0 (default off)',
+      corpusTokensApprox: brandCorpusTokenEstimate(),
+    }
+  }
+
+  if (systemLooksDynamic(systemText) || systemLooksDynamic(opts.corpus || '')) {
+    geminiCallStats.contextCacheSkipped += 1
+    return {
+      name: null,
+      cached: false,
+      cacheReused: false,
+      cacheFallback: true,
+      model,
+      error: 'system/corpus looks dynamic — refuse cachedContents',
+      corpusTokensApprox: brandCorpusTokenEstimate(),
+    }
+  }
+
   const resource = modelResource(model)
   const displayName = opts.displayName || `bodasesor-${model}`
   const ttl = `${opts.ttlSeconds || GEMINI_CACHE_TTL_SECONDS}s`
@@ -86,11 +185,13 @@ export async function getOrCreateSystemCache(opts = {}) {
   const now = Date.now()
   const hit = cacheMemo.get(memoKey)
   if (hit && hit.expireAt > now + 30_000) {
+    geminiCallStats.contextCacheHits += 1
     return { name: hit.name, cached: true, cacheReused: true, model }
   }
 
   const fail = cacheFailMemo.get(memoKey)
   if (fail && fail.expireAt > now) {
+    geminiCallStats.contextCacheSkipped += 1
     return {
       name: null,
       cached: false,
@@ -108,7 +209,7 @@ export async function getOrCreateSystemCache(opts = {}) {
     displayName,
     ttl,
     systemInstruction: {
-      parts: [{ text: opts.systemInstruction || BODASESOR_SYSTEM_INSTRUCTION }],
+      parts: [{ text: systemText }],
     },
     contents: [
       {
@@ -133,10 +234,9 @@ export async function getOrCreateSystemCache(opts = {}) {
   })
   const raw = await res.text()
   if (!res.ok) {
-    // Free tier often has TotalCachedContentStorageTokensPerModelFreeTier limit=0.
-    // Remember failure briefly so we don't pay latency/429 every turn.
     const error = `cache HTTP ${res.status}: ${raw.slice(0, 400)}`
     cacheFailMemo.set(memoKey, { expireAt: now + 10 * 60_000, error })
+    geminiCallStats.contextCacheSkipped += 1
     return {
       name: null,
       cached: false,
@@ -149,8 +249,11 @@ export async function getOrCreateSystemCache(opts = {}) {
   }
   const data = JSON.parse(raw)
   const name = data.name
-  const expireAt = data.expireTime ? Date.parse(data.expireTime) : now + GEMINI_CACHE_TTL_SECONDS * 1000
+  const expireAt = data.expireTime
+    ? Date.parse(data.expireTime)
+    : now + GEMINI_CACHE_TTL_SECONDS * 1000
   cacheMemo.set(memoKey, { name, expireAt, model })
+  geminiCallStats.contextCacheCreates += 1
   return {
     name,
     cached: true,
@@ -163,11 +266,9 @@ export async function getOrCreateSystemCache(opts = {}) {
 
 /**
  * History for API: text only + mediaDescription; never re-attach past inlineData.
- * Current-turn media may be passed separately via `currentMediaParts`.
- *
- * @param {Array<{ role: string, text?: string, parts?: any[], mediaDescription?: string, media?: any }>} history
+ * Trimmed to getGeminiChatHistoryMax() most recent user/model turns.
  */
-export function sanitizeHistoryForApi(history = []) {
+export function sanitizeHistoryForApi(history = [], maxMessages = getGeminiChatHistoryMax()) {
   const out = []
   for (const turn of history || []) {
     const role = turn.role === 'model' || turn.role === 'assistant' ? 'model' : 'user'
@@ -176,7 +277,6 @@ export function sanitizeHistoryForApi(history = []) {
     if (Array.isArray(turn.parts)) {
       for (const p of turn.parts) {
         if (p?.text) parts.push({ text: String(p.text) })
-        // Drop inlineData / fileData from past turns
       }
     }
     if (turn.mediaDescription) {
@@ -187,14 +287,10 @@ export function sanitizeHistoryForApi(history = []) {
     if (!parts.length) continue
     out.push({ role, parts })
   }
-  return out
+  if (out.length <= maxMessages) return out
+  return out.slice(-maxMessages)
 }
 
-/**
- * Resize fit-inside 1024×1024 (no upscale) + JPEG q80.
- * @param {Buffer|Uint8Array|ArrayBuffer|string} input bytes or data URL / base64
- * @returns {Promise<{ buffer: Buffer, mimeType: 'image/jpeg', base64: string, stats: object }>}
- */
 export async function compressImageForGemini(input) {
   let buf
   if (Buffer.isBuffer(input)) buf = input
@@ -252,16 +348,22 @@ function extractText(data) {
   )
 }
 
-/**
- * One-shot text generation with explicit cache when possible.
- */
 export async function geminiGenerate(prompt, opts = {}) {
   const model = resolveTextModel(opts.model || GEMINI_TEXT_MODEL)
   const { headers } = await getGeminiAuth()
+  noteCall(opts.purpose || 'generate', model)
 
-  let cacheMeta = { cached: false, cacheReused: false, name: null }
-  if (opts.useCache !== false) {
-    cacheMeta = await getOrCreateSystemCache({ model, displayName: opts.cacheName })
+  let cacheMeta = { cached: false, cacheReused: false, name: null, cacheFallback: true }
+  const wantCache = opts.useCache === true && isGeminiContextCacheEnabled()
+  if (wantCache) {
+    cacheMeta = await getOrCreateSystemCache({
+      model,
+      displayName: opts.cacheName,
+      systemInstruction: opts.systemInstruction || buildStaticSystemPrompt(),
+      corpus: opts.corpus,
+    })
+  } else if (!isGeminiContextCacheEnabled()) {
+    geminiCallStats.contextCacheDisabled += 1
   }
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
@@ -278,9 +380,8 @@ export async function geminiGenerate(prompt, opts = {}) {
   if (cacheMeta.name) {
     body.cachedContent = cacheMeta.name
   } else {
-    // Fallback: SHORT systemInstruction only — do not resend full corpus
     body.systemInstruction = {
-      parts: [{ text: opts.shortSystem || GEMINI_SHORT_SYSTEM_FALLBACK }],
+      parts: [{ text: opts.shortSystem || buildStaticSystemPrompt() }],
     }
   }
 
@@ -304,6 +405,7 @@ export async function geminiGenerate(prompt, opts = {}) {
         model,
         cacheName: cacheMeta.name,
         cacheError: cacheMeta.error || null,
+        cost_cut_version: GEMINI_COST_CUT_VERSION,
       },
     }
   }
@@ -311,21 +413,10 @@ export async function geminiGenerate(prompt, opts = {}) {
 }
 
 /**
- * Chat turn with cost-aware cache + optional current-turn image.
- *
- * @param {{
- *   history?: array,
- *   message: string,
- *   imageBase64?: string,
- *   imageMimeType?: string,
- *   imageBuffer?: Buffer,
- *   model?: string,
- * }} input
+ * Chat turn — always 1 generateContent call.
+ * Dynamic turn context is a user preamble, never inside cached system.
  */
 export async function geminiChat(input) {
-  if (!shouldPreferGeminiOverOpenAI() && process.env.OPENAI_API_KEY) {
-    // Hard rule: if Gemini creds exist we never reach here; if only OpenAI, still refuse when GEMINI_* set empty? User said: don't use OpenAI if GEMINI key present.
-  }
   if (
     (process.env.GEMINI_API_KEY || process.env.GEMINI_IA || '').trim() &&
     process.env.FORCE_OPENAI === '1'
@@ -335,11 +426,24 @@ export async function geminiChat(input) {
 
   const model = resolveTextModel(input.model || GEMINI_TEXT_MODEL)
   const { headers } = await getGeminiAuth()
-  const cacheMeta = await getOrCreateSystemCache({ model })
+  noteCall(input.purpose || 'chat', model)
+
+  let cacheMeta = { cached: false, cacheReused: false, name: null, cacheFallback: true }
+  if (isGeminiContextCacheEnabled()) {
+    cacheMeta = await getOrCreateSystemCache({
+      model,
+      systemInstruction: buildStaticSystemPrompt(),
+    })
+  } else {
+    geminiCallStats.contextCacheDisabled += 1
+  }
 
   const contents = sanitizeHistoryForApi(input.history || [])
   /** @type {any[]} */
   const userParts = []
+
+  const dynamic = buildDynamicTurnContext(input.turnContext || {})
+  if (dynamic) userParts.push({ text: dynamic })
   if (input.message) userParts.push({ text: String(input.message) })
 
   let imageCompressed = false
@@ -354,7 +458,6 @@ export async function geminiChat(input) {
     userParts.push({
       inlineData: { mimeType: compressed.mimeType, data: compressed.base64 },
     })
-    // Ask model to produce a short description we can persist
     userParts.push({
       text:
         '\n\n[Instrucción interna]: Si hay imagen, incluye al FINAL una línea exacta ' +
@@ -377,7 +480,7 @@ export async function geminiChat(input) {
     body.cachedContent = cacheMeta.name
   } else {
     body.systemInstruction = {
-      parts: [{ text: GEMINI_SHORT_SYSTEM_FALLBACK }],
+      parts: [{ text: buildStaticSystemPrompt() }],
     }
   }
 
@@ -391,6 +494,19 @@ export async function geminiChat(input) {
   let reply = extractText(data)
   if (!reply) throw new Error('Gemini chat empty response')
 
+  let extracted = null
+  if (input.unifiedJson) {
+    try {
+      const parsed = parseGeminiJson(reply)
+      if (parsed && typeof parsed === 'object' && (parsed.reply || parsed.extracted)) {
+        extracted = parsed.extracted ?? null
+        reply = String(parsed.reply || reply)
+      }
+    } catch {
+      // Fallback: treat full text as reply
+    }
+  }
+
   const md = reply.match(/MEDIA_DESCRIPTION:\s*(.+)$/im)
   if (md) {
     mediaDescription = md[1].trim()
@@ -401,6 +517,7 @@ export async function geminiChat(input) {
 
   return {
     reply,
+    extracted,
     mediaDescription,
     cost: {
       cached: Boolean(cacheMeta.cached && !cacheMeta.cacheReused),
@@ -411,11 +528,13 @@ export async function geminiChat(input) {
       model,
       cacheName: cacheMeta.name,
       cacheError: cacheMeta.error || null,
+      callsThisTurn: 1,
+      cost_cut_version: GEMINI_COST_CUT_VERSION,
+      historyTrimmedTo: getGeminiChatHistoryMax(),
     },
   }
 }
 
-/** Parse JSON from model output (strips fences if needed). */
 export function parseGeminiJson(text) {
   const trimmed = String(text || '').trim()
   try {
@@ -427,11 +546,15 @@ export function parseGeminiJson(text) {
   }
 }
 
-/** Image generation ONLY when needed — uses Imagen fast model. */
+/** Image generation blocked by default (cost cut). */
 export async function geminiGenerateImage(prompt, opts = {}) {
+  if (process.env.GEMINI_ALLOW_IMAGE_GEN !== '1') {
+    throw new Error(
+      'Gemini image generation blocked (cost cut). Set GEMINI_ALLOW_IMAGE_GEN=1 only for offline jobs.',
+    )
+  }
   const model = opts.model || GEMINI_IMAGE_MODEL
   const { headers } = await getGeminiAuth()
-  // Imagen predict endpoint (Generative Language / Vertex-compatible path may vary)
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict`
   const body = {
     instances: [{ prompt: String(prompt) }],
