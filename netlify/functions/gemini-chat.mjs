@@ -6,6 +6,9 @@
 import {
   geminiChat,
   shouldPreferGeminiOverOpenAI,
+  geminiCostControlsSummary,
+  isGeminiUnifiedLlmTurn,
+  GEMINI_COST_CUT_VERSION,
 } from '../../scripts/lib/gemini.mjs'
 import { GEMINI_TEXT_MODEL } from '../../scripts/lib/gemini-config.mjs'
 
@@ -55,12 +58,18 @@ export async function handler(event) {
       history: Array.isArray(payload.history) ? payload.history : [],
       imageBase64: payload.imageBase64 || null,
       model: GEMINI_TEXT_MODEL,
+      turnContext: payload.turnContext || undefined,
+      unifiedJson: isGeminiUnifiedLlmTurn() && Boolean(payload.unifiedJson),
     })
 
     return {
       statusCode: 200,
       headers: { ...cors, 'Content-Type': 'application/json' },
-      body: JSON.stringify(result),
+      body: JSON.stringify({
+        ...result,
+        cost_cut_version: GEMINI_COST_CUT_VERSION,
+        cost_controls: geminiCostControlsSummary(),
+      }),
     }
   } catch (e) {
     return {
