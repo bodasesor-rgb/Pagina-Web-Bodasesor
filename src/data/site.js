@@ -178,8 +178,8 @@ export const WHY_BODASESOR = [
   { icon: '⚡', title: 'Respuesta en 1 hora', desc: 'Cotización personalizada en menos de una hora. Rápido, fácil y sin compromiso.' },
 ]
 
-// Instagram gallery images (groups of 3 per slide)
-export const INSTAGRAM_GROUPS = Array.from({ length: 10 }, (_, i) => {
+// Instagram gallery images (groups of 3 per slide) — same count as product carousels
+export const INSTAGRAM_GROUPS = Array.from({ length: 31 }, (_, i) => {
   const base = i * 3
   return [base + 1, base + 2, base + 3].map(n => img(`/images/instagram/ig${n}.jpg`))
 })

@@ -176,6 +176,40 @@ export const GALLERY_TARGET = 31
 
 const IG_POOL = Array.from({ length: 200 }, (_, i) => `/images/instagram/ig${i + 1}.jpg`)
 
+/** Promo/template IG shots excluded from public galleries (same set as GaleriaPage). */
+const IG_EXCLUDED = new Set([
+  2, 13, 22, 33, 35, 36, 40, 41, 55, 56,
+  59, 62, 66, 68, 75, 76, 80, 84, 86, 89,
+  93, 94, 99, 102, 110, 112, 114, 115, 117, 119,
+  121, 125, 126, 127, 128, 129, 130, 136, 137, 145,
+  152, 156, 157, 160, 165, 172, 173, 177, 179, 180,
+  188, 190, 195, 196, 198,
+])
+
+/** Clean IG paths for section carousels (3-up grids). */
+export const CLEAN_IG_POOL = Array.from({ length: 200 }, (_, i) => i + 1)
+  .filter((n) => !IG_EXCLUDED.has(n))
+  .map((n) => `/images/instagram/ig${n}.jpg`)
+
+/**
+ * Build GALLERY_TARGET groups of 3 photos for "Momentos Que Creamos" / home.
+ * Uses the clean IG pool so every section carousel has the same slide count.
+ */
+export function getSectionGallerySlides(groupSize = 3) {
+  const need = GALLERY_TARGET * groupSize
+  const imgs = []
+  let i = 0
+  while (imgs.length < need) {
+    imgs.push(CLEAN_IG_POOL[i % CLEAN_IG_POOL.length])
+    i += 1
+  }
+  const slides = []
+  for (let s = 0; s < GALLERY_TARGET; s++) {
+    slides.push(imgs.slice(s * groupSize, (s + 1) * groupSize))
+  }
+  return slides
+}
+
 function slugSeed(slug) {
   let h = 0
   for (let i = 0; i < String(slug || '').length; i++) {
