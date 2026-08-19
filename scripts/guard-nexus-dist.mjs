@@ -11,6 +11,7 @@ import { readdir, readFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { existsSync } from 'node:fs'
+import { isNexusLandingHtml } from './lib/nexus-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST = join(__dirname, '..', 'dist')
@@ -35,9 +36,7 @@ async function isSeoLanding(relPath) {
   const abs = join(DIST, relPath)
   try {
     const html = await readFile(abs, 'utf8')
-    if (!html.includes('seo-service-hero')) return false
-    if (html.includes('id="root"') && html.includes('/assets/index-')) return false
-    return true
+    return isNexusLandingHtml(html)
   } catch {
     return false
   }

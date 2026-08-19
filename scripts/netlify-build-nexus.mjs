@@ -33,6 +33,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const LIVE = join(ROOT, '.netlify-live')
 const allowSpaOnly = process.env.ALLOW_SPA_ONLY_DEPLOY === '1'
+if (process.env.SEO_SYNC_FORCE !== '0') {
+  process.env.SEO_SYNC_FORCE = '1'
+}
 const inCi = process.env.CI === 'true'
 const isPreview =
   process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy'
@@ -74,6 +77,8 @@ function liveBlogRichHint() {
 console.log('══════════════════════════════════════════════════')
 console.log(' netlify-build-nexus — SPA + preserve Nexus SEO + blogs')
 console.log(` CONTEXT=${process.env.CONTEXT || '(none)'} preview=${isPreview} CI=${inCi}`)
+console.log(` NEXUS_URL=${process.env.NEXUS_URL || 'https://white-ferret-567834.hostingersite.com'}`)
+console.log(` SEO_SYNC_FORCE=${process.env.SEO_SYNC_FORCE || '(off)'}`)
 console.log(` MIN_NEXUS_LANDINGS=${process.env.MIN_NEXUS_LANDINGS || 1200}`)
 console.log(` MIN_BLOG_PAGES=${MIN_BLOG_PAGES}`)
 console.log('══════════════════════════════════════════════════')

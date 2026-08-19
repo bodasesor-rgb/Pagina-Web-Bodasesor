@@ -23,7 +23,7 @@ import { mkdir, writeFile, readFile, readdir, stat } from 'node:fs/promises'
 import { existsSync, readFileSync } from 'node:fs'
 import { join, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { browserAssetHeaders } from './lib/browser-fetch-headers.mjs'
+import { headersFor } from './lib/browser-fetch-headers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -141,10 +141,10 @@ async function fetchImage(path) {
     for (let attempt = 0; attempt < 4; attempt++) {
       try {
         const res = await fetch(url, {
-          headers: browserAssetHeaders({
+          headers: headersFor(url, {
             'user-agent': 'BodasesorNexusVerify/1.0',
             accept: 'image/webp,image/*,*/*;q=0.8',
-          }),
+          }, 'asset'),
           redirect: 'follow',
         })
         if (res.status === 404 || res.status === 401 || res.status === 403) break

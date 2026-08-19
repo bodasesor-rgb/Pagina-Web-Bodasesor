@@ -15,6 +15,7 @@ import { readdir, readFile, access } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isNexusLandingHtml } from './lib/nexus-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -55,10 +56,7 @@ async function walkIndexHtml(dir, base = dir, found = []) {
 async function isSeoLandingHtml(absPath) {
   try {
     const html = await readFile(absPath, 'utf8')
-    if (!html.includes('seo-service-hero')) return false
-    // SPA shell mistaken as landing
-    if (html.includes('id="root"') && html.includes('/assets/index-')) return false
-    return true
+    return isNexusLandingHtml(html)
   } catch {
     return false
   }
@@ -127,7 +125,7 @@ async function verifySmoke(dist, issues) {
       continue
     }
     if (!(await isSeoLandingHtml(p))) {
-      issues.push(`SEO smoke invalid (no seo-service-hero): dist/${slug}/index.html`)
+      issues.push(`SEO smoke invalid (not a Nexus landing): dist/${slug}/index.html`)
     }
   }
 }
@@ -273,7 +271,7 @@ async function main() {
   await verifySpa(DIST, issues)
 
   const { count, seen } = await countSeoLandings(DIST)
-  console.log(`SEO landings with seo-service-hero: ${count}`)
+  console.log(`SEO landings (seo-service-hero|seo-section): ${count}`)
 
   let expected = null
   if (existsSync(INVENTORY)) {
@@ -301,7 +299,10 @@ async function main() {
   // SPA must still win at root
   if (existsSync(join(DIST, 'index.html'))) {
     const root = await readFile(join(DIST, 'index.html'), 'utf8')
-    if (root.includes('seo-service-hero') && !root.includes('id="root"')) {
+    if (
+      (root.includes('seo-service-hero') || root.includes('seo-section')) &&
+      !root.includes('id="root"')
+    ) {
       issues.push('dist/index.html looks like a Nexus landing — SPA root was overwritten')
     }
   }

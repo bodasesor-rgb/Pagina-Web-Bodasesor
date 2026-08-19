@@ -60,9 +60,13 @@ jobs:
           MIN_BLOG_PAGES: "50"
           MIN_BLOG_IMAGES: "50"
           MIN_SEO_CSS_BYTES: "10000"
+          NEXUS_USER: ${{ secrets.NEXUS_USER }}
+          NEXUS_PASS: ${{ secrets.NEXUS_PASS }}
+          NEXUS_ACCESS_KEY: ${{ secrets.NEXUS_ACCESS_KEY }}
+          SEO_SYNC_FORCE: "1"
 
       - name: Deploy merged dist to Netlify production
-        run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + preserved Nexus SEO + blogs"
+        run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + Hostinger Nexus SEO + sitemap"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 

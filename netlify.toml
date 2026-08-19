@@ -4,6 +4,7 @@
   publish = "dist"
   # Skip Netlify UI/auto builds — production is published only by GitHub Actions
   # (npm run build:nexus + deploy --no-build) so a racing SPA-only publish cannot wipe Nexus SEO.
+  # Nexus push of .rebuild-trigger → this repo main → workflow "Deploy to Netlify" (jala Hostinger).
   ignore = "exit 0"
 
 [build.environment]
@@ -12,6 +13,12 @@
   SITE_BASE = "https://bodasesor.com"
   NEXUS_URL = "https://white-ferret-567834.hostingersite.com"
   SEO_SYNC_CONCURRENCY = "3"
+  SEO_SYNC_FORCE = "1"
+
+# Bot shield FIRST — 403 scrapers before other edge functions spend CPU/bandwidth.
+[[edge_functions]]
+  path = "/*"
+  function = "bot-shield"
 
 # Legacy Shopify redirects — DO NOT REMOVE
 [[edge_functions]]
@@ -34,11 +41,6 @@
 [[edge_functions]]
   function = "city-canonical-redirect"
   path = "/*"
-
-# Bot shield — block AI/scraper traffic (403 at edge)
-[[edge_functions]]
-  path = "/*"
-  function = "bot-shield"
 
 # SPA fallback is in dist/_redirects (last line: /* /index.html 200)
 # Do NOT add [[redirects]] here — it can override _redirects on deploy

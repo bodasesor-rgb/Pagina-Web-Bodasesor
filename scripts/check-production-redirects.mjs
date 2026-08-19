@@ -20,6 +20,7 @@ const BROWSER_UA =
 const BROWSER_NAV_HEADERS = {
   'user-agent': BROWSER_UA,
   accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language': 'es-MX,es;q=0.9,en;q=0.8',
   'sec-fetch-site': 'none',
   'sec-fetch-mode': 'navigate',
   'sec-fetch-dest': 'document',
@@ -46,6 +47,7 @@ const mapRes = await fetch('https://bodasesor.com/redirects-map.json', {
   headers: {
     'user-agent': BROWSER_UA,
     accept: 'application/json',
+    'accept-language': 'es-MX,es;q=0.9,en;q=0.8',
     'sec-fetch-site': 'same-origin',
     'sec-fetch-mode': 'cors',
     'sec-fetch-dest': 'empty',

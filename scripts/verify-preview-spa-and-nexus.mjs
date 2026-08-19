@@ -10,6 +10,7 @@
  * Never use this as a reason to deploy --prod; it only checks an already-published URL.
  */
 import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
+import { isNexusLandingHtml } from './lib/nexus-html.mjs'
 
 const BASE = (process.argv[2] || process.env.PREVIEW_URL || '').replace(/\/$/, '')
 const MIN_CSS_BYTES = Number(process.env.MIN_SEO_CSS_BYTES || 10_000)
@@ -43,7 +44,7 @@ function isSpaHome(html) {
 }
 
 function isSeoLanding(html) {
-  return html.includes('seo-service-hero') && !(html.includes('id="root"') && html.includes('/assets/index-'))
+  return isNexusLandingHtml(html)
 }
 
 function looksLikeCss(text, contentType) {
@@ -73,7 +74,7 @@ async function main() {
       if (isSeoLanding(html) && !isSpaHome(html)) issues.push(`${path} overwritten by Nexus HTML`)
     } else {
       if (!isSeoLanding(html)) {
-        issues.push(`${path} missing seo-service-hero (SPA shell or wrong page; ${bytes}B)`)
+        issues.push(`${path} missing Nexus landing marker (SPA shell or wrong page; ${bytes}B)`)
       }
       if (bytes < 12_000) issues.push(`${path} too small (${bytes}B) — likely SPA-only shell`)
     }

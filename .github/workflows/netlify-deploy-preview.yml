@@ -61,6 +61,10 @@ jobs:
           # Force preview context so logs show preview=true; sync is still mandatory.
           CONTEXT: deploy-preview
           SKIP_NETLIFY_ZIP: "1"
+          NEXUS_USER: ${{ secrets.NEXUS_USER }}
+          NEXUS_PASS: ${{ secrets.NEXUS_PASS }}
+          NEXUS_ACCESS_KEY: ${{ secrets.NEXUS_ACCESS_KEY }}
+          SEO_SYNC_FORCE: "1"
 
       - name: Gate A (explicit re-check)
         run: npm run verify:dist-bundle

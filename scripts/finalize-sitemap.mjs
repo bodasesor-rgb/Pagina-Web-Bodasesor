@@ -16,6 +16,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { collectSpaSeoPathsForSitemap } from './collect-spa-seo-entries.mjs'
+import { isNexusLandingHtml, isSpaShellHtml } from './lib/nexus-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -46,12 +47,11 @@ function escapeXml(s) {
 }
 
 function isSpaShell(html) {
-  return html.includes('id="root"') && /\/assets\/index-[^"']+\.js/.test(html)
+  return isSpaShellHtml(html)
 }
 
 function isNexusLanding(html) {
-  if (!html || isSpaShell(html)) return false
-  return html.includes('seo-service-hero') || html.includes('seo-landing.css')
+  return isNexusLandingHtml(html)
 }
 
 function isRichBlog(html) {

@@ -18,6 +18,7 @@ import {
   organizationRef,
 } from '../src/utils/seo-page-meta.js'
 import { absoluteOgImage, DEFAULT_OG_IMAGE_ALT } from '../src/utils/seo-social.js'
+import { isNexusLandingHtml } from './lib/nexus-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -39,10 +40,7 @@ async function isNexusLanding(absPath) {
   try {
     await access(absPath)
     const html = await readFile(absPath, 'utf8')
-    if (!html.includes('seo-service-hero')) return false
-    // SPA shells have #root + hashed assets — do not treat as Nexus
-    if (html.includes('id="root"') && /\/assets\/index-[^"]+\.js/.test(html)) return false
-    return true
+    return isNexusLandingHtml(html)
   } catch {
     return false
   }

@@ -19,7 +19,7 @@ import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises'
 import { existsSync, readFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { browserNavHeaders } from './lib/browser-fetch-headers.mjs'
+import { headersFor } from './lib/browser-fetch-headers.mjs'
 import { spawnSync } from 'node:child_process'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -27,7 +27,12 @@ const ROOT = join(__dirname, '..')
 const OUT_DIR = join(ROOT, '.netlify-live')
 const BLOG_DIR = join(OUT_DIR, 'blog')
 const SLUG_LIST = join(ROOT, 'seo-seed', 'blog-slugs.txt')
+const NEXUS = (process.env.NEXUS_URL || 'https://white-ferret-567834.hostingersite.com').replace(
+  /\/$/,
+  '',
+)
 const PROD = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/$/, '')
+const ORIGINS = [...new Set([NEXUS, PROD].filter(Boolean))]
 const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
 const MIN_BLOG_PAGES = Number(process.env.MIN_BLOG_PAGES || 50)
 const allowSpaOnly = process.env.ALLOW_SPA_ONLY_DEPLOY === '1'
@@ -50,7 +55,7 @@ async function fetchText(url, { retries = 4 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
-        headers: browserNavHeaders(),
+        headers: headersFor(url),
         redirect: 'follow',
       })
       if (res.status === 401 || res.status === 403 || res.status === 404) return null
@@ -97,15 +102,30 @@ async function listExistingBlogPaths() {
   return paths
 }
 
+async function fetchRichBlog(path) {
+  for (const origin of ORIGINS) {
+    const base = `${origin}${path}`
+    const body = (await fetchText(`${base}/`)) || (await fetchText(base))
+    if (body && isRichBlogHtml(body)) return body
+  }
+  return null
+}
+
 async function listBlogPathsFromSitemap() {
-  const xml = await fetchText(`${PROD}/sitemap.xml`)
-  if (!xml) return []
-  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim())
   const paths = new Set()
-  for (const loc of locs) {
-    if (!loc.startsWith(PROD)) continue
-    let path = loc.slice(PROD.length).replace(/\/+$/, '') || '/'
-    if (path === '/blog' || path.startsWith('/blog/')) paths.add(path)
+  for (const origin of ORIGINS) {
+    const xml = await fetchText(`${origin}/sitemap.xml`)
+    if (!xml) continue
+    const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim())
+    for (const loc of locs) {
+      try {
+        const u = new URL(loc)
+        const p = (u.pathname || '/').replace(/\/+$/, '') || '/'
+        if (p === '/blog' || p.startsWith('/blog/')) paths.add(p)
+      } catch {
+        /* skip */
+      }
+    }
   }
   paths.add('/blog/articulos')
   return [...paths]
@@ -143,7 +163,7 @@ async function countRichOnDisk() {
 
 async function main() {
   console.log(`Sync blogs → ${OUT_DIR}/blog/`)
-  console.log(`  source: ${PROD}`)
+  console.log(`  source: ${ORIGINS.join(' → ')}`)
   await mkdir(OUT_DIR, { recursive: true })
 
   // 0) Always ensure durable seed first (no-op if enough rich blogs already)
@@ -189,8 +209,7 @@ async function main() {
         const existingHtml = await readFile(dest, 'utf8')
         if (isRichBlogHtml(existingHtml)) {
           // Still try live refresh only if live is also rich AND larger
-          const url = `${PROD}${path}`
-          const body = (await fetchText(`${url}/`)) || (await fetchText(url))
+          const body = await fetchRichBlog(path)
           if (body && isRichBlogHtml(body) && body.length > existingHtml.length * 1.05) {
             await writeFile(dest, body)
             saved++
@@ -205,8 +224,7 @@ async function main() {
       }
     }
 
-    const url = `${PROD}${path}`
-    const body = (await fetchText(`${url}/`)) || (await fetchText(url))
+    const body = await fetchRichBlog(path)
     if (!body || isSpaShell(body) || !isRichBlogHtml(body)) {
       skippedSpa++
       return
@@ -226,7 +244,7 @@ async function main() {
   const onDisk = await countRichOnDisk()
   const manifest = {
     pulledAt: new Date().toISOString(),
-    source: PROD,
+    source: ORIGINS,
     candidates: paths.size,
     savedThisRun: saved,
     skippedSpa,

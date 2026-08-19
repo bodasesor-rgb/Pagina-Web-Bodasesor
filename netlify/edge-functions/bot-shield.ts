@@ -23,6 +23,11 @@ const PROBE_PATHS = new Set([
   '/admin.php',
   '/actuator',
   '/actuator/health',
+  '/wp-json',
+  '/wp-config.php',
+  '/xmlrpc',
+  '/server-status',
+  '/.ds_store',
 ])
 
 const PROBE_PREFIXES = [
@@ -33,17 +38,25 @@ const PROBE_PREFIXES = [
   '/wp-admin/',
   '/wp-content/',
   '/wp-includes/',
+  '/wp-json/',
   '/.git/',
   '/.env',
   '/vendor/phpunit/',
   '/phpmyadmin',
   '/admin/config',
+  '/cgi-bin/',
+  '/autodiscover/',
+  '/owa/',
+  '/.aws/',
 ]
+
+const PROBE_EXTENSIONS = /\.(php|aspx?|jsp|cgi|env|bak|sql|py)$/i
 
 function isProbePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, '') || '/'
   if (PROBE_PATHS.has(pathname) || PROBE_PATHS.has(p)) return true
   const lower = p.toLowerCase()
+  if (PROBE_EXTENSIONS.test(lower)) return true
   return PROBE_PREFIXES.some((prefix) => lower === prefix || lower.startsWith(prefix))
 }
 
@@ -54,7 +67,8 @@ function isProbePath(pathname: string): boolean {
 // ═══════════════════════════════════════════════════════════════
 const ALLOW = [
   // Google Search / Ads / tooling (indexing ≠ Google-Extended training)
-  /googlebot/i, // Googlebot, Googlebot-Image, Googlebot-Video
+  // Googlebot, Googlebot-Image, Googlebot-Video (inline comment breaks verify parser)
+  /googlebot/i,
   /google-inspectiontool/i,
   /storebot-google/i,
   /adsbot-google/i,
@@ -132,6 +146,17 @@ const BLOCK = [
   /MistralAI-User/i,
   /NovaAct/i,
   /Operator/i,
+  /Perplexity-User/i,
+  /Claude-SearchBot/i,
+  /Google-CloudVertexBot/i,
+  /xAI-Grok/i,
+  /\bGrok\b/i,
+  /DeepSeek/i,
+  /TikTokSpider/i,
+  /iaskspider/i,
+  /img2dataset/i,
+  /FacebookBot/i,
+  /SearchGPT/i,
 
   // SEO / bandwidth scrapers (Semrush permitido arriba en ALLOW)
   /AhrefsBot/i,
@@ -158,6 +183,20 @@ const BLOCK = [
   /Buck\/\d/i,
   /Barkrowler/i,
   /Grapeshot/i,
+  /SiteAuditBot/i,
+  /ContentKing/i,
+  /OnCrawl/i,
+  /Botify/i,
+  /DeepCrawl/i,
+  /Sitebulb/i,
+  /Lumar/i,
+  /YisouSpider/i,
+  /Sogou/i,
+  /360Spider/i,
+  /archive\.org_bot/i,
+  /ia_archiver/i,
+  /MauiBot/i,
+  /webprosbot/i,
 
   // Security scanners / internet census
   /CensysInspect/i,
@@ -206,7 +245,46 @@ const BLOCK = [
   /heritrix/i,
   /Firefox\/.*Bot/i,
   /facebookscraper/i,
+  /fasthttp/i,
+  /colly/i,
+  /crawler4j/i,
+  /GuzzleHttp/i,
+  /\bphp\//i,
+  /\bgot\//i,
+  /\bDeno\//i,
+  /\bBun\//i,
+  /jsoup/i,
 ]
+
+const ASSET_PATH = /\.(js|css|map|webp|png|jpe?g|gif|svg|ico|woff2?|ttf|txt|xml|json)$/i
+
+// HTML pages only — a real page load is 1 HTML + many assets. Counting assets
+// at 30/min would 429 a normal visitor (and Googlebot, if we used Netlify's
+// path rateLimit). ALLOW list (Google/Bing/social) bypasses this entirely.
+const HTML_RATE_LIMIT = 30
+const HTML_WINDOW_MS = 60_000
+const MAX_TRACKED_IPS = 8_000
+const htmlHits = new Map<string, { count: number; windowStart: number }>()
+
+function isAssetPath(pathname: string): boolean {
+  return ASSET_PATH.test(pathname)
+}
+
+function isOverHtmlRateLimit(ip: string): boolean {
+  if (!ip) return false
+  const now = Date.now()
+  const rec = htmlHits.get(ip)
+  if (!rec || now - rec.windowStart >= HTML_WINDOW_MS) {
+    if (!rec && htmlHits.size >= MAX_TRACKED_IPS) {
+      const oldest = htmlHits.keys().next().value
+      if (oldest) htmlHits.delete(oldest)
+    }
+    htmlHits.set(ip, { count: 1, windowStart: now })
+    return false
+  }
+  rec.count += 1
+  return rec.count > HTML_RATE_LIMIT
+}
 
 /** Netlify sets Netlify-Agent-Category as `<category>[;<subcategory>]`. */
 function parseAgentCategory(header: string | null): { category: string; subcategory: string } {
@@ -262,7 +340,7 @@ function isSuspiciousUa(ua: string): boolean {
 /** HTML navigations without typical browser client hints are often scrapers spoofing Chrome. */
 function isLikelySpoofedBrowser(request: Request, pathname: string, ua: string): boolean {
   // Only apply to document-like paths (not assets / api probes already handled)
-  if (/\.(js|css|map|webp|png|jpe?g|gif|svg|ico|woff2?|ttf|txt|xml|json)$/i.test(pathname)) {
+  if (isAssetPath(pathname)) {
     return false
   }
   if (!/Mozilla\/5\.0/i.test(ua)) return false
@@ -273,6 +351,20 @@ function isLikelySpoofedBrowser(request: Request, pathname: string, ua: string):
   const secFetchDest = request.headers.get('sec-fetch-dest')
   if (!secFetchSite && !secFetchMode && !secFetchDest) {
     return true
+  }
+  // Chrome-impersonators now copy Sec-Fetch but still omit Accept-Language.
+  const lang = request.headers.get('accept-language')
+  if (!lang || !lang.trim()) {
+    return true
+  }
+  // Document navigations send Accept: text/html. Scrapers often send */* or nothing.
+  const accept = (request.headers.get('accept') || '').toLowerCase()
+  const dest = (secFetchDest || '').toLowerCase()
+  const mode = (secFetchMode || '').toLowerCase()
+  const isDocumentNav = dest === 'document' || mode === 'navigate'
+  if (isDocumentNav) {
+    if (!accept || accept === '*/*') return true
+    if (!accept.includes('text/html') && !accept.includes('application/xhtml')) return true
   }
   return false
 }
@@ -318,20 +410,27 @@ export default async (request: Request, context: Context) => {
   }
 
   if (isLikelySpoofedBrowser(request, pathname, ua)) {
-    return block(context, ua, 'spoof-sin-sec-fetch')
+    return block(context, ua, 'spoof-headers')
+  }
+
+  // Scrapers spoofing Chrome still chew Analytics/bandwidth. Cap HTML pages
+  // (not assets) at 30/min per IP. Googlebot never reaches here (ALLOW).
+  if (!isAssetPath(pathname) && isOverHtmlRateLimit(context.ip || '')) {
+    return block(context, ua, 'rate-30-html', 429)
   }
 
   return context.next()
 }
 
-function block(context: Context, ua: string, reason: string) {
+function block(context: Context, ua: string, reason: string, status = 403) {
   console.log(`BLOQUEADO [${reason}] ip=${context.ip} ua="${ua.slice(0, 180)}"`)
-  return new Response('Access denied.', {
-    status: 403,
+  return new Response(status === 429 ? 'Too many requests.' : 'Access denied.', {
+    status,
     headers: {
       'content-type': 'text/plain; charset=utf-8',
-      'cache-control': 'public, max-age=3600',
+      'cache-control': status === 429 ? 'public, max-age=60' : 'public, max-age=3600',
       'x-robots-tag': 'noindex',
+      ...(status === 429 ? { 'retry-after': '60' } : {}),
     },
   })
 }

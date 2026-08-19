@@ -50,6 +50,10 @@ const mustBlock = [
   'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)',
   'CCBot/2.0',
   'Mozilla/5.0 (compatible; Google-Extended)',
+  'Mozilla/5.0 (Linux; Android 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Mobile Safari/537.36 (compatible; Bytespider; +https://zhanzhang.sm.cn/bot.html)',
+  'Mozilla/5.0 (compatible; AhrefsBot/7.0; +http://ahrefs.com/robot/)',
+  'FacebookBot/1.0',
+  'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Perplexity-User/1.0)',
 ]
 
 let failed = 0

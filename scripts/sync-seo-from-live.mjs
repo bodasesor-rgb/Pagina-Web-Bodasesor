@@ -15,7 +15,8 @@ import { mkdir, writeFile, rm, readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { browserNavHeaders, browserAssetHeaders } from './lib/browser-fetch-headers.mjs'
+import { headersFor, hasNexusAuth } from './lib/browser-fetch-headers.mjs'
+import { isNexusLandingHtml } from './lib/nexus-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -30,22 +31,38 @@ const CONCURRENCY = Number(process.env.SEO_SYNC_CONCURRENCY || 8)
 const MIN_LANDINGS = Number(process.env.MIN_NEXUS_LANDINGS || 1200)
 
 function isSpaShell(html) {
-  if (!html) return true
-  if (!html.includes('seo-service-hero')) return true
-  if (html.includes('id="root"') && html.includes('/assets/index-')) return true
-  if (html.includes('Access denied')) return true
-  return false
+  return !isNexusLandingHtml(html)
+}
+
+const warnedAuth = new Set()
+
+function warnAuthOnce(url, status) {
+  let host = url
+  try {
+    host = new URL(url).host
+  } catch {
+    /* keep url */
+  }
+  if (warnedAuth.has(host)) return
+  warnedAuth.add(host)
+  const hint = hasNexusAuth()
+    ? 'key presente pero Hostinger sigue en 401/403 — revisa usuario/contraseña'
+    : 'falta NEXUS_PASS o NEXUS_ACCESS_KEY (no la pegues en el chat; .env.local + GitHub secret)'
+  console.warn(`⚠ ${host} HTTP ${status} — ${hint}`)
 }
 
 async function fetchText(url, { retries = 5 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
-        headers: browserNavHeaders(),
+        headers: headersFor(url),
         redirect: 'follow',
       })
-      // Auth / not-found — do not burn retries (Hostinger often 401 from CI)
-      if (res.status === 401 || res.status === 403 || res.status === 404) return null
+      if (res.status === 401 || res.status === 403) {
+        warnAuthOnce(url, res.status)
+        return null
+      }
+      if (res.status === 404) return null
       if (res.status === 429 || res.status >= 500) {
         await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
         continue
@@ -62,8 +79,15 @@ async function fetchText(url, { retries = 5 } = {}) {
 async function fetchBuffer(url, { retries = 4 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const res = await fetch(url, { headers: browserAssetHeaders(), redirect: 'follow' })
-      if (res.status === 401 || res.status === 403 || res.status === 404) return null
+      const res = await fetch(url, {
+        headers: headersFor(url, {}, 'asset'),
+        redirect: 'follow',
+      })
+      if (res.status === 401 || res.status === 403) {
+        warnAuthOnce(url, res.status)
+        return null
+      }
+      if (res.status === 404) return null
       if (res.status === 429 || res.status >= 500) {
         await new Promise((r) => setTimeout(r, 800 * 2 ** attempt))
         continue
@@ -94,7 +118,82 @@ async function loadSlugs() {
   const path = join(__dirname, 'seo-landing-slugs.json')
   if (!existsSync(path)) throw new Error(`Falta ${path}`)
   const data = JSON.parse(await readFile(path, 'utf8'))
-  return (data.slugs || []).map((s) => String(s).replace(/^\/+|\/+$/g, '')).filter(Boolean)
+  const local = (data.slugs || []).map((s) => String(s).replace(/^\/+|\/+$/g, '')).filter(Boolean)
+  const remote = await loadRemoteSlugs()
+  const merged = [...new Set([...local, ...remote])]
+  if (remote.length) {
+    console.log(`  extra slugs from Hostinger/prod: ${remote.length} (inventory ${local.length} → ${merged.length})`)
+  }
+  return merged
+}
+
+const SKIP_TOP = new Set([
+  'blog',
+  'css',
+  'assets',
+  'images',
+  'fonts',
+  'js',
+  'api',
+  'wp-admin',
+  'robots.txt',
+  'sitemap.xml',
+  'llms.txt',
+  'nexus-output-pages',
+])
+
+function slugFromPathname(pathname) {
+  const p = String(pathname || '')
+    .replace(/\/index\.html$/i, '')
+    .replace(/\/+$/, '')
+    .replace(/^\//, '')
+  if (!p || p.includes('.')) return ''
+  const top = p.split('/')[0]
+  if (SKIP_TOP.has(top.toLowerCase())) return ''
+  return p
+}
+
+function slugsFromSitemapXml(xml) {
+  const out = []
+  for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    try {
+      const slug = slugFromPathname(new URL(m[1].trim()).pathname)
+      if (slug) out.push(slug)
+    } catch {
+      /* skip */
+    }
+  }
+  return out
+}
+
+function slugsFromJson(raw) {
+  try {
+    const data = JSON.parse(raw)
+    const list = Array.isArray(data) ? data : data.slugs || data.landings || []
+    return list.map((s) => slugFromPathname(String(s))).filter(Boolean)
+  } catch {
+    return []
+  }
+}
+
+async function loadRemoteSlugs() {
+  const found = new Set()
+  const paths = [
+    '/sitemap.xml',
+    '/sitemap-seo.xml',
+    '/seo-landing-slugs.json',
+    '/nexus-slugs.json',
+    '/landings.json',
+  ]
+  for (const origin of FETCH_ORIGINS) {
+    for (const p of paths) {
+      const body = await fetchText(`${origin}${p}`)
+      if (!body) continue
+      const extra = p.endsWith('.json') ? slugsFromJson(body) : slugsFromSitemapXml(body)
+      for (const slug of extra) found.add(slug)
+    }
+  }
+  return [...found]
 }
 
 async function fetchLanding(slug) {
@@ -275,6 +374,7 @@ async function pullSlugs(slugs, concurrency) {
 async function main() {
   console.log(`Sync SEO → ${OUT_DIR}`)
   console.log(`  fetch origins: ${FETCH_ORIGINS.join(' → ')}`)
+  console.log(`  Hostinger auth: ${hasNexusAuth() ? 'on' : 'off (expect 401 if the site is protected)'}`)
   const slugs = await loadSlugs()
   console.log(`  inventory slugs: ${slugs.length}`)
 

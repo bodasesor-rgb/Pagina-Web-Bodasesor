@@ -167,6 +167,7 @@ export default async function handler(request: Request, context: Context) {
       // Preserve Nexus landings AND static blog HTML (blogs use seo-blog-*, not seo-service-hero).
       if (
         html.includes('seo-service-hero') ||
+        html.includes('seo-section') ||
         html.includes('seo-blog-') ||
         html.includes('seo-blog-conversion')
       ) {
