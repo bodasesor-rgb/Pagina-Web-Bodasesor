@@ -10,6 +10,7 @@ export const CITY_EXEMPT_PREFIXES = [
   '/quienes-somos',
   '/aviso-de-privacidad',
   '/terminos-y-condiciones',
+  '/politicas-de-devoluciones',
   '/galeria',
   '/catalogo',
   '/catalogos',

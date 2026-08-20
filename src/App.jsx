@@ -413,6 +413,9 @@ function Router() {
           <Route path="/terminos-y-condiciones">
             {() => <LegalPage kind="terminos" />}
           </Route>
+          <Route path="/politicas-de-devoluciones">
+            {() => <LegalPage kind="devoluciones" />}
+          </Route>
 
           {/* Blog */}
           <Route path="/blog" component={BlogPage} />

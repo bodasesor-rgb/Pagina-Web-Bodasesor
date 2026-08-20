@@ -99,6 +99,7 @@ export const SPA_SEO_HUBS = [
   { path: '/carrito-snacks', title: 'Carrito de Snacks', desc: 'Carrito de snacks dulces y salados para eventos, bodas y fiestas.' },
   { path: '/aviso-de-privacidad', title: 'Aviso de Privacidad', desc: 'Aviso de privacidad de Bodasesor: tratamiento de datos personales y derechos ARCO.' },
   { path: '/terminos-y-condiciones', title: 'Términos y Condiciones', desc: 'Términos y condiciones de uso del sitio y servicios de Bodasesor Eventos.' },
+  { path: '/politicas-de-devoluciones', title: 'Políticas de Devoluciones', desc: 'Política de cancelación y devoluciones de Bodasesor: reembolsos según anticipación al evento.' },
 ]
 
 export const SPA_SEO_HUB_PATHS = new Set(SPA_SEO_HUBS.map((h) => h.path))

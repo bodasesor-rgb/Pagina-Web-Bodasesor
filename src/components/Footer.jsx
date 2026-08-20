@@ -68,6 +68,7 @@ export default function Footer() {
                 { name: 'Quiénes Somos', href: '/quienes-somos' },
                 { name: 'Aviso de Privacidad', href: '/aviso-de-privacidad' },
                 { name: 'Términos y Condiciones', href: '/terminos-y-condiciones' },
+                { name: 'Políticas de Devoluciones', href: '/politicas-de-devoluciones' },
               ].map(item => (
                 <li key={item.href}>
                   <Link href={item.href} className={linkClass}>{item.name}</Link>
