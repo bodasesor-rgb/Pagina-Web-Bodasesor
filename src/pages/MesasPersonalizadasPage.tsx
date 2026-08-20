@@ -288,7 +288,8 @@ function MesaCard({
         <div className="h-52 overflow-hidden bg-[#f5efe8] relative">
           <OptimizedImage
             src={img}
-            alt=""
+            alt={name}
+            title={name}
             width={400}
             height={208}
             priority={priority}

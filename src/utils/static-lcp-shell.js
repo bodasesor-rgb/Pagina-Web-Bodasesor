@@ -9,10 +9,12 @@ export function isHomePath(pathname) {
 const HERO_IDS = ['static-hero-copy', 'lcp-hero-wrap']
 const SHELL_IDS = [...HERO_IDS, 'static-nav-shell']
 
+const HOME_HERO_ALT = 'Banquetes, Catering y Servicios para Eventos en México'
+
 const HERO_PICTURE_HTML =
   '<source media="(max-width: 768px)" srcset="/images/hero-bg-new-mobile.webp" type="image/webp" />' +
   '<source srcset="/images/hero-bg-new.webp" type="image/webp" />' +
-  '<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="" width="1408" height="768" fetchpriority="high" decoding="async" />'
+  `<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="${HOME_HERO_ALT}" title="${HOME_HERO_ALT}" width="1408" height="768" fetchpriority="high" decoding="async" />`
 
 const HERO_COPY_HTML =
   '<h1>Banquetes, Catering y Servicios para Eventos en México</h1>' +
@@ -38,7 +40,6 @@ export function ensureHomeStaticHeroNodes() {
   if (!wrap) {
     wrap = document.createElement('picture')
     wrap.id = 'lcp-hero-wrap'
-    wrap.setAttribute('aria-hidden', 'true')
     document.body.appendChild(wrap)
   }
   if (!wrap.querySelector('img')) {
@@ -109,6 +110,9 @@ export function syncStaticHeroCopy(city) {
   if (!root) return
   const h1 = root.querySelector('h1, .hero-title')
   const sub = root.querySelector('.hero-sub')
+  const heroAlt = city?.name
+    ? `Banquetes y Catering para Eventos en ${city.name}`
+    : HOME_HERO_ALT
   if (h1) {
     h1.innerHTML = city?.name
       ? `Banquetes y Catering para Eventos<br>en ${city.name}`
@@ -118,6 +122,11 @@ export function syncStaticHeroCopy(city) {
     sub.textContent = city?.name
       ? `Banquetes, catering gourmet y mobiliario elegante para eventos en ${city.name}. Cotiza sin compromiso.`
       : 'Banquetes premium, catering gourmet y mobiliario elegante para bodas, quinceañeras, eventos corporativos y celebraciones en todo México'
+  }
+  const heroImg = document.getElementById('lcp-hero')
+  if (heroImg) {
+    heroImg.setAttribute('alt', heroAlt)
+    heroImg.setAttribute('title', heroAlt)
   }
 }
 

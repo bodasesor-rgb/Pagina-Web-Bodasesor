@@ -7,6 +7,19 @@ const gallerySlides = [
   [116,117,118],[119,120,121],[122,123,124],[125,126,127],[128,129,130],
 ].map(group => group.map(n => img(`/images/instagram/ig${n}.jpg`)))
 
+const galleryAlts = [
+  ["Banquete para boda Bodasesor", "Decoración floral para eventos", "XV años con catering gourmet"],
+  ["Catering servido en sitio", "Mobiliario premium para bodas", "Montaje de mesas para eventos"],
+  ["Banquete formal México", "Recepción con open bar", "Celebración con wedding planner"],
+  ["Mesas y sillas para eventos", "Coffee break empresarial", "Salón decorado para boda"],
+  ["Catering gourmet Bodasesor", "Servicio de meseros en evento", "Boda con banquete completo"],
+  ["Centros de mesa florales", "Mesa de banquete elegante", "Evento privado con catering"],
+  ["Banquete a domicilio", "Evento íntimo con menú", "Mesa de dulces para XV años"],
+  ["Decoración de boda México", "Quinceañera con banquete", "Buffet y estaciones de comida"],
+  ["Catering corporativo", "Producción integral de eventos", "Banquete formal Bodasesor"],
+  ["Celebración social con catering", "Gala corporativa México", "Evento familiar con mobiliario"],
+]
+
 function Carousel() {
   const [slide, setSlide] = useState(0)
   const prev = () => setSlide(s => (s - 1 + gallerySlides.length) % gallerySlides.length)
@@ -23,7 +36,8 @@ function Carousel() {
             className="relative h-80 overflow-hidden rounded-2xl group cursor-pointer border-4 border-white hover:border-[#162040] transition-all duration-300">
             <img
               src={src}
-              alt={`Evento real Bodasesor ${slide * 3 + i + 1}`}
+              alt={galleryAlts[slide]?.[i] || `Banquetes y eventos Bodasesor ${slide * 3 + i + 1}`}
+              title={galleryAlts[slide]?.[i] || `Banquetes y eventos Bodasesor`}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               onError={e => { e.target.src = img('/images/instagram/ig101.jpg') }}
             />

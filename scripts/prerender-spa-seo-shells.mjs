@@ -193,6 +193,7 @@ function applySeo(html, entry) {
   ensureName('twitter:title', entry.title)
   ensureName('twitter:description', description)
   ensureName('twitter:image', ogImage)
+  ensureName('twitter:image:alt', entry.h1 || entry.title || DEFAULT_OG_IMAGE_ALT)
 
   // Crawler-visible JSON-LD (Service/Article + BreadcrumbList) — no fake prices
   const isBlog = entry.path.startsWith('/blog/')

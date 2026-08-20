@@ -88,6 +88,7 @@ export function applySocialMeta({
   upsertMeta('name', 'twitter:title', safeTitle)
   upsertMeta('name', 'twitter:description', safeDesc)
   upsertMeta('name', 'twitter:image', ogImage)
+  upsertMeta('name', 'twitter:image:alt', safeTitle || DEFAULT_OG_IMAGE_ALT)
 }
 
 /**

@@ -75,7 +75,8 @@ function RotatingReviewCard() {
       <div className="flex items-start gap-3">
         <img
           src={r.photo}
-          alt=""
+          alt={r.name}
+          title={r.name}
           width={40}
           height={40}
           className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 border-[#f5efe8]"

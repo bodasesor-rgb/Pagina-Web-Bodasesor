@@ -129,7 +129,7 @@ export default function CarpasPage() {
               return (
                 <div key={carpa.slug} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1 group">
                   <div className="bg-[#162040] h-48 overflow-hidden relative">
-                    <OptimizedImage src={carpa.img} alt="" width={400} height={192} priority={carpa.slug === CARPAS[0].slug} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" />
+                    <OptimizedImage src={carpa.img} alt={carpa.name} title={carpa.name} width={400} height={192} priority={carpa.slug === CARPAS[0].slug} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#162040]/60 to-transparent" />
                   </div>
                   <div className="p-6">

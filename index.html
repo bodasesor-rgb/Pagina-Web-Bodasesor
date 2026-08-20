@@ -57,6 +57,7 @@
     <meta name="twitter:title" content="Banquetes, Catering y Mobiliario | Bodasesor" />
     <meta name="twitter:description" content="Banquetes, catering gourmet y renta de mobiliario para bodas, XV años y eventos en México. Cotiza por WhatsApp sin compromiso hoy." />
     <meta name="twitter:image" content="https://bodasesor.com/images/hero-bg-new.webp" />
+    <meta name="twitter:image:alt" content="Banquetes y eventos Bodasesor en México" />
     <script type="application/ld+json" id="bodasesor-jsonld">
     {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://bodasesor.com/#organization","name":"Bodasesor Eventos","alternateName":"bodasesor.com","url":"https://bodasesor.com/","logo":"https://bodasesor.com/favicon.svg","description":"Productora de eventos integrales: banquetes, catering, mobiliario y coordinación completa para bodas, quinceañeras y eventos corporativos en México.","telephone":"+52-55-4008-0373","sameAs":["https://www.facebook.com/bodasesor","https://www.instagram.com/bodasesor"]},{"@type":"WebSite","@id":"https://bodasesor.com/#website","url":"https://bodasesor.com/","name":"Bodasesor Eventos","publisher":{"@id":"https://bodasesor.com/#organization"},"inLanguage":"es-MX"},{"@type":"LocalBusiness","@id":"https://bodasesor.com/#localbusiness","name":"Bodasesor Eventos","url":"https://bodasesor.com/","telephone":"+52-55-4008-0373","priceRange":"$$","areaServed":{"@type":"Country","name":"México"},"description":"Productora de eventos con banquetes, catering, mobiliario y producción integral para celebraciones en México."}]}
     </script>
@@ -155,10 +156,10 @@
         // Write home cover only on home/city — avoids inner pages fetching hero bytes.
         if (!window.__BS_HOME_LCP) return;
         document.write(
-          '<picture id="lcp-hero-wrap" aria-hidden="true">' +
+          '<picture id="lcp-hero-wrap">' +
             '<source media="(max-width: 768px)" srcset="/images/hero-bg-new-mobile.webp" type="image/webp" />' +
             '<source srcset="/images/hero-bg-new.webp" type="image/webp" />' +
-            '<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="" width="1408" height="768" fetchpriority="high" decoding="async" />' +
+            '<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="Banquetes, Catering y Servicios para Eventos en México" title="Banquetes, Catering y Servicios para Eventos en México" width="1408" height="768" fetchpriority="high" decoding="async" />' +
           '</picture>' +
           '<div id="static-hero-copy">' +
             '<h1>Banquetes, Catering y Mobiliario para Eventos en México</h1>' +

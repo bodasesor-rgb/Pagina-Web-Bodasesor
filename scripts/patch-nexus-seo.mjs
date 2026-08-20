@@ -349,34 +349,47 @@ function patchIdentityMetas(html, filePath) {
 
 /**
  * Optimize img alt/title from page URL + service keywords.
- * Prefer slug-aligned naming in alt text (filenames on Nexus already match URL).
+ * Hero image (seo-hero-image) ALWAYS uses the page keyword (1 image = 1 keyword).
+ * Logo/sello keep brand alts. Other weak/empty alts get upgraded.
  */
 function patchImageAlts(html, { path, title, h1 }) {
   let changed = false
   let imgIndex = 0
   const stem = imageStemFromPath(path)
   const core = h1 || title || labelFromSlug(stem)
+  const heroAlt = `${core} | Bodasesor Eventos`.slice(0, 125)
   const out = html.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
     imgIndex++
     let next = attrs
-    const alt = buildImageAlt({
-      path,
-      title,
-      h1,
-      index: imgIndex - 1,
-      role: imgIndex === 1 ? 'imagen principal' : 'detalle',
-    })
+    const src = ((next.match(/\bsrc\s*=\s*["']([^"']*)["']/i) || [])[1] || '').toLowerCase()
+    const isLogoOrSello =
+      src.includes('/images/logo') ||
+      src.includes('/images/sello') ||
+      src.includes('logo-white') ||
+      src.includes('sello-garantia')
+    if (isLogoOrSello) return match
+
+    const isHero = /seo-hero-image/i.test(next) || imgIndex === 1
+    const alt = isHero
+      ? heroAlt
+      : buildImageAlt({
+          path,
+          title,
+          h1,
+          index: imgIndex - 1,
+          role: 'detalle',
+        })
 
     if (/\balt\s*=\s*["'][^"']*["']/i.test(next)) {
       const prev = (next.match(/\balt\s*=\s*["']([^"']*)["']/i) || [])[1] || ''
-      // Upgrade weak/generic alts
-      if (
+      const shouldUpgrade =
+        isHero ||
         !prev.trim() ||
         /^evento real/i.test(prev) ||
         /^image$/i.test(prev) ||
         prev.length < 8 ||
         /^(foto|imagen)\s*\d*$/i.test(prev)
-      ) {
+      if (shouldUpgrade && prev !== alt) {
         next = next.replace(/\balt\s*=\s*["'][^"']*["']/i, `alt="${escapeAttr(alt)}"`)
         changed = true
       }
@@ -385,13 +398,23 @@ function patchImageAlts(html, { path, title, h1 }) {
       changed = true
     }
 
-    if (!/\btitle\s*=/i.test(next)) {
+    if (isHero) {
+      if (/\btitle\s*=\s*["'][^"']*["']/i.test(next)) {
+        const prevTitle = (next.match(/\btitle\s*=\s*["']([^"']*)["']/i) || [])[1] || ''
+        if (prevTitle !== core) {
+          next = next.replace(/\btitle\s*=\s*["'][^"']*["']/i, `title="${escapeAttr(core)}"`)
+          changed = true
+        }
+      } else {
+        next = ` title="${escapeAttr(core)}"${next}`
+        changed = true
+      }
+    } else if (!/\btitle\s*=/i.test(next)) {
       next = ` title="${escapeAttr(core)}"${next}`
       changed = true
     }
 
-    // Annotate data-seo-stem for debugging / future renames (harmless)
-    if (!/\bdata-seo-stem\s*=/i.test(next) && imgIndex === 1) {
+    if (!/\bdata-seo-stem\s*=/i.test(next) && isHero) {
       next = ` data-seo-stem="${escapeAttr(stem)}"${next}`
       changed = true
     }
@@ -400,8 +423,32 @@ function patchImageAlts(html, { path, title, h1 }) {
     return `<img${next}>`
   })
 
-  // Soften weak generic H2s that hurt service intent
+  // Align social image alts to the same page keyword
   let html2 = out
+  const ogAltRe = /(<meta\s+property="og:image:alt"\s+content=")[^"]*(")/i
+  if (ogAltRe.test(html2)) {
+    const nextOg = html2.replace(ogAltRe, `$1${escapeAttr(heroAlt)}$2`)
+    if (nextOg !== html2) {
+      html2 = nextOg
+      changed = true
+    }
+  }
+  const twAltRe = /(<meta\s+name="twitter:image:alt"\s+content=")[^"]*(")/i
+  if (twAltRe.test(html2)) {
+    const nextTw = html2.replace(twAltRe, `$1${escapeAttr(heroAlt)}$2`)
+    if (nextTw !== html2) {
+      html2 = nextTw
+      changed = true
+    }
+  } else if (/<meta\s+name="twitter:image"/i.test(html2)) {
+    html2 = html2.replace(
+      /(<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>)/i,
+      `$1\n  <meta name="twitter:image:alt" content="${escapeAttr(heroAlt)}">`,
+    )
+    changed = true
+  }
+
+  // Soften weak generic H2s that hurt service intent
   const beforeH2 = html2
   html2 = html2.replace(
     /(<h2[^>]*>)\s*Galería(?:\s+de\s+eventos)?\s*(<\/h2>)/gi,

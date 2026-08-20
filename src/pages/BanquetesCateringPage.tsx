@@ -300,7 +300,7 @@ function ServiceCard({ name, href, tag, img, city, priority = false }: { name: s
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={href} aria-label={`Ver ${name}`}>
         <div className="h-44 overflow-hidden bg-[#f5efe8]">
-          <OptimizedImage src={img} alt="" width={400} height={176} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          <OptimizedImage src={img} alt={name} title={name} width={400} height={176} priority={priority} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
         </div>
       </Link>

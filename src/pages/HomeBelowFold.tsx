@@ -69,6 +69,7 @@ function GalleryCarousel() {
               <img
                 src={src}
                 alt={galleryAlts[slide][i]}
+                title={galleryAlts[slide][i]}
                 className="w-full h-full object-contain"
                 loading="lazy"
                 decoding="async"
