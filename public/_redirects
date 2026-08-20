@@ -4315,6 +4315,16 @@
 # Catalog detail pages — SPA (open-in-new-tab / hard load must not hit /* → 404)
 /catalogos/:slug  /index.html  200
 
+# Legal / policy SPA pages (must not fall through to /* → 404.html)
+/aviso-de-privacidad  /index.html  200
+/aviso-de-privacidad/  /index.html  200
+/terminos-y-condiciones  /index.html  200
+/terminos-y-condiciones/  /index.html  200
+/politicas-de-devoluciones  /index.html  200
+/politicas-de-devoluciones/  /index.html  200
+/quienes-somos  /index.html  200
+/quienes-somos/  /index.html  200
+
 # Fallback for unknown legacy pages
 /pages/:slug  /  301!
 
