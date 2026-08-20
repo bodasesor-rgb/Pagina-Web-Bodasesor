@@ -15,6 +15,7 @@ import { prefetchProducts } from './data/products-loader'
 
 const Footer = lazy(() => import('./components/Footer'))
 const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
+const DiscountBalloon = lazy(() => import('./components/DiscountBalloon'))
 
 import Home from './pages/Home.tsx'
 
@@ -224,7 +225,12 @@ function DeferredBelowFold() {
     <Suspense fallback={null}>
       {/* Footer (Lo Más Buscado / Catálogos) must load with the page — not after idle */}
       <Footer />
-      {showFab ? <WhatsAppFab /> : null}
+      {showFab ? (
+        <>
+          <DiscountBalloon />
+          <WhatsAppFab />
+        </>
+      ) : null}
     </Suspense>
   )
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import CityLink from "./CityLink";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
@@ -24,8 +24,7 @@ import { banquetesNavGroups } from "../data/banquetes-menus";
 
 import { hideStaticLcpShell, isHomePath } from "../utils/static-lcp-shell";
 import { prefetchProducts } from "../data/products-loader";
-
-const SearchBar = lazy(() => import("./SearchBar"));
+import SearchBar from "./SearchBar";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -966,7 +965,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [mobileSubExpanded, setMobileSubExpanded] = useState(null);
-  const [showSearch, setShowSearch] = useState(false);
   const [location, setLocation] = useLocation();
   const { city } = useCity();
 
@@ -980,24 +978,6 @@ export default function Navbar() {
       document.getElementById('static-nav-shell')?.remove()
     }
   }, [location])
-
-  useEffect(() => {
-    // Search UI only after explicit intent — avoid pulling search chunk during LCP.
-    const reveal = () => setShowSearch(true)
-    const onIntent = () => {
-      reveal()
-      window.removeEventListener('pointerdown', onIntent)
-      window.removeEventListener('keydown', onIntent)
-    }
-    window.addEventListener('pointerdown', onIntent, { once: true, passive: true })
-    window.addEventListener('keydown', onIntent, { once: true })
-    const t = setTimeout(reveal, 6000)
-    return () => {
-      window.removeEventListener('pointerdown', onIntent)
-      window.removeEventListener('keydown', onIntent)
-      clearTimeout(t)
-    }
-  }, [])
 
   useEffect(() => {
     // Warm products after LCP budget — avoid competing with hero/logo bytes.
@@ -1053,15 +1033,9 @@ export default function Navbar() {
 
             {/* Desktop: search + actions */}
             <div className="hidden md:flex items-center space-x-6">
-              {showSearch ? (
-              <Suspense fallback={<div className="w-64 h-10 rounded-lg bg-white/20 animate-pulse" />}>
               <SearchBar
-                inputClassName="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white/90 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
+                inputClassName="w-64 px-4 py-2 pr-10 rounded-lg border-2 border-white bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#f5efe8] transition-colors font-serif"
               />
-              </Suspense>
-              ) : (
-                <div className="w-64 h-10 rounded-lg bg-white/20" aria-hidden="true" />
-              )}
 
               <a href="tel:5215540080373" className="flex items-center space-x-2 hover:text-[#f5efe8] transition-colors" data-testid="link-llamar">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1188,15 +1162,11 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-200 max-h-[80vh] overflow-y-auto shadow-xl">
           <div className="px-4 pt-3 pb-2">
             {/* Search */}
-            {showSearch ? (
-            <Suspense fallback={<div className="w-full h-10 rounded-lg bg-gray-100 animate-pulse mb-3" />}>
             <SearchBar
               onNavigate={() => setMobileOpen(false)}
               wrapperClassName="mb-3"
-              inputClassName="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif"
+              inputClassName="w-full px-4 py-2.5 pr-10 rounded-lg text-sm bg-gray-100 border-0 outline-none font-serif text-gray-800 placeholder-gray-500"
             />
-            </Suspense>
-            ) : null}
 
             <MobileSection title="Ciudad" id="ciudad" expanded={mobileExpanded} setExpanded={setMobileExpanded}>
               {[ciudades[0], ciudades[1], ...sortItems(ciudades.slice(2))].map(c => (
