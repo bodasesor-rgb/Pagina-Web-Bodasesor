@@ -1,5 +1,3 @@
 # Nexus bump-file. Seo-Nexus-2.0 pushes a timestamp here on Pagina-Web-Bodasesor
-# (this repo only). That push runs GitHub Action "Deploy to Netlify":
-# build:nexus jalas Hostinger → merge SPA+SEO+blogs → sitemap → publish bodasesor.com
-# Do not gitignore. Do not edit from Seo-Nexus except this file.
-2026-08-18T00:00:00Z
+# (this repo only). That push runs GitHub Action Deploy to Netlify.
+2026-08-20T00:48:55.6723400Z
