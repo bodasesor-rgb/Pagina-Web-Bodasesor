@@ -5,6 +5,7 @@ dist
 .env
 .env.local
 .DS_Store
+.tmp-google-sheet/
 live-bundle.js
 private/credentials/
 nexus-ia-power*.json

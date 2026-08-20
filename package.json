@@ -7,6 +7,7 @@
     "dev": "vite",
     "generate:redirects": "node scripts/generate-redirects.mjs",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "generate:google-shopping": "node scripts/generate-google-shopping-feed.mjs",
     "generate:webp": "node scripts/generate-webp.mjs",
     "prerender:seo": "node scripts/prerender-spa-seo-shells.mjs",
     "audit:seo": "node scripts/audit-seo-production.mjs",
