@@ -3,9 +3,9 @@ import { useEffect, useState, useCallback } from 'react'
 const CODE = 'CierreRapido'
 const DISCOUNT_PCT = 10
 const MIN_GUESTS = 35
-const DURATION_MS = 60 * 60 * 1000
-const STORAGE_END = 'bs_cierre_rapido_ends'
-const STORAGE_DISMISS = 'bs_cierre_rapido_dismissed'
+const DURATION_MS = 5 * 60 * 60 * 1000
+const STORAGE_END = 'bs_cierre_rapido_ends_v2'
+const STORAGE_DISMISS = 'bs_cierre_rapido_dismissed_v2'
 const WHATSAPP_NUMBER = '5215540080373'
 
 function pad(n) {
