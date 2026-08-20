@@ -29,9 +29,9 @@ function loadDotEnv() {
 
 loadDotEnv()
 
-/** Headers that pass bot-shield (Chrome + Sec-Fetch navigation hints). */
+/** Headers that pass bot-shield (Chrome + Sec-Fetch + UA Bodasesor en ALLOW). */
 export const BROWSER_UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 BodasesorSync/1.0 (+https://bodasesor.com)'
 
 export function hasNexusAuth() {
   return Boolean(

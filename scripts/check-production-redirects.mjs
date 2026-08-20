@@ -14,7 +14,7 @@ const SAMPLES = [
 ]
 
 const BROWSER_UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 BodasesorSync/1.0 (+https://bodasesor.com)'
 
 /** Mimic a real Chrome navigation so bot-shield Sec-Fetch checks pass. */
 const BROWSER_NAV_HEADERS = {
