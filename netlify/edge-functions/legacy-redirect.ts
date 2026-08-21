@@ -25,8 +25,12 @@ function lookup(map: Record<string, string>, pathname: string, search: string): 
  * must NOT fetch redirects-map.json — the ~400KB JSON parse can crash the edge
  * isolate and block all legacy URLs with "This edge function has crashed".
  *
- * Default: delegate to Netlify _redirects via context.next().
- * Sync fallbacks below only apply when _redirects is unavailable.
+ * Always prefer context.next() so Netlify applies specific _redirects rows first.
+ * Only keep tiny sync CRITICAL fallbacks for known bad deploys.
+ *
+ * Do NOT splat /blogs/noticias/:slug → /blog/:slug here: that bypasses curated
+ * _redirects (slug renames) and creates multi-hop chains
+ * (e.g. banquete-de-boda-2024 → banquetes-para-bodas-de-lujo → trailing slash).
  */
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
@@ -41,21 +45,9 @@ export default async function handler(request: Request, context: Context) {
     }
   }
 
-  // Pattern fallback if a specific _redirects row is missing
-  if (pathname.startsWith('/blogs/noticias/')) {
-    let slug = pathname.split('/').pop() || ''
-    slug = slug.replace(/®️/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
-    if (slug.includes('estrategias-y-consejos')) {
-      slug = 'estrategias-y-consejos-para-recaudar-fondos-para-causas-importantes-bodasesor-2024'
-    }
-    if (slug.includes('tipos-de-banquetes')) {
-      slug = 'tipos-de-banquetes'
-    }
-    if (slug) {
-      return Response.redirect(resolveDestination(`/blog/${slug}`, url.origin), 301)
-    }
-  }
-  if (pathname === '/blogs' || pathname === '/blogs/noticias' || pathname.startsWith('/blogs/')) {
+  // Hub-only fallbacks when no specific _redirects row exists.
+  // Post URLs (/blogs/noticias/…) must hit _redirects via context.next().
+  if (pathname === '/blogs' || pathname === '/blogs/noticias') {
     return Response.redirect(resolveDestination('/blog', url.origin), 301)
   }
 
