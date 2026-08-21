@@ -64,10 +64,21 @@ const COLLECTION_PREFIX_MAP = [
 
 /** Specific rules first — avoid dumping everything into /banquetes-catering */
 const KEYWORD_RULES = [
-  [/cabina|photobooth|photo.?booth|\bfotos?\b/i, '/fotografia/cabina-fotos'],
-  // Catering for film sets is food service — not photography.
+  // Traffic-recovery: high-intent phrases before broad wedding/food catch-alls
+  [/presupuesto.*(boda|bodas)|boda.?economica|pre-?boda/i, '/bodas'],
+  [/ramos?.?de.?novia|bouquet.?novia/i, '/floreria/ramos-de-novia'],
+  [/centros?.?de.?mesa|arreglos?.?florales?|arcos?.?florales?|flores?.?frescas|florer/i, '/floreria'],
+  [/cabina|photobooth|photo.?booth/i, '/fotografia/cabina-fotos'],
+  [/quesadillas?/i, '/puestos-quesadillas'],
+  [/sangria|refrescos?|margarita|brindis|vino|cerveza|tequila|barra.?libre/i, '/barras-de-bebidas'],
+  [/copa|vajilla|cristal|loza|cubier|bomker/i, '/vajillas'],
+  [/reuniones?.?familiares?|recepcion|evento.?privado/i, '/banquetes-catering'],
+  [/recordatorios?|souvenirs?|recuerdos?.?para.?bodas/i, '/wedding-planner'],
+  [/publicidad|activaciones?|corporativ|empresarial|oficinas?/i, '/corporativos'],
+  [/galeria|salon|venue|espacio|hacienda|jardin/i, '/espacios-eventos'],
+  [/mobiliario.?corporativ|mobiliario/i, '/mesas-sillas'],
   [/catering.?para.?filmaci|catering.?filmaci|catering.?para.?filmacion/i, '/banquetes-catering'],
-  [/fotograf|videograf|video.?mapping|video.?bodas|video-de-bodas|streaming/i, '/fotografia'],
+  [/fotograf|videograf|video.?mapping|video.?bodas|video-de-bodas|streaming|\bfotos?\b/i, '/fotografia'],
   [/ensaladas?/i, '/banquetes-catering'],
   [/bancos?(-de-bar|-vintage|-para)?/i, '/mesas-sillas'],
   [/coordinacion|event.?host|logistica.?de.?eventos|bautizos?/i, '/wedding-planner'],
@@ -94,29 +105,30 @@ const KEYWORD_RULES = [
   [/vocalista|cantante|mariachi|trio-musical/i, '/musica'],
   [/transporte|trajes?|vestidos?/i, '/wedding-planner'],
   [/testimonios?|opiniones?/i, '/quienes-somos'],
-  [/taller|curso/i, '/'],
-  [/cotiza|contacto|contact/i, '/'],
+  [/taller|curso/i, '/banquetes-catering'],
+  [/cotiza|contacto|contact/i, '/banquetes-catering'],
   [/flor|flower|decor|ambientacion|terrarios?/i, '/floreria'],
   [/carpa|toldo|tent|stands?/i, '/carpas'],
   [/tarima|pista|escenario|estrado/i, '/pistas-tarimas'],
-  [/silla|mesa|mobiliario|salas?|periquera|lounge|taburetes?|sofas?|muebles?/i, '/mesas-sillas'],
+  [/silla|mesa|lounge|taburetes?|sofas?|muebles?|periquera|salas?/i, '/mesas-sillas'],
   [/vajilla|cristal|loza|cubier/i, '/vajillas'],
   [/colgante|entelado/i, '/colgantes'],
-  [/wedding|novia|novio|bodas?/i, '/wedding-planner'],
+  [/wedding.?planner|organizador/i, '/wedding-planner'],
+  [/novia|novio|\bbodas?\b/i, '/bodas'],
   [/dj|musica|banda|grupo-musical/i, '/musica'],
-  [/show|animador|payaso|mago/i, '/shows'],
+  [/show|animador|payaso|mago|animacion/i, '/shows'],
   [/audio|ilumin|luz|sonido|pantalla/i, '/audio-iluminacion-video'],
-  [/espacio|salon|jardin|hacienda|hotel|restaurante|santa-fe-roof|lucerna/i, '/espacios-eventos'],
   [/meseros?|servir/i, '/banquetes-catering'],
-  [/bebida|barra|coctel|moctel|vino|cerveza|alcohol|tequila/i, '/barras-de-bebidas'],
-  [/empresa|corporativ|business|oficinas?|activaciones?|team.?building/i, '/alimentos-empresas'],
+  [/bebida|barra|coctel|moctel|alcohol/i, '/barras-de-bebidas'],
+  [/empresa|business|team.?building/i, '/alimentos-empresas'],
   [/xv|quince/i, '/xv-anos'],
   [/graduaci/i, '/graduaciones'],
   [/baby.?shower/i, '/baby-shower'],
   [/comunion/i, '/primera-comunion'],
   [/cumple/i, '/cumpleanos'],
   [/inflable/i, '/inflables'],
-  [/catering|banquete|comida|chef|canape|bocadillo|coffee-break|desayuno|gourmet/i, '/banquetes-catering'],
+  [/catering|banquete|comida|chef|canape|bocadillo|coffee-break|desayuno|gourmet|servicio/i, '/banquetes-catering'],
+  [/variedad|vouge|deloitte|tercera.?ronda/i, '/banquetes-catering'],
 ]
 
 const PRODUCT_ALIASES = {
@@ -189,14 +201,48 @@ const PRODUCT_ALIASES = {
   margarita: '/barras-de-bebidas',
   'brindis-de-boda-cdmx': '/barras-de-bebidas/ciudad-de-mexico',
   'brindis-de-boda': '/barras-de-bebidas',
-  'presupuesto-para-bodas-economicas-cdmx': '/wedding-planner/ciudad-de-mexico',
+  'presupuesto-para-bodas-economicas-cdmx': '/bodas/ciudad-de-mexico',
+  'presupuesto-para-bodas-economicas': '/bodas',
+  'presupuesto-para-una-boda-cdmx': '/bodas/ciudad-de-mexico',
+  'presupuesto-para-una-boda': '/bodas',
   'silla-gamma': '/sillas/gamma',
   'banquete-de-boda-2024': '/blog/banquetes-para-bodas-de-lujo',
   'arreglos-florales-2024': '/blog/arreglos-florales-en-un-evento-2024',
   'mi-bautizo-2024': '/blog/lugares-para-un-bautizo-2024',
-  'pre-boda-2024': '/blog/banquetes-para-bodas-de-lujo',
+  'pre-boda-2024': '/bodas/ciudad-de-mexico',
   'eventos-en-espacios-pequenos-2024': '/espacios-eventos',
   'fomentar-la-inclusion-y-la-diversidad-2024': '/blog',
+  'catering-cdmx-1': '/banquetes-catering/ciudad-de-mexico',
+  'catering-coyoacan': '/banquetes-catering/ciudad-de-mexico',
+  'ncatering-catering-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'ncatering-catering': '/banquetes-catering',
+  'mobiliario-corporativo': '/mesas-sillas/ciudad-de-mexico',
+  'flores-frescas-para-bodas-de-lujo-cdmx': '/floreria/ciudad-de-mexico',
+  'flores-frescas-para-bodas-de-lujo': '/floreria',
+  'ramos-de-novia-personalizados-cdmx': '/floreria/ramos-de-novia/ciudad-de-mexico',
+  'ramos-de-novia-personalizados': '/floreria/ramos-de-novia',
+  'arreglos-florales-para-ceremonias-cdmx': '/floreria/ciudad-de-mexico',
+  'banquetes-para-fiestas-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'precio-de-catering-para-fiestas-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'catering-empresarial-cdmx': '/alimentos-empresas/ciudad-de-mexico',
+  'banquetes-empresariales-cdmx': '/alimentos-empresas/ciudad-de-mexico',
+  'precio-de-fotografia-para-bodas-cdmx': '/fotografia/ciudad-de-mexico',
+  'eventos-corporativos-gustavo-a-madero': '/corporativos/ciudad-de-mexico',
+  'banquetes-para-eventos-privados-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'copa-negra-para-eventos': '/vajillas',
+  'quesadillas-cdmx': '/puestos-quesadillas/ciudad-de-mexico',
+  quesadillas: '/puestos-quesadillas',
+  'sangria-cdmx': '/barras-de-bebidas/ciudad-de-mexico',
+  sangria: '/barras-de-bebidas',
+  'refrescos-cdmx': '/barras-de-bebidas/ciudad-de-mexico',
+  refrescos: '/barras-de-bebidas',
+  'reuniones-familiares-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'recepcion-cdmx': '/espacios-eventos/ciudad-de-mexico',
+  'galeria': '/espacios-eventos',
+  'publicidad-para-eventos-cdmx': '/corporativos/ciudad-de-mexico',
+  'recordatorios-de-eventos-cdmx': '/wedding-planner/ciudad-de-mexico',
+  'servicio-cdmx': '/banquetes-catering/ciudad-de-mexico',
+  'variedad-cdmx': '/banquetes-catering/ciudad-de-mexico',
 }
 
 const SEO_TRAILING = [
@@ -439,9 +485,8 @@ function resolveProductSlug(slug) {
   if (productSlugs.has(decoded)) return `/${decoded}`
   if (catalogPaths.has(decoded)) return catalogPaths.get(decoded)
 
-  // Unknown: send to search with readable query (better than wrong hub)
-  const q = base.replace(/-/g, ' ').trim()
-  return q ? `/buscar?q=${encodeURIComponent(q)}` : '/banquetes-catering'
+  // Never dump to /buscar — soft SEO sink. Prefer hub (+ city when known).
+  return withCity('/banquetes-catering', city)
 }
 
 export function resolveLegacyPath(fromPath) {
@@ -515,8 +560,7 @@ export function resolveLegacyPath(fromPath) {
     const keyword = matchKeyword(base) || matchKeyword(decoded)
     if (keyword) return withCity(keyword, city)
 
-    const q = base.replace(/-/g, ' ').trim()
-    return q ? `/buscar?q=${encodeURIComponent(q)}` : '/banquetes-catering'
+    return withCity('/banquetes-catering', city)
   }
 
   return null

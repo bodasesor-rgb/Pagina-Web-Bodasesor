@@ -60,7 +60,18 @@ const COLLECTION_PREFIX_MAP = [
 ]
 
 const KEYWORD_RULES = [
+  [/presupuesto.*(boda|bodas)|boda.?economica|pre-?boda/i, '/bodas'],
+  [/ramos?.?de.?novia|bouquet.?novia/i, '/floreria/ramos-de-novia'],
+  [/centros?.?de.?mesa|arreglos?.?florales?|arcos?.?florales?|flores?.?frescas|florer/i, '/floreria'],
   [/cabina|photobooth|photo.?booth|\bfotos?\b/i, '/fotografia/cabina-fotos'],
+  [/quesadillas?/i, '/puestos-quesadillas'],
+  [/sangria|refrescos?|margarita|brindis/i, '/barras-de-bebidas'],
+  [/copa|vajilla|cristal|loza|cubier/i, '/vajillas'],
+  [/reuniones?.?familiares?|recepcion/i, '/banquetes-catering'],
+  [/publicidad|activaciones?|corporativ|empresarial/i, '/corporativos'],
+  [/galeria|salon|venue|espacio|hacienda|jardin/i, '/espacios-eventos'],
+  [/mobiliario/i, '/mesas-sillas'],
+  [/catering.?para.?filmaci|catering.?filmaci|catering.?para.?filmacion/i, '/banquetes-catering'],
   [/fotograf|videograf|video.?mapping|video.?bodas|filmaci|streaming/i, '/fotografia'],
   [/batucada/i, '/shows/batucada-brasilena'],
   [/robot.?de.?led|led.?robot|robots?-led/i, '/shows'],
@@ -84,29 +95,29 @@ const KEYWORD_RULES = [
   [/vocalista|cantante|mariachi|trio-musical/i, '/musica'],
   [/transporte|trajes?|vestidos?/i, '/wedding-planner'],
   [/testimonios?|opiniones?/i, '/quienes-somos'],
-  [/taller|curso/i, '/'],
-  [/cotiza|contacto|contact/i, '/'],
+  [/taller|curso/i, '/banquetes-catering'],
+  [/cotiza|contacto|contact/i, '/banquetes-catering'],
   [/flor|flower|decor|ambientacion|terrarios?/i, '/floreria'],
   [/carpa|toldo|tent|stands?/i, '/carpas'],
   [/tarima|pista|escenario|estrado/i, '/pistas-tarimas'],
-  [/silla|mesa|mobiliario|salas?|periquera|lounge|taburetes?|sofas?|muebles?/i, '/mesas-sillas'],
+  [/silla|mesa|salas?|periquera|lounge|taburetes?|sofas?|muebles?/i, '/mesas-sillas'],
   [/vajilla|cristal|loza|cubier/i, '/vajillas'],
   [/colgante|entelado/i, '/colgantes'],
-  [/wedding|novia|novio|bodas?/i, '/wedding-planner'],
+  [/wedding.?planner|organizador/i, '/wedding-planner'],
+  [/novia|novio|\bbodas?\b/i, '/bodas'],
   [/dj|musica|banda|grupo-musical/i, '/musica'],
-  [/show|animador|payaso|mago/i, '/shows'],
+  [/show|animador|payaso|mago|animacion/i, '/shows'],
   [/audio|ilumin|luz|sonido|pantalla/i, '/audio-iluminacion-video'],
-  [/espacio|salon|jardin|hacienda|hotel|restaurante|santa-fe-roof|lucerna/i, '/espacios-eventos'],
   [/meseros?|servir/i, '/banquetes-catering'],
   [/bebida|barra|coctel|moctel|vino|cerveza|alcohol|tequila/i, '/barras-de-bebidas'],
-  [/empresa|corporativ|business|oficinas?|activaciones?|team.?building/i, '/alimentos-empresas'],
+  [/empresa|business|oficinas?|team.?building/i, '/alimentos-empresas'],
   [/xv|quince/i, '/xv-anos'],
   [/graduaci/i, '/graduaciones'],
   [/baby.?shower/i, '/baby-shower'],
   [/comunion/i, '/primera-comunion'],
   [/cumple/i, '/cumpleanos'],
   [/inflable/i, '/inflables'],
-  [/catering|banquete|comida|chef|canape|bocadillo|coffee-break|desayuno|gourmet/i, '/banquetes-catering'],
+  [/catering|banquete|comida|chef|canape|bocadillo|coffee-break|desayuno|gourmet|servicio/i, '/banquetes-catering'],
 ]
 
 const PRODUCT_ALIASES = {
@@ -149,6 +160,17 @@ const PRODUCT_ALIASES = {
   'silla-tiffany': '/sillas/tiffany',
   'periquera-parota': '/periqueras/periquera-parota-nogal',
   'tipos-de-banquetes': '/blog/tipos-de-banquetes',
+  'pre-boda-2024': '/bodas/ciudad-de-mexico',
+  'presupuesto-para-una-boda': '/bodas',
+  'presupuesto-para-una-boda-cdmx': '/bodas/ciudad-de-mexico',
+  'presupuesto-para-bodas-economicas-cdmx': '/bodas/ciudad-de-mexico',
+  'catering-cdmx-1': '/banquetes-catering/ciudad-de-mexico',
+  'mobiliario-corporativo': '/mesas-sillas/ciudad-de-mexico',
+  'ramos-de-novia-personalizados': '/floreria/ramos-de-novia',
+  'flores-frescas-para-bodas-de-lujo': '/floreria',
+  'quesadillas': '/puestos-quesadillas',
+  'sangria': '/barras-de-bebidas',
+  'galeria': '/espacios-eventos',
 }
 
 const SEO_TRAILING = [
@@ -343,8 +365,7 @@ function resolveProductSlug(slug) {
   if (productSlugs.has(decoded)) return `/${decoded}`
   if (catalogPaths.has(decoded)) return catalogPaths.get(decoded)
 
-  const q = base.replace(/-/g, ' ').trim()
-  return q ? `/buscar?q=${encodeURIComponent(q)}` : '/banquetes-catering'
+  return withCity('/banquetes-catering', city)
 }
 
 export function resolveLegacyPathClient(fromPath) {
@@ -363,6 +384,7 @@ export function resolveLegacyPathClient(fromPath) {
     if (slug.includes('tipos-de-banquetes')) {
       slug = 'tipos-de-banquetes'
     }
+    if (PRODUCT_ALIASES[slug]) return PRODUCT_ALIASES[slug]
     return `/blog/${slug}`
   }
 
@@ -395,8 +417,7 @@ export function resolveLegacyPathClient(fromPath) {
     const keyword = matchKeyword(base) || matchKeyword(decoded)
     if (keyword) return withCity(keyword, city)
 
-    const q = base.replace(/-/g, ' ').trim()
-    return q ? `/buscar?q=${encodeURIComponent(q)}` : '/banquetes-catering'
+    return withCity('/banquetes-catering', city)
   }
 
   if (path.startsWith('/pages/')) return '/'
