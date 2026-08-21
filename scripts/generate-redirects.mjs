@@ -53,33 +53,45 @@ const GSC_FORCE_REDIRECTS = [
   ['/collections/event-host-cdmx', '/wedding-planner/ciudad-de-mexico'],
   ['/collections/bautizos-cdmx', '/banquetes-catering/ciudad-de-mexico'],
   ['/collections/mole-cdmx', '/banquetes-catering/ciudad-de-mexico'],
-  ['/collections/arreglos-para-aniversarios-cdmx', '/floreria/ciudad-de-mexico'],
-  ['/silla-tiffany/ciudad-de-mexico', '/sillas/tiffany/ciudad-de-mexico'],
-  ['/silla-antonellaciudad-de-mexico', '/sillas/antonella/ciudad-de-mexico'],
-  ['/sillascuernavaca', '/mesas-sillas/cuernavaca'],
+  ['/collections/arreglos-para-aniversarios-cdmx', '/floreria/ciudad-de-mexico/'],
+  ['/silla-tiffany/ciudad-de-mexico', '/sillas/tiffany/ciudad-de-mexico/'],
+  ['/silla-antonellaciudad-de-mexico', '/sillas/antonella/ciudad-de-mexico/'],
+  ['/sillascuernavaca', '/mesas-sillas/cuernavaca/'],
   // Remainder: dead blogs, search dumps, home dump, weak topic hubs
-  ['/blogs/noticias/banquete-de-boda-2024', '/blog/banquetes-para-bodas-de-lujo'],
-  ['/blog/banquete-de-boda-2024', '/blog/banquetes-para-bodas-de-lujo'],
-  ['/blogs/noticias/arreglos-florales-2024', '/blog/arreglos-florales-en-un-evento-2024'],
-  ['/blog/arreglos-florales-2024', '/blog/arreglos-florales-en-un-evento-2024'],
-  ['/blogs/noticias/mi-bautizo-2024', '/blog/lugares-para-un-bautizo-2024'],
-  ['/blog/mi-bautizo-2024', '/blog/lugares-para-un-bautizo-2024'],
-  ['/blogs/noticias/pre-boda-2024', '/blog/banquetes-para-bodas-de-lujo'],
-  ['/blog/pre-boda-2024', '/blog/banquetes-para-bodas-de-lujo'],
-  ['/blogs/noticias/eventos-en-espacios-pequenos-2024', '/espacios-eventos'],
-  ['/blog/eventos-en-espacios-pequenos-2024', '/espacios-eventos'],
-  ['/blogs/noticias/fomentar-la-inclusion-y-la-diversidad-2024', '/blog'],
-  ['/blog/fomentar-la-inclusion-y-la-diversidad-2024', '/blog'],
-  ['/products/cotiza-tu-evento', '/banquetes-catering'],
-  ['/products/cisidat', '/banquetes-catering'],
-  ['/products/cabo-cakery', '/reposteria'],
-  ['/collections/margarita-cdmx', '/barras-de-bebidas/ciudad-de-mexico'],
-  ['/collections/brindis-de-boda-cdmx', '/barras-de-bebidas/ciudad-de-mexico'],
-  ['/collections/presupuesto-para-bodas-economicas-cdmx', '/wedding-planner/ciudad-de-mexico'],
-  ['/collections/proveedores-de-souvenirs-para-bodas-cdmx', '/wedding-planner/ciudad-de-mexico'],
-  ['/collections/proveedores-de-recuerdos-para-bodas-cdmx', '/wedding-planner/ciudad-de-mexico'],
-  ['/sillas/silla-gamma', '/sillas/gamma'],
-  ['/sillas/silla-gamma/acapulco', '/sillas/gamma/acapulco'],
+  ['/blogs/noticias/banquete-de-boda-2024', '/blog/banquetes-para-bodas-de-lujo/'],
+  ['/blog/banquete-de-boda-2024', '/blog/banquetes-para-bodas-de-lujo/'],
+  ['/blogs/noticias/arreglos-florales-2024', '/blog/arreglos-florales-en-un-evento-2024/'],
+  ['/blog/arreglos-florales-2024', '/blog/arreglos-florales-en-un-evento-2024/'],
+  ['/blogs/noticias/mi-bautizo-2024', '/blog/lugares-para-un-bautizo-2024/'],
+  ['/blog/mi-bautizo-2024', '/blog/lugares-para-un-bautizo-2024/'],
+  // pre-boda is wedding intent — NOT a banquetes blog post
+  ['/blogs/noticias/pre-boda-2024', '/bodas/ciudad-de-mexico/'],
+  ['/blog/pre-boda-2024', '/bodas/ciudad-de-mexico/'],
+  ['/blogs/noticias/eventos-en-espacios-pequenos-2024', '/espacios-eventos/'],
+  ['/blog/eventos-en-espacios-pequenos-2024', '/espacios-eventos/'],
+  ['/blogs/noticias/fomentar-la-inclusion-y-la-diversidad-2024', '/blog/'],
+  ['/blog/fomentar-la-inclusion-y-la-diversidad-2024', '/blog/'],
+  ['/products/cotiza-tu-evento', '/banquetes-catering/'],
+  ['/products/cisidat', '/banquetes-catering/'],
+  ['/products/cabo-cakery', '/reposteria/'],
+  ['/collections/margarita-cdmx', '/barras-de-bebidas/ciudad-de-mexico/'],
+  ['/collections/brindis-de-boda-cdmx', '/barras-de-bebidas/ciudad-de-mexico/'],
+  ['/collections/presupuesto-para-bodas-economicas-cdmx', '/bodas/ciudad-de-mexico/'],
+  ['/collections/presupuesto-para-una-boda-cdmx', '/bodas/ciudad-de-mexico/'],
+  ['/collections/proveedores-de-souvenirs-para-bodas-cdmx', '/wedding-planner/ciudad-de-mexico/'],
+  ['/collections/proveedores-de-recuerdos-para-bodas-cdmx', '/wedding-planner/ciudad-de-mexico/'],
+  // High-impression Shopify leftovers → closest real hub (no new pages)
+  ['/collections/flores-frescas-para-bodas-de-lujo-cdmx', '/floreria/ciudad-de-mexico/'],
+  ['/collections/mobiliario-corporativo', '/mesas-sillas/ciudad-de-mexico/'],
+  ['/collections/arreglos-florales-para-ceremonias-cdmx', '/floreria/ciudad-de-mexico/'],
+  ['/products/catering-cdmx-1', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/banquetes-para-fiestas-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/precio-de-catering-para-fiestas-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/catering-empresarial-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/banquetes-empresariales-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/products/ncatering-catering-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/sillas/silla-gamma', '/sillas/gamma/'],
+  ['/sillas/silla-gamma/acapulco', '/sillas/gamma/acapulco/'],
   ['/b', '/'],
 ]
 
@@ -143,19 +155,42 @@ function normalizePath(url) {
 
 function addEntry(map, fromPath, to, stats) {
   if (!fromPath || !to) return
-  map[fromPath] = to
+  const dest = withTrailingSlash(to)
+  map[fromPath] = dest
   stats.count++
 
   if (!fromPath.endsWith('/') && !fromPath.includes('?')) {
-    map[`${fromPath}/`] = to
+    map[`${fromPath}/`] = dest
     stats.count++
   }
 }
 
+/** Prefer trailing slash so Netlify does not add a second hop (/path → /path/). */
+function withTrailingSlash(dest) {
+  if (!dest || dest === '/') return dest || '/'
+  if (dest.startsWith('http://') || dest.startsWith('https://')) {
+    try {
+      const u = new URL(dest)
+      if (u.search || u.hash) return dest
+      if (u.pathname === '/') return dest
+      if (/\.[a-z0-9]{2,5}$/i.test(u.pathname)) return dest
+      if (!u.pathname.endsWith('/')) u.pathname += '/'
+      return u.toString()
+    } catch {
+      return dest
+    }
+  }
+  if (dest.includes('?') || dest.includes('#')) return dest
+  if (/\.[a-z0-9]{2,5}$/i.test(dest)) return dest
+  return dest.endsWith('/') ? dest : `${dest}/`
+}
+
 function toRedirectDest(to) {
-  if (to.startsWith(SITE_BASE)) return to.slice(SITE_BASE.length) || '/'
-  if (to.startsWith('http://') || to.startsWith('https://')) return to
-  return to.startsWith('/') ? to : `/${to}`
+  let dest = to
+  if (dest.startsWith(SITE_BASE)) dest = dest.slice(SITE_BASE.length) || '/'
+  else if (dest.startsWith('http://') || dest.startsWith('https://')) return withTrailingSlash(dest)
+  else if (!dest.startsWith('/')) dest = `/${dest}`
+  return withTrailingSlash(dest)
 }
 
 function buildRedirectsFile(map) {
@@ -166,8 +201,9 @@ function buildRedirectsFile(map) {
     '# GSC relevance overrides (must stay above map rules)',
   ]
   for (const [from, to] of GSC_FORCE_REDIRECTS) {
-    lines.push(`${from}  ${to}  301`)
-    if (!from.endsWith('/') && !from.includes('?')) lines.push(`${from}/  ${to}  301`)
+    const dest = toRedirectDest(to)
+    lines.push(`${from}  ${dest}  301`)
+    if (!from.endsWith('/') && !from.includes('?')) lines.push(`${from}/  ${dest}  301`)
   }
   lines.push('')
 
@@ -203,14 +239,14 @@ function buildRedirectsFile(map) {
   lines.push(`/pages/:slug  /  301!`)
   lines.push('')
   lines.push(`# Fallback for unknown legacy collections`)
-  lines.push(`/collections/:slug  /banquetes-catering  301!`)
+  lines.push(`/collections/:slug  /banquetes-catering/  301!`)
   lines.push('')
   lines.push(`# Fallback for unknown legacy products`)
-  lines.push(`/products/:slug  /banquetes-catering  301!`)
+  lines.push(`/products/:slug  /banquetes-catering/  301!`)
   lines.push('')
   lines.push(`# Blog posts not listed in the CSV map`)
   lines.push(`/blogs/noticias/*  /blog/:splat  301`)
-  lines.push(`/blogs/*  /blog  301`)
+  lines.push(`/blogs/*  /blog/  301`)
   lines.push('')
   lines.push(`# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.`)
   lines.push(`/*  /404.html  404`)
