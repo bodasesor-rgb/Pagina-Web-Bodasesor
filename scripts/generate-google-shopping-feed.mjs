@@ -1,6 +1,9 @@
 /**
  * Build Google Merchant / Shopping feed from the public Bodasesor pricing sheet.
  *
+ * Column layout matches the official Merchant Center template
+ * (id, title, description, availability, … cost_of_goods_sold).
+ *
  * Tabs used: "Servicio de alimentos" + "Mesas y Sillas"
  * Output: public/feeds/google-shopping.csv
  *
@@ -216,6 +219,90 @@ function get(row, ...names) {
   return ''
 }
 
+/** Official Merchant Center template column order (exact headers). */
+const COLUMNS = [
+  'id',
+  'title',
+  'description',
+  'availability',
+  'availability_date',
+  'expiration_date',
+  'link',
+  'mobile_link',
+  'image_link',
+  'price',
+  'sale_price',
+  'sale_price_effective_date',
+  'identifier_exists',
+  'gtin',
+  'mpn',
+  'brand',
+  'product_highlight',
+  'product_detail',
+  'additional_image_link',
+  'condition',
+  'adult',
+  'color',
+  'size',
+  'size_type',
+  'size_system',
+  'gender',
+  'material',
+  'pattern',
+  'age_group',
+  'multipack',
+  'is bundle',
+  'unit_pricing_measure',
+  'unit_pricing_base_measure',
+  'energy_efficiency_class',
+  'min_energy_efficiency_class',
+  'max_energy_efficiency',
+  'item_group_id',
+  'video_link',
+  'virtual_model_link',
+  'cost_of_goods_sold',
+]
+
+function emptyMerchantRow() {
+  const row = {}
+  for (const col of COLUMNS) row[col] = ''
+  return row
+}
+
+function merchantProduct({
+  id,
+  title,
+  description,
+  link,
+  image_link,
+  price,
+  item_group_id,
+  product_highlight = '',
+  product_detail = '',
+  color = '',
+  _kind = '',
+}) {
+  const row = emptyMerchantRow()
+  row.id = id
+  row.title = String(title).slice(0, 150)
+  row.description = String(description).slice(0, 5000)
+  row.availability = 'in_stock'
+  row.link = link
+  row.mobile_link = link
+  row.image_link = image_link
+  row.price = price
+  row.identifier_exists = 'no'
+  row.brand = 'Bodasesor'
+  row.product_highlight = product_highlight
+  row.product_detail = product_detail
+  row.condition = 'new'
+  row.adult = 'no'
+  row.color = color
+  row.item_group_id = item_group_id
+  row._kind = _kind
+  return row
+}
+
 function buildAlimentosProducts(rows) {
   const products = []
   for (const row of rows) {
@@ -238,23 +325,26 @@ function buildAlimentosProducts(rows) {
       `Precio unitario de referencia: $${price} MXN. Cotiza disponibilidad y montaje en bodasesor.com.`,
     ].filter(Boolean)
 
-    products.push({
-      id,
-      title: title.slice(0, 150),
-      description: descParts.join(' ').slice(0, 5000),
-      link,
-      image_link: resolveImage(link, 'alimentos'),
-      availability: 'in_stock',
-      price: `${price} MXN`,
-      condition: 'new',
-      brand: 'Bodasesor',
-      identifier_exists: 'false',
-      google_product_category: 'Business & Industrial > Food Service',
-      product_type: `Alimentos > ${servicio}`,
-      custom_label_0: 'alimentos',
-      custom_label_1: nivel || '',
-      item_group_id: `ali-${slugify(servicio)}`,
-    })
+    const highlights = [
+      `"Servicio de alimentos Bodasesor"`,
+      nivel ? `"Nivel ${nivel}"` : '',
+      `"Disponible en CDMX"`,
+    ].filter(Boolean)
+
+    products.push(
+      merchantProduct({
+        id,
+        title,
+        description: descParts.join(' '),
+        link,
+        image_link: resolveImage(link, 'alimentos'),
+        price: `${price} MXN`,
+        item_group_id: `ali-${slugify(servicio)}`,
+        product_highlight: highlights.join(', '),
+        product_detail: `Categoría:alimentos:${servicio}`,
+        _kind: 'alimentos',
+      }),
+    )
   }
   return products
 }
@@ -281,6 +371,9 @@ function buildMesasProducts(rows) {
             ? 'conjuntos'
             : 'mesas'
 
+    const colorMatch = descripcion.match(/Color:\s*([^|]+)/i)
+    const color = colorMatch ? colorMatch[1].trim() : ''
+
     const descParts = [
       `Renta de ${articulo} para eventos con Bodasesor.`,
       descripcion ? `${descripcion}.` : '',
@@ -288,44 +381,24 @@ function buildMesasProducts(rows) {
       `Precio de renta de referencia: $${price} MXN. Disponible en CDMX y zona metropolitana.`,
     ].filter(Boolean)
 
-    products.push({
-      id,
-      title,
-      description: descParts.join(' ').slice(0, 5000),
-      link,
-      image_link: resolveImage(link, fallbackKey),
-      availability: 'in_stock',
-      price: `${price} MXN`,
-      condition: 'new',
-      brand: 'Bodasesor',
-      identifier_exists: 'false',
-      google_product_category: 'Home & Garden > Decor > Event & Party Supplies',
-      product_type: `Mobiliario > ${categoria}`,
-      custom_label_0: 'mobiliario',
-      custom_label_1: categoria,
-      item_group_id: `mob-${slugify(pathFromLink(link) || articulo)}`,
-    })
+    products.push(
+      merchantProduct({
+        id,
+        title,
+        description: descParts.join(' '),
+        link,
+        image_link: resolveImage(link, fallbackKey),
+        price: `${price} MXN`,
+        item_group_id: `mob-${slugify(pathFromLink(link) || articulo)}`,
+        product_highlight: `"Renta de mobiliario", "Categoría ${categoria}", "CDMX y zona metropolitana"`,
+        product_detail: `Categoría:mobiliario:${categoria}`,
+        color,
+        _kind: 'mobiliario',
+      }),
+    )
   }
   return products
 }
-
-const COLUMNS = [
-  'id',
-  'title',
-  'description',
-  'link',
-  'image_link',
-  'availability',
-  'price',
-  'condition',
-  'brand',
-  'identifier_exists',
-  'google_product_category',
-  'product_type',
-  'custom_label_0',
-  'custom_label_1',
-  'item_group_id',
-]
 
 function toCsv(products) {
   const lines = [COLUMNS.join(',')]
@@ -364,9 +437,10 @@ async function main() {
   fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true })
   fs.writeFileSync(OUT_PATH, toCsv(unique), 'utf8')
 
-  const mobiliario = unique.filter((p) => p.custom_label_0 === 'mobiliario').length
-  const alimentos = unique.filter((p) => p.custom_label_0 === 'alimentos').length
+  const mobiliario = unique.filter((p) => p._kind === 'mobiliario').length
+  const alimentos = unique.filter((p) => p._kind === 'alimentos').length
   console.log(`Wrote ${unique.length} products → ${path.relative(ROOT, OUT_PATH)}`)
+  console.log(`  columns: ${COLUMNS.length} (Merchant template)`)
   console.log(`  mobiliario: ${mobiliario}`)
   console.log(`  alimentos:  ${alimentos}`)
 }
