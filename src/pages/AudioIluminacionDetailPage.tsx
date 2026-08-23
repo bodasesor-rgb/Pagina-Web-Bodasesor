@@ -2,6 +2,8 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 import { AUDIO_ILUMINACION } from "../data/audio-iluminacion-products";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
@@ -62,9 +64,12 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Image */}
           <div className="rounded-2xl overflow-hidden bg-[#f5efe8] h-80 lg:h-auto">
-            <img
+            <OptimizedImage
               src={product.img}
               alt={product.name}
+              width={960}
+              height={720}
+              priority
               className="w-full h-full object-cover"
               onError={e => { (e.target as HTMLImageElement).src = '/images/instagram/ig1.jpg'; }}
             />
@@ -122,9 +127,8 @@ export default function AudioIluminacionDetailPage({ slug }: { slug?: string }) 
                 <Link key={p.slug} href={`/audio-iluminacion-video/${p.slug}`}
                   className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-lg transition-all">
                   <div className="h-40 overflow-hidden bg-[#f5efe8]">
-                    <img src={p.img} alt={p.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={e => { (e.target as HTMLImageElement).src = '/images/instagram/ig1.jpg'; }} />
+                    <CatalogImage src={p.img} alt={p.name} width={400} height={160} fallback="/images/instagram/ig1.jpg"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-4">
                     <h3 className="font-serif font-bold text-[#162040] text-sm mb-1">{p.name}</h3>

@@ -4,6 +4,7 @@ import { ENTELADOS } from "../data/entelados-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un entelado para techo para mi evento. ¿Me pueden dar información?");
@@ -57,10 +58,10 @@ export default function EnteladosPage() {
           <div className="hidden lg:block">
             <div className="grid grid-cols-2 gap-3 h-80">
               <div className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src="/images/entelados/sencillo-1.jpg" alt="Entelado Sencillo" className="w-full h-full object-cover opacity-90" />
+                <CatalogImage src="/images/entelados/sencillo-1.jpg" alt="Entelado Sencillo" width={400} height={320} className="w-full h-full object-cover opacity-90" />
               </div>
               <div className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src="/images/entelados/completo-1.jpg" alt="Entelado Completo" className="w-full h-full object-cover opacity-90" />
+                <CatalogImage src="/images/entelados/completo-1.jpg" alt="Entelado Completo" width={400} height={320} className="w-full h-full object-cover opacity-90" />
               </div>
             </div>
           </div>
@@ -139,7 +140,7 @@ export default function EnteladosPage() {
                 className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
                 <Link href={`/entelados/${estilo.slug}`}>
                   <div className="h-52 overflow-hidden bg-gray-100">
-                    <img src={estilo.img} alt={estilo.name}
+                    <CatalogImage src={estilo.img} alt={estilo.name} width={400} height={208}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                 </Link>
@@ -171,7 +172,7 @@ export default function EnteladosPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl p-8 flex flex-col sm:flex-row items-center gap-6 border border-[#162040]/8">
             <div className="w-32 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
-              <img src="/images/entelados/page-08.jpg" alt="Esferas decorativas" className="w-full h-full object-cover" />
+              <CatalogImage src="/images/entelados/page-08.jpg" alt="Esferas decorativas" width={128} height={128} className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-1">Complemento</p>

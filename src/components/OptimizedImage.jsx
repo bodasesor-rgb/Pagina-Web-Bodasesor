@@ -1,4 +1,6 @@
-/** Responsive image with WebP preference, explicit dimensions and lazy loading. */
+import { preferWebp, preferWebpSm } from '../utils/image-url'
+
+/** Responsive image with WebP preference, mobile -sm variant, explicit dimensions and lazy loading. */
 export default function OptimizedImage({
   src,
   alt = '',
@@ -6,15 +8,17 @@ export default function OptimizedImage({
   height = 300,
   priority = false,
   className = '',
-  sizes,
+  sizes = '(max-width: 768px) 100vw, 960px',
   onError,
   style,
   ...rest
 }) {
   if (!src) return null
 
-  const webpSrc = src.replace(/\.(png|jpe?g)$/i, '.webp')
+  const webpSrc = preferWebp(src)
+  const webpSmSrc = preferWebpSm(src)
   const useWebp = webpSrc !== src
+  const useSm = useWebp && webpSmSrc !== webpSrc
 
   const aspectStyle =
     width && height
@@ -32,7 +36,6 @@ export default function OptimizedImage({
     style: aspectStyle,
     ...rest,
     onError: (e) => {
-      // If webp sibling 404s, fall back to original raster once.
       const el = e.currentTarget
       if (useWebp && el?.dataset?.fallback !== '1' && el.src?.includes('.webp')) {
         el.dataset.fallback = '1'
@@ -49,6 +52,14 @@ export default function OptimizedImage({
 
   return (
     <picture>
+      {useSm ? (
+        <source
+          media="(max-width: 768px)"
+          srcSet={webpSmSrc}
+          type="image/webp"
+          sizes="100vw"
+        />
+      ) : null}
       <source srcSet={webpSrc} type="image/webp" sizes={sizes} />
       <img src={src} {...imgProps} />
     </picture>

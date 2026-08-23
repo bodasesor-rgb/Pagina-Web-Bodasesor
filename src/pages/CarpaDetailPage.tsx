@@ -3,6 +3,7 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { CARPAS, CarpaSlug } from "../data/carpas-products";
+import OptimizedImage from "../components/OptimizedImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -95,7 +96,7 @@ export default function CarpaDetailPage({ slug }: Props) {
 
           {/* Right: visual */}
           <div className="hidden lg:block lg:col-span-3 h-full min-h-[460px] overflow-hidden">
-            <img src={carpa.img} alt={carpa.name} className="w-full h-full object-cover opacity-90" />
+            <OptimizedImage src={carpa.img} alt={carpa.name} width={960} height={720} priority className="w-full h-full object-cover opacity-90" />
           </div>
         </div>
       </section>

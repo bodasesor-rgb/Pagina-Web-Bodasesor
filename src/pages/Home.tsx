@@ -7,6 +7,7 @@ import {
   disableHomeStaticHero,
   syncStaticHeroCopy,
 } from "../utils/static-lcp-shell";
+import CatalogImage from "../components/CatalogImage";
 
 const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
 
@@ -71,17 +72,16 @@ function RotatingReviewCard() {
   if (!ready) return null;
   const r = heroReviews[idx];
   return (
-    <div key={key} className="review-card-enter fixed bottom-24 left-4 sm:left-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 w-72 z-40 border border-white/50">
+    <div key={key} className="review-card-enter fixed bottom-24 left-4 sm:left-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 w-72 min-h-[7.5rem] z-40 border border-white/50">
       <div className="flex items-start gap-3">
-        <img
+        <CatalogImage
           src={r.photo}
           alt={r.name}
           title={r.name}
           width={40}
           height={40}
           className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 border-[#f5efe8]"
-          loading="lazy"
-          decoding="async"
+          fallback=""
           onError={e => {
             const el = e.target as HTMLImageElement;
             el.style.display = 'none';

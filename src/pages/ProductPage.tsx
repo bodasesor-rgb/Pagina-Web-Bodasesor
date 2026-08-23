@@ -3,6 +3,8 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { ChevronRight, Phone, MessageCircle, Star, ArrowLeft } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 import { findProductByHandle, getRelatedProducts, navigation } from "../data/navigation";
 import NotFound from "./not-found";
 
@@ -92,20 +94,27 @@ export default function ProductPage() {
           {/* Images */}
           <div>
             <div className="rounded-2xl overflow-hidden shadow-lg aspect-[4/3] bg-muted mb-3">
-              <img
+              <OptimizedImage
                 src={mainImage}
                 alt={product.name}
+                width={960}
+                height={720}
+                priority
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="w-full h-full object-cover"
                 data-testid="product-main-image"
                 onError={(e) => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
               />
             </div>
             <div className="grid grid-cols-4 gap-2">
-              {extraImages.map((img, i) => (
+              {extraImages.map((imgSrc, i) => (
                 <div key={i} className="rounded-xl overflow-hidden aspect-square bg-muted shadow-sm">
-                  <img
-                    src={img}
+                  <OptimizedImage
+                    src={imgSrc}
                     alt={`${product.name} ${i + 1}`}
+                    width={240}
+                    height={240}
+                    sizes="25vw"
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
@@ -198,14 +207,12 @@ export default function ProductPage() {
             </p>
 
             <div className="mt-6 p-4 bg-muted rounded-xl flex items-center gap-3">
-              <img
+              <CatalogImage
                 src="/images/sello-garantia.webp"
                 alt="Garantía"
                 className="h-12 w-auto"
                 width={64}
                 height={48}
-                loading="lazy"
-                decoding="async"
               />
               <div>
                 <p className="text-sm font-semibold text-foreground">Garantía Bodasesor</p>
@@ -233,9 +240,12 @@ export default function ProductPage() {
                   data-testid={`card-related-${p.handle}`}
                 >
                   <div className="aspect-square overflow-hidden bg-muted">
-                    <img
+                    <OptimizedImage
                       src={getImageForProduct(p.sectionSlug, p.handle)}
                       alt={p.name}
+                      width={240}
+                      height={240}
+                      sizes="(min-width: 1024px) 16vw, 50vw"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
                       onError={(e) => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
                     />

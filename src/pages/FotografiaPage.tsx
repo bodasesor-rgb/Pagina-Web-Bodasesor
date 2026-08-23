@@ -5,6 +5,7 @@ import type { FotografiaProduct } from "../data/fotografia-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar fotografía y video para mi evento. ¿Me pueden dar información?");
@@ -46,7 +47,7 @@ export default function FotografiaPage() {
           <div className="hidden lg:grid grid-cols-3 gap-3 h-56">
             {FOTOGRAFIA.slice(0, 3).map(p => (
               <div key={p.slug} className="rounded-xl overflow-hidden">
-                <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
+                <CatalogImage src={p.img} alt={p.name} width={400} height={224} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -116,7 +117,7 @@ function FotoCard({ product }: { product: FotografiaProduct }) {
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={`/fotografia/${product.slug}`}>
         <div className="h-44 overflow-hidden bg-[#f5efe8]">
-          {product.img ? <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-5xl">⬡</div>}
+          {product.img ? <CatalogImage src={product.img} alt={product.name} width={400} height={176} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-5xl">⬡</div>}
         </div>
       </Link>
       <div className="p-4">

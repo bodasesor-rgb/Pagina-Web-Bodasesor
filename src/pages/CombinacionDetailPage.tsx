@@ -3,6 +3,8 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { usePageSeo } from "../hooks/usePageSeo";
 import { COMBINACIONES } from "../data/combinaciones-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -107,7 +109,7 @@ export default function CombinacionDetailPage({ slug }: Props) {
           {/* Right: image */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
             <div className="w-full max-w-xl h-[300px] lg:h-[380px] rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img src={combo.img} alt={combo.label}
+              <OptimizedImage src={combo.img} alt={combo.label} width={960} height={720} priority
                 className="w-full h-full object-contain drop-shadow-2xl" />
             </div>
           </div>
@@ -151,7 +153,7 @@ export default function CombinacionDetailPage({ slug }: Props) {
               <Link key={c.slug} href={`/combinaciones/${c.slug}`}
                 className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={c.img} alt={c.label}
+                  <CatalogImage src={c.img} alt={c.label} width={400} height={300}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-2.5">

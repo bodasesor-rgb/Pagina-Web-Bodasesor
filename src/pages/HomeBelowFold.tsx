@@ -3,6 +3,8 @@ import { useLocation } from "wouter";
 import CityLink from "../components/CityLink";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Lightbox } from "../components/Lightbox";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 import IconFromEmoji from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
@@ -66,13 +68,15 @@ function GalleryCarousel() {
               className="relative h-80 overflow-hidden rounded-2xl group cursor-pointer border-4 border-white hover:border-[#162040] transition-all duration-300 bg-[#f5efe8]"
               onClick={() => setLightboxIdx(slide * 3 + i)}
             >
-              <img
+              <OptimizedImage
                 src={src}
                 alt={galleryAlts[slide][i]}
                 title={galleryAlts[slide][i]}
+                width={640}
+                height={320}
+                priority={slide === 0 && i === 0}
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="w-full h-full object-contain"
-                loading="lazy"
-                decoding="async"
                 onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
               />
               <div className="absolute inset-0 bg-[#162040]/0 group-hover:bg-[#162040]/40 transition-all duration-300 flex items-center justify-center">
@@ -249,15 +253,13 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
           </div>
           {/* Sello — absolutely positioned to the right, partially outside */}
           <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-8 lg:-right-16">
-            <img
+            <CatalogImage
               src="/images/sello-garantia-transparent.webp"
               alt="Garantía de Felicidad Bodasesor"
               className="h-32 w-auto drop-shadow-lg"
               width={160}
               height={120}
-              loading="lazy"
-              decoding="async"
-              onError={e => { (e.target as HTMLImageElement).src = '/images/sello-garantia.webp'; }}
+              fallback="/images/sello-garantia.webp"
             />
           </div>
         </div>

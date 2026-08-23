@@ -3,6 +3,7 @@ const Link = CityLink;
 import { blogPosts } from "../data/blog-data";
 import { useEffect } from "react";
 import { usePageSeo } from "../hooks/usePageSeo";
+import CatalogImage from "../components/CatalogImage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -61,11 +62,13 @@ export default function BlogPage() {
           <Link href={`/blog/${featured.slug}`}>
             <div className="group grid grid-cols-1 md:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#162040]">
               <div className="relative h-72 md:h-auto overflow-hidden">
-                <img
+                <CatalogImage
                   src={featured.image}
                   alt={featured.title}
+                  width={600}
+                  height={400}
+                  fallback="/images/galeria-1.png"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
                 />
                 <div className="absolute inset-0 bg-[#162040]/20 group-hover:bg-[#162040]/10 transition-colors duration-300" />
               </div>
@@ -103,11 +106,13 @@ export default function BlogPage() {
               <Link key={post.slug} href={`/blog/${post.slug}`}>
                 <article className="group bg-white border-2 border-[#f5efe8] rounded-2xl overflow-hidden hover:shadow-2xl hover:border-[#162040] transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full flex flex-col">
                   <div className="relative h-52 overflow-hidden">
-                    <img
+                    <CatalogImage
                       src={post.image}
                       alt={post.title}
+                      width={400}
+                      height={208}
+                      fallback="/images/galeria-1.png"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
                     />
                     <div className="absolute top-4 left-4">
                       <span className={`text-xs font-bold px-3 py-1 rounded-full font-serif ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-700'}`}>

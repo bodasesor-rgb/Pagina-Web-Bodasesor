@@ -6,6 +6,7 @@ import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar decoración floral o decoración para mi evento. ¿Me pueden dar información?");
@@ -64,7 +65,7 @@ export default function FloreriaPage() {
             {FLORERIA.slice(0, 3).map((p, i) => (
               <div key={p.slug} className={`rounded-2xl overflow-hidden bg-[#0d1630] flex items-center justify-center ${i === 1 ? 'row-span-1' : ''}`}>
                 {p.img ? (
-                  <img src={p.img} alt={p.name} className="w-full h-full object-cover opacity-80" />
+                  <CatalogImage src={p.img} alt={p.name} width={400} height={224} className="w-full h-full object-cover opacity-80" />
                 ) : (
                   <span className="text-white/20 font-serif text-4xl">{categoryConfig[p.category].icon}</span>
                 )}
@@ -202,7 +203,7 @@ function ProductCard({ product }: { product: FloreriaProduct }) {
       <Link href={`/floreria/${product.slug}`}>
         <div className="h-48 overflow-hidden bg-[#f5efe8] flex items-center justify-center">
           {product.img ? (
-            <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <CatalogImage src={product.img} alt={product.name} width={400} height={192} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           ) : (
             <span className="text-[#162040]/20 font-serif text-5xl">
               {product.category === 'floral' ? '✿' : product.category === 'globos' ? '○' : '✦'}

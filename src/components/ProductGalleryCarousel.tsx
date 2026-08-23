@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Lightbox } from "./Lightbox";
+import OptimizedImage from "./OptimizedImage";
 import { getProductGalleryImages, padGalleryToTarget } from "../data/product-galleries";
 
 type ProductGalleryCarouselProps = {
@@ -61,12 +62,14 @@ export default function ProductGalleryCarousel({
           tabIndex={0}
           aria-label={`Ver ${label} en grande`}
         >
-          <img
+          <OptimizedImage
             src={images[idx]}
             alt={`${label} para bodas y eventos — foto ${idx + 1} | Bodasesor`}
+            width={1200}
+            height={480}
+            priority={idx === 0}
+            sizes="(min-width: 768px) 960px, 100vw"
             className="w-full h-full object-contain bg-[#f5efe8] transition-opacity duration-300"
-            loading={idx === 0 ? "eager" : "lazy"}
-            decoding="async"
             onError={(e) => {
               (e.target as HTMLImageElement).src = "/images/galeria/g1.jpg";
             }}

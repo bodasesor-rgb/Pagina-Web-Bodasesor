@@ -6,6 +6,7 @@ import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import { Drum, Sparkles, Zap, CircleDot, CheckCircle2 } from "lucide-react";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un show de entretenimiento para mi evento. ¿Me pueden dar información?");
@@ -64,7 +65,7 @@ export default function ShowsPage() {
           <div className="hidden lg:grid grid-cols-3 gap-3 h-64">
             {SHOWS.slice(0, 3).map(p => (
               <div key={p.slug} className="rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src={p.img} alt={p.name} className="w-full h-full object-cover opacity-80" />
+                <CatalogImage src={p.img} alt={p.name} width={400} height={224} className="w-full h-full object-cover opacity-80" />
               </div>
             ))}
           </div>
@@ -214,7 +215,7 @@ function ShowCard({ product }: { product: ShowsProduct }) {
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={`/shows/${product.slug}`}>
         <div className="h-48 overflow-hidden bg-[#0d1630]">
-          <img src={product.img || `/images/shows/${product.slug}.png`} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
+          <CatalogImage src={product.img || `/images/shows/${product.slug}.png`} alt={product.name} width={400} height={192} fallback="/images/galeria-1.png" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
       </Link>
       <div className="p-5">

@@ -1,4 +1,5 @@
 import { stripCityFromPath } from './city-url'
+import { HERO_IMAGES } from '../data/product-galleries'
 
 /** Known LCP candidates for catalog and event pages (path without city suffix). */
 const LCP_BY_PATH = {
@@ -34,7 +35,18 @@ const PRELOAD_ID = 'lcp-route-preload'
 export function getLcpImageForPath(pathname) {
   const base = stripCityFromPath(pathname.replace(/\/+$/, '') || '/')
   if (base === '/') return null
-  return LCP_BY_PATH[base] ?? null
+  if (LCP_BY_PATH[base]) return LCP_BY_PATH[base]
+
+  const parts = base.split('/').filter(Boolean)
+  if (parts.length === 1 && HERO_IMAGES[parts[0]]) return HERO_IMAGES[parts[0]]
+
+  // Banquet menu detail: /banquetes/formal-3-tiempos, /banquete-kosher/...
+  if (parts.length === 2 && parts[0].startsWith('banquete')) {
+    const parentKey = parts[0] === 'banquetes' ? 'banquetes' : parts[0]
+    return HERO_IMAGES[parentKey] || '/images/banquete-hero.png'
+  }
+
+  return null
 }
 
 export function syncLcpPreload(pathname) {
@@ -49,10 +61,18 @@ export function syncLcpPreload(pathname) {
     link.id = PRELOAD_ID
     link.rel = 'preload'
     link.as = 'image'
+    link.fetchPriority = 'high'
     document.head.appendChild(link)
   }
   const webpHref = href.replace(/\.(png|jpe?g)$/i, '.webp')
-  const preloadHref = webpHref !== href ? webpHref : href
+  const mobile =
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  const preloadHref =
+    mobile && webpHref.endsWith('.webp')
+      ? webpHref.replace(/\.webp$/i, '-sm.webp')
+      : webpHref !== href
+        ? webpHref
+        : href
   if (link.getAttribute('href') !== preloadHref) {
     link.setAttribute('href', preloadHref)
     if (preloadHref.endsWith('.webp')) {

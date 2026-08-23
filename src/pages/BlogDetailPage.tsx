@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getBlogPostBySlug, blogPosts } from "../data/blog-data";
 import Breadcrumbs from "../components/Breadcrumbs";
 import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 import { usePageSeo } from "../hooks/usePageSeo";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -132,11 +133,13 @@ export default function BlogDetailPage({ slug }: Props) {
               <Link key={p.slug} href={`/blog/${p.slug}`}>
                 <article className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#162040]">
                   <div className="h-44 overflow-hidden relative">
-                    <img
+                    <CatalogImage
                       src={p.image}
                       alt={p.title}
+                      width={400}
+                      height={176}
+                      fallback="/images/galeria-1.png"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
                     />
                     <div className="absolute top-3 left-3">
                       <span className={`text-xs font-bold px-2 py-0.5 rounded-full font-serif ${CATEGORY_COLORS[p.category] ?? 'bg-gray-100 text-gray-700'}`}>

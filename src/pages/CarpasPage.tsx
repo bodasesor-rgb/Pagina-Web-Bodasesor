@@ -6,6 +6,7 @@ import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar una carpa para mi evento. ¿Me pueden dar información y disponibilidad?");
@@ -67,10 +68,10 @@ export default function CarpasPage() {
           </div>
           <div className="hidden lg:grid grid-cols-2 gap-3 h-80">
             <div className="rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img src={CARPAS[0].img} alt={CARPAS[0].name} className="w-full h-full object-cover opacity-90" />
+              <CatalogImage src={CARPAS[0].img} alt={CARPAS[0].name} width={400} height={320} className="w-full h-full object-cover opacity-90" />
             </div>
             <div className="rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img src={CARPAS[2].img} alt={CARPAS[2].name} className="w-full h-full object-cover opacity-90" />
+              <CatalogImage src={CARPAS[2].img} alt={CARPAS[2].name} width={400} height={320} className="w-full h-full object-cover opacity-90" />
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { usePageSeo } from "../hooks/usePageSeo";
 import { VAJILLAS } from "../data/vajillas-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -108,9 +110,12 @@ export default function VajillaDetailPage({ slug }: Props) {
           {/* Right: image */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
             <div className="w-full max-w-xl h-[300px] lg:h-[420px] rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img
+              <OptimizedImage
                 src={product.img}
                 alt={product.name}
+                width={960}
+                height={720}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>
@@ -192,7 +197,7 @@ export default function VajillaDetailPage({ slug }: Props) {
                 <Link key={v.slug} href={`/vajillas/${v.slug}`}
                   className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                   <div className="h-24 overflow-hidden bg-gray-100">
-                    <img src={v.img} alt={v.name}
+                    <CatalogImage src={v.img} alt={v.name} width={400} height={96}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-3">
@@ -215,7 +220,7 @@ export default function VajillaDetailPage({ slug }: Props) {
                 <Link key={v.slug} href={`/vajillas/${v.slug}`}
                   className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                   <div className="h-20 overflow-hidden bg-gray-100">
-                    <img src={v.img} alt={v.name}
+                    <CatalogImage src={v.img} alt={v.name} width={400} height={96}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-2.5">

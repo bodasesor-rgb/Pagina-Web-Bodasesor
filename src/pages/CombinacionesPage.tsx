@@ -4,6 +4,7 @@ import { COMBINACIONES } from "../data/combinaciones-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 
@@ -121,9 +122,11 @@ export default function CombinacionesPage() {
                   {/* Foto — link a página individual */}
                   <Link href={`/combinaciones/${c.slug}`}>
                     <div className="aspect-[4/3] overflow-hidden bg-[#f5efe8]">
-                      <img
+                      <CatalogImage
                         src={c.img}
                         alt={c.label}
+                        width={400}
+                        height={300}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>

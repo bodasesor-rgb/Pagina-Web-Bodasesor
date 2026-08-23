@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { img } from "../data/site"
+import OptimizedImage from "./OptimizedImage"
 
 const gallerySlides = [
   [101,102,103],[104,105,106],[107,108,109],[110,111,112],[113,114,115],
@@ -34,10 +35,14 @@ function Carousel() {
         {gallerySlides[slide].map((src, i) => (
           <div key={src}
             className="relative h-80 overflow-hidden rounded-2xl group cursor-pointer border-4 border-white hover:border-[#162040] transition-all duration-300">
-            <img
+            <OptimizedImage
               src={src}
               alt={galleryAlts[slide]?.[i] || `Banquetes y eventos Bodasesor ${slide * 3 + i + 1}`}
               title={galleryAlts[slide]?.[i] || `Banquetes y eventos Bodasesor`}
+              width={640}
+              height={320}
+              priority={slide === 0 && i === 0}
+              sizes="(min-width: 768px) 33vw, 100vw"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               onError={e => { e.target.src = img('/images/instagram/ig101.jpg') }}
             />

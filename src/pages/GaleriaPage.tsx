@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 import { usePageSeo } from "../hooks/usePageSeo";
 function Instagram({ className }) { return <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>; }
 
@@ -193,12 +194,13 @@ export default function GaleriaPage() {
           >
             <ChevronRight className="w-6 h-6" />
           </button>
-          <img
+          <CatalogImage
             src={ALL_PHOTOS[lightboxIdx].src}
             alt={ALL_PHOTOS[lightboxIdx].alt}
+            width={960}
+            height={720}
             className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
             onClick={e => e.stopPropagation()}
-            onError={e => { (e.target as HTMLImageElement).src = '/images/galeria/g1.jpg'; }}
           />
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white text-sm font-serif px-4 py-1.5 rounded-full">
             {lightboxIdx + 1} / {TOTAL_PHOTOS}

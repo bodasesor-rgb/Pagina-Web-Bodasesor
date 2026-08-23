@@ -4,6 +4,7 @@ import { WEDDING } from "../data/wedding-products";
 import type { WeddingProduct } from "../data/wedding-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa saber más sobre sus servicios de Wedding Planner. ¿Me pueden dar información?");
@@ -36,7 +37,7 @@ export default function WeddingPage() {
           <div className="hidden lg:grid grid-cols-3 gap-3 h-56">
             {WEDDING.slice(0, 3).map(p => (
               <div key={p.slug} className="rounded-xl overflow-hidden">
-                <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
+                <CatalogImage src={p.img} alt={p.name} width={400} height={224} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -141,7 +142,7 @@ function WeddingCard({ product }: { product: WeddingProduct }) {
       <Link href={`/wedding-planner/${product.slug}`}>
         <div className="h-48 overflow-hidden bg-[#f5efe8]">
           {product.img ? (
-            <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <CatalogImage src={product.img} alt={product.name} width={400} height={192} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-5xl">◈</div>
           )}

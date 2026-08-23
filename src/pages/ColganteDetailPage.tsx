@@ -3,6 +3,8 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { COLGANTES } from "../data/colgantes-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -116,9 +118,12 @@ export default function ColganteDetailPage({ slug }: Props) {
           {/* Right: image */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
             <div className="w-full max-w-xl h-[320px] lg:h-[440px] rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img
+              <OptimizedImage
                 src={product.img}
                 alt={product.name}
+                width={960}
+                height={720}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>
@@ -206,7 +211,7 @@ export default function ColganteDetailPage({ slug }: Props) {
                 <Link key={c.slug} href={`/colgantes/${c.slug}`}
                   className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                   <div className="h-28 overflow-hidden bg-gray-100">
-                    <img src={c.img} alt={c.name}
+                    <CatalogImage src={c.img} alt={c.name} width={400} height={112}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-3">
@@ -230,7 +235,7 @@ export default function ColganteDetailPage({ slug }: Props) {
                 <Link key={c.slug} href={`/colgantes/${c.slug}`}
                   className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                   <div className="h-20 overflow-hidden bg-gray-100">
-                    <img src={c.img} alt={c.name}
+                    <CatalogImage src={c.img} alt={c.name} width={400} height={112}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-2.5">

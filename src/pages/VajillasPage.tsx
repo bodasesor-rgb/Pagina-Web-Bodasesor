@@ -4,6 +4,7 @@ import { VAJILLAS, VajillaCat } from "../data/vajillas-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar vajillas para mi evento. ¿Me pueden dar información?");
@@ -139,9 +140,11 @@ export default function VajillasPage() {
                     className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/20 hover:shadow-xl transition-all duration-300">
                     <Link href={`/vajillas/${product.slug}`}>
                       <div className="h-48 overflow-hidden bg-gray-100">
-                        <img
+                        <CatalogImage
                           src={product.img}
                           alt={product.name}
+                          width={400}
+                          height={192}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>

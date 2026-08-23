@@ -3,6 +3,8 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { ENTELADOS, EnteladoSlug } from "../data/entelados-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -102,13 +104,13 @@ export default function EnteladoDetailPage({ slug }: Props) {
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
             {(estilo.imgPages ?? []).length === 1 ? (
               <div className="w-full max-w-xl h-[320px] lg:h-[440px] rounded-2xl overflow-hidden bg-[#0d1630]">
-                <img src={estilo.img} alt={estilo.name} className="w-full h-full object-cover" />
+                <OptimizedImage src={estilo.img} alt={estilo.name} width={960} height={720} priority className="w-full h-full object-cover" />
               </div>
             ) : (
               <div className={`w-full grid gap-2 ${(estilo.imgPages ?? []).length >= 4 ? 'grid-cols-2' : 'grid-cols-2'} h-[320px] lg:h-[440px]`}>
                 {(estilo.imgPages ?? []).slice(0, 4).map((src, i) => (
                   <div key={i} className="rounded-xl overflow-hidden bg-[#0d1630]">
-                    <img src={src} alt={`${estilo.name} ${i + 1}`} className="w-full h-full object-contain" />
+                    <CatalogImage src={src} alt={`${estilo.name} ${i + 1}`} width={480} height={360} className="w-full h-full object-contain" />
                   </div>
                 ))}
               </div>
@@ -197,7 +199,7 @@ export default function EnteladoDetailPage({ slug }: Props) {
               <Link key={e.slug} href={`/entelados/${e.slug}`}
                 className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                 <div className="h-36 overflow-hidden bg-gray-100">
-                  <img src={e.img} alt={e.name}
+                  <CatalogImage src={e.img} alt={e.name} width={400} height={144}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-4">

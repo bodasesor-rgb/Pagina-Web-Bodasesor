@@ -2,11 +2,12 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
-import { getCityHubContent } from "../data/city-hub-content";
+import { getCityHubContent, prefetchCityHubContent } from "../data/city-hub-content";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import { HERO_IMAGES } from "../data/product-galleries";
 import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 import SeoRelatedLinks from "../components/SeoRelatedLinks";
 import Breadcrumbs from "../components/Breadcrumbs";
 import HighlightKeywords from "../components/HighlightKeywords";
@@ -244,9 +245,12 @@ function MesasSillasCatalog({ waUrl }: { waUrl: string }) {
             {COMBINACIONES_CATALOG.map((c, i) => (
               <div key={i} className="group bg-[#f5efe8] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 border border-[#162040]/5">
                 <div className="aspect-[4/3] overflow-hidden bg-white">
-                  <img
+                  <OptimizedImage
                     src={c.img}
                     alt={c.label}
+                    width={480}
+                    height={360}
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -323,7 +327,24 @@ export default function ServicePage({ params }: ServicePageProps) {
   }, [rawSlug, slug]);
 
   const { city } = useCity();
-  const cityCopy = city ? getCityHubContent(slug, city.slug) : null;
+  const [hubStoreReady, setHubStoreReady] = useState(!city);
+
+  useEffect(() => {
+    if (!city) {
+      setHubStoreReady(true);
+      return;
+    }
+    let cancelled = false;
+    setHubStoreReady(false);
+    prefetchCityHubContent().then(() => {
+      if (!cancelled) setHubStoreReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [city?.slug]);
+
+  const cityCopy = city && hubStoreReady ? getCityHubContent(slug, city.slug) : null;
   const pageCopy = cityCopy || (product ? buildNationalServiceCopy(product) : null);
 
   useEffect(() => {
@@ -753,7 +774,9 @@ export default function ServicePage({ params }: ServicePageProps) {
               {product.varieties.map((v, i) => {
                 const menuHubSlug = v.href?.replace(/^\//, "") || "";
                 const menuCityCopy =
-                  city && menuHubSlug ? getCityHubContent(menuHubSlug, city.slug) : null;
+                  city && menuHubSlug && hubStoreReady
+                    ? getCityHubContent(menuHubSlug, city.slug)
+                    : null;
                 const cardTitle = menuCityCopy?.h1
                   ? toSpanishTitleCase(menuCityCopy.h1)
                   : city
@@ -955,15 +978,13 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </div>
               ))}
             </div>
-            <img
+            <CatalogImage
               src="/images/sello-garantia-transparent.webp"
               alt="Garantía de Felicidad Bodasesor"
               className="h-24 w-auto drop-shadow-lg"
               width={120}
               height={90}
-              loading="lazy"
-              decoding="async"
-              onError={e => { (e.target as HTMLImageElement).src = '/images/sello-garantia.webp'; }}
+              fallback="/images/sello-garantia.webp"
             />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import OptimizedImage from "./OptimizedImage"
 
 export function Lightbox({ images, index, onClose, onPrev, onNext }) {
   useEffect(() => {
@@ -19,9 +20,13 @@ export function Lightbox({ images, index, onClose, onPrev, onNext }) {
   return (
     <div className="fixed inset-0 z-[9999] bg-black/92 flex items-center justify-center" onClick={onClose}>
       <div className="relative w-full max-w-4xl mx-4 flex flex-col items-center" onClick={e => e.stopPropagation()}>
-        <img
+        <OptimizedImage
           src={images[index]}
           alt={`Foto ${index + 1} de ${images.length}`}
+          width={1200}
+          height={900}
+          priority
+          sizes="(min-width: 768px) 896px, 100vw"
           className="max-h-[82vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
         />
         <button onClick={onClose} className="absolute -top-10 right-0 text-white/80 hover:text-white transition-colors" aria-label="Cerrar">

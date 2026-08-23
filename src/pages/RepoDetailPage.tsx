@@ -3,6 +3,8 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { REPOSTERIA } from "../data/reposteria-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -43,7 +45,7 @@ export default function RepoDetailPage({ slug }: { slug?: string }) {
           {/* Imagen */}
           <div className="rounded-2xl overflow-hidden bg-[#f5efe8] h-80 lg:h-auto">
             {product.img ? (
-              <img src={product.img} alt={product.name} className="w-full h-full object-cover" />
+              <OptimizedImage src={product.img} alt={product.name} width={960} height={720} priority className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-8xl">✦</div>
             )}
@@ -96,7 +98,7 @@ export default function RepoDetailPage({ slug }: { slug?: string }) {
                 <Link key={p.slug} href={`/reposteria/${p.slug}`}
                   className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-lg transition-all">
                   <div className="h-40 overflow-hidden bg-[#f5efe8]">
-                    {p.img && <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
+                    {p.img && <CatalogImage src={p.img} alt={p.name} width={400} height={192} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
                   </div>
                   <div className="p-4">
                     <h3 className="font-serif font-bold text-[#162040] text-sm mb-1">{p.name}</h3>

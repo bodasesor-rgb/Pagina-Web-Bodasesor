@@ -5,6 +5,7 @@ import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import { AUDIO_ILUMINACION } from "../data/audio-iluminacion-products";
 import type { AudioIluminacionProduct, AudioIluminacionCategory } from "../data/audio-iluminacion-products";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar audio, iluminación o video para mi evento. ¿Me pueden dar información?");
@@ -27,11 +28,13 @@ function ProductCard({ product }: { product: AudioIluminacionProduct }) {
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={`/audio-iluminacion-video/${product.slug}`}>
         <div className="h-48 overflow-hidden bg-[#f5efe8]">
-          <img
+          <CatalogImage
             src={product.img}
             alt={product.name}
+            width={400}
+            height={192}
+            fallback="/images/instagram/ig1.jpg"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            onError={e => { (e.target as HTMLImageElement).src = '/images/instagram/ig1.jpg'; }}
           />
         </div>
       </Link>
@@ -97,8 +100,7 @@ export default function AudioIluminacionPage() {
           <div className="hidden lg:grid grid-cols-3 gap-3 h-56">
             {AUDIO_ILUMINACION.slice(0, 3).map(p => (
               <div key={p.slug} className="rounded-xl overflow-hidden">
-                <img src={p.img} alt={p.name} className="w-full h-full object-cover"
-                  onError={e => { (e.target as HTMLImageElement).src = '/images/instagram/ig1.jpg'; }} />
+                <CatalogImage src={p.img} alt={p.name} width={400} height={224} fallback="/images/instagram/ig1.jpg" className="w-full h-full object-cover" />
               </div>
             ))}
           </div>

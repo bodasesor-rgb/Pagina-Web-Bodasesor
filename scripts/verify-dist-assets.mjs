@@ -28,4 +28,25 @@ if (missing.length) {
 }
 
 const assetCount = fs.readdirSync(assetsDir).length
-console.log(`✓ dist assets OK: ${refs.length} refs in index.html, ${assetCount} files in assets/`)
+
+// WebP siblings must ship in dist/images (generated at build time).
+const imagesDir = path.join(dist, 'images')
+let webpCount = 0
+let rasterCount = 0
+function countImages(dir) {
+  if (!fs.existsSync(dir)) return
+  for (const name of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, name.name)
+    if (name.isDirectory()) countImages(full)
+    else if (/\.webp$/i.test(name.name)) webpCount++
+    else if (/\.(png|jpe?g)$/i.test(name.name)) rasterCount++
+  }
+}
+countImages(imagesDir)
+const minWebp = Number(process.env.MIN_DIST_WEBP || 500)
+if (webpCount < minWebp) {
+  console.error(`❌ dist/images has only ${webpCount} WebP files (need ≥${minWebp}). Run generate:webp before vite build.`)
+  process.exit(1)
+}
+
+console.log(`✓ dist assets OK: ${refs.length} refs in index.html, ${assetCount} files in assets/, ${webpCount} WebP in images/`)

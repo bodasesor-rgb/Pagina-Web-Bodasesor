@@ -5,6 +5,7 @@ import type { EspaciosProduct } from "../data/espacios-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un espacio para mi evento. ¿Me pueden dar información sobre sus venues?");
@@ -46,7 +47,7 @@ export default function EspaciosPage() {
           <div className="hidden lg:grid grid-cols-2 gap-3 h-56">
             {ESPACIOS.slice(0, 4).map(p => (
               <div key={p.slug} className="rounded-xl overflow-hidden">
-                <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
+                <CatalogImage src={p.img} alt={p.name} width={400} height={224} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -117,7 +118,7 @@ function EspacioCard({ product }: { product: EspaciosProduct }) {
       <Link href={`/espacios-eventos/${product.slug}`}>
         <div className="h-64 overflow-hidden bg-[#f5efe8]">
           {product.img ? (
-            <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <CatalogImage src={product.img} alt={product.name} width={400} height={256} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-5xl">⬡</div>
           )}

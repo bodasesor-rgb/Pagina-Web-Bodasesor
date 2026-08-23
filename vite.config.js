@@ -72,6 +72,7 @@ function deferNonCriticalPreloadsPlugin() {
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/search-index-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/blog-data-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/city-hub-content-[^"]+">\n?/g, '')
+          .replace(/<link rel="modulepreload" crossorigin href="\/assets\/spanish-title-case-[^"]+">\n?/g, '')
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/banquetes-menus-[^"]+">\n?/g, '')
           // Route-level page chunks — loaded on demand by the router
           .replace(/<link rel="modulepreload" crossorigin href="\/assets\/BanqueteMenuDetailPage-[^"]+">\n?/g, '')
@@ -133,6 +134,14 @@ export default defineConfig({
             {
               name: 'search-index',
               test: /src[\\/]data[\\/]search-index/,
+            },
+            {
+              name: 'city-hub-content',
+              test: /city-hub-content\.json$/,
+            },
+            {
+              name: 'banquetes-menus',
+              test: /src[\\/]data[\\/]banquetes-menus/,
             },
           ],
         },

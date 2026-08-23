@@ -1,6 +1,5 @@
 /* font-display: swap is set inside @fontsource CSS — keep Georgia/Arial fallbacks below to avoid FOIT */
 @import '@fontsource/playfair-display/latin-400.css';
-@import '@fontsource/playfair-display/latin-700.css';
 @import '@fontsource/lato/latin-400.css';
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -128,6 +127,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  /* Common catalog / carousel slots — reduce CLS while WebP loads */
+  .aspect-\[4\/3\],
+  .aspect-\[16\/9\],
+  .aspect-square {
+    contain: layout style;
   }
 }
 

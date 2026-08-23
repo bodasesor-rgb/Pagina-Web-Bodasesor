@@ -4,6 +4,7 @@ import { SALAS_CATALOG, PERIQUERAS_CATALOG } from "../data/salas-periqueras-prod
 import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import CatalogImage from "../components/CatalogImage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -21,7 +22,7 @@ function ProductCard({ name, img, href, waMsg }: { name: string; img: string; hr
     <div className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-xl transition-all duration-300">
       <Link href={href} aria-label={`Ver ${name}`}>
         <div className="aspect-[4/3] overflow-hidden bg-[#f5efe8]">
-          <img src={img} alt={name} title={name} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <CatalogImage src={img} alt={name} title={name} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="p-4 pb-2">
           <h3 className="font-serif font-bold text-[#162040] text-sm leading-snug">{name}</h3>

@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { useBrowserLocation } from 'wouter/use-browser-location'
 import { parseCityFromPath, toCanonicalCityPath } from '../utils/city-url'
+import { prefetchCityHubContent } from '../data/city-hub-content'
 
 const CityContext = createContext({ city: null, setCity: () => {} })
 
@@ -23,6 +24,15 @@ export function CityUrlSync() {
     const canonical = toCanonicalCityPath(fullPath)
     const { city } = parseCityFromPath(canonical)
     setCity(city)
+
+    if (city) {
+      const warm = () => prefetchCityHubContent()
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(warm, { timeout: 6000 })
+      } else {
+        setTimeout(warm, 2000)
+      }
+    }
 
     const normalized = fullPath.replace(/\/+$/, '') || '/'
     if (canonical !== normalized) {

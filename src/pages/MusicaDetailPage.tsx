@@ -3,6 +3,8 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { MUSICA } from "../data/musica-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -37,7 +39,7 @@ export default function MusicaDetailPage({ slug }: { slug?: string }) {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           <div className="rounded-2xl overflow-hidden bg-[#f5efe8] h-80 lg:h-auto">
-            {product.img ? <img src={product.img} alt={product.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-8xl">♪</div>}
+            {product.img ? <OptimizedImage src={product.img} alt={product.name} width={960} height={720} priority className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#162040]/20 font-serif text-8xl">♪</div>}
           </div>
           <div>
             <p className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#162040]/75 mb-2">Música para Eventos</p>
@@ -67,7 +69,7 @@ export default function MusicaDetailPage({ slug }: { slug?: string }) {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {others.map(p => (
                 <Link key={p.slug} href={`/musica/${p.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-lg transition-all">
-                  <div className="h-40 overflow-hidden bg-[#f5efe8]">{p.img && <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}</div>
+                  <div className="h-40 overflow-hidden bg-[#f5efe8]">{p.img && <CatalogImage src={p.img} alt={p.name} width={400} height={160} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}</div>
                   <div className="p-4"><h3 className="font-serif font-bold text-[#162040] text-sm mb-1">{p.name}</h3><p className="font-serif text-gray-600 text-xs italic">{p.tagline}</p></div>
                 </Link>
               ))}

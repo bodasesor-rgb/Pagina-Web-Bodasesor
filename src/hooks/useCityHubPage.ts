@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useCity } from '../context/CityContext'
-import { getCityHubContent } from '../data/city-hub-content'
+import { getCityHubContent, prefetchCityHubContent } from '../data/city-hub-content'
 import { applyPageSeo, upsertJsonLd, absoluteUrl } from '../utils/seo-head'
 import { buildFaqPageJsonLd, buildServiceCityJsonLd } from '../utils/seo-meta'
 import { buildNationalHubCopy } from '../utils/national-service-copy'
@@ -31,10 +31,28 @@ export function useCityHubPage(
   pageSeo: PageSeoOverrides | null = null,
 ) {
   const { city } = useCity()
+  const [hubStoreReady, setHubStoreReady] = useState(!city)
+
+  useEffect(() => {
+    if (!city) {
+      setHubStoreReady(true)
+      return
+    }
+    let cancelled = false
+    setHubStoreReady(false)
+    prefetchCityHubContent().then(() => {
+      if (!cancelled) setHubStoreReady(true)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [city?.slug])
 
   const cityCopy = useMemo(() => {
     const base = city
-      ? getCityHubContent(hubSlug, city.slug)
+      ? hubStoreReady
+        ? getCityHubContent(hubSlug, city.slug)
+        : null
       : buildNationalHubCopy(hubSlug, fallbackTitle)
     if (!base && !pageSeo) return null
     if (!pageSeo) return base
@@ -48,7 +66,7 @@ export function useCityHubPage(
           ? base.seoDescription
           : pageSeo.seoDescription || base?.seoDescription,
     }
-  }, [city, hubSlug, fallbackTitle, pageSeo])
+  }, [city, hubSlug, fallbackTitle, pageSeo, hubStoreReady])
 
   const displayH1 = toSpanishTitleCase(
     cityCopy?.h1 ||

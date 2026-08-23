@@ -4,6 +4,8 @@ import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { SHOWS, ShowsSlug, SHOWS_BY_CATEGORY } from "../data/shows-products";
 import { Drum, Sparkles, Zap, CircleDot } from "lucide-react";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const CATEGORY_ICONS = {
   percusion: Drum,
@@ -113,7 +115,7 @@ export default function ShowsDetailPage({ slug }: Props) {
           {/* Right: image */}
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
             <div className="w-full max-w-xl h-[300px] lg:h-[420px] rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img src={product.img || `/images/shows/${product.slug}.png`} alt={product.name} className="w-full h-full object-cover" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
+              <OptimizedImage src={product.img || `/images/shows/${product.slug}.png`} alt={product.name} width={960} height={720} priority className="w-full h-full object-cover" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
             </div>
           </div>
         </div>
@@ -189,7 +191,7 @@ export default function ShowsDetailPage({ slug }: Props) {
                 <Link key={p.slug} href={`/shows/${p.slug}`}
                   className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                   <div className="h-36 overflow-hidden bg-[#0d1630]">
-                    <img src={p.img || `/images/shows/${p.slug}.png`} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }} />
+                    <CatalogImage src={p.img || `/images/shows/${p.slug}.png`} alt={p.name} width={400} height={144} fallback="/images/galeria-1.png" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-4">
                     <p className="font-serif font-bold text-[#162040] text-sm">{p.name}</p>

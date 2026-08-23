@@ -2,6 +2,8 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { usePageSeo } from "../hooks/usePageSeo";
 import { SALAS_CATALOG } from "../data/salas-periqueras-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_BASE = `https://wa.me/${WHATSAPP_NUMBER}?text=`;
@@ -124,12 +126,12 @@ export default function SalaDetailPage({ salaSlug }: Props) {
           {/* Right: image(s) */}
           <div className="lg:col-span-3 relative flex gap-3 h-full min-h-[320px] lg:min-h-[420px] items-center py-8 lg:py-10">
             <div className="flex-1 h-[280px] lg:h-[340px] rounded-2xl overflow-hidden bg-[#0d1630]">
-              <img src={allImgs[0]} alt={sala.name}
+              <OptimizedImage src={allImgs[0]} alt={sala.name} width={960} height={720} priority
                 className="w-full h-full object-contain drop-shadow-2xl" />
             </div>
             {allImgs[1] && (
               <div className="w-28 lg:w-36 h-[200px] lg:h-[240px] rounded-xl overflow-hidden bg-[#0d1630] flex-shrink-0 self-end">
-                <img src={allImgs[1]} alt={sala.name}
+                <CatalogImage src={allImgs[1]} alt={sala.name} width={144} height={240}
                   className="w-full h-full object-cover" />
               </div>
             )}
@@ -145,7 +147,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {allImgs.slice(2).map((img, i) => (
                 <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden">
-                  <img src={img} alt={`${sala.name} vista ${i + 2}`} className="w-full h-full object-cover" />
+                  <CatalogImage src={img} alt={`${sala.name} vista ${i + 2}`} width={400} height={300} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -190,7 +192,7 @@ export default function SalaDetailPage({ salaSlug }: Props) {
               <Link key={s.slug} href={`/salas/${s.slug}`}
                 className="group bg-white rounded-xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={s.img} alt={s.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <CatalogImage src={s.img} alt={s.name} width={400} height={300} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-2.5">
                   <p className="text-xs font-serif font-semibold text-[#162040] leading-snug">{s.name}</p>

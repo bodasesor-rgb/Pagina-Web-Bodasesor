@@ -3,6 +3,8 @@ const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { FLORERIA, FloreriaSlug, FLORERIA_BY_CATEGORY } from "../data/floreria-products";
+import OptimizedImage from "../components/OptimizedImage";
+import CatalogImage from "../components/CatalogImage";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 
@@ -102,7 +104,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
           <div className="lg:col-span-3 flex items-center justify-center py-8 lg:py-10">
             <div className="w-full max-w-xl h-[320px] lg:h-[440px] rounded-2xl overflow-hidden bg-[#0d1630] flex items-center justify-center">
               {product.img ? (
-                <img src={product.img} alt={product.name} className="w-full h-full object-contain" />
+                <OptimizedImage src={product.img} alt={product.name} width={960} height={720} priority className="w-full h-full object-contain" />
               ) : (
                 <span className="text-white/10 font-serif text-8xl">{categoryIcon}</span>
               )}
@@ -182,7 +184,7 @@ export default function FloreriaDetailPage({ slug }: Props) {
                   className="group bg-white rounded-2xl overflow-hidden border border-[#162040]/8 hover:border-[#162040]/25 hover:shadow-md transition-all">
                   <div className="h-36 overflow-hidden bg-[#f5efe8] flex items-center justify-center">
                     {p.img ? (
-                      <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <CatalogImage src={p.img} alt={p.name} width={400} height={144} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     ) : (
                       <span className="text-[#162040]/20 font-serif text-4xl">
                         {p.category === 'floral' ? '✿' : p.category === 'globos' ? '○' : '✦'}

@@ -3,6 +3,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { ChevronRight, MessageCircle, Star } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
+import OptimizedImage from "../components/OptimizedImage";
 import { findSubsectionBySlug, findSectionBySlug } from "../data/navigation";
 import NotFound from "./not-found";
 
@@ -95,10 +96,17 @@ export default function SubcategoryPage() {
       </div>
 
       {/* Hero */}
-      <div
-        className="relative h-48 md:h-60 flex items-center"
-        style={{ backgroundImage: `url('${heroBg}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
+      <div className="relative h-48 md:h-60 flex items-center overflow-hidden">
+        <OptimizedImage
+          src={heroBg}
+          alt=""
+          width={1200}
+          height={360}
+          priority
+          sizes="100vw"
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-hidden
+        />
         <div className="absolute inset-0 bg-primary/65" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-white">
           <div className="gold-divider w-10 mb-3" />
@@ -146,9 +154,12 @@ export default function SubcategoryPage() {
                 data-testid={`card-product-${product.handle}`}
               >
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
-                  <img
+                  <OptimizedImage
                     src={img}
                     alt={product.name}
+                    width={480}
+                    height={360}
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
                   />
