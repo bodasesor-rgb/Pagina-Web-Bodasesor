@@ -27,6 +27,7 @@ import { CATALOGOS } from '../src/data/catalogos-embeds.js'
 import { getCityHubContent } from './lib/load-city-hub-content.mjs'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
+import { HERO_IMAGES } from '../src/data/product-galleries.js'
 
 /** Unique canonical city slugs for hub×city prerender shells */
 const CITY_SLUGS = [...new Set(Object.values(CITY_MAP).map((c) => c.slug))]
@@ -96,6 +97,15 @@ function usefulCityShort(city) {
   return short
 }
 
+function hubHeroImage(path) {
+  const slug = String(path || '').replace(/^\//, '')
+  return HERO_IMAGES[slug] || null
+}
+
+function productHeroImage(slug, fallback) {
+  return HERO_IMAGES[slug] || fallback || null
+}
+
 function entry(path, headline, description, h1, cityShort = null, opts = {}) {
   const cleanPath = path.replace(/\/+$/, '') || '/'
   if (cleanPath === '/') return null
@@ -149,7 +159,8 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
   }
 
   for (const h of HUBS) {
-    put(entry(h.path, h.title, h.desc, h.title))
+    const hubImage = hubHeroImage(h.path)
+    put(entry(h.path, h.title, h.desc, h.title, null, { image: hubImage }))
     if (isCityExemptPath(h.path)) continue
     const hubSlug = h.path.replace(/^\//, '')
     for (const citySlug of CITY_SLUGS) {
@@ -165,6 +176,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
           desc,
           headline,
           usefulCityShort(city),
+          { image: hubImage },
         ),
       )
     }
@@ -190,7 +202,9 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
       (Array.isArray(p.description) ? p.description[0] : p.description) ||
       p.headline ||
       name
-    put(entry(href, p.seoTitle || name, desc, name))
+    put(entry(href, p.seoTitle || name, desc, name, null, {
+      image: productHeroImage(p.slug, p.img),
+    }))
   }
 
   for (const m of BANQUET_MENUS) {
@@ -215,10 +229,10 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
   }
 
   for (const s of SALAS_CATALOG) {
-    put(entry(`/salas/${s.slug}`, s.name, s.desc || s.short || s.name, s.name))
+    put(entry(`/salas/${s.slug}`, s.name, s.desc || s.short || s.name, s.name, null, { image: s.img || null }))
   }
   for (const p of PERIQUERAS_CATALOG) {
-    put(entry(`/periqueras/${p.slug}`, p.name, p.desc || p.short || p.name, p.name))
+    put(entry(`/periqueras/${p.slug}`, p.name, p.desc || p.short || p.name, p.name, null, { image: p.img || null }))
   }
 
   const catalogs = [
@@ -243,7 +257,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
     for (const item of list) {
       const name = item[nameKey] || item.name
       if (!name || !item.slug) continue
-      put(entry(hrefFn(item), name, item.desc || item.short || name, name))
+      put(entry(hrefFn(item), name, item.desc || item.short || name, name, null, { image: item.img || null }))
     }
   }
 
@@ -271,7 +285,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
             `${base.description} Cotiza en ${cityName} y área metropolitana.`,
             headline,
             usefulCityShort(city),
-            { noindex: true },
+            { noindex: true, image: base.image || null },
           ),
         )
       }

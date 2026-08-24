@@ -73,6 +73,7 @@ export default function DiscountBalloon() {
 
   useEffect(() => {
     if (wasDismissed()) return
+    const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
     const show = () => {
       const end = getOrCreateEnd()
       const left = end - Date.now()
@@ -82,10 +83,10 @@ export default function DiscountBalloon() {
       setVisible(true)
     }
     if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(show, { timeout: 3500 })
+      const id = window.requestIdleCallback(show, { timeout: isMobile ? 12000 : 3500 })
       return () => window.cancelIdleCallback(id)
     }
-    const t = setTimeout(show, 2000)
+    const t = setTimeout(show, isMobile ? 10000 : 2000)
     return () => clearTimeout(t)
   }, [])
 

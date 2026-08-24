@@ -19,6 +19,7 @@ import {
 } from '../src/utils/seo-page-meta.js'
 import { absoluteOgImage, DEFAULT_OG_IMAGE_ALT } from '../src/utils/seo-social.js'
 import { isNexusLandingHtml } from './lib/nexus-html.mjs'
+import { injectServiceLcpShell } from './lib/lcp-prerender-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -296,7 +297,7 @@ function applySeo(html, entry) {
     `$1${escapeHtml(entry.h1)}$2${escapeHtml(description)}$3`,
   )
 
-  return out
+  return injectServiceLcpShell(out, entry)
 }
 
 async function main() {
@@ -370,6 +371,21 @@ async function main() {
   const smokeHtml = await readFile(smoke, 'utf8')
   if (!smokeHtml.includes('pista-pintada-mano') || smokeHtml.includes('rel="canonical" href="https://bodasesor.com/"')) {
     console.error('prerender-spa-seo-shells: smoke shell still has home SEO meta')
+    process.exit(1)
+  }
+  if (!smokeHtml.includes('id="spa-lcp-prerender"')) {
+    console.error('prerender-spa-seo-shells: smoke shell missing static LCP hero')
+    process.exit(1)
+  }
+
+  const snacksShell = join(DIST, 'carrito-snacks/index.html')
+  if (!existsSync(snacksShell)) {
+    console.error('prerender-spa-seo-shells: missing carrito-snacks shell')
+    process.exit(1)
+  }
+  const snacksHtml = await readFile(snacksShell, 'utf8')
+  if (!snacksHtml.includes('id="spa-lcp-prerender"') || !snacksHtml.includes('carrito-snacks-sm.webp')) {
+    console.error('prerender-spa-seo-shells: carrito-snacks missing LCP preload/shell')
     process.exit(1)
   }
 

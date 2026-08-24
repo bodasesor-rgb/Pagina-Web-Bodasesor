@@ -7,7 +7,7 @@ import GoogleAnalytics from './components/GoogleAnalytics'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import Navbar from './components/Navbar'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
-import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero } from './utils/static-lcp-shell'
+import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero, removeSpaLcpPrerender } from './utils/static-lcp-shell'
 import { syncLcpPreload } from './utils/lcp-preload'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
@@ -187,6 +187,9 @@ function StaticLcpCleanup() {
       document.getElementById('static-nav-shell')?.remove()
       removeHomeStaticHero()
       syncLcpPreload(location)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => removeSpaLcpPrerender())
+      })
     }
   }, [location])
   useEffect(() => {

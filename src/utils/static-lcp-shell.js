@@ -146,5 +146,11 @@ export function removeHomeStaticHero() {
   document.getElementById('static-hero-copy')?.remove()
 }
 
+/** Remove prerendered inner-page LCP shell once React paints the real hero. */
+export function removeSpaLcpPrerender() {
+  document.documentElement.classList.add('no-lcp-prerender')
+  document.getElementById('spa-lcp-prerender')?.remove()
+}
+
 /** Inline boot script source — keep in sync with index.html home/LCP path gate */
 export const LCP_SHELL_BOOT_SCRIPT = `(function(){var p=location.pathname.replace(/\\/+$/,'')||'/';var cities=',ciudad-de-mexico,cdmx,estado-de-mexico,aguascalientes,acapulco,cancun,cozumel,cuernavaca,guadalajara,leon,los-cabos,merida,monterrey,morelia,oaxaca,pachuca,puebla,puerto-vallarta,vallarta,queretaro,san-luis-potosi,san-miguel-allende,tijuana,toluca,torreon,valle-de-bravo,veracruz,';var segments=p.split('/').filter(Boolean);var isHome=p==='/'||(segments.length===1&&cities.indexOf(','+segments[0]+',')>=0);window.__BS_HOME_LCP=isHome;if(!isHome)document.documentElement.classList.add('no-lcp-hero')})();`

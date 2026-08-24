@@ -1,0 +1,70 @@
+---
+alwaysApply: true
+---
+# PageSpeed verde — todas las páginas SPA
+
+## Objetivo
+**Home e inner pages** deben pasar Lighthouse móvil en **verde (≥90 rendimiento)** en cold load, no solo la portada.
+
+## Por qué el home era verde y el resto no
+- Home: hero estático + preload en `index.html` antes de React (`#lcp-hero-wrap`, `#static-hero-copy`).
+- Inner pages: el prerender solo tenía meta/noscript; el body quedaba vacío hasta hidratar React → LCP ~7s en móvil.
+
+## Reglas obligatorias (no negociables)
+
+### 1. Shell LCP en prerender
+Toda entrada SEO con `entry.image` **debe** recibir shell visible en `scripts/prerender-spa-seo-shells.mjs` vía `injectServiceLcpShell()`:
+- `#spa-lcp-prerender` con imagen WebP (`-sm.webp` móvil) + H1
+- `rel="preload"` de la imagen hero en `<head>`
+- CSS crítico en `index.html` para `.spa-lcp-*`
+
+Al hidratar React, `removeSpaLcpPrerender()` quita el shell (`src/utils/static-lcp-shell.js`).
+
+### 2. Imágenes en inventario SEO
+`scripts/collect-spa-seo-entries.mjs` debe asignar `image` a:
+- Productos (`HERO_IMAGES[slug]` o `p.img`)
+- Hubs (`HERO_IMAGES[hubSlug]`)
+- Catálogos verticales (`item.img`)
+- Menús banquete (`parentImg`)
+- Variantes ciudad (heredar `base.image`)
+
+### 3. Imágenes en runtime
+- Usar `OptimizedImage` / `CatalogImage` — nunca `<img>` crudo en páginas de catálogo.
+- WebP generado en build (`npm run generate:webp` + `guard:webp`).
+- Hero LCP: `priority`, `object-cover`, dimensiones explícitas.
+
+### 4. JS liviano en rutas de producto
+- `ServicePage`: sin import masivo de lucide; usar `IconFromEmoji`.
+- Galerías below-fold: `LazyInView` + `React.lazy`.
+- Chunks pesados (`city-hub-content`, `products`): dynamic import, no bundle inicial.
+
+### 5. CLS / terceros
+- `DiscountBalloon`: diferir ≥10s en móvil (no durante LCP).
+- Reservar altura en cards/carouseles (`min-height`, `aspect-ratio`).
+
+## Gate de build (Gate A+)
+Tras `prerender:seo`, **debe pasar**:
+
+```bash
+node scripts/audit-performance-shells.mjs
+```
+
+Falla si < `MIN_LCP_SHELLS` (default 200) páginas con imagen tienen `spa-lcp-prerender` + preload.
+
+También: `npm run verify:dist-bundle` (WebP ≥500 en dist).
+
+## Antes de merge / deploy prod
+1. `npm run build:nexus` (nunca SPA-only).
+2. Gate A verde (bundle + shells + WebP).
+3. Gate B en preview: `PREVIEW_URL=… node scripts/verify-preview-spa-and-nexus.mjs`
+4. PageSpeed manual en muestra:
+   - `/` (home)
+   - `/carrito-snacks` (producto típico)
+   - `/banquetes/formal-3-tiempos` (menú)
+   - Un hub: `/pistas-tarimas`
+
+## Prohibido
+- Quitar `injectServiceLcpShell` o el gate `audit-performance-shells`.
+- Inner pages sin `image` en collect cuando existe hero en `HERO_IMAGES`.
+- Popup promocional visible antes de 8s en móvil.
+- Deploy sin `build:nexus`.

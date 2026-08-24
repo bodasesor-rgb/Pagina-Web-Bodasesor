@@ -143,6 +143,15 @@
       }
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy{top:8rem}#static-hero-copy h1{font-size:4.5rem;margin-bottom:1.5rem}#static-hero-copy .hero-sub{font-size:1.25rem;margin-bottom:2rem}}
+      /* Inner pages: prerendered LCP hero (image + H1 before React) */
+      #spa-lcp-prerender{position:relative;z-index:0;min-height:280px;background:#162040;overflow:hidden}
+      html.no-lcp-prerender #spa-lcp-prerender{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important}
+      .spa-lcp-hero{position:absolute;inset:0;margin:0}
+      .spa-lcp-hero img{width:100%;height:100%;object-fit:cover;object-position:center}
+      .spa-lcp-overlay{position:absolute;inset:0;background:#1620408c;z-index:1;pointer-events:none}
+      .spa-lcp-copy{position:relative;z-index:2;max-width:80rem;margin:0 auto;padding:2.5rem 1rem 3.5rem;pointer-events:none}
+      .spa-lcp-copy h1{margin:0;color:#fff;font-size:2.25rem;line-height:1.2;font-weight:700;font-family:Georgia,'Times New Roman',serif}
+      @media (min-width:768px){.spa-lcp-copy{padding:3.5rem 3rem 4rem}.spa-lcp-copy h1{font-size:3rem}}
     </style>
   </head>
   <body>
