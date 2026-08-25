@@ -42,7 +42,8 @@
     "guard:blog-images": "node scripts/guard-blog-images-dist.mjs",
     "finalize:sitemap": "node scripts/finalize-sitemap.mjs",
     "gsc:audit": "node scripts/gsc-audit.mjs",
-    "gsc:redirects": "node scripts/audit-gsc-redirect-relevance.mjs"
+    "gsc:redirects": "node scripts/audit-gsc-redirect-relevance.mjs",
+    "gsc:traffic-loss": "node scripts/gsc-traffic-loss.mjs"
   },
   "dependencies": {
     "@fontsource/lato": "^5.2.7",

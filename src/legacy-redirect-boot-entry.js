@@ -5,6 +5,12 @@ const pathOnly = location.pathname
 const search = location.search
 const hash = location.hash
 
+function withTrailingSlash(p) {
+  if (!p || p === '/') return '/'
+  if (p.includes('?') || p.includes('#')) return p
+  return p.endsWith('/') ? p : `${p}/`
+}
+
 if (isLegacyShopifyPath(pathOnly)) {
   const dest = resolveLegacyPathClient(`${pathOnly}${search}`)
   if (dest) location.replace(dest)
@@ -12,6 +18,6 @@ if (isLegacyShopifyPath(pathOnly)) {
   const canonical = toCanonicalCityPath(pathOnly)
   const normalized = pathOnly.replace(/\/+$/, '') || '/'
   if (canonical !== normalized) {
-    location.replace(`${canonical}${search}${hash}`)
+    location.replace(`${withTrailingSlash(canonical)}${search}${hash}`)
   }
 }

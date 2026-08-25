@@ -66,7 +66,16 @@ const cases = [
   // Must NOT become /blog/.../ciudad-de-mexico
   ['/blog/salon-de-eventos-consejos-para-elegir-salon-de-bodas-cdmx', '/blog/salon-de-eventos-consejos-para-elegir-salon-de-bodas-cdmx'],
   ['/blog/bodasesor-fechas-y-preventas-de-conciertos-en-cdmx', '/blog/bodasesor-fechas-y-preventas-de-conciertos-en-cdmx'],
+  // High-impression glued URLs from GSC audit
+  ['/carrito-snacksmonterrey', '/carrito-snacks/monterrey'],
+  ['/musicalos-cabos', '/musica/los-cabos'],
+  ['/carpascancun', '/carpas/cancun'],
 ]
+
+function withTrailingSlash(p) {
+  if (!p || p === '/') return '/'
+  return p.endsWith('/') ? p : `${p}/`
+}
 
 let failed = 0
 for (const [from, expect] of cases) {
@@ -80,4 +89,17 @@ if (failed) {
   console.error(`\n${failed} glued-city check(s) failed`)
   process.exit(1)
 }
-console.log('\n✓ Glued-city canonicalization OK')
+
+// Redirect Location must include trailing slash (one hop; no Pretty URL second 301)
+for (const [from, expect] of cases) {
+  if (from.startsWith('/blog')) continue
+  const got = toCanonical(from)
+  if (got === from.replace(/\/+$/, '') || got === from) continue
+  const loc = withTrailingSlash(got)
+  if (!loc.endsWith('/')) {
+    console.error(`✗ trailing slash missing for redirect ${from} → ${loc}`)
+    process.exit(1)
+  }
+}
+
+console.log('\n✓ Glued-city canonicalization OK (incl. trailing-slash redirect targets)')

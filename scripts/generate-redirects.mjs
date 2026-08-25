@@ -105,6 +105,17 @@ const GSC_FORCE_REDIRECTS = [
   ['/sillas/silla-gamma', '/sillas/gamma/'],
   ['/sillas/silla-gamma/acapulco', '/sillas/gamma/acapulco/'],
   ['/b', '/'],
+  // High-impression glued city URLs → one-hop slash destinations (edge also covers; keep explicit for audits)
+  ['/musicalos-cabos', '/musica/los-cabos/'],
+  ['/carrito-snacksmonterrey', '/carrito-snacks/monterrey/'],
+  ['/carrito-snacksqueretaro', '/carrito-snacks/queretaro/'],
+  ['/carpascancun', '/carpas/cancun/'],
+  ['/banquetes-cateringguadalajara', '/banquetes-catering/guadalajara/'],
+  ['/banquetes-cateringcuernavaca', '/banquetes-catering/cuernavaca/'],
+  ['/barra-bebidasmonterrey', '/barra-bebidas/monterrey/'],
+  ['/comidasciudad-de-mexico', '/comidas/ciudad-de-mexico/'],
+  ['/floreria-decoracionpuebla', '/floreria-decoracion/puebla/'],
+  ['/floreria-decoracionmonterrey', '/floreria-decoracion/monterrey/'],
 ]
 
 function parseCsv(text) {
@@ -257,7 +268,7 @@ function buildRedirectsFile(map) {
   lines.push(`/products/:slug  /banquetes-catering/  301!`)
   lines.push('')
   lines.push(`# Blog posts not listed in the CSV map`)
-  lines.push(`/blogs/noticias/*  /blog/:splat  301`)
+  lines.push(`/blogs/noticias/*  /blog/:splat/  301`)
   lines.push(`/blogs/*  /blog/  301`)
   lines.push('')
   lines.push(`# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.`)

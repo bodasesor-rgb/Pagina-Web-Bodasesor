@@ -2,14 +2,31 @@ import type { Context } from '@netlify/edge-functions'
 
 /** Minimal fallbacks if dist/_redirects is missing from a bad deploy */
 const CRITICAL: Record<string, string> = {
-  '/products/tarima-madera': 'https://bodasesor.com/pistas-tarimas/tarima-madera',
-  '/collections/xv-anos-cdmx': 'https://bodasesor.com/xv-anos/ciudad-de-mexico',
-  '/products/tarima-vinil': 'https://bodasesor.com/pistas-tarimas/pista-madera',
+  '/products/tarima-madera': 'https://bodasesor.com/pistas-tarimas/tarima-madera/',
+  '/collections/xv-anos-cdmx': 'https://bodasesor.com/xv-anos/ciudad-de-mexico/',
+  '/products/tarima-vinil': 'https://bodasesor.com/pistas-tarimas/pista-madera/',
+}
+
+function withTrailingSlash(raw: string): string {
+  if (!raw || raw === '/') return '/'
+  try {
+    if (raw.startsWith('http://') || raw.startsWith('https://')) {
+      const u = new URL(raw)
+      if (u.search || u.hash || u.pathname === '/') return raw
+      if (!u.pathname.endsWith('/')) u.pathname += '/'
+      return u.toString()
+    }
+  } catch {
+    /* ignore */
+  }
+  if (raw.includes('?') || raw.includes('#')) return raw
+  return raw.endsWith('/') ? raw : `${raw}/`
 }
 
 function resolveDestination(raw: string, origin: string): string {
-  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw
-  return `${origin}${raw.startsWith('/') ? raw : `/${raw}`}`
+  if (raw.startsWith('http://') || raw.startsWith('https://')) return withTrailingSlash(raw)
+  const path = raw.startsWith('/') ? raw : `/${raw}`
+  return withTrailingSlash(`${origin}${path}`)
 }
 
 function lookup(map: Record<string, string>, pathname: string, search: string): string | undefined {
@@ -48,7 +65,7 @@ export default async function handler(request: Request, context: Context) {
   // Hub-only fallbacks when no specific _redirects row exists.
   // Post URLs (/blogs/noticias/…) must hit _redirects via context.next().
   if (pathname === '/blogs' || pathname === '/blogs/noticias') {
-    return Response.redirect(resolveDestination('/blog', url.origin), 301)
+    return Response.redirect(resolveDestination('/blog/', url.origin), 301)
   }
 
   return context.next()

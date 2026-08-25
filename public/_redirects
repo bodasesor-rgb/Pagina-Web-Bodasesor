@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4307 rules + fallback
+# 4327 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  /sillas/ghost/  301
@@ -158,6 +158,26 @@
 /sillas/silla-gamma/acapulco/  /sillas/gamma/acapulco/  301
 /b  /  301
 /b/  /  301
+/musicalos-cabos  /musica/los-cabos/  301
+/musicalos-cabos/  /musica/los-cabos/  301
+/carrito-snacksmonterrey  /carrito-snacks/monterrey/  301
+/carrito-snacksmonterrey/  /carrito-snacks/monterrey/  301
+/carrito-snacksqueretaro  /carrito-snacks/queretaro/  301
+/carrito-snacksqueretaro/  /carrito-snacks/queretaro/  301
+/carpascancun  /carpas/cancun/  301
+/carpascancun/  /carpas/cancun/  301
+/banquetes-cateringguadalajara  /banquetes-catering/guadalajara/  301
+/banquetes-cateringguadalajara/  /banquetes-catering/guadalajara/  301
+/banquetes-cateringcuernavaca  /banquetes-catering/cuernavaca/  301
+/banquetes-cateringcuernavaca/  /banquetes-catering/cuernavaca/  301
+/barra-bebidasmonterrey  /barra-bebidas/monterrey/  301
+/barra-bebidasmonterrey/  /barra-bebidas/monterrey/  301
+/comidasciudad-de-mexico  /comidas/ciudad-de-mexico/  301
+/comidasciudad-de-mexico/  /comidas/ciudad-de-mexico/  301
+/floreria-decoracionpuebla  /floreria-decoracion/puebla/  301
+/floreria-decoracionpuebla/  /floreria-decoracion/puebla/  301
+/floreria-decoracionmonterrey  /floreria-decoracion/monterrey/  301
+/floreria-decoracionmonterrey/  /floreria-decoracion/monterrey/  301
 
 /blogs/noticias?page=11  /blog/  301
 /blogs/noticias?page=2  /blog/  301
@@ -4327,7 +4347,7 @@
 /products/:slug  /banquetes-catering/  301!
 
 # Blog posts not listed in the CSV map
-/blogs/noticias/*  /blog/:splat  301
+/blogs/noticias/*  /blog/:splat/  301
 /blogs/*  /blog/  301
 
 # Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.

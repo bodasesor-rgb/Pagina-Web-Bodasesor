@@ -11,9 +11,9 @@ import type { Context } from '@netlify/edge-functions'
  * Keep CITY_CANONICAL in sync with src/data/city-data.js
  *
  * Examples:
- *   /bodasciudad-de-mexico → /bodas/ciudad-de-mexico
- *   /banquetes/2-tiemposmorelia → /banquetes/2-tiempos/morelia
- *   /bodas/cdmx → /bodas/ciudad-de-mexico
+ *   /bodasciudad-de-mexico → /bodas/ciudad-de-mexico/  (trailing / = one hop)
+ *   /banquetes/2-tiemposmorelia → /banquetes/2-tiempos/morelia/
+ *   /bodas/cdmx → /bodas/ciudad-de-mexico/
  */
 const CITY_CANONICAL: Record<string, string> = {
   'ciudad-de-mexico': 'ciudad-de-mexico',
@@ -99,7 +99,14 @@ function stripCityFromSegment(segment: string): { base: string; citySlug: string
   return { base: segment, citySlug: null }
 }
 
-/** Returns canonical path or null if already canonical / not a city URL */
+/** Prefer trailing slash so Netlify Pretty URLs do not add a second 301 hop. */
+export function withTrailingSlash(pathname: string): string {
+  if (!pathname || pathname === '/') return '/'
+  if (pathname.includes('?') || pathname.includes('#')) return pathname
+  return pathname.endsWith('/') ? pathname : `${pathname}/`
+}
+
+/** Returns canonical path (no trailing slash) or null if already canonical / not a city URL */
 export function toCanonicalCityPath(pathname: string): string | null {
   const normalized = decodeURIComponent(pathname).replace(/\/+$/, '') || '/'
   if (shouldSkip(normalized)) return null
@@ -151,7 +158,7 @@ export default async function handler(request: Request, context: Context) {
   // After P0 (/* → /404.html 404), glued legacy URLs no longer soft-200 the SPA.
   // Still 301 them to slash-canonical; only real Nexus HTML below is preserved.
   if (response.status === 404) {
-    const dest = new URL(canonical, url.origin)
+    const dest = new URL(withTrailingSlash(canonical), url.origin)
     dest.search = url.search
     return Response.redirect(dest.toString(), 301)
   }
@@ -180,8 +187,8 @@ export default async function handler(request: Request, context: Context) {
     return response
   }
 
-  // SPA soft-404 / missing landing → slash-canonical 301
-  const dest = new URL(canonical, url.origin)
+  // SPA soft-404 / missing landing → slash-canonical 301 (with trailing / = one hop)
+  const dest = new URL(withTrailingSlash(canonical), url.origin)
   dest.search = url.search
   return Response.redirect(dest.toString(), 301)
 }

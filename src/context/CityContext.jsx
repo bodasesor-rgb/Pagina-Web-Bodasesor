@@ -36,7 +36,8 @@ export function CityUrlSync() {
 
     const normalized = fullPath.replace(/\/+$/, '') || '/'
     if (canonical !== normalized) {
-      setFullPath(canonical, { replace: true })
+      const dest = canonical === '/' ? '/' : `${canonical.replace(/\/+$/, '')}/`
+      setFullPath(dest, { replace: true })
     }
   }, [fullPath, setFullPath, setCity])
 
