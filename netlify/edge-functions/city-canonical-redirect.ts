@@ -181,6 +181,7 @@ const TRAILING_SLASH_HUBS = new Set([
   'mesas-sillas',
   'pistas-tarimas',
   'banquetes-catering',
+  'banquetes',
   'carpas',
   'shows',
   'floreria',
@@ -198,21 +199,73 @@ const TRAILING_SLASH_HUBS = new Set([
   'vajillas',
   'salas-periqueras',
   'reposteria',
+  'desayunos',
+  'comidas',
+  'cenas',
+  'graduaciones',
+  'baby-shower',
+  'cumpleanos',
+  'primera-comunion',
+  'inflables',
+  'sillas',
+  'mesas',
+  'periqueras',
+  'salas',
+  'colgantes',
+  'barras',
+  'mesas-personalizadas',
+  'combinaciones-mesas-sillas',
+  'galeria',
+  'catalogos',
+  'quienes-somos',
 ])
 
 function hubNeedsTrailingSlash(rawPathname: string): string | null {
   if (!rawPathname || rawPathname === '/' || rawPathname.endsWith('/')) return null
   const segs = decodeURIComponent(rawPathname).split('/').filter(Boolean)
+  if (!segs.length) return null
+  const last = segs[segs.length - 1]
+  if (last.includes('.')) return null
+
+  // SPA blog: /blog and /blog/:slug (high dual-index in GSC without slash)
+  if (segs[0] === 'blog' && segs.length <= 2) {
+    return `/${segs.join('/')}/`
+  }
+
+  // Leave Shopify legacy prefixes to legacy-redirect / _redirects
+  if (
+    segs[0] === 'products' ||
+    segs[0] === 'collections' ||
+    segs[0] === 'blogs' ||
+    segs[0] === 'pages' ||
+    segs[0] === 'assets' ||
+    segs[0] === 'images' ||
+    segs[0] === 'css' ||
+    segs[0] === 'api' ||
+    segs[0] === 'buscar'
+  ) {
+    return null
+  }
+
   if (segs.length === 1 && TRAILING_SLASH_HUBS.has(segs[0])) {
     return `/${segs[0]}/`
   }
-  if (
-    segs.length === 2 &&
-    TRAILING_SLASH_HUBS.has(segs[0]) &&
-    CITY_CANONICAL[segs[1]]
-  ) {
-    return `/${segs[0]}/${CITY_CANONICAL[segs[1]]}/`
+
+  if (segs.length === 2 && TRAILING_SLASH_HUBS.has(segs[0])) {
+    const city = CITY_CANONICAL[segs[1]]
+    if (city) return `/${segs[0]}/${city}/`
+    // Hub product/detail: /reposteria/pasteles, /banquetes/buffet
+    return `/${segs[0]}/${segs[1]}/`
   }
+
+  if (
+    segs.length === 3 &&
+    TRAILING_SLASH_HUBS.has(segs[0]) &&
+    CITY_CANONICAL[segs[2]]
+  ) {
+    return `/${segs[0]}/${segs[1]}/${CITY_CANONICAL[segs[2]]}/`
+  }
+
   return null
 }
 

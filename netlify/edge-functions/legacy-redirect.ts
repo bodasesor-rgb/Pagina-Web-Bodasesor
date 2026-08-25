@@ -52,6 +52,17 @@ const CRITICAL: Record<string, string> = {
   '/collections/fotografia-y-video-cuernavaca': 'https://bodasesor.com/fotografia/cuernavaca/',
   '/collections/wedding-planner-cuernavaca': 'https://bodasesor.com/wedding-planner/cuernavaca/',
   '/blogs/noticias/pre-boda-2024': 'https://bodasesor.com/bodas/ciudad-de-mexico/',
+  '/blogs/noticias/eventos-tematicos-2024': 'https://bodasesor.com/blog/eventos-tematicos-2024/',
+  '/blogs/noticias/eventos-en-espacios-pequenos-2024': 'https://bodasesor.com/espacios-eventos/',
+  '/blogs/noticias/mi-bautizo-2024': 'https://bodasesor.com/blog/lugares-para-un-bautizo-2024/',
+  '/collections/alimentos-para-empresas-y-comedores-industriales':
+    'https://bodasesor.com/alimentos-empresas/',
+  '/collections/arcos-florales-para-ceremonias-cdmx':
+    'https://bodasesor.com/floreria/ciudad-de-mexico/',
+  '/collections/arreglos-para-aniversarios-cdmx':
+    'https://bodasesor.com/floreria/ciudad-de-mexico/',
+  '/collections/banquetes-para-eventos-pequenos-cdmx':
+    'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
 }
 
 function withTrailingSlash(raw: string): string {

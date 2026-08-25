@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4335 rules + fallback
+# 4349 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  https://bodasesor.com/sillas/ghost/  301
@@ -178,6 +178,30 @@
 /floreria-decoracionpuebla/  https://bodasesor.com/floreria/puebla/  301
 /floreria-decoracionmonterrey  https://bodasesor.com/floreria/monterrey/  301
 /floreria-decoracionmonterrey/  https://bodasesor.com/floreria/monterrey/  301
+/periqueras/periquera-rusticaguadalajara  https://bodasesor.com/periqueras/periquera-rustica/guadalajara/  301
+/periqueras/periquera-rusticaguadalajara/  https://bodasesor.com/periqueras/periquera-rustica/guadalajara/  301
+/shows/hula-hulacancun  https://bodasesor.com/shows/hula-hula/cancun/  301
+/shows/hula-hulacancun/  https://bodasesor.com/shows/hula-hula/cancun/  301
+/sillas/ghostguadalajara  https://bodasesor.com/sillas/ghost/guadalajara/  301
+/sillas/ghostguadalajara/  https://bodasesor.com/sillas/ghost/guadalajara/  301
+/sillas/tiffanyguadalajara  https://bodasesor.com/sillas/tiffany/guadalajara/  301
+/sillas/tiffanyguadalajara/  https://bodasesor.com/sillas/tiffany/guadalajara/  301
+/taquiza-guisadosmorelia  https://bodasesor.com/taquiza-guisados/morelia/  301
+/taquiza-guisadosmorelia/  https://bodasesor.com/taquiza-guisados/morelia/  301
+/xv-anosmorelia  https://bodasesor.com/xv-anos/morelia/  301
+/xv-anosmorelia/  https://bodasesor.com/xv-anos/morelia/  301
+/paellacuernavaca  https://bodasesor.com/paella/cuernavaca/  301
+/paellacuernavaca/  https://bodasesor.com/paella/cuernavaca/  301
+/silla-camila  https://bodasesor.com/sillas/camila/  301
+/silla-camila/  https://bodasesor.com/sillas/camila/  301
+/collections/alimentos-para-empresas-y-comedores-industriales  https://bodasesor.com/alimentos-empresas/  301
+/collections/alimentos-para-empresas-y-comedores-industriales/  https://bodasesor.com/alimentos-empresas/  301
+/collections/arcos-florales-para-ceremonias-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/arcos-florales-para-ceremonias-cdmx/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/arreglos-para-aniversarios-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/arreglos-para-aniversarios-cdmx/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/banquetes-para-eventos-pequenos-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
+/collections/banquetes-para-eventos-pequenos-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/servicios-de-catering-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/servicios-de-catering-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-empresariales-en-cdmx  https://bodasesor.com/alimentos-empresas/ciudad-de-mexico/  301
@@ -408,8 +432,6 @@
 /collections/actuacion-teatral-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/alianzas-estrategicas-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/alianzas-estrategicas-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
-/collections/alimentos-para-empresas-y-comedores-industriales  https://bodasesor.com/alimentos-empresas/comedores-industriales/  301
-/collections/alimentos-para-empresas-y-comedores-industriales/  https://bodasesor.com/alimentos-empresas/comedores-industriales/  301
 /collections/all  https://bodasesor.com/banquetes-catering/  301
 /collections/all/  https://bodasesor.com/banquetes-catering/  301
 /collections/alquiler-de-carpas-cdmx  https://bodasesor.com/carpas/ciudad-de-mexico/  301
@@ -1181,8 +1203,6 @@
 /collections/banquetes-para-eventos-en-queretaro  https://bodasesor.com/banquetes-catering/queretaro/  301
 /collections/banquetes-para-eventos-en-queretaro/  https://bodasesor.com/banquetes-catering/queretaro/  301
 /collections/banquetes-para-eventos-pequenos  https://bodasesor.com/banquetes-catering/  301
-/collections/banquetes-para-eventos-pequenos-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
-/collections/banquetes-para-eventos-pequenos-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-para-eventos-pequenos-en-acapulco  https://bodasesor.com/banquetes-catering/acapulco/  301
 /collections/banquetes-para-eventos-pequenos-en-acapulco/  https://bodasesor.com/banquetes-catering/acapulco/  301
 /collections/banquetes-para-eventos-pequenos-en-cuernavaca  https://bodasesor.com/banquetes-catering/cuernavaca/  301
