@@ -174,10 +174,10 @@
 /barra-bebidasmonterrey/  https://bodasesor.com/barra-bebidas/monterrey/  301
 /comidasciudad-de-mexico  https://bodasesor.com/comidas/ciudad-de-mexico/  301
 /comidasciudad-de-mexico/  https://bodasesor.com/comidas/ciudad-de-mexico/  301
-/floreria-decoracionpuebla  https://bodasesor.com/floreria-decoracion/puebla/  301
-/floreria-decoracionpuebla/  https://bodasesor.com/floreria-decoracion/puebla/  301
-/floreria-decoracionmonterrey  https://bodasesor.com/floreria-decoracion/monterrey/  301
-/floreria-decoracionmonterrey/  https://bodasesor.com/floreria-decoracion/monterrey/  301
+/floreria-decoracionpuebla  https://bodasesor.com/floreria/puebla/  301
+/floreria-decoracionpuebla/  https://bodasesor.com/floreria/puebla/  301
+/floreria-decoracionmonterrey  https://bodasesor.com/floreria/monterrey/  301
+/floreria-decoracionmonterrey/  https://bodasesor.com/floreria/monterrey/  301
 /collections/servicios-de-catering-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/servicios-de-catering-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-empresariales-en-cdmx  https://bodasesor.com/alimentos-empresas/ciudad-de-mexico/  301
@@ -188,10 +188,10 @@
 /collections/wedding-planner-valle-de-bravo/  https://bodasesor.com/wedding-planner/valle-de-bravo/  301
 /collections/musica-para-eventos-guadalajara  https://bodasesor.com/musica/guadalajara/  301
 /collections/musica-para-eventos-guadalajara/  https://bodasesor.com/musica/guadalajara/  301
-/collections/proveedores-de-letras-gigantes-cdmx  https://bodasesor.com/floreria/letras-gigantes/  301
-/collections/proveedores-de-letras-gigantes-cdmx/  https://bodasesor.com/floreria/letras-gigantes/  301
-/collections/letras-gigantes-cdmx  https://bodasesor.com/floreria/letras-gigantes/  301
-/collections/letras-gigantes-cdmx/  https://bodasesor.com/floreria/letras-gigantes/  301
+/collections/proveedores-de-letras-gigantes-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/proveedores-de-letras-gigantes-cdmx/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/letras-gigantes-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/collections/letras-gigantes-cdmx/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
 /products/letras-gigantes-para-eventos-cdmx  https://bodasesor.com/floreria/letras-gigantes/  301
 /products/letras-gigantes-para-eventos-cdmx/  https://bodasesor.com/floreria/letras-gigantes/  301
 /alimentos-empresas/alimentos-empresas  https://bodasesor.com/alimentos-empresas/  301
@@ -4356,10 +4356,17 @@
 /blogs/noticias/*  /blog/:splat/  301
 /blogs/*  /blog/  301
 
-# High-impression /buscar?q=… dumps → real hubs (keep /buscar UI itself)
-/buscar q=animacion  https://bodasesor.com/shows/  301
-/buscar/ q=animacion  https://bodasesor.com/shows/  301
-/buscar q=animación  https://bodasesor.com/shows/  301
+# High-impression /buscar?q=… dumps → real hubs (edge also handles; keep /buscar UI itself)
+/buscar q=animacion  https://bodasesor.com/shows/  301!
+/buscar/ q=animacion  https://bodasesor.com/shows/  301!
+/buscar q=animación  https://bodasesor.com/shows/  301!
+/buscar/ q=animación  https://bodasesor.com/shows/  301!
+/buscar q=catering  https://bodasesor.com/banquetes-catering/  301!
+/buscar/ q=catering  https://bodasesor.com/banquetes-catering/  301!
+/buscar q=floreria  https://bodasesor.com/floreria/  301!
+/buscar/ q=floreria  https://bodasesor.com/floreria/  301!
+/buscar q=musica  https://bodasesor.com/musica/  301!
+/buscar/ q=musica  https://bodasesor.com/musica/  301!
 
 # Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.
 /*  /404.html  404

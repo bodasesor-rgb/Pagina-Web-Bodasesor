@@ -16,6 +16,33 @@ const CRITICAL: Record<string, string> = {
   '/collections/banquetes-para-fiestas': 'https://bodasesor.com/banquetes-catering/',
   '/collections/banquetes-para-fiestas-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
   '/collections/banquetes-para-xv-anos-cdmx': 'https://bodasesor.com/xv-anos/ciudad-de-mexico/',
+  // Top GSC multi-hop leftovers (www → apex path → final). Edge on www collapses to one hop.
+  '/products/catering-cdmx-1': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/products/ncatering-catering-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/precio-de-catering-para-fiestas-cdmx':
+    'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/servicios-de-catering-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/catering-empresarial-cdmx': 'https://bodasesor.com/alimentos-empresas/ciudad-de-mexico/',
+  '/collections/banquetes-empresariales-cdmx':
+    'https://bodasesor.com/alimentos-empresas/ciudad-de-mexico/',
+  '/collections/banquetes-empresariales-en-cdmx':
+    'https://bodasesor.com/alimentos-empresas/ciudad-de-mexico/',
+  '/collections/flores-frescas-para-bodas-de-lujo-cdmx':
+    'https://bodasesor.com/floreria/ciudad-de-mexico/',
+  '/collections/arreglos-florales-para-ceremonias-cdmx':
+    'https://bodasesor.com/floreria/ciudad-de-mexico/',
+  '/collections/proveedores-de-letras-gigantes-cdmx':
+    'https://bodasesor.com/floreria/ciudad-de-mexico/',
+  '/collections/mobiliario-corporativo': 'https://bodasesor.com/mesas-sillas/ciudad-de-mexico/',
+  '/collections/presupuesto-para-una-boda-cdmx': 'https://bodasesor.com/bodas/ciudad-de-mexico/',
+  '/collections/wedding-planner-queretaro': 'https://bodasesor.com/wedding-planner/queretaro/',
+  '/collections/wedding-planner-valle-de-bravo':
+    'https://bodasesor.com/wedding-planner/valle-de-bravo/',
+  '/collections/musica-para-eventos-guadalajara': 'https://bodasesor.com/musica/guadalajara/',
+  '/collections/precio-de-fotografia-para-bodas-cdmx':
+    'https://bodasesor.com/fotografia/ciudad-de-mexico/',
+  '/collections/eventos-corporativos-gustavo-a-madero':
+    'https://bodasesor.com/corporativos/ciudad-de-mexico/',
 }
 
 function withTrailingSlash(raw: string): string {

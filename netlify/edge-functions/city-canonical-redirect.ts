@@ -158,10 +158,50 @@ export function analyzeCityCanonical(pathname: string): CityCanonical {
   return { canonical, safeEarly }
 }
 
-function apexRedirect(pathname: string, search: string): Response {
+function apexRedirect(pathname: string, search: string = ''): Response {
   const dest = new URL(withTrailingSlash(pathname), 'https://bodasesor.com')
   dest.search = search
   return Response.redirect(dest.toString(), 301)
+}
+
+/**
+ * High-impression /buscar?q=… dumps — Netlify _redirects query rules often lose to
+ * Pretty URLs (/buscar → /buscar/). Handle here so crawlers get a real hub in one hop.
+ */
+const BUSCAR_QUERY_HUBS: Record<string, string> = {
+  animacion: '/shows/',
+  animación: '/shows/',
+  animaciones: '/shows/',
+  show: '/shows/',
+  shows: '/shows/',
+  catering: '/banquetes-catering/',
+  banquete: '/banquetes-catering/',
+  banquetes: '/banquetes-catering/',
+  floreria: '/floreria/',
+  floristeria: '/floreria/',
+  flores: '/floreria/',
+  musica: '/musica/',
+  música: '/musica/',
+  dj: '/musica/',
+  fotografia: '/fotografia/',
+  fotografía: '/fotografia/',
+  'wedding planner': '/wedding-planner/',
+  wedding: '/wedding-planner/',
+  mobiliario: '/mesas-sillas/',
+  mesas: '/mesas-sillas/',
+  sillas: '/mesas-sillas/',
+}
+
+function resolveBuscarQuery(url: URL): string | null {
+  const path = url.pathname.replace(/\/+$/, '') || '/'
+  if (path !== '/buscar') return null
+  const raw = (url.searchParams.get('q') || '').trim().toLowerCase()
+  if (!raw) return null
+  const exact = BUSCAR_QUERY_HUBS[raw]
+  if (exact) return exact
+  // First token for multi-word queries ("animacion infantil" → shows)
+  const first = raw.split(/\s+/)[0]
+  return BUSCAR_QUERY_HUBS[first] || null
 }
 
 /** Duplicate hubs → canonical SPA hub (before Pretty URLs / soft SPA). */
@@ -185,6 +225,11 @@ function applyHubAlias(pathname: string): string | null {
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
   const pathname = url.pathname.replace(/\/+$/, '') || '/'
+
+  const buscarHub = resolveBuscarQuery(url)
+  if (buscarHub) {
+    return apexRedirect(buscarHub)
+  }
 
   const hubAlias = applyHubAlias(pathname)
   if (hubAlias && hubAlias !== pathname) {

@@ -114,17 +114,17 @@ const GSC_FORCE_REDIRECTS = [
   ['/banquetes-cateringcuernavaca', '/banquetes-catering/cuernavaca/'],
   ['/barra-bebidasmonterrey', '/barra-bebidas/monterrey/'],
   ['/comidasciudad-de-mexico', '/comidas/ciudad-de-mexico/'],
-  ['/floreria-decoracionpuebla', '/floreria-decoracion/puebla/'],
-  ['/floreria-decoracionmonterrey', '/floreria-decoracion/monterrey/'],
+  ['/floreria-decoracionpuebla', '/floreria/puebla/'],
+  ['/floreria-decoracionmonterrey', '/floreria/monterrey/'],
   // More high-impression leftovers from live top-60 probe (2026-08-25)
   ['/collections/servicios-de-catering-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
   ['/collections/banquetes-empresariales-en-cdmx', '/alimentos-empresas/ciudad-de-mexico/'],
   ['/collections/wedding-planner-queretaro', '/wedding-planner/queretaro/'],
   ['/collections/wedding-planner-valle-de-bravo', '/wedding-planner/valle-de-bravo/'],
   ['/collections/musica-para-eventos-guadalajara', '/musica/guadalajara/'],
-  // Land on indexable hub — product×city thin shells are noindex
-  ['/collections/proveedores-de-letras-gigantes-cdmx', '/floreria/letras-gigantes/'],
-  ['/collections/letras-gigantes-cdmx', '/floreria/letras-gigantes/'],
+  // Indexable hub×city (not thin product×city noindex shells)
+  ['/collections/proveedores-de-letras-gigantes-cdmx', '/floreria/ciudad-de-mexico/'],
+  ['/collections/letras-gigantes-cdmx', '/floreria/ciudad-de-mexico/'],
   ['/products/letras-gigantes-para-eventos-cdmx', '/floreria/letras-gigantes/'],
   // Self-duplicate hub path (slug = parent)
   ['/alimentos-empresas/alimentos-empresas', '/alimentos-empresas/'],
@@ -298,10 +298,17 @@ function buildRedirectsFile(map) {
   lines.push(`/blogs/noticias/*  /blog/:splat/  301`)
   lines.push(`/blogs/*  /blog/  301`)
   lines.push('')
-  lines.push(`# High-impression /buscar?q=… dumps → real hubs (keep /buscar UI itself)`)
-  lines.push(`/buscar q=animacion  ${SITE_BASE}/shows/  301`)
-  lines.push(`/buscar/ q=animacion  ${SITE_BASE}/shows/  301`)
-  lines.push(`/buscar q=animación  ${SITE_BASE}/shows/  301`)
+  lines.push(`# High-impression /buscar?q=… dumps → real hubs (edge also handles; keep /buscar UI itself)`)
+  lines.push(`/buscar q=animacion  ${SITE_BASE}/shows/  301!`)
+  lines.push(`/buscar/ q=animacion  ${SITE_BASE}/shows/  301!`)
+  lines.push(`/buscar q=animación  ${SITE_BASE}/shows/  301!`)
+  lines.push(`/buscar/ q=animación  ${SITE_BASE}/shows/  301!`)
+  lines.push(`/buscar q=catering  ${SITE_BASE}/banquetes-catering/  301!`)
+  lines.push(`/buscar/ q=catering  ${SITE_BASE}/banquetes-catering/  301!`)
+  lines.push(`/buscar q=floreria  ${SITE_BASE}/floreria/  301!`)
+  lines.push(`/buscar/ q=floreria  ${SITE_BASE}/floreria/  301!`)
+  lines.push(`/buscar q=musica  ${SITE_BASE}/musica/  301!`)
+  lines.push(`/buscar/ q=musica  ${SITE_BASE}/musica/  301!`)
   lines.push('')
   lines.push(`# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.`)
   lines.push(`/*  /404.html  404`)
