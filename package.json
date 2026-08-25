@@ -43,7 +43,8 @@
     "finalize:sitemap": "node scripts/finalize-sitemap.mjs",
     "gsc:audit": "node scripts/gsc-audit.mjs",
     "gsc:redirects": "node scripts/audit-gsc-redirect-relevance.mjs",
-    "gsc:traffic-loss": "node scripts/gsc-traffic-loss.mjs"
+    "gsc:traffic-loss": "node scripts/gsc-traffic-loss.mjs",
+    "gsc:recover-top": "node scripts/recover-top-gsc-pages.mjs"
   },
   "dependencies": {
     "@fontsource/lato": "^5.2.7",

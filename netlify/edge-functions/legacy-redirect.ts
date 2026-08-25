@@ -23,10 +23,11 @@ function withTrailingSlash(raw: string): string {
   return raw.endsWith('/') ? raw : `${raw}/`
 }
 
-function resolveDestination(raw: string, origin: string): string {
+function resolveDestination(raw: string, _origin: string): string {
+  // Always apex — collapses www + path into one Location when edge handles the request.
   if (raw.startsWith('http://') || raw.startsWith('https://')) return withTrailingSlash(raw)
   const path = raw.startsWith('/') ? raw : `/${raw}`
-  return withTrailingSlash(`${origin}${path}`)
+  return withTrailingSlash(`https://bodasesor.com${path}`)
 }
 
 function lookup(map: Record<string, string>, pathname: string, search: string): string | undefined {

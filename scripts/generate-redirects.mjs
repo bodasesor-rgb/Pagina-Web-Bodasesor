@@ -116,6 +116,16 @@ const GSC_FORCE_REDIRECTS = [
   ['/comidasciudad-de-mexico', '/comidas/ciudad-de-mexico/'],
   ['/floreria-decoracionpuebla', '/floreria-decoracion/puebla/'],
   ['/floreria-decoracionmonterrey', '/floreria-decoracion/monterrey/'],
+  // More high-impression leftovers from live top-60 probe (2026-08-25)
+  ['/collections/servicios-de-catering-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/banquetes-empresariales-en-cdmx', '/alimentos-empresas/ciudad-de-mexico/'],
+  ['/collections/wedding-planner-queretaro', '/wedding-planner/queretaro/'],
+  ['/collections/wedding-planner-valle-de-bravo', '/wedding-planner/valle-de-bravo/'],
+  ['/collections/musica-para-eventos-guadalajara', '/musica/guadalajara/'],
+  // Land on indexable hub — product×city thin shells are noindex
+  ['/collections/proveedores-de-letras-gigantes-cdmx', '/floreria/letras-gigantes/'],
+  ['/collections/letras-gigantes-cdmx', '/floreria/letras-gigantes/'],
+  ['/products/letras-gigantes-para-eventos-cdmx', '/floreria/letras-gigantes/'],
 ]
 
 function parseCsv(text) {
@@ -225,8 +235,12 @@ function buildRedirectsFile(map) {
   ]
   for (const [from, to] of GSC_FORCE_REDIRECTS) {
     const dest = toRedirectDest(to)
-    lines.push(`${from}  ${dest}  301`)
-    if (!from.endsWith('/') && !from.includes('?')) lines.push(`${from}/  ${dest}  301`)
+    // Absolute apex URL: one hop even when the request hit www first (when Netlify
+    // applies the rule before/alongside domain alias — Location is already final).
+    const abs =
+      dest.startsWith('http') ? dest : `${SITE_BASE}${dest.startsWith('/') ? dest : `/${dest}`}`
+    lines.push(`${from}  ${abs}  301`)
+    if (!from.endsWith('/') && !from.includes('?')) lines.push(`${from}/  ${abs}  301`)
   }
   lines.push('')
 
@@ -270,6 +284,11 @@ function buildRedirectsFile(map) {
   lines.push(`# Blog posts not listed in the CSV map`)
   lines.push(`/blogs/noticias/*  /blog/:splat/  301`)
   lines.push(`/blogs/*  /blog/  301`)
+  lines.push('')
+  lines.push(`# High-impression /buscar?q=… dumps → real hubs (keep /buscar UI itself)`)
+  lines.push(`/buscar q=animacion  ${SITE_BASE}/shows/  301`)
+  lines.push(`/buscar/ q=animacion  ${SITE_BASE}/shows/  301`)
+  lines.push(`/buscar q=animación  ${SITE_BASE}/shows/  301`)
   lines.push('')
   lines.push(`# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.`)
   lines.push(`/*  /404.html  404`)

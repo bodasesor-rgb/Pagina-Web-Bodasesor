@@ -158,7 +158,8 @@ export default async function handler(request: Request, context: Context) {
   // After P0 (/* → /404.html 404), glued legacy URLs no longer soft-200 the SPA.
   // Still 301 them to slash-canonical; only real Nexus HTML below is preserved.
   if (response.status === 404) {
-    const dest = new URL(withTrailingSlash(canonical), url.origin)
+    const destPath = withTrailingSlash(canonical)
+    const dest = new URL(destPath, 'https://bodasesor.com')
     dest.search = url.search
     return Response.redirect(dest.toString(), 301)
   }
@@ -187,8 +188,10 @@ export default async function handler(request: Request, context: Context) {
     return response
   }
 
-  // SPA soft-404 / missing landing → slash-canonical 301 (with trailing / = one hop)
-  const dest = new URL(withTrailingSlash(canonical), url.origin)
+  // SPA soft-404 / missing landing → one-hop 301 to apex + trailing slash
+  // (absolute apex skips an extra www→apex hop when edge runs on www)
+  const destPath = withTrailingSlash(canonical)
+  const dest = new URL(destPath, 'https://bodasesor.com')
   dest.search = url.search
   return Response.redirect(dest.toString(), 301)
 }
