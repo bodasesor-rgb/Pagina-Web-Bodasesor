@@ -126,6 +126,8 @@ const GSC_FORCE_REDIRECTS = [
   ['/collections/proveedores-de-letras-gigantes-cdmx', '/floreria/letras-gigantes/'],
   ['/collections/letras-gigantes-cdmx', '/floreria/letras-gigantes/'],
   ['/products/letras-gigantes-para-eventos-cdmx', '/floreria/letras-gigantes/'],
+  // Self-duplicate hub path (slug = parent)
+  ['/alimentos-empresas/alimentos-empresas', '/alimentos-empresas/'],
 ]
 
 function parseCsv(text) {

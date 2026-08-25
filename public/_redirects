@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4329 rules + fallback
+# 4331 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  https://bodasesor.com/sillas/ghost/  301
@@ -194,6 +194,8 @@
 /collections/letras-gigantes-cdmx/  https://bodasesor.com/floreria/letras-gigantes/  301
 /products/letras-gigantes-para-eventos-cdmx  https://bodasesor.com/floreria/letras-gigantes/  301
 /products/letras-gigantes-para-eventos-cdmx/  https://bodasesor.com/floreria/letras-gigantes/  301
+/alimentos-empresas/alimentos-empresas  https://bodasesor.com/alimentos-empresas/  301
+/alimentos-empresas/alimentos-empresas/  https://bodasesor.com/alimentos-empresas/  301
 
 /blogs/noticias?page=11  /blog/  301
 /blogs/noticias?page=2  /blog/  301

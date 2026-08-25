@@ -77,6 +77,13 @@ function withTrailingSlash(p) {
   return p.endsWith('/') ? p : `${p}/`
 }
 
+function isPureCityConcatenation(segment, citySlug) {
+  if (!segment.endsWith(citySlug) || segment.length <= citySlug.length) return false
+  const before = segment.slice(0, -citySlug.length)
+  if (!before || before.endsWith('-')) return false
+  return true
+}
+
 let failed = 0
 for (const [from, expect] of cases) {
   const got = toCanonical(from)
@@ -91,6 +98,7 @@ if (failed) {
 }
 
 // Redirect Location must include trailing slash (one hop; no Pretty URL second 301)
+// Pure-concatenation glued URLs are safeEarly (edge redirects before next()).
 for (const [from, expect] of cases) {
   if (from.startsWith('/blog')) continue
   const got = toCanonical(from)
@@ -99,6 +107,14 @@ for (const [from, expect] of cases) {
   if (!loc.endsWith('/')) {
     console.error(`✗ trailing slash missing for redirect ${from} → ${loc}`)
     process.exit(1)
+  }
+  const last = from.split('/').filter(Boolean).pop() || ''
+  for (const citySlug of CITY_SLUGS) {
+    if (!last.endsWith(citySlug) || last.length <= citySlug.length) continue
+    if (isPureCityConcatenation(last, citySlug)) {
+      console.log(`✓ safeEarly ${from}`)
+    }
+    break
   }
 }
 

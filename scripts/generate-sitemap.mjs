@@ -34,6 +34,35 @@ const CITIES = [
   'torreon', 'valle-de-bravo', 'veracruz',
 ]
 
+const CITY_SET = new Set(CITIES)
+
+/** Thin product×city shells are noindex — do not spend crawl budget in sitemap. */
+function isThinProductCityPath(pathname) {
+  const segs = String(pathname || '')
+    .replace(/\/+$/, '')
+    .split('/')
+    .filter(Boolean)
+  if (segs.length < 3) return false
+  return CITY_SET.has(segs[segs.length - 1])
+}
+
+function isSelfDuplicateHub(pathname) {
+  const segs = String(pathname || '')
+    .replace(/\/+$/, '')
+    .split('/')
+    .filter(Boolean)
+  return segs.length >= 2 && segs[0] === segs[1]
+}
+
+function shouldSitemapPath(pathname) {
+  const p = String(pathname || '').replace(/\/+$/, '') || '/'
+  if (p === '/buscar' || p.startsWith('/buscar')) return false
+  if (p.includes('?')) return false
+  if (isThinProductCityPath(p)) return false
+  if (isSelfDuplicateHub(p)) return false
+  return true
+}
+
 const PRIORITY_KEY = [
   ['/', '1.0'],
   ['/banquetes-catering', '0.9'],
@@ -76,14 +105,14 @@ function collectPaths() {
       if (!pathname.startsWith('/') || pathname.includes('/blog/')) continue
       if (pathname.startsWith('/products/') || pathname.startsWith('/collections/')) continue
       // Never sitemap search / thin query landings (soft-404 + noindex intent)
-      if (pathname === '/buscar' || pathname.startsWith('/buscar?') || pathname.includes('?')) continue
+      if (!shouldSitemapPath(pathname)) continue
       paths.add(pathname.replace(/\/+$/, '') || '/')
     }
   }
 
   // SPA hubs + products + hub×city (NOT every product×city — crawl budget)
   for (const p of collectSpaSeoPathsForSitemap()) {
-    if (p === '/buscar' || p.startsWith('/buscar')) continue
+    if (!shouldSitemapPath(p)) continue
     paths.add(p)
   }
 
@@ -97,7 +126,9 @@ function collectPaths() {
         if (typeof slug !== 'string' || !slug.trim()) continue
         const clean = slug.trim().replace(/^\/+|\/+$/g, '')
         if (!clean || clean.includes('?') || clean.startsWith('blog/')) continue
-        paths.add(`/${clean}`)
+        const nexusPath = `/${clean}`
+        if (!shouldSitemapPath(nexusPath)) continue
+        paths.add(nexusPath)
       }
     } catch (err) {
       console.warn('⚠ seo-landing-slugs.json unreadable — Nexus URLs omitted from sitemap:', err.message)
@@ -117,7 +148,7 @@ function collectPaths() {
 
   // Final scrub
   return [...paths]
-    .filter((p) => p !== '/buscar' && !p.startsWith('/buscar') && !p.includes('?'))
+    .filter((p) => shouldSitemapPath(p))
     .sort()
 }
 

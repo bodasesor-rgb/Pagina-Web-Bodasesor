@@ -1,6 +1,6 @@
 export const empresasNavItems = [
   {
-    "href": "/alimentos-empresas/alimentos-empresas",
+    "href": "/alimentos-empresas",
     "name": "Alimentos Empresas"
   },
   {

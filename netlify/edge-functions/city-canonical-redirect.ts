@@ -106,40 +106,73 @@ export function withTrailingSlash(pathname: string): string {
   return pathname.endsWith('/') ? pathname : `${pathname}/`
 }
 
+/**
+ * Pure concatenation (musicalos-cabos, carpasmorelia) — never Nexus HTML.
+ * Hyphen forms (banquete-kosher-ciudad-de-mexico) may be real Nexus landings.
+ */
+function isPureCityConcatenation(segment: string, citySlug: string): boolean {
+  if (!segment.endsWith(citySlug) || segment.length <= citySlug.length) return false
+  const before = segment.slice(0, -citySlug.length)
+  if (!before || before.endsWith('-')) return false
+  return true
+}
+
 /** Returns canonical path (no trailing slash) or null if already canonical / not a city URL */
 export function toCanonicalCityPath(pathname: string): string | null {
+  return analyzeCityCanonical(pathname).canonical
+}
+
+type CityCanonical = { canonical: string | null; safeEarly: boolean }
+
+export function analyzeCityCanonical(pathname: string): CityCanonical {
   const normalized = decodeURIComponent(pathname).replace(/\/+$/, '') || '/'
-  if (shouldSkip(normalized)) return null
+  if (shouldSkip(normalized)) return { canonical: null, safeEarly: false }
 
   const segments = normalized.split('/').filter(Boolean)
-  if (segments.length === 0) return null
+  if (segments.length === 0) return { canonical: null, safeEarly: false }
 
   const last = segments[segments.length - 1]
 
   // Already a trailing city segment (maybe alias)
   if (CITY_CANONICAL[last]) {
     const canon = CITY_CANONICAL[last]
-    if (last === canon) return null
+    if (last === canon) return { canonical: null, safeEarly: false }
     const prefix = segments.slice(0, -1)
-    return prefix.length ? `/${prefix.join('/')}/${canon}` : `/${canon}`
+    const canonical = prefix.length ? `/${prefix.join('/')}/${canon}` : `/${canon}`
+    // Alias-only (cdmx → ciudad-de-mexico) is always safe to early-redirect
+    return { canonical, safeEarly: true }
   }
 
-  // Single-segment city landing is already canonical (or alias handled above)
-  if (segments.length === 1 && CITY_CANONICAL[segments[0]]) return null
+  if (segments.length === 1 && CITY_CANONICAL[segments[0]]) {
+    return { canonical: null, safeEarly: false }
+  }
 
   const { base, citySlug } = stripCityFromSegment(last)
-  if (!citySlug) return null
+  if (!citySlug) return { canonical: null, safeEarly: false }
 
   const canon = CITY_CANONICAL[citySlug]
   const prefix = segments.slice(0, -1)
   const parts = [...prefix, base, canon].filter(Boolean)
-  return `/${parts.join('/')}`
+  const canonical = `/${parts.join('/')}`
+  const safeEarly = isPureCityConcatenation(last, citySlug)
+  return { canonical, safeEarly }
+}
+
+function apexRedirect(pathname: string, search: string): Response {
+  const dest = new URL(withTrailingSlash(pathname), 'https://bodasesor.com')
+  dest.search = search
+  return Response.redirect(dest.toString(), 301)
 }
 
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
   const pathname = url.pathname.replace(/\/+$/, '') || '/'
-  const canonical = toCanonicalCityPath(url.pathname)
+  const { canonical, safeEarly } = analyzeCityCanonical(url.pathname)
+
+  // Fast one-hop for pure glued URLs (edge before Pretty URLs / HTML inspect)
+  if (canonical && canonical !== pathname && safeEarly) {
+    return apexRedirect(canonical, url.search)
+  }
 
   // Always resolve the static/Nexus/SPA response first.
   // Hyphenated Nexus landings (e.g. /banquete-kosher-ciudad-de-mexico) must NOT
@@ -158,10 +191,7 @@ export default async function handler(request: Request, context: Context) {
   // After P0 (/* → /404.html 404), glued legacy URLs no longer soft-200 the SPA.
   // Still 301 them to slash-canonical; only real Nexus HTML below is preserved.
   if (response.status === 404) {
-    const destPath = withTrailingSlash(canonical)
-    const dest = new URL(destPath, 'https://bodasesor.com')
-    dest.search = url.search
-    return Response.redirect(dest.toString(), 301)
+    return apexRedirect(canonical, url.search)
   }
 
   if (!response.ok) {
@@ -188,10 +218,5 @@ export default async function handler(request: Request, context: Context) {
     return response
   }
 
-  // SPA soft-404 / missing landing → one-hop 301 to apex + trailing slash
-  // (absolute apex skips an extra www→apex hop when edge runs on www)
-  const destPath = withTrailingSlash(canonical)
-  const dest = new URL(destPath, 'https://bodasesor.com')
-  dest.search = url.search
-  return Response.redirect(dest.toString(), 301)
+  return apexRedirect(canonical, url.search)
 }
