@@ -1,5 +1,4 @@
-# Buscadores: acceso total (tu SEO los necesita)
-# Google-Extended abajo = bloquea entrenamiento Gemini, NO indexación Search.
+# Buscadores clásicos: acceso total
 User-agent: Googlebot
 Allow: /
 
@@ -18,20 +17,33 @@ Allow: /
 User-agent: SemrushBot
 Allow: /
 
-# Crawlers de IA: fuera
+# IA — búsqueda y citas (ChatGPT Search, Perplexity, Claude, etc.)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: SearchGPT
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# IA — solo entrenamiento (bloqueado; no afecta Google Search ni bots de arriba)
 User-agent: GPTBot
 Disallow: /
 
-User-agent: ChatGPT-User
-Disallow: /
-
-User-agent: OAI-SearchBot
-Disallow: /
-
 User-agent: ClaudeBot
-Disallow: /
-
-User-agent: Claude-User
 Disallow: /
 
 User-agent: anthropic-ai
@@ -41,9 +53,6 @@ User-agent: CCBot
 Disallow: /
 
 User-agent: Google-Extended
-Disallow: /
-
-User-agent: PerplexityBot
 Disallow: /
 
 User-agent: Bytespider
@@ -79,19 +88,10 @@ Disallow: /
 User-agent: AI2Bot
 Disallow: /
 
-User-agent: Perplexity-User
-Disallow: /
-
-User-agent: Claude-SearchBot
-Disallow: /
-
 User-agent: TikTokSpider
 Disallow: /
 
 User-agent: FacebookBot
-Disallow: /
-
-User-agent: SearchGPT
 Disallow: /
 
 User-agent: archive.org_bot
@@ -151,5 +151,8 @@ Disallow: /wp-login.php
 Disallow: /xmlrpc.php
 Disallow: /.env
 Disallow: /.git
+
+# Resumen para LLMs (servicios, ciudades, contacto)
+# https://bodasesor.com/llms.txt
 
 Sitemap: https://bodasesor.com/sitemap.xml

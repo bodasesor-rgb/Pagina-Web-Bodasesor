@@ -110,23 +110,27 @@ const ALLOW = [
   /Bodasesor/i,
   /Cursor/i,
   /CursorBrowser/i,
+  // AI search / citations (not training — GPTBot stays in BLOCK)
+  /OAI-SearchBot/i,
+  /ChatGPT-User/i,
+  /SearchGPT/i,
+  /PerplexityBot/i,
+  /Perplexity-User/i,
+  /Claude-SearchBot/i,
+  /Claude-User/i,
 ]
 
 // ═══════════════════════════════════════════════════════════════
 // CAPA 2 — BLOQUEAR (IA, SEO scrapers, headless, libraries)
 // ═══════════════════════════════════════════════════════════════
 const BLOCK = [
-  // AI / LLM crawlers
+  // AI training crawlers (search bots are in ALLOW above)
   /GPTBot/i,
-  /OAI-SearchBot/i,
-  /ChatGPT-User/i,
   /ClaudeBot/i,
-  /Claude-User/i,
   /anthropic-ai/i,
   /Claude-Web/i,
   /CCBot/i,
   /Google-Extended/i,
-  /PerplexityBot/i,
   /Bytespider/i,
   /Amazonbot/i,
   /Applebot-Extended/i,
@@ -148,8 +152,6 @@ const BLOCK = [
   /MistralAI-User/i,
   /NovaAct/i,
   /Operator/i,
-  /Perplexity-User/i,
-  /Claude-SearchBot/i,
   /Google-CloudVertexBot/i,
   /xAI-Grok/i,
   /\bGrok\b/i,
@@ -158,7 +160,6 @@ const BLOCK = [
   /iaskspider/i,
   /img2dataset/i,
   /FacebookBot/i,
-  /SearchGPT/i,
 
   // SEO / bandwidth scrapers (Semrush permitido arriba en ALLOW)
   /AhrefsBot/i,
@@ -310,8 +311,11 @@ function shouldBlockCategory(category: string, subcategory: string): string | nu
   if (!category) return null
   if (category === 'tooling' && subcategory === 'netlify-service') return null
   // Netlify may tag Google/Bing as crawler;search — allow that subcategory.
-  // Do NOT blanket-allow crawler;seo (Ahrefs/etc. still hit BLOCK via UA).
+  // AI search agents (ChatGPT Search, Perplexity, etc.) — allow citation crawlers.
   if (category === 'crawler' && /^search$/i.test(subcategory)) {
+    return null
+  }
+  if (category === 'ai-agent' && /^search$/i.test(subcategory)) {
     return null
   }
 
