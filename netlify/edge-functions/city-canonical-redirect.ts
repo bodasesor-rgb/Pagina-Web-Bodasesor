@@ -315,6 +315,17 @@ const HUB_ALIASES: Record<string, string> = {
   'fotografia-video': 'fotografia',
 }
 
+/** Short legacy product URLs (high GSC impressions) → catalog path. */
+const PRODUCT_SHORT_ALIASES: Record<string, string> = {
+  'silla-ghost': '/sillas/ghost',
+  'silla-camila': '/sillas/camila',
+  'silla-crossback': '/sillas/crossback',
+  'silla-tiffany': '/sillas/tiffany',
+  'silla-tolix': '/sillas/tolix',
+  'silla-basket': '/sillas/basket',
+  'silla-antonella': '/sillas/antonella',
+}
+
 function applyHubAlias(pathname: string): string | null {
   const segs = decodeURIComponent(pathname)
     .replace(/\/+$/, '')
@@ -327,6 +338,12 @@ function applyHubAlias(pathname: string): string | null {
   return `/${segs.join('/')}`
 }
 
+/** City unglue + hub alias in one pass (avoids floreria-decoracionpuebla → …/puebla → /floreria/…). */
+function withHubAlias(pathname: string | null): string | null {
+  if (!pathname) return null
+  return applyHubAlias(pathname) || pathname
+}
+
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
   const pathname = url.pathname.replace(/\/+$/, '') || '/'
@@ -336,6 +353,11 @@ export default async function handler(request: Request, context: Context) {
     return apexRedirect(buscarHub)
   }
 
+  const shortProduct = PRODUCT_SHORT_ALIASES[pathname.replace(/^\//, '')]
+  if (shortProduct) {
+    return apexRedirect(shortProduct, url.search)
+  }
+
   const hubAlias = applyHubAlias(pathname)
   if (hubAlias && hubAlias !== pathname) {
     return apexRedirect(hubAlias, url.search)
@@ -343,14 +365,15 @@ export default async function handler(request: Request, context: Context) {
 
   const slashHub = hubNeedsTrailingSlash(url.pathname)
   if (slashHub) {
-    return apexRedirect(slashHub, url.search)
+    return apexRedirect(withHubAlias(slashHub) || slashHub, url.search)
   }
 
   const { canonical, safeEarly } = analyzeCityCanonical(url.pathname)
+  const dest = withHubAlias(canonical)
 
   // Fast one-hop for pure glued URLs (edge before Pretty URLs / HTML inspect)
-  if (canonical && canonical !== pathname && safeEarly) {
-    return apexRedirect(canonical, url.search)
+  if (dest && dest !== pathname && safeEarly) {
+    return apexRedirect(dest, url.search)
   }
 
   // Always resolve the static/Nexus/SPA response first.
@@ -358,7 +381,7 @@ export default async function handler(request: Request, context: Context) {
   // be 301'd away — they are real SEO HTML with seo-service-hero.
   const response = await context.next()
 
-  if (!canonical || canonical === pathname) {
+  if (!dest || dest === pathname) {
     return response
   }
 
@@ -370,7 +393,7 @@ export default async function handler(request: Request, context: Context) {
   // After P0 (/* → /404.html 404), glued legacy URLs no longer soft-200 the SPA.
   // Still 301 them to slash-canonical; only real Nexus HTML below is preserved.
   if (response.status === 404) {
-    return apexRedirect(canonical, url.search)
+    return apexRedirect(dest, url.search)
   }
 
   if (!response.ok) {
@@ -397,5 +420,5 @@ export default async function handler(request: Request, context: Context) {
     return response
   }
 
-  return apexRedirect(canonical, url.search)
+  return apexRedirect(dest, url.search)
 }

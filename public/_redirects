@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4349 rules + fallback
+# 4359 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  https://bodasesor.com/sillas/ghost/  301
@@ -170,8 +170,8 @@
 /banquetes-cateringguadalajara/  https://bodasesor.com/banquetes-catering/guadalajara/  301
 /banquetes-cateringcuernavaca  https://bodasesor.com/banquetes-catering/cuernavaca/  301
 /banquetes-cateringcuernavaca/  https://bodasesor.com/banquetes-catering/cuernavaca/  301
-/barra-bebidasmonterrey  https://bodasesor.com/barra-bebidas/monterrey/  301
-/barra-bebidasmonterrey/  https://bodasesor.com/barra-bebidas/monterrey/  301
+/barra-bebidasmonterrey  https://bodasesor.com/barras-de-bebidas/monterrey/  301
+/barra-bebidasmonterrey/  https://bodasesor.com/barras-de-bebidas/monterrey/  301
 /comidasciudad-de-mexico  https://bodasesor.com/comidas/ciudad-de-mexico/  301
 /comidasciudad-de-mexico/  https://bodasesor.com/comidas/ciudad-de-mexico/  301
 /floreria-decoracionpuebla  https://bodasesor.com/floreria/puebla/  301
@@ -194,6 +194,16 @@
 /paellacuernavaca/  https://bodasesor.com/paella/cuernavaca/  301
 /silla-camila  https://bodasesor.com/sillas/camila/  301
 /silla-camila/  https://bodasesor.com/sillas/camila/  301
+/wedding-plannerguadalajara  https://bodasesor.com/wedding-planner/guadalajara/  301
+/wedding-plannerguadalajara/  https://bodasesor.com/wedding-planner/guadalajara/  301
+/comidascancun  https://bodasesor.com/comidas/cancun/  301
+/comidascancun/  https://bodasesor.com/comidas/cancun/  301
+/comidaspuebla  https://bodasesor.com/comidas/puebla/  301
+/comidaspuebla/  https://bodasesor.com/comidas/puebla/  301
+/carpas/arabeguadalajara  https://bodasesor.com/carpas/arabe/guadalajara/  301
+/carpas/arabeguadalajara/  https://bodasesor.com/carpas/arabe/guadalajara/  301
+/pistas-tarimas/pista-iluminadamonterrey  https://bodasesor.com/pistas-tarimas/pista-iluminada/monterrey/  301
+/pistas-tarimas/pista-iluminadamonterrey/  https://bodasesor.com/pistas-tarimas/pista-iluminada/monterrey/  301
 /collections/alimentos-para-empresas-y-comedores-industriales  https://bodasesor.com/alimentos-empresas/  301
 /collections/alimentos-para-empresas-y-comedores-industriales/  https://bodasesor.com/alimentos-empresas/  301
 /collections/arcos-florales-para-ceremonias-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
