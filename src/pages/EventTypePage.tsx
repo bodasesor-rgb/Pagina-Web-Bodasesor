@@ -104,7 +104,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Ramos, arco floral, centros de mesa y decoración completa del venue con flores naturales.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Ramos, arco floral, centros de mesa y decoración completa del venue con flores naturales.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones, haciendas, jardines y venues premium con disponibilidad y precios competitivos.", href: "/espacios-eventos" },
       ],
     },
@@ -185,7 +185,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Arreglo completo del salón: mesa de honor, centros de mesa, arco floral y entrada.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Arreglo completo del salón: mesa de honor, centros de mesa, arco floral y entrada.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones y jardines para quinceañeras de todos los tamaños, en toda la república.", href: "/espacios-eventos" },
       ],
     },
@@ -249,7 +249,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Decoración con identidad corporativa, señalética de marca y ambientación ejecutiva.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Decoración con identidad corporativa, señalética de marca y ambientación ejecutiva.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Centros de convenciones, salones ejecutivos y venues premium para cualquier escala.", href: "/espacios-eventos" },
       ],
     },
@@ -319,7 +319,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Globos, flores, letreros y centros de mesa en la temática elegida para mamá.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Globos, flores, letreros y centros de mesa en la temática elegida para mamá.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones y jardines íntimos para baby showers de todos los tamaños.", href: "/espacios-eventos" },
       ],
     },
@@ -373,7 +373,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Globos, flores, letreros y centros de mesa coordinados con la temática del festejado.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Globos, flores, letreros y centros de mesa coordinados con la temática del festejado.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones, jardines y terrazas para fiestas de cumpleaños de todos los tamaños.", href: "/espacios-eventos" },
       ],
     },
@@ -434,7 +434,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Decoración institucional con los colores de la universidad o preparatoria.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Decoración institucional con los colores de la universidad o preparatoria.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones y venues para ceremonias de entrega de diplomas y fiestas de graduación.", href: "/espacios-eventos" },
       ],
     },
@@ -494,7 +494,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Decoración en blanco y dorado con flores naturales. Elegancia y solemnidad.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Decoración en blanco y dorado con flores naturales. Elegancia y solemnidad.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Jardines y salones para recepciones de Primera Comunión de todos los tamaños.", href: "/espacios-eventos" },
       ],
     },
@@ -554,7 +554,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Centros de mesa florales, velas y ambientación para cenas íntimas y elegantes.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Centros de mesa florales, velas y ambientación para cenas íntimas y elegantes.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones y venues con la atmósfera ideal para cenas de gala y cenas privadas.", href: "/espacios-eventos" },
       ],
     },
@@ -606,7 +606,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       accent: "bg-green-50 border-green-200",
       services: [
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Jardines, salones y terrazas para comidas familiares y empresariales.", href: "/espacios-eventos" },
-        { icon: "💐", title: "Florería y Decoración", desc: "Decoración de mesa para comidas de gala y celebraciones especiales del mediodía.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Decoración de mesa para comidas de gala y celebraciones especiales del mediodía.", href: "/floreria" },
       ],
     },
   ],
@@ -646,7 +646,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       accent: "bg-green-50 border-green-200",
       services: [
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Salones y terrazas con vista para desayunos y brunchs de empresa o familia.", href: "/espacios-eventos" },
-        { icon: "💐", title: "Florería y Decoración", desc: "Ambientación fresca y luminosa para desayunos especiales y brunchs de celebración.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Ambientación fresca y luminosa para desayunos especiales y brunchs de celebración.", href: "/floreria" },
       ],
     },
   ],
@@ -677,7 +677,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "💐",
       accent: "bg-green-50 border-green-200",
       services: [
-        { icon: "💐", title: "Florería y Decoración", desc: "Decoración con identidad visual de marca: colores corporativos, señalética y ambientación.", href: "/floreria-decoracion" },
+        { icon: "💐", title: "Florería y Decoración", desc: "Decoración con identidad visual de marca: colores corporativos, señalética y ambientación.", href: "/floreria" },
         { icon: "🏛️", title: "Espacios para Eventos", desc: "Venues premium, showrooms y espacios de diseño para lanzamientos de alto impacto.", href: "/espacios-eventos" },
       ],
     },

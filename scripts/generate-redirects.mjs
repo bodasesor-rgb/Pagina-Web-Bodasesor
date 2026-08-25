@@ -128,6 +128,14 @@ const GSC_FORCE_REDIRECTS = [
   ['/products/letras-gigantes-para-eventos-cdmx', '/floreria/letras-gigantes/'],
   // Self-duplicate hub path (slug = parent)
   ['/alimentos-empresas/alimentos-empresas', '/alimentos-empresas/'],
+  // Canonical florería hub (avoid splitting equity with /floreria-decoracion)
+  ['/floreria-decoracion', '/floreria/'],
+  // Legacy bare banquetes path often meant catering hub in Shopify era
+  ['/collections/banquetes-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/banquetes-para-bodas-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/banquetes-para-eventos-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
+  ['/collections/banquetes-para-xv-anos-cdmx', '/xv-anos/ciudad-de-mexico/'],
+  ['/collections/banquetes-para-fiestas', '/banquetes-catering/'],
 ]
 
 function parseCsv(text) {
@@ -257,7 +265,10 @@ function buildRedirectsFile(map) {
     .sort(([a], [b]) => a.localeCompare(b))
 
   for (const [from, to] of entries) {
-    lines.push(`${from}  ${toRedirectDest(to)}  301`)
+    const dest = toRedirectDest(to)
+    const abs =
+      dest.startsWith('http') ? dest : `${SITE_BASE}${dest.startsWith('/') ? dest : `/${dest}`}`
+    lines.push(`${from}  ${abs}  301`)
   }
 
   lines.push('')

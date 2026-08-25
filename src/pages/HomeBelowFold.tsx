@@ -323,7 +323,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 <ul className="space-y-3 mb-6 flex-grow">
                   {[
                     { text: 'Wedding planner', href: '/wedding-planner' },
-                    { text: 'Decoración y florería', href: '/floreria-decoracion' },
+                    { text: 'Decoración y florería', href: '/floreria' },
                     { text: 'Fotografía y video', href: '/fotografia-video' },
                     { text: 'Música y DJ', href: '/musica' },
                     { text: 'Shows y entretenimiento', href: '/shows' },

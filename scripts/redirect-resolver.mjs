@@ -19,6 +19,7 @@ const COLLECTION_PREFIX_MAP = [
   ['banquetes-para-eventos-pequenos-en', '/banquetes-catering'],
   ['banquetes-para-fiestas-infantiles-en', '/banquetes-catering'],
   ['banquetes-para-xv-anos-en', '/xv-anos'],
+  ['banquetes-para-xv-anos', '/xv-anos'],
   ['banquetes-para-bautizos-en', '/banquetes-catering'],
   ['servicio-de-banqueteria-en', '/banquetes-catering'],
   ['servicio-de-banquetes-en', '/alimentos-empresas'],
@@ -644,10 +645,20 @@ export function resolveLegacyPath(fromPath) {
     const { base, city } = stripCitySuffix(decoded)
 
     if (PRODUCT_ALIASES[base]) return withCity(PRODUCT_ALIASES[base], city)
-    if (productSlugs.has(base)) return withCity(`/${base}`, city)
+    if (PRODUCT_ALIASES[decoded]) return withCity(PRODUCT_ALIASES[decoded], city)
 
-    const mapped = matchCollectionBase(base)
+    // Prefix map BEFORE productSlugs — "banquetes" product slug otherwise steals
+    // Shopify collections (banquetes-cdmx → /banquetes instead of /banquetes-catering).
+    const mapped =
+      matchCollectionBase(decoded) ||
+      matchCollectionBase(base) ||
+      matchCollectionBase(stripSeoTrailing(base))
     if (mapped) return withCity(mapped, city)
+
+    if (productSlugs.has(base)) {
+      if (base === 'banquetes') return withCity('/banquetes-catering', city)
+      return withCity(`/${base}`, city)
+    }
 
     const mobiliario = resolveMobiliarioPath(base)
     if (mobiliario) return withCity(mobiliario, city)
