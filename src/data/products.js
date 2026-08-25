@@ -7693,7 +7693,7 @@ const PRODUCTS = [
       ],
       category: "servicios",
       categoryLabel: "Servicios",
-      categoryHref: "/fotografia-video",
+      categoryHref: "/fotografia",
       related: [
         {
           name: "Espacios para Eventos",
