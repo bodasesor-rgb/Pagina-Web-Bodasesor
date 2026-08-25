@@ -164,9 +164,33 @@ function apexRedirect(pathname: string, search: string): Response {
   return Response.redirect(dest.toString(), 301)
 }
 
+/** Duplicate hubs → canonical SPA hub (before Pretty URLs / soft SPA). */
+const HUB_ALIASES: Record<string, string> = {
+  'floreria-decoracion': 'floreria',
+  'fotografia-video': 'fotografia',
+}
+
+function applyHubAlias(pathname: string): string | null {
+  const segs = decodeURIComponent(pathname)
+    .replace(/\/+$/, '')
+    .split('/')
+    .filter(Boolean)
+  if (!segs.length) return null
+  const alias = HUB_ALIASES[segs[0]]
+  if (!alias || alias === segs[0]) return null
+  segs[0] = alias
+  return `/${segs.join('/')}`
+}
+
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
   const pathname = url.pathname.replace(/\/+$/, '') || '/'
+
+  const hubAlias = applyHubAlias(pathname)
+  if (hubAlias && hubAlias !== pathname) {
+    return apexRedirect(hubAlias, url.search)
+  }
+
   const { canonical, safeEarly } = analyzeCityCanonical(url.pathname)
 
   // Fast one-hop for pure glued URLs (edge before Pretty URLs / HTML inspect)

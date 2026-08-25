@@ -176,7 +176,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -362,7 +362,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -548,7 +548,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -734,7 +734,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -928,7 +928,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -1122,7 +1122,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -1708,7 +1708,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -1902,7 +1902,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -2096,7 +2096,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -2294,7 +2294,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -2492,7 +2492,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -2690,7 +2690,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -2896,7 +2896,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -3094,7 +3094,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -3296,7 +3296,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -3494,7 +3494,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -3692,7 +3692,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -3922,7 +3922,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -4112,7 +4112,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -4318,7 +4318,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -4508,7 +4508,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -4698,7 +4698,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -4888,7 +4888,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -5040,7 +5040,7 @@ const PRODUCTS = [
         },
         {
           name: "Decoración y Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -5199,7 +5199,7 @@ const PRODUCTS = [
         },
         {
           name: "Decoración y Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -5342,7 +5342,7 @@ const PRODUCTS = [
         },
         {
           name: "Decoración y Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -5485,7 +5485,7 @@ const PRODUCTS = [
         },
         {
           name: "Decoración y Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -5628,7 +5628,7 @@ const PRODUCTS = [
         },
         {
           name: "Decoración y Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -5824,7 +5824,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         }
       ]
@@ -6010,7 +6010,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         }
       ]
@@ -6518,7 +6518,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -6655,7 +6655,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -6807,7 +6807,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         }
       ]
@@ -6929,7 +6929,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -7066,7 +7066,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -7255,7 +7255,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -7431,7 +7431,7 @@ const PRODUCTS = [
       related: [
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Fotografía y Video",
@@ -7527,7 +7527,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -7560,7 +7560,7 @@ const PRODUCTS = [
       ],
       category: "servicios",
       categoryLabel: "Servicios",
-      categoryHref: "/floreria-decoracion",
+      categoryHref: "/floreria",
       related: [
         {
           name: "Espacios para Eventos",
@@ -7701,7 +7701,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Inflables y Juegos",
@@ -7783,7 +7783,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -7834,7 +7834,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Fotografía y Video",
@@ -7967,7 +7967,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Fotografía y Video",
@@ -8069,7 +8069,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -8100,7 +8100,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Fotografía y Video",
@@ -8208,7 +8208,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -8239,7 +8239,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Fotografía y Video",
@@ -8341,7 +8341,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -8372,7 +8372,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion"
+          href: "/floreria"
         },
         {
           name: "Fotografía y Video",
@@ -8464,7 +8464,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -8613,7 +8613,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -8762,7 +8762,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -8911,7 +8911,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -9065,7 +9065,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -9209,7 +9209,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -9358,7 +9358,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -9502,7 +9502,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -9705,7 +9705,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -9903,7 +9903,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10101,7 +10101,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10261,7 +10261,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10389,7 +10389,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10528,7 +10528,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10675,7 +10675,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10818,7 +10818,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -10965,7 +10965,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11112,7 +11112,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11255,7 +11255,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11388,7 +11388,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11521,7 +11521,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11654,7 +11654,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11793,7 +11793,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -11936,7 +11936,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12069,7 +12069,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12202,7 +12202,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12349,7 +12349,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12482,7 +12482,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12615,7 +12615,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12738,7 +12738,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -12873,7 +12873,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -13016,7 +13016,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -13135,7 +13135,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -13262,7 +13262,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -13377,7 +13377,7 @@ const PRODUCTS = [
         },
         {
           name: "Florería y Decoración",
-          href: "/floreria-decoracion",
+          href: "/floreria",
           icon: "💐"
         },
         {
@@ -13437,7 +13437,7 @@ const PRODUCTS = [
         { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
         { name: "Banquete Formal", href: "/banquetes", icon: "🍽️" },
         { name: "Barras de Bebidas", href: "/barra-bebidas", icon: "🍹" },
-        { name: "Florería y Decoración", href: "/floreria-decoracion", icon: "💐" },
+        { name: "Florería y Decoración", href: "/floreria", icon: "💐" },
         { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
         { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }
       ]
@@ -13526,7 +13526,7 @@ const PRODUCTS = [
       integralServices: [
         { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
         { name: "Banquete Mexicano", href: "/banquete-mexicano", icon: "🌮" },
-        { name: "Florería y Decoración", href: "/floreria-decoracion", icon: "💐" },
+        { name: "Florería y Decoración", href: "/floreria", icon: "💐" },
         { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
         { name: "Entelados", href: "/entelados", icon: "✨" },
         { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }

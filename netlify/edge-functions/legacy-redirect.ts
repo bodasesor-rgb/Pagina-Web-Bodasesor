@@ -1,10 +1,21 @@
 import type { Context } from '@netlify/edge-functions'
 
-/** Minimal fallbacks if dist/_redirects is missing from a bad deploy */
+/** Minimal fallbacks if dist/_redirects is missing / stale from a bad deploy */
 const CRITICAL: Record<string, string> = {
   '/products/tarima-madera': 'https://bodasesor.com/pistas-tarimas/tarima-madera/',
   '/collections/xv-anos-cdmx': 'https://bodasesor.com/xv-anos/ciudad-de-mexico/',
   '/products/tarima-vinil': 'https://bodasesor.com/pistas-tarimas/pista-madera/',
+  // High-impression Shopify banquetes collections (must not land on /banquetes menu hub)
+  '/collections/banquetes-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-cdmx-1': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-cdmx-2': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-en-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-para-bodas-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-para-bodas-cdmx-1': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-para-eventos-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-para-fiestas': 'https://bodasesor.com/banquetes-catering/',
+  '/collections/banquetes-para-fiestas-cdmx': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-para-xv-anos-cdmx': 'https://bodasesor.com/xv-anos/ciudad-de-mexico/',
 }
 
 function withTrailingSlash(raw: string): string {
