@@ -90,7 +90,7 @@ const GSC_FORCE_REDIRECTS = [
   ['/collections/catering-empresarial-cdmx', '/alimentos-empresas/ciudad-de-mexico/'],
   ['/collections/banquetes-empresariales-cdmx', '/alimentos-empresas/ciudad-de-mexico/'],
   ['/products/ncatering-catering-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
-  ['/collections/ramos-de-novia-personalizados-cdmx', '/floreria/ramos-de-novia/ciudad-de-mexico/'],
+  ['/collections/ramos-de-novia-personalizados-cdmx', '/floreria/ciudad-de-mexico/'],
   ['/collections/precio-de-fotografia-para-bodas-cdmx', '/fotografia/ciudad-de-mexico/'],
   ['/collections/eventos-corporativos-gustavo-a-madero', '/corporativos/ciudad-de-mexico/'],
   ['/products/catering-coyoacan', '/banquetes-catering/ciudad-de-mexico/'],

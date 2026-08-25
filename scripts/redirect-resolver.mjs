@@ -219,7 +219,7 @@ const PRODUCT_ALIASES = {
   'mobiliario-corporativo': '/mesas-sillas/ciudad-de-mexico',
   'flores-frescas-para-bodas-de-lujo-cdmx': '/floreria/ciudad-de-mexico',
   'flores-frescas-para-bodas-de-lujo': '/floreria',
-  'ramos-de-novia-personalizados-cdmx': '/floreria/ramos-de-novia/ciudad-de-mexico',
+  'ramos-de-novia-personalizados-cdmx': '/floreria/ciudad-de-mexico',
   'ramos-de-novia-personalizados': '/floreria/ramos-de-novia',
   'arreglos-florales-para-ceremonias-cdmx': '/floreria/ciudad-de-mexico',
   'banquetes-para-fiestas-cdmx': '/banquetes-catering/ciudad-de-mexico',
@@ -371,15 +371,115 @@ const NO_CITY_PATHS = new Set([
   '/buscar',
 ])
 
+/** Hubs that keep indexable /{hub}/{city} shells (see spa-seo-hubs.js). */
+const CITY_INDEXABLE_HUBS = new Set([
+  'banquetes-catering',
+  'barras-de-bebidas',
+  'mesas-personalizadas',
+  'combinaciones-mesas-sillas',
+  'vajillas',
+  'colgantes',
+  'barras',
+  'entelados',
+  'floreria',
+  'shows',
+  'pistas-tarimas',
+  'salas-periqueras',
+  'reposteria',
+  'wedding-planner',
+  'musica',
+  'fotografia',
+  'espacios-eventos',
+  'carpas',
+  'alimentos-empresas',
+  'audio-iluminacion-video',
+  'mesas-sillas',
+  'bodas',
+  'corporativos',
+  'xv-anos',
+  'graduaciones',
+  'baby-shower',
+  'cumpleanos',
+  'primera-comunion',
+  'cenas',
+  'comidas',
+  'desayunos',
+  'lanzamientos',
+  'parrillada',
+  'banquetes',
+  'banquete-kosher',
+  'banquete-mexicano',
+  'banquete-navideno',
+  'mesa-dulces',
+  'mesa-postres',
+  'mesa-quesos',
+  'cupcakes-gourmet',
+  'barra-bebidas',
+  'barra-mocteles',
+  'cocteles-mixologia',
+  'barra-cafe-premium',
+  'paletas-helados',
+  'inflables',
+  'puestos-quesadillas',
+  // Banquet format hubs (indexable with city)
+  'banquetes/2-tiempos',
+  'banquetes/3-tiempos',
+  'banquetes/4-tiempos',
+  'banquetes/buffet',
+  'banquete-kosher/2-tiempos',
+  'banquete-kosher/3-tiempos',
+  'banquete-kosher/4-tiempos',
+  'banquete-kosher/buffet',
+  'banquete-mexicano/2-tiempos',
+  'banquete-mexicano/3-tiempos',
+  'banquete-mexicano/4-tiempos',
+  'banquete-mexicano/buffet',
+  'banquete-navideno/2-tiempos',
+  'banquete-navideno/3-tiempos',
+  'banquete-navideno/4-tiempos',
+  'banquete-navideno/buffet',
+])
+
+const CITY_SLUG_SET = new Set(CITY_SUFFIXES)
+
+/**
+ * Attach city only to indexable hubs.
+ * Never emit thin product×city paths (noindex) like /floreria/ramos/ciudad-de-mexico.
+ * Deep product + city → promote to /{hub}/{city}. Lone product slug → keep national page.
+ */
 function withCity(pathname, city) {
   if (!city) return pathname
   const normalized = normalizeCity(city)
-  const base = pathname.replace(/\/+$/, '') || '/'
-  // Never emit bare /{city} from home — that soft-404s for crawlers/users.
-  if (base === '/') return '/'
-  if (base.startsWith('/buscar')) return base
-  if (NO_CITY_PATHS.has(base)) return base
-  return `${base}/${normalized}`.replace(/\/+/g, '/')
+  let segs = (pathname.replace(/\/+$/, '') || '/')
+    .split('/')
+    .filter(Boolean)
+
+  if (!segs.length) return '/'
+  if (segs[0] === 'buscar') return pathname.startsWith('/') ? pathname : `/${pathname}`
+
+  if (CITY_SLUG_SET.has(segs[segs.length - 1])) {
+    segs = segs.slice(0, -1)
+  }
+  if (!segs.length) return '/'
+
+  const basePath = `/${segs.join('/')}`
+  if (NO_CITY_PATHS.has(basePath)) return basePath
+
+  // /banquetes/3-tiempos + city → indexable format×city
+  if (segs.length === 2 && CITY_INDEXABLE_HUBS.has(`${segs[0]}/${segs[1]}`)) {
+    return `/${segs[0]}/${segs[1]}/${normalized}`
+  }
+
+  // /floreria/ramos-de-novia + city → /floreria/{city} (not thin product×city)
+  if (segs.length >= 2) {
+    const hub = segs[0]
+    if (CITY_INDEXABLE_HUBS.has(hub)) return `/${hub}/${normalized}`
+    return basePath
+  }
+
+  const hub = segs[0]
+  if (CITY_INDEXABLE_HUBS.has(hub)) return `/${hub}/${normalized}`
+  return `/${hub}`
 }
 
 function matchKeyword(slug) {

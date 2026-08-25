@@ -251,15 +251,96 @@ const NO_CITY_PATHS = new Set([
   '/buscar',
 ])
 
+const CITY_INDEXABLE_HUBS = new Set([
+  'banquetes-catering',
+  'barras-de-bebidas',
+  'mesas-personalizadas',
+  'floreria',
+  'shows',
+  'pistas-tarimas',
+  'salas-periqueras',
+  'reposteria',
+  'wedding-planner',
+  'musica',
+  'fotografia',
+  'espacios-eventos',
+  'carpas',
+  'alimentos-empresas',
+  'audio-iluminacion-video',
+  'mesas-sillas',
+  'bodas',
+  'corporativos',
+  'xv-anos',
+  'graduaciones',
+  'baby-shower',
+  'cumpleanos',
+  'primera-comunion',
+  'cenas',
+  'comidas',
+  'desayunos',
+  'banquetes',
+  'banquete-kosher',
+  'banquete-mexicano',
+  'banquete-navideno',
+  'barra-bebidas',
+  'puestos-quesadillas',
+  'banquetes/2-tiempos',
+  'banquetes/3-tiempos',
+  'banquetes/4-tiempos',
+  'banquetes/buffet',
+])
+
+const CITY_SLUG_SET = new Set([
+  'san-miguel-allende',
+  'san-luis-potosi',
+  'ciudad-de-mexico',
+  'estado-de-mexico',
+  'puerto-vallarta',
+  'los-cabos',
+  'aguascalientes',
+  'guadalajara',
+  'monterrey',
+  'cuernavaca',
+  'cancun',
+  'tijuana',
+  'veracruz',
+  'morelia',
+  'oaxaca',
+  'pachuca',
+  'queretaro',
+  'toluca',
+  'torreon',
+  'merida',
+  'puebla',
+  'leon',
+  'acapulco',
+  'valle-de-bravo',
+  'cdmx',
+  'cozumel',
+  'vallarta',
+])
+
 function withCity(pathname, city) {
   if (!city) return pathname
   const normalized = normalizeCity(city)
-  const base = pathname.replace(/\/+$/, '') || '/'
-  // Never emit bare /{city} from home — that soft-404s for crawlers/users.
-  if (base === '/') return '/'
-  if (base.startsWith('/buscar')) return base
-  if (NO_CITY_PATHS.has(base)) return base
-  return `${base}/${normalized}`.replace(/\/+/g, '/')
+  let segs = (pathname.replace(/\/+$/, '') || '/').split('/').filter(Boolean)
+  if (!segs.length) return '/'
+  if (segs[0] === 'buscar') return pathname.startsWith('/') ? pathname : `/${pathname}`
+  if (CITY_SLUG_SET.has(segs[segs.length - 1])) segs = segs.slice(0, -1)
+  if (!segs.length) return '/'
+  const basePath = `/${segs.join('/')}`
+  if (NO_CITY_PATHS.has(basePath)) return basePath
+  if (segs.length === 2 && CITY_INDEXABLE_HUBS.has(`${segs[0]}/${segs[1]}`)) {
+    return `/${segs[0]}/${segs[1]}/${normalized}`
+  }
+  if (segs.length >= 2) {
+    const hub = segs[0]
+    if (CITY_INDEXABLE_HUBS.has(hub)) return `/${hub}/${normalized}`
+    return basePath
+  }
+  const hub = segs[0]
+  if (CITY_INDEXABLE_HUBS.has(hub)) return `/${hub}/${normalized}`
+  return `/${hub}`
 }
 
 function matchKeyword(slug) {
