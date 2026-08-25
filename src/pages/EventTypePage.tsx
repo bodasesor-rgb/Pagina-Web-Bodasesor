@@ -82,7 +82,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con coctelería clásica, refrescos, aguas frescas y todo lo necesario.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con coctelería clásica, refrescos, aguas frescas y todo lo necesario.", href: "/barras-de-bebidas" },
         { icon: "🍸", title: "Cócteles y Mixología", desc: "Bartenders profesionales con cócteles de autor personalizados para tu boda.", href: "/cocteles-mixologia" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Baristas con café de especialidad italiano para el cierre perfecto de la velada.", href: "/barra-cafe-premium" },
         { icon: "🧃", title: "Barra de Mocteles", desc: "Mocteles artesanales sin alcohol para todos los invitados. Elegantes y deliciosos.", href: "/barra-mocteles" },
@@ -163,7 +163,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con cócteles, refrescos, aguas frescas y barra sin alcohol para los jóvenes.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con cócteles, refrescos, aguas frescas y barra sin alcohol para los jóvenes.", href: "/barras-de-bebidas" },
         { icon: "🧃", title: "Barra de Mocteles", desc: "Mocteles elegantes sin alcohol. Perfectos para quinceañeras con invitados de todas las edades.", href: "/barra-mocteles" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Baristas profesionales con café de especialidad para el cierre de la noche.", href: "/barra-cafe-premium" },
         { icon: "🍦", title: "Paletas y Helados", desc: "Carrito de paletas artesanales y helados gourmet. El detalle que todos recuerdan.", href: "/paletas-helados" },
@@ -239,7 +239,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       accent: "bg-blue-50 border-blue-200",
       services: [
         { icon: "☕", title: "Barra de Café Premium", desc: "Baristas profesionales con café de especialidad. La pausa ejecutiva que tu equipo merece.", href: "/barra-cafe-premium" },
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa para cenas de gala, premiaciones y eventos corporativos de fin de año.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa para cenas de gala, premiaciones y eventos corporativos de fin de año.", href: "/barras-de-bebidas" },
         { icon: "🍸", title: "Cócteles y Mixología", desc: "Bartenders de autor para lanzamientos, inauguraciones y eventos de marca premium.", href: "/cocteles-mixologia" },
         { icon: "🧃", title: "Barra de Mocteles", desc: "Mocteles artesanales para eventos donde se requiere opción sin alcohol.", href: "/barra-mocteles" },
       ],
@@ -351,7 +351,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con cócteles, refrescos y aguas frescas para cumpleaños de adultos.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con cócteles, refrescos y aguas frescas para cumpleaños de adultos.", href: "/barras-de-bebidas" },
         { icon: "🧃", title: "Barra de Mocteles", desc: "Mocteles artesanales sin alcohol para todas las edades y todos los invitados.", href: "/barra-mocteles" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Baristas con café de especialidad para el cierre de la celebración.", href: "/barra-cafe-premium" },
         { icon: "🍦", title: "Paletas y Helados", desc: "Carrito artesanal con paletas y helados gourmet. El detalle que todos recuerdan.", href: "/paletas-helados" },
@@ -415,7 +415,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra libre completa para la fiesta de graduación. Todo lo que los egresados merecen.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra libre completa para la fiesta de graduación. Todo lo que los egresados merecen.", href: "/barras-de-bebidas" },
         { icon: "🍸", title: "Cócteles y Mixología", desc: "Cócteles de autor y mixología artesanal para festejar el logro con estilo.", href: "/cocteles-mixologia" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Café de especialidad con barista para el cóctel post-ceremonia.", href: "/barra-cafe-premium" },
       ],
@@ -474,7 +474,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       accent: "bg-blue-50 border-blue-200",
       services: [
         { icon: "🧃", title: "Barra de Mocteles", desc: "Mocteles artesanales sin alcohol. Perfectos para toda la familia, incluidos los niños.", href: "/barra-mocteles" },
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con opciones para adultos y menores. Todo incluido.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con opciones para adultos y menores. Todo incluido.", href: "/barras-de-bebidas" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Café de especialidad con barista para los adultos durante la recepción.", href: "/barra-cafe-premium" },
         { icon: "🍦", title: "Paletas y Helados", desc: "Carrito artesanal con paletas y helados. Los niños no pueden resistirlo.", href: "/paletas-helados" },
       ],
@@ -535,7 +535,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con cócteles, vinos, destilados y bebidas sin alcohol para la cena.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa con cócteles, vinos, destilados y bebidas sin alcohol para la cena.", href: "/barras-de-bebidas" },
         { icon: "🍸", title: "Cócteles y Mixología", desc: "Bartenders de autor con cócteles diseñados especialmente para la ocasión.", href: "/cocteles-mixologia" },
         { icon: "☕", title: "Barra de Café Premium", desc: "El cierre perfecto de la cena con café de especialidad y postres.", href: "/barra-cafe-premium" },
       ],
@@ -588,7 +588,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Aguas frescas, refrescos y cócteles para acompañar la comida.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Aguas frescas, refrescos y cócteles para acompañar la comida.", href: "/barras-de-bebidas" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Café de especialidad para el cierre de la comida. El digestivo perfecto.", href: "/barra-cafe-premium" },
       ],
     },
@@ -667,7 +667,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "🍹",
       accent: "bg-blue-50 border-blue-200",
       services: [
-        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa para el cocktail del lanzamiento. Todo lo que tus invitados esperan.", href: "/barra-bebidas" },
+        { icon: "🍹", title: "Barra de Bebidas", desc: "Barra completa para el cocktail del lanzamiento. Todo lo que tus invitados esperan.", href: "/barras-de-bebidas" },
         { icon: "🍸", title: "Cócteles y Mixología", desc: "Cócteles de autor diseñados con los colores o concepto de tu marca.", href: "/cocteles-mixologia" },
         { icon: "☕", title: "Barra de Café Premium", desc: "Café de especialidad para lanzamientos matutinos o vespertinos.", href: "/barra-cafe-premium" },
       ],

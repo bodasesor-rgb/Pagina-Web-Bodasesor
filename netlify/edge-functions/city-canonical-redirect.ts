@@ -199,6 +199,7 @@ const TRAILING_SLASH_HUBS = new Set([
   'vajillas',
   'salas-periqueras',
   'reposteria',
+  'carrito-snacks',
   'desayunos',
   'comidas',
   'cenas',
@@ -215,6 +216,11 @@ const TRAILING_SLASH_HUBS = new Set([
   'barras',
   'mesas-personalizadas',
   'combinaciones-mesas-sillas',
+  'barra-pizzas',
+  'barra-crepas',
+  'paella',
+  'cupcakes-gourmet',
+  'taquiza-guisados',
   'galeria',
   'catalogos',
   'quienes-somos',
@@ -295,6 +301,18 @@ const BUSCAR_QUERY_HUBS: Record<string, string> = {
   mobiliario: '/mesas-sillas/',
   mesas: '/mesas-sillas/',
   sillas: '/mesas-sillas/',
+  carpas: '/carpas/',
+  tarima: '/pistas-tarimas/',
+  pistas: '/pistas-tarimas/',
+  pista: '/pistas-tarimas/',
+  xv: '/xv-anos/',
+  quinceañera: '/xv-anos/',
+  quinceanera: '/xv-anos/',
+  bodas: '/bodas/',
+  boda: '/bodas/',
+  empresas: '/alimentos-empresas/',
+  corporativo: '/corporativos/',
+  corporativos: '/corporativos/',
 }
 
 function resolveBuscarQuery(url: URL): string | null {
@@ -313,6 +331,7 @@ function resolveBuscarQuery(url: URL): string | null {
 const HUB_ALIASES: Record<string, string> = {
   'floreria-decoracion': 'floreria',
   'fotografia-video': 'fotografia',
+  'barra-bebidas': 'barras-de-bebidas',
 }
 
 /** Short legacy product URLs (high GSC impressions) → catalog path. */

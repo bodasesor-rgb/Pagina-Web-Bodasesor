@@ -67,8 +67,7 @@ export const SPA_SEO_HUBS = [
   { path: '/mesa-postres', title: 'Mesa de Postres', desc: 'Mesa de postres para bodas y eventos: pasteles, tartaletas y repostería fina en México.' },
   { path: '/mesa-quesos', title: 'Mesa de Quesos', desc: 'Mesa de quesos y charcutería gourmet para bodas, cenas y eventos corporativos en México.' },
   { path: '/cupcakes-gourmet', title: 'Cupcakes Gourmet', desc: 'Cupcakes gourmet decorados a mano para bodas, XV años y eventos en México.' },
-  // Barras de bebidas — city landings
-  { path: '/barra-bebidas', title: 'Barra de Bebidas', desc: 'Barra de bebidas con aguas frescas, refrescos y jugos para bodas y eventos en México.' },
+  // Barras de bebidas — city landings (hub canónico: /barras-de-bebidas)
   { path: '/barra-mocteles', title: 'Barra de Mocteles', desc: 'Barra de mocteles sin alcohol con presentación elegante para bodas y eventos.' },
   { path: '/cocteles-mixologia', title: 'Cócteles y Mixología', desc: 'Cócteles y mixología premium con bartenders profesionales para bodas y eventos.' },
   { path: '/barra-cafe-premium', title: 'Barra de Café Premium', desc: 'Barra de café premium con barista y espresso profesional para eventos en México.' },

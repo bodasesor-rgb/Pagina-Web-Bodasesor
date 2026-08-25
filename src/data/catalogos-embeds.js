@@ -105,7 +105,7 @@ export const CATALOGOS =
     "provider": "gamma",
     "title": "Barra de Bebidas",
     "category": "barras",
-    "relatedHref": "/barra-bebidas",
+    "relatedHref": "/barras-de-bebidas",
     "embedSrc": "https://gamma.app/embed/m30do486cwn6vr5",
     "slug": "barra-de-bebidas",
     "services": [

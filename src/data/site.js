@@ -155,7 +155,7 @@ export const BANQUETES_SERVICES = {
 }
 
 export const BARRAS_SERVICES = [
-  { icon: '🥤', name: 'Barra de Bebidas', desc: 'Barras de aguas frescas, refrescos, jugos naturales y bebidas personalizadas para tus invitados', slug: 'barra-bebidas' },
+  { icon: '🥤', name: 'Barra de Bebidas', desc: 'Barras de aguas frescas, refrescos, jugos naturales y bebidas personalizadas para tus invitados', slug: 'barras-de-bebidas' },
   { icon: '🍹', name: 'Barra de Mocteles', desc: 'Bebidas sin alcohol inspiradas en cócteles clásicos: presentación elegante y sabores únicos para todos', slug: 'barra-mocteles' },
   { icon: '🍸', name: 'Cocteles y Mixología', desc: 'Bartenders profesionales con carta de cócteles artesanales y show de flairtending para tus invitados', slug: 'cocteles-mixologia' },
   { icon: '☕', name: 'Barra de Café Premium', desc: 'Barista certificado, máquina espresso profesional, café de especialidad y bebidas calientes gourmet', slug: 'barra-cafe-premium' },

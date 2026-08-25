@@ -129,6 +129,19 @@ const GSC_FORCE_REDIRECTS = [
   ['/comidaspuebla', '/comidas/puebla/'],
   ['/carpas/arabeguadalajara', '/carpas/arabe/guadalajara/'],
   ['/pistas-tarimas/pista-iluminadamonterrey', '/pistas-tarimas/pista-iluminada/monterrey/'],
+  ['/banquete-mexicano/buffetcuernavaca', '/banquete-mexicano/buffet/cuernavaca/'],
+  ['/barra-pizzascancun', '/barra-pizzas/cancun/'],
+  ['/cupcakes-gourmetcancun', '/cupcakes-gourmet/cancun/'],
+  ['/cupcakes-gourmetmorelia', '/cupcakes-gourmet/morelia/'],
+  ['/entelados/completomonterrey', '/entelados/completo/monterrey/'],
+  ['/colgantes/col-02-cascadas-flor-naturalmorelia', '/colgantes/col-02-cascadas-flor-natural/morelia/'],
+  ['/combinaciones/mesa-redonda-avant-gardecancun', '/combinaciones/mesa-redonda-avant-garde/cancun/'],
+  ['/combinaciones/mesa-redonda-avant-gardepachuca', '/combinaciones/mesa-redonda-avant-garde/pachuca/'],
+  ['/combinaciones/mesa-redonda-silla-luis-xvmorelia', '/combinaciones/mesa-redonda-silla-luis-xv/morelia/'],
+  ['/collections/desayunos-acapulco', '/desayunos/acapulco/'],
+  ['/collections/reposteria-para-eventos-merida', '/reposteria/merida/'],
+  ['/collections/reposteria-para-eventos-puerto-vallarta', '/reposteria/puerto-vallarta/'],
+  ['/collections/servicio-de-banquetes-en-puebla', '/banquetes-catering/puebla/'],
   // Prefer indexable hub over thin product detail for this Shopify leftover
   ['/collections/alimentos-para-empresas-y-comedores-industriales', '/alimentos-empresas/'],
   ['/collections/arcos-florales-para-ceremonias-cdmx', '/floreria/ciudad-de-mexico/'],
@@ -146,9 +159,10 @@ const GSC_FORCE_REDIRECTS = [
   ['/products/letras-gigantes-para-eventos-cdmx', '/floreria/letras-gigantes/'],
   // Self-duplicate hub path (slug = parent)
   ['/alimentos-empresas/alimentos-empresas', '/alimentos-empresas/'],
-  // Canonical florería / fotografía hubs (avoid splitting equity with legacy aliases)
+  // Canonical hubs (avoid splitting equity with legacy aliases)
   ['/floreria-decoracion', '/floreria/'],
   ['/fotografia-video', '/fotografia/'],
+  ['/barra-bebidas', '/barras-de-bebidas/'],
   // Legacy bare banquetes path often meant catering hub in Shopify era
   ['/collections/banquetes-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
   ['/collections/banquetes-para-bodas-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
@@ -328,6 +342,16 @@ function buildRedirectsFile(map) {
   lines.push(`/buscar/ q=floreria  ${SITE_BASE}/floreria/  301!`)
   lines.push(`/buscar q=musica  ${SITE_BASE}/musica/  301!`)
   lines.push(`/buscar/ q=musica  ${SITE_BASE}/musica/  301!`)
+  lines.push(`/buscar q=mobiliario  ${SITE_BASE}/mesas-sillas/  301!`)
+  lines.push(`/buscar/ q=mobiliario  ${SITE_BASE}/mesas-sillas/  301!`)
+  lines.push(`/buscar q=carpas  ${SITE_BASE}/carpas/  301!`)
+  lines.push(`/buscar/ q=carpas  ${SITE_BASE}/carpas/  301!`)
+  lines.push(`/buscar q=wedding  ${SITE_BASE}/wedding-planner/  301!`)
+  lines.push(`/buscar/ q=wedding  ${SITE_BASE}/wedding-planner/  301!`)
+  lines.push(`/buscar q=fotografia  ${SITE_BASE}/fotografia/  301!`)
+  lines.push(`/buscar/ q=fotografia  ${SITE_BASE}/fotografia/  301!`)
+  lines.push(`/buscar q=bodas  ${SITE_BASE}/bodas/  301!`)
+  lines.push(`/buscar/ q=bodas  ${SITE_BASE}/bodas/  301!`)
   lines.push('')
   lines.push(`# Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.`)
   lines.push(`/*  /404.html  404`)

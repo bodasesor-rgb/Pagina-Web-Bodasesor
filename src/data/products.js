@@ -166,7 +166,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -352,7 +352,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -538,7 +538,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -724,7 +724,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -918,7 +918,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -1112,7 +1112,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -1326,7 +1326,7 @@ const PRODUCTS = [
           },
           {
             name: "Barras de Bebidas",
-            href: "/barra-bebidas",
+            href: "/barras-de-bebidas",
             icon: "🍹"
           },
           {
@@ -1698,7 +1698,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -1892,7 +1892,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -2086,7 +2086,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -2284,7 +2284,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -2482,7 +2482,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -2680,7 +2680,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -2886,7 +2886,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -3084,7 +3084,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -3286,7 +3286,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -3484,7 +3484,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -3682,7 +3682,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -3912,7 +3912,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -4102,7 +4102,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -4308,7 +4308,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -4498,7 +4498,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -4688,7 +4688,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -4878,7 +4878,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -4925,7 +4925,7 @@ const PRODUCTS = [
       related: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas"
+          href: "/barras-de-bebidas"
         },
         {
           name: "Barra de Mocteles",
@@ -5072,7 +5072,7 @@ const PRODUCTS = [
       related: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas"
+          href: "/barras-de-bebidas"
         },
         {
           name: "Barra de Mocteles",
@@ -5231,7 +5231,7 @@ const PRODUCTS = [
       related: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas"
+          href: "/barras-de-bebidas"
         },
         {
           name: "Barra de Mocteles",
@@ -5374,7 +5374,7 @@ const PRODUCTS = [
       related: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas"
+          href: "/barras-de-bebidas"
         },
         {
           name: "Barra de Mocteles",
@@ -5517,7 +5517,7 @@ const PRODUCTS = [
       related: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas"
+          href: "/barras-de-bebidas"
         },
         {
           name: "Barra de Mocteles",
@@ -5814,7 +5814,7 @@ const PRODUCTS = [
         },
         {
           name: "Barras de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -6181,7 +6181,7 @@ const PRODUCTS = [
         },
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -6513,7 +6513,7 @@ const PRODUCTS = [
         },
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -6650,7 +6650,7 @@ const PRODUCTS = [
         },
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -6924,7 +6924,7 @@ const PRODUCTS = [
         },
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -7061,7 +7061,7 @@ const PRODUCTS = [
         },
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -7250,7 +7250,7 @@ const PRODUCTS = [
         },
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -7517,7 +7517,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -8454,7 +8454,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -8603,7 +8603,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -8752,7 +8752,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -8901,7 +8901,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -9199,7 +9199,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -9348,7 +9348,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -9695,7 +9695,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -9893,7 +9893,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -10091,7 +10091,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Barra de Bebidas",
-          href: "/barra-bebidas",
+          href: "/barras-de-bebidas",
           icon: "🍹"
         },
         {
@@ -13436,7 +13436,7 @@ const PRODUCTS = [
       integralServices: [
         { name: "Mesas y Sillas", href: "/mesas-sillas", icon: "🪑" },
         { name: "Banquete Formal", href: "/banquetes", icon: "🍽️" },
-        { name: "Barras de Bebidas", href: "/barra-bebidas", icon: "🍹" },
+        { name: "Barras de Bebidas", href: "/barras-de-bebidas", icon: "🍹" },
         { name: "Florería y Decoración", href: "/floreria", icon: "💐" },
         { name: "Salas y Periqueras", href: "/salas-periqueras", icon: "🛋️" },
         { name: "Wedding Planner", href: "/wedding-planner", icon: "📋" }

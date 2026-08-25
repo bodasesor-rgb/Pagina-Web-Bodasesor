@@ -26,7 +26,7 @@ const DEFAULT_FAQS = [
 const ITEMS = [
   {
     name: "Barra de Bebidas",
-    href: "/barra-bebidas",
+    href: "/barras-de-bebidas",
     tag: "Barras de aguas frescas, refrescos, jugos naturales y bebidas personalizadas para tus invitados",
     icon: "🥤",
     img: "/images/productos/barra-bebidas.png",

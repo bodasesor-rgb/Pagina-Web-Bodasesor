@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4359 rules + fallback
+# 4379 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  https://bodasesor.com/sillas/ghost/  301
@@ -204,6 +204,32 @@
 /carpas/arabeguadalajara/  https://bodasesor.com/carpas/arabe/guadalajara/  301
 /pistas-tarimas/pista-iluminadamonterrey  https://bodasesor.com/pistas-tarimas/pista-iluminada/monterrey/  301
 /pistas-tarimas/pista-iluminadamonterrey/  https://bodasesor.com/pistas-tarimas/pista-iluminada/monterrey/  301
+/banquete-mexicano/buffetcuernavaca  https://bodasesor.com/banquete-mexicano/buffet/cuernavaca/  301
+/banquete-mexicano/buffetcuernavaca/  https://bodasesor.com/banquete-mexicano/buffet/cuernavaca/  301
+/barra-pizzascancun  https://bodasesor.com/barra-pizzas/cancun/  301
+/barra-pizzascancun/  https://bodasesor.com/barra-pizzas/cancun/  301
+/cupcakes-gourmetcancun  https://bodasesor.com/cupcakes-gourmet/cancun/  301
+/cupcakes-gourmetcancun/  https://bodasesor.com/cupcakes-gourmet/cancun/  301
+/cupcakes-gourmetmorelia  https://bodasesor.com/cupcakes-gourmet/morelia/  301
+/cupcakes-gourmetmorelia/  https://bodasesor.com/cupcakes-gourmet/morelia/  301
+/entelados/completomonterrey  https://bodasesor.com/entelados/completo/monterrey/  301
+/entelados/completomonterrey/  https://bodasesor.com/entelados/completo/monterrey/  301
+/colgantes/col-02-cascadas-flor-naturalmorelia  https://bodasesor.com/colgantes/col-02-cascadas-flor-natural/morelia/  301
+/colgantes/col-02-cascadas-flor-naturalmorelia/  https://bodasesor.com/colgantes/col-02-cascadas-flor-natural/morelia/  301
+/combinaciones/mesa-redonda-avant-gardecancun  https://bodasesor.com/combinaciones/mesa-redonda-avant-garde/cancun/  301
+/combinaciones/mesa-redonda-avant-gardecancun/  https://bodasesor.com/combinaciones/mesa-redonda-avant-garde/cancun/  301
+/combinaciones/mesa-redonda-avant-gardepachuca  https://bodasesor.com/combinaciones/mesa-redonda-avant-garde/pachuca/  301
+/combinaciones/mesa-redonda-avant-gardepachuca/  https://bodasesor.com/combinaciones/mesa-redonda-avant-garde/pachuca/  301
+/combinaciones/mesa-redonda-silla-luis-xvmorelia  https://bodasesor.com/combinaciones/mesa-redonda-silla-luis-xv/morelia/  301
+/combinaciones/mesa-redonda-silla-luis-xvmorelia/  https://bodasesor.com/combinaciones/mesa-redonda-silla-luis-xv/morelia/  301
+/collections/desayunos-acapulco  https://bodasesor.com/desayunos/acapulco/  301
+/collections/desayunos-acapulco/  https://bodasesor.com/desayunos/acapulco/  301
+/collections/reposteria-para-eventos-merida  https://bodasesor.com/reposteria/merida/  301
+/collections/reposteria-para-eventos-merida/  https://bodasesor.com/reposteria/merida/  301
+/collections/reposteria-para-eventos-puerto-vallarta  https://bodasesor.com/reposteria/puerto-vallarta/  301
+/collections/reposteria-para-eventos-puerto-vallarta/  https://bodasesor.com/reposteria/puerto-vallarta/  301
+/collections/servicio-de-banquetes-en-puebla  https://bodasesor.com/banquetes-catering/puebla/  301
+/collections/servicio-de-banquetes-en-puebla/  https://bodasesor.com/banquetes-catering/puebla/  301
 /collections/alimentos-para-empresas-y-comedores-industriales  https://bodasesor.com/alimentos-empresas/  301
 /collections/alimentos-para-empresas-y-comedores-industriales/  https://bodasesor.com/alimentos-empresas/  301
 /collections/arcos-florales-para-ceremonias-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
@@ -234,6 +260,8 @@
 /floreria-decoracion/  https://bodasesor.com/floreria/  301
 /fotografia-video  https://bodasesor.com/fotografia/  301
 /fotografia-video/  https://bodasesor.com/fotografia/  301
+/barra-bebidas  https://bodasesor.com/barras-de-bebidas/  301
+/barra-bebidas/  https://bodasesor.com/barras-de-bebidas/  301
 /collections/banquetes-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-para-bodas-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
@@ -1851,8 +1879,6 @@
 /collections/demostracion-de-producto/  https://bodasesor.com/banquetes-catering/  301
 /collections/desayuno-de-trabajo  https://bodasesor.com/banquetes-catering/  301
 /collections/desayuno-de-trabajo/  https://bodasesor.com/banquetes-catering/  301
-/collections/desayunos-acapulco  https://bodasesor.com/banquetes-catering/acapulco/  301
-/collections/desayunos-acapulco/  https://bodasesor.com/banquetes-catering/acapulco/  301
 /collections/desayunos-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/desayunos-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/desayunos-cuernavaca  https://bodasesor.com/banquetes-catering/cuernavaca/  301
@@ -3164,8 +3190,6 @@
 /collections/reposteria-para-eventos-guadalajara/  https://bodasesor.com/reposteria/guadalajara/  301
 /collections/reposteria-para-eventos-los-cabos  https://bodasesor.com/reposteria/los-cabos/  301
 /collections/reposteria-para-eventos-los-cabos/  https://bodasesor.com/reposteria/los-cabos/  301
-/collections/reposteria-para-eventos-merida  https://bodasesor.com/reposteria/merida/  301
-/collections/reposteria-para-eventos-merida/  https://bodasesor.com/reposteria/merida/  301
 /collections/reposteria-para-eventos-monterrey  https://bodasesor.com/reposteria/monterrey/  301
 /collections/reposteria-para-eventos-monterrey/  https://bodasesor.com/reposteria/monterrey/  301
 /collections/reposteria-para-eventos-morelia  https://bodasesor.com/reposteria/morelia/  301
@@ -3176,8 +3200,6 @@
 /collections/reposteria-para-eventos-pachuca/  https://bodasesor.com/reposteria/pachuca/  301
 /collections/reposteria-para-eventos-puebla  https://bodasesor.com/reposteria/puebla/  301
 /collections/reposteria-para-eventos-puebla/  https://bodasesor.com/reposteria/puebla/  301
-/collections/reposteria-para-eventos-puerto-vallarta  https://bodasesor.com/reposteria/puerto-vallarta/  301
-/collections/reposteria-para-eventos-puerto-vallarta/  https://bodasesor.com/reposteria/puerto-vallarta/  301
 /collections/reposteria-para-eventos-queretaro  https://bodasesor.com/reposteria/queretaro/  301
 /collections/reposteria-para-eventos-queretaro/  https://bodasesor.com/reposteria/queretaro/  301
 /collections/reposteria-para-eventos-valle-de-bravo  https://bodasesor.com/reposteria/valle-de-bravo/  301
@@ -3253,8 +3275,6 @@
 /collections/servicio-de-banquetes-en-monterrey/  https://bodasesor.com/alimentos-empresas/monterrey/  301
 /collections/servicio-de-banquetes-en-oaxaca  https://bodasesor.com/alimentos-empresas/oaxaca/  301
 /collections/servicio-de-banquetes-en-oaxaca/  https://bodasesor.com/alimentos-empresas/oaxaca/  301
-/collections/servicio-de-banquetes-en-puebla  https://bodasesor.com/alimentos-empresas/puebla/  301
-/collections/servicio-de-banquetes-en-puebla/  https://bodasesor.com/alimentos-empresas/puebla/  301
 /collections/servicio-de-banquetes-en-queretaro  https://bodasesor.com/alimentos-empresas/queretaro/  301
 /collections/servicio-de-banquetes-en-queretaro/  https://bodasesor.com/alimentos-empresas/queretaro/  301
 /collections/servicio-de-catering-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
@@ -4399,6 +4419,16 @@
 /buscar/ q=floreria  https://bodasesor.com/floreria/  301!
 /buscar q=musica  https://bodasesor.com/musica/  301!
 /buscar/ q=musica  https://bodasesor.com/musica/  301!
+/buscar q=mobiliario  https://bodasesor.com/mesas-sillas/  301!
+/buscar/ q=mobiliario  https://bodasesor.com/mesas-sillas/  301!
+/buscar q=carpas  https://bodasesor.com/carpas/  301!
+/buscar/ q=carpas  https://bodasesor.com/carpas/  301!
+/buscar q=wedding  https://bodasesor.com/wedding-planner/  301!
+/buscar/ q=wedding  https://bodasesor.com/wedding-planner/  301!
+/buscar q=fotografia  https://bodasesor.com/fotografia/  301!
+/buscar/ q=fotografia  https://bodasesor.com/fotografia/  301!
+/buscar q=bodas  https://bodasesor.com/bodas/  301!
+/buscar/ q=bodas  https://bodasesor.com/bodas/  301!
 
 # Unknown URLs → real 404 (no soft-404 home). Known SPA/Nexus/blog paths are static files or explicit 200 rewrites above.
 /*  /404.html  404

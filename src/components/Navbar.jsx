@@ -102,7 +102,7 @@ const cateringGroups = [
 ];
 
 const bebidasItems = [
-  { name: 'Barra de Bebidas', href: '/barra-bebidas' },
+  { name: 'Barra de Bebidas', href: '/barras-de-bebidas' },
   { name: 'Barra de Mocteles', href: '/barra-mocteles' },
   { name: 'Cocteles y Mixología', href: '/cocteles-mixologia' },
   { name: 'Barra de Café Premium', href: '/barra-cafe-premium' },
