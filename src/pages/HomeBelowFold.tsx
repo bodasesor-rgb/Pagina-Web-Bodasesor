@@ -324,7 +324,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                   {[
                     { text: 'Wedding planner', href: '/wedding-planner' },
                     { text: 'Decoración y florería', href: '/floreria' },
-                    { text: 'Fotografía y video', href: '/fotografia-video' },
+                    { text: 'Fotografía y video', href: '/fotografia' },
                     { text: 'Música y DJ', href: '/musica' },
                     { text: 'Shows y entretenimiento', href: '/shows' },
                     { text: 'Pozole y tostadas', href: '/pozole-tostadas' },

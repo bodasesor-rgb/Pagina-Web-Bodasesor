@@ -128,8 +128,9 @@ const GSC_FORCE_REDIRECTS = [
   ['/products/letras-gigantes-para-eventos-cdmx', '/floreria/letras-gigantes/'],
   // Self-duplicate hub path (slug = parent)
   ['/alimentos-empresas/alimentos-empresas', '/alimentos-empresas/'],
-  // Canonical florería hub (avoid splitting equity with /floreria-decoracion)
+  // Canonical florería / fotografía hubs (avoid splitting equity with legacy aliases)
   ['/floreria-decoracion', '/floreria/'],
+  ['/fotografia-video', '/fotografia/'],
   // Legacy bare banquetes path often meant catering hub in Shopify era
   ['/collections/banquetes-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
   ['/collections/banquetes-para-bodas-cdmx', '/banquetes-catering/ciudad-de-mexico/'],

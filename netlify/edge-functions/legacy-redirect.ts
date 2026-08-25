@@ -43,6 +43,15 @@ const CRITICAL: Record<string, string> = {
     'https://bodasesor.com/fotografia/ciudad-de-mexico/',
   '/collections/eventos-corporativos-gustavo-a-madero':
     'https://bodasesor.com/corporativos/ciudad-de-mexico/',
+  // Next GSC tier (multi-hop leftovers + blog mis-map)
+  '/products/catering-coyoacan': 'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/banquetes-para-eventos-privados-cdmx':
+    'https://bodasesor.com/banquetes-catering/ciudad-de-mexico/',
+  '/collections/ramos-de-novia-personalizados-cdmx':
+    'https://bodasesor.com/floreria/ciudad-de-mexico/',
+  '/collections/fotografia-y-video-cuernavaca': 'https://bodasesor.com/fotografia/cuernavaca/',
+  '/collections/wedding-planner-cuernavaca': 'https://bodasesor.com/wedding-planner/cuernavaca/',
+  '/blogs/noticias/pre-boda-2024': 'https://bodasesor.com/bodas/ciudad-de-mexico/',
 }
 
 function withTrailingSlash(raw: string): string {

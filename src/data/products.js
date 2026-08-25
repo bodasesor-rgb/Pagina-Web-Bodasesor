@@ -181,7 +181,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -367,7 +367,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -553,7 +553,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -739,7 +739,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -933,7 +933,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -1127,7 +1127,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -1713,7 +1713,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -1907,7 +1907,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -2101,7 +2101,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -2299,7 +2299,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -2497,7 +2497,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -2695,7 +2695,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -2901,7 +2901,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -3099,7 +3099,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -3301,7 +3301,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -3499,7 +3499,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -3697,7 +3697,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -3927,7 +3927,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -4117,7 +4117,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -4323,7 +4323,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -4513,7 +4513,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -4703,7 +4703,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -4893,7 +4893,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -5045,7 +5045,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -5204,7 +5204,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -5347,7 +5347,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -5490,7 +5490,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -5633,7 +5633,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -6528,7 +6528,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -6665,7 +6665,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -6939,7 +6939,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -7076,7 +7076,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -7265,7 +7265,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -7435,7 +7435,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Inflables y Juegos",
@@ -7532,7 +7532,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -7568,7 +7568,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Inflables y Juegos",
@@ -7650,7 +7650,7 @@ const PRODUCTS = [
       integralServices: [
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -7838,7 +7838,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Música y DJ",
@@ -7936,7 +7936,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -7971,7 +7971,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Inflables y Juegos",
@@ -8059,7 +8059,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -8104,7 +8104,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Inflables y Juegos",
@@ -8213,7 +8213,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -8243,7 +8243,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Inflables y Juegos",
@@ -8326,7 +8326,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -8376,7 +8376,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video"
+          href: "/fotografia"
         },
         {
           name: "Inflables y Juegos",
@@ -8469,7 +8469,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -8618,7 +8618,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -8767,7 +8767,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -8916,7 +8916,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -9070,7 +9070,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -9214,7 +9214,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -9363,7 +9363,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -9507,7 +9507,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -9710,7 +9710,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -9908,7 +9908,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -10106,7 +10106,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -10256,7 +10256,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -10404,7 +10404,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -10543,7 +10543,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -10690,7 +10690,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -10833,7 +10833,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -10980,7 +10980,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11127,7 +11127,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11270,7 +11270,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11403,7 +11403,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11536,7 +11536,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11669,7 +11669,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11808,7 +11808,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -11951,7 +11951,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -12084,7 +12084,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -12217,7 +12217,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -12364,7 +12364,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -12492,7 +12492,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         },
         {
@@ -12630,7 +12630,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -12753,7 +12753,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -12888,7 +12888,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -13031,7 +13031,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -13150,7 +13150,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -13277,7 +13277,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]
@@ -13392,7 +13392,7 @@ const PRODUCTS = [
         },
         {
           name: "Fotografía y Video",
-          href: "/fotografia-video",
+          href: "/fotografia",
           icon: "📸"
         }
       ]

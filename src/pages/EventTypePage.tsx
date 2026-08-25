@@ -113,7 +113,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura cinematográfica del día completo: ceremonia, cocktail, cena y fiesta. Álbum incluido.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura cinematográfica del día completo: ceremonia, cocktail, cena y fiesta. Álbum incluido.", href: "/fotografia" },
       ],
     },
     {
@@ -194,7 +194,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura del día completo: misa, llegada, vals, baile sorpresa y fiesta. Álbum incluido.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura del día completo: misa, llegada, vals, baile sorpresa y fiesta. Álbum incluido.", href: "/fotografia" },
       ],
     },
     {
@@ -258,7 +258,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura profesional para comunicación interna, redes sociales y material institucional.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura profesional para comunicación interna, redes sociales y material institucional.", href: "/fotografia" },
       ],
     },
     {
@@ -328,7 +328,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Sesión de fotos con props, cobertura del evento y galería digital para compartir.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Sesión de fotos con props, cobertura del evento y galería digital para compartir.", href: "/fotografia" },
       ],
     },
   ],
@@ -382,7 +382,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura del evento, sesión de fotos y galería digital. Recuerdos para siempre.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura del evento, sesión de fotos y galería digital. Recuerdos para siempre.", href: "/fotografia" },
       ],
     },
     {
@@ -443,7 +443,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura de la ceremonia y la fiesta. Galería compartida para toda la generación.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura de la ceremonia y la fiesta. Galería compartida para toda la generación.", href: "/fotografia" },
       ],
     },
     {
@@ -503,7 +503,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura de la misa, la recepción y los momentos familiares. Recuerdos eternos.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura de la misa, la recepción y los momentos familiares. Recuerdos eternos.", href: "/fotografia" },
       ],
     },
     {
@@ -563,7 +563,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura fotográfica de la cena para recuerdos y comunicación del evento.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura fotográfica de la cena para recuerdos y comunicación del evento.", href: "/fotografia" },
         { icon: "🎵", title: "Música y DJ", desc: "Música de fondo en vivo o DJ para la cena. Ambiente y entretenimiento en uno.", href: "/musica" },
       ],
     },
@@ -686,7 +686,7 @@ const EVENT_SERVICES: Record<string, ServiceGroup[]> = {
       categoryIcon: "📸",
       accent: "bg-purple-50 border-purple-200",
       services: [
-        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura profesional del lanzamiento para redes sociales, comunicados y archivo.", href: "/fotografia-video" },
+        { icon: "📸", title: "Fotografía y Video", desc: "Cobertura profesional del lanzamiento para redes sociales, comunicados y archivo.", href: "/fotografia" },
       ],
     },
     {

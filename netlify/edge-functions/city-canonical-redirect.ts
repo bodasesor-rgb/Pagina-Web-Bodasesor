@@ -158,10 +158,62 @@ export function analyzeCityCanonical(pathname: string): CityCanonical {
   return { canonical, safeEarly }
 }
 
+/** Drop vanity pagination so /hub?page=1 does not re-split equity. */
+function cleanSearch(search: string): string {
+  if (!search) return ''
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
+  params.delete('page')
+  const next = params.toString()
+  return next ? `?${next}` : ''
+}
+
 function apexRedirect(pathname: string, search: string = ''): Response {
   const dest = new URL(withTrailingSlash(pathname), 'https://bodasesor.com')
-  dest.search = search
+  dest.search = cleanSearch(search)
   return Response.redirect(dest.toString(), 301)
+}
+
+/**
+ * High-impression SPA hubs indexed both with and without trailing slash in GSC
+ * (e.g. /mesas-sillas vs /mesas-sillas/). Collapse before Pretty URLs.
+ */
+const TRAILING_SLASH_HUBS = new Set([
+  'mesas-sillas',
+  'pistas-tarimas',
+  'banquetes-catering',
+  'carpas',
+  'shows',
+  'floreria',
+  'fotografia',
+  'musica',
+  'wedding-planner',
+  'entelados',
+  'bodas',
+  'corporativos',
+  'xv-anos',
+  'alimentos-empresas',
+  'espacios-eventos',
+  'audio-iluminacion-video',
+  'barras-de-bebidas',
+  'vajillas',
+  'salas-periqueras',
+  'reposteria',
+])
+
+function hubNeedsTrailingSlash(rawPathname: string): string | null {
+  if (!rawPathname || rawPathname === '/' || rawPathname.endsWith('/')) return null
+  const segs = decodeURIComponent(rawPathname).split('/').filter(Boolean)
+  if (segs.length === 1 && TRAILING_SLASH_HUBS.has(segs[0])) {
+    return `/${segs[0]}/`
+  }
+  if (
+    segs.length === 2 &&
+    TRAILING_SLASH_HUBS.has(segs[0]) &&
+    CITY_CANONICAL[segs[1]]
+  ) {
+    return `/${segs[0]}/${CITY_CANONICAL[segs[1]]}/`
+  }
+  return null
 }
 
 /**
@@ -234,6 +286,11 @@ export default async function handler(request: Request, context: Context) {
   const hubAlias = applyHubAlias(pathname)
   if (hubAlias && hubAlias !== pathname) {
     return apexRedirect(hubAlias, url.search)
+  }
+
+  const slashHub = hubNeedsTrailingSlash(url.pathname)
+  if (slashHub) {
+    return apexRedirect(slashHub, url.search)
   }
 
   const { canonical, safeEarly } = analyzeCityCanonical(url.pathname)
