@@ -33,9 +33,9 @@ export const PRIORITY_HUB_SERP = {
       'Arreglos florales, centros de mesa y decoración integral para transformar el escenario de tu evento.',
   },
   'pistas-tarimas': {
-    title: 'Pistas de Baile y Tarimas',
+    title: 'Pistas de Baile y Tarimas para Eventos',
     desc: 'Renta de pistas de baile y tarimas para bodas y eventos: escenarios, estrados y sets completos. Cotiza por WhatsApp con Bodasesor.',
-    h1: 'Pistas de Baile y Tarimas',
+    h1: 'Pistas de Baile y Tarimas para Eventos',
     headline:
       'Pistas de baile, tarimas y escenarios a medida para bodas, XV años y eventos con montaje incluido.',
   },

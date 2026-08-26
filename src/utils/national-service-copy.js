@@ -13,15 +13,76 @@ export const NATIONAL_COVERAGE_ZONES = [
   'Cancún',
 ]
 
+/** Pages that should NOT get “para Bodas y Eventos…” stuffed into the H1. */
+const META_PAGE_RE =
+  /quienes.?somos|aviso.?de.?privacidad|terminos|politicas.?de.?devoluci|catalogos|galeria|^blog$|buscar/i
+
+function foldAccents(s) {
+  return String(s || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+}
+
+function isMetaPageTitle(title) {
+  return META_PAGE_RE.test(foldAccents(title))
+}
+
+/** Event-type hubs: “Bodas para Bodas…” is wrong — prefer “Servicios para X en México”. */
+const EVENT_TYPE_LABELS = new Set([
+  'bodas',
+  'xv anos',
+  'xv-anos',
+  'eventos corporativos',
+  'corporativos',
+  'graduaciones',
+  'baby shower',
+  'cumpleanos',
+  'primera comunion',
+  'cenas',
+  'comidas',
+  'desayunos',
+  'lanzamientos',
+  'inflables',
+])
+
+function isEventTypeTitle(title) {
+  return EVENT_TYPE_LABELS.has(foldAccents(title))
+}
+
+/**
+ * National H1 with natural Spanish prepositions (para / en / de).
+ * Avoids stuffing legal pages and redundant “Bodas para Bodas…”.
+ */
 function nationalH1(title) {
   const t = String(title || '').trim()
   if (!t) return 'Servicios para Bodas y Eventos en México'
+  if (isMetaPageTitle(t)) return t
   if (/en\s+méxico/i.test(t)) return t
-  if (/para\s+bodas\s+y\s+eventos/i.test(t)) return `${t} en México`
+  if (isEventTypeTitle(t)) {
+    if (/^eventos\s+corporativos$/i.test(t)) return 'Eventos Corporativos en México'
+    return `Servicios para ${t} en México`
+  }
+  if (/para\s+bodas\s+y\s+eventos/i.test(t)) return /en\s+méxico/i.test(t) ? t : `${t} en México`
   if (/para\s+eventos(\s+corporativos)?/i.test(t)) {
     return t.replace(/para\s+eventos(\s+corporativos)?/i, 'para Bodas y Eventos en México')
   }
+  if (/\bpara\b/i.test(t)) return /en\s+méxico/i.test(t) ? t : `${t} en México`
   return `${t} para Bodas y Eventos en México`
+}
+
+/** Compact SERP title core (brand appended later; keep natural prepositions). */
+function nationalSeoTitle(title) {
+  const t = String(title || '').trim()
+  if (!t) return 'Servicios para Eventos'
+  if (isMetaPageTitle(t)) return t
+  if (isEventTypeTitle(t)) {
+    if (/^eventos\s+corporativos$/i.test(t)) return 'Eventos Corporativos en México'
+    return `${t} en México`
+  }
+  if (/\b(para|en|de)\b/i.test(t)) return t
+  return `${t} para Eventos`
 }
 
 /**
@@ -66,7 +127,7 @@ export function buildNationalServiceCopy(product) {
     localBullets,
     zones: NATIONAL_COVERAGE_ZONES,
     faqs,
-    seoTitle: product.seoTitle || `${title} | Bodasesor`,
+    seoTitle: product.seoTitle || nationalSeoTitle(title),
     seoDescription:
       product.seoDescription ||
       `${title} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp.`,
@@ -75,7 +136,11 @@ export function buildNationalServiceCopy(product) {
 }
 
 function eventTypeNational(label, servicesHint) {
+  const h1 = `Servicios para ${label} en México`
   return {
+    h1,
+    seoTitle: `${label} en México`,
+    sectionTitle: h1,
     headline: `Organización integral de ${label.toLowerCase()} con un solo coordinador Bodasesor.`,
     localBullets: [
       `Paquete completo para ${label.toLowerCase()}: ${servicesHint}.`,
@@ -318,7 +383,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
     localBullets: extra.localBullets,
     zones: NATIONAL_COVERAGE_ZONES,
     faqs: extra.faqs,
-    seoTitle: extra.seoTitle || `${title} | Bodasesor`,
+    seoTitle: extra.seoTitle || nationalSeoTitle(title),
     seoDescription:
       extra.seoDescription ||
       `${title} para bodas y eventos en México. Cotiza con Bodasesor por WhatsApp sin compromiso.`,
