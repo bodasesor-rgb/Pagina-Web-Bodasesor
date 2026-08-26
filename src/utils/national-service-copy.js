@@ -120,7 +120,7 @@ export function buildNationalServiceCopy(product) {
   return {
     h1,
     headline: product.headline || `${title} con servicio profesional Bodasesor`,
-    sectionTitle: h1,
+    sectionTitle: 'Detalle del servicio, montaje y cotización',
     description: Array.isArray(product.description)
       ? product.description
       : [product.description].filter(Boolean),
@@ -140,7 +140,7 @@ function eventTypeNational(label, servicesHint) {
   return {
     h1,
     seoTitle: `${label} en México`,
-    sectionTitle: h1,
+    sectionTitle: `Qué incluye tu paquete de ${label.toLowerCase()}`,
     headline: `Organización integral de ${label.toLowerCase()} con un solo coordinador Bodasesor.`,
     localBullets: [
       `Paquete completo para ${label.toLowerCase()}: ${servicesHint}.`,
@@ -177,7 +177,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP['banquetes-catering'].title,
       seoDescription: PRIORITY_HUB_SERP['banquetes-catering'].desc,
       h1: PRIORITY_HUB_SERP['banquetes-catering'].h1,
-      sectionTitle: 'Banquetes para Eventos: Menús, Catering y Estaciones',
+      sectionTitle: 'Menús, estaciones y cómo cotizar',
       description: [
         'Buscas un banquete o catering para eventos en México: menús por tiempos, buffet y estaciones con chef, meseros y vajilla incluidos. Bodasesor arma la propuesta completa para bodas, XV años y corporativos.',
         'Ofrecemos banquetes formales de alta cocina, banquete mexicano, kosher y navideño, además de catering gourmet, barras de alimentos y puestos de antojitos cocinados al momento.',
@@ -210,7 +210,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP.carpas.title,
       seoDescription: PRIORITY_HUB_SERP.carpas.desc,
       h1: PRIORITY_HUB_SERP.carpas.h1,
-      sectionTitle: 'Carpas para Fiestas y Eventos al Aire Libre',
+      sectionTitle: 'Tipos de carpa, instalación y logística',
       description: [
         'Renta de carpas para fiestas y eventos al aire libre: bodas, XV años, corporativos y celebraciones en jardines, haciendas o terrenos. Instalación, anclaje y retiro a cargo de nuestro equipo.',
         'Elige carpas clásicas, transparentes, domos o estructuras tensionadas según invitados, clima y estilo. Adaptamos tamaño y montaje al venue de tu evento.',
@@ -243,7 +243,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP.floreria.title,
       seoDescription: PRIORITY_HUB_SERP.floreria.desc,
       h1: PRIORITY_HUB_SERP.floreria.h1,
-      sectionTitle: 'Florería y Decoración para Bodas y Eventos',
+      sectionTitle: 'Arreglos, ambientación y montaje floral',
       description: [
         'Florería y decoración para bodas y eventos: centros de mesa, ramos nupciales, arreglos florales, globos y ambientación integral según la temática de tu celebración.',
         'Diseñamos la decoración de eventos con flores, plantas, photo ops y estructuras que transforman el venue — desde bodas íntimas hasta XV años y corporativos.',
@@ -276,7 +276,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP['pistas-tarimas'].title,
       seoDescription: PRIORITY_HUB_SERP['pistas-tarimas'].desc,
       h1: PRIORITY_HUB_SERP['pistas-tarimas'].h1,
-      sectionTitle: 'Pistas de Baile y Tarimas para Eventos',
+      sectionTitle: 'Acabados, medidas y montaje profesional',
       description: [
         'Renta de pistas de baile y tarimas para bodas, XV años y eventos: madera, LED, espejo, escenarios y estrados a medida con instalación profesional.',
         'Una pista de baile bien dimensionada es el centro de la celebración. También montamos tarimas, escenarios y sets completos con barras y cabinas coordinadas.',
@@ -378,7 +378,7 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
   return {
     h1: extra.h1 || h1,
     headline: extra.headline,
-    sectionTitle: extra.sectionTitle || extra.h1 || h1,
+    sectionTitle: extra.sectionTitle || 'Opciones, montaje y cotización',
     description: Array.isArray(extra.description) ? extra.description : [],
     localBullets: extra.localBullets,
     zones: NATIONAL_COVERAGE_ZONES,

@@ -190,7 +190,7 @@ export default function BanquetesCateringPage() {
           ) : (
             <>
               <h2 className="text-xl font-serif font-bold text-[#162040]">
-                {displaySectionTitle || "Banquetes y Catering para Bodas y Eventos en México"}
+                {displaySectionTitle}
               </h2>
               <p>
                 Nuestro servicio de <strong>banquetes y catering en México</strong> está diseñado para todo tipo de celebración: desde una íntima boda civil hasta una convención corporativa con cientos de comensales. Contamos con <strong>chefs ejecutivos certificados</strong>, menús personalizados y logística completa de alimentos y bebidas para que tu evento sea perfecto desde el primer bocado hasta el último.

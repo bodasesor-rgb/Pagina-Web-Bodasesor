@@ -16,6 +16,7 @@ import {
 import { isCityLandingSlug } from "../utils/city-url";
 import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-title-case";
 import { NATIONAL_COVERAGE_ZONES } from "../utils/national-service-copy";
+import { bodySectionHeading } from "../utils/seo-headings";
 import ServicePage from "./ServicePage";
 
 const WHATSAPP = "5215540080373";
@@ -76,7 +77,7 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
         ? {
             seoTitle: menu.seoTitle,
             seoDescription: menu.seoDescription,
-            h1: menu.name,
+            // Let national/city copy enrich H1; do not force the short product name.
             image: menu.parentImg,
           }
         : null,
@@ -125,13 +126,13 @@ export default function BanqueteMenuDetailPage({ parentSlug, menuSlug }: Props) 
   const headline =
     displayHeadline ||
     toSpanishTitleCase(menu.headline);
-  const sectionTitle =
-    displaySectionTitle ||
-    toSpanishTitleCase(
-      city
-        ? `${menu.name} para Bodas y Eventos en ${city.name}`
-        : `${menu.name} para Bodas y Eventos`,
-    );
+  const sectionTitle = toSpanishTitleCase(
+    bodySectionHeading(
+      displayH1,
+      displaySectionTitle,
+      city ? `Sobre este banquete en ${city.name}` : 'Sobre este banquete',
+    ),
+  );
 
   const bodyParas = cityCopy?.description?.length
     ? cityCopy.description

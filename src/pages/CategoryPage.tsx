@@ -5,6 +5,7 @@ import { ChevronRight, MessageCircle } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
 import { findSectionBySlug } from "../data/navigation";
+import { enrichServiceH1 } from "../utils/seo-headings";
 import NotFound from "./not-found";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -107,7 +108,7 @@ export default function CategoryPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-white">
           <div className="gold-divider w-12 mb-4" />
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-2" data-testid="category-title">
-            {section.icon} {section.name}
+            {section.icon} {enrichServiceH1(section.name)}
           </h1>
           <p className="text-white/80 text-sm max-w-xl">{description}</p>
           <p className="text-white/60 text-xs mt-2">{totalProducts} servicios disponibles · Ciudad de México</p>
@@ -119,7 +120,7 @@ export default function CategoryPage() {
         <div className="mb-8">
           <div className="gold-divider w-12 mb-4" />
           <h2 className="font-serif text-2xl font-bold text-foreground">
-            Categorías de {section.name}
+            Explora subcategorías y servicios
           </h2>
         </div>
 

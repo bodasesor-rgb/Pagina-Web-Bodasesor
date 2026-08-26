@@ -159,7 +159,7 @@ export default function BarrasBebidasPage() {
           ) : (
             <>
               <h2 className="text-xl font-serif font-bold text-[#162040]">
-                {displaySectionTitle || "Barras de Bebidas para Bodas y Eventos en México"}
+                {displaySectionTitle}
               </h2>
               <p>
                 Las <strong>barras de bebidas para eventos</strong> son un elemento fundamental para la experiencia de tus invitados. Ofrecemos <strong>barra de aguas frescas artesanales</strong>, <strong>barra de mocteles sin alcohol</strong>, <strong>coctelería y mixología premium</strong> con bartenders certificados, <strong>café de especialidad con barista</strong> y <strong>carritos de paletas y helados artesanales</strong>. Cada barra incluye montaje, cristalería o vajilla desechable premium, decoración y desmontaje.

@@ -34,12 +34,11 @@ export function normalizeCityHubContent(raw, ctx = {}) {
   const cityName = ctx.cityName || ''
   const h1 = String(raw.h1 || '').trim()
   let sectionTitle = String(raw.sectionTitle || '').trim()
-  if (!sectionTitle && h1) {
+  // Never mirror H1 as the first body H2 (SEO duplicate heading).
+  if (!sectionTitle || sectionTitle === h1) {
     sectionTitle = cityName
-      ? `Cotiza ${h1.includes(cityName) ? h1 : `${h1} en ${cityName}`}`.slice(0, 90)
+      ? `Sobre este servicio en ${cityName}`
       : 'Detalle del servicio y cotización'
-    // Ensure ≠ h1
-    if (sectionTitle === h1) sectionTitle = `${h1}: opciones y cotización`
   }
 
   return {

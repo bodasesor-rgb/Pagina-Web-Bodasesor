@@ -171,7 +171,7 @@ export default function MesasPersonalizadasPage() {
           ) : (
             <>
               <h2 className="text-xl font-serif font-bold text-[#162040]">
-                {displaySectionTitle || "Mesas Personalizadas para Bodas y Eventos en México"}
+                {displaySectionTitle}
               </h2>
               <p>
                 Las <strong>mesas personalizadas</strong> elevan la experiencia visual y gastronómica de tu celebración. Ofrecemos <strong>mesa de dulces</strong>, <strong>mesa de postres gourmet</strong>, <strong>mesa de quesos y charcutería</strong>, <strong>cupcakes gourmet</strong> y <strong>carrito de snacks</strong>, todas decoradas con la paleta de tu evento.

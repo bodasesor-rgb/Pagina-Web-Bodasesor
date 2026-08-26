@@ -5,6 +5,7 @@ import { ChevronRight, MessageCircle, Star } from "lucide-react";
 import GalleryCarouselSection from "../components/GalleryCarousel";
 import OptimizedImage from "../components/OptimizedImage";
 import { findSubsectionBySlug, findSectionBySlug } from "../data/navigation";
+import { enrichServiceH1 } from "../utils/seo-headings";
 import NotFound from "./not-found";
 
 const WHATSAPP_NUMBER = "5215540080373";
@@ -112,7 +113,7 @@ export default function SubcategoryPage() {
           <div className="gold-divider w-10 mb-3" />
           <div className="text-xs text-white/60 mb-1 uppercase tracking-widest">{section.name}</div>
           <h1 className="font-serif text-3xl md:text-4xl font-bold" data-testid="subcategory-title">
-            {sub.name}
+            {enrichServiceH1(sub.name)}
           </h1>
           <p className="text-white/70 text-sm mt-1">
             {sub.products.length} {sub.products.length === 1 ? 'servicio' : 'servicios'} disponibles en CDMX
@@ -126,7 +127,7 @@ export default function SubcategoryPage() {
           <div>
             <div className="gold-divider w-12 mb-3" />
             <h2 className="font-serif text-2xl font-bold text-foreground">
-              {sub.name} en Ciudad de México
+              Opciones disponibles en Ciudad de México
             </h2>
             <p className="text-muted-foreground text-sm mt-1">
               Proveedores y servicios verificados · {sub.products.length} opciones disponibles

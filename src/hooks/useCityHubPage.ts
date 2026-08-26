@@ -6,6 +6,7 @@ import { buildFaqPageJsonLd, buildServiceCityJsonLd } from '../utils/seo-meta'
 import { buildNationalHubCopy } from '../utils/national-service-copy'
 import { toSpanishTitleCase, buildHighlightKeywords } from '../utils/spanish-title-case'
 import { stripSeoBrand } from '../utils/seo-title'
+import { bodySectionHeading, enrichServiceH1, headingsAreDuplicate } from '../utils/seo-headings'
 
 export type PageSeoOverrides = {
   /** Preferred <title> / og:title source (brand appended via buildSeoTitle) */
@@ -56,10 +57,23 @@ export function useCityHubPage(
       : buildNationalHubCopy(hubSlug, fallbackTitle)
     if (!base && !pageSeo) return null
     if (!pageSeo) return base
-    // City Gemini copy wins when present; pageSeo fills national / missing fields.
+
+    // Prefer richer H1: never let a short pageSeo.h1 wipe an enriched national/city H1.
+    let h1 = city && base?.h1 ? base.h1 : pageSeo.h1 || base?.h1
+    if (pageSeo.h1 && base?.h1) {
+      if (
+        headingsAreDuplicate(pageSeo.h1, base.h1) &&
+        String(base.h1).length > String(pageSeo.h1).length
+      ) {
+        h1 = base.h1
+      } else if (!city && String(base.h1).length >= String(pageSeo.h1).length) {
+        h1 = base.h1
+      }
+    }
+
     return {
       ...(base || {}),
-      h1: city && base?.h1 ? base.h1 : pageSeo.h1 || base?.h1,
+      h1,
       seoTitle: city && base?.seoTitle ? base.seoTitle : pageSeo.seoTitle || base?.seoTitle,
       seoDescription:
         city && base?.seoDescription
@@ -69,18 +83,25 @@ export function useCityHubPage(
   }, [city, hubSlug, fallbackTitle, pageSeo, hubStoreReady])
 
   const displayH1 = toSpanishTitleCase(
-    cityCopy?.h1 ||
-      pageSeo?.h1 ||
-      (city ? `${fallbackTitle} en ${city.name}` : fallbackTitle),
+    enrichServiceH1(
+      cityCopy?.h1 ||
+        pageSeo?.h1 ||
+        (city ? `${fallbackTitle} en ${city.name}` : fallbackTitle),
+      city?.name || null,
+    ),
   )
 
   const displayHeadline = cityCopy?.headline
     ? toSpanishTitleCase(cityCopy.headline)
     : null
 
-  const displaySectionTitle = cityCopy?.sectionTitle
-    ? toSpanishTitleCase(cityCopy.sectionTitle)
-    : null
+  const displaySectionTitle = toSpanishTitleCase(
+    bodySectionHeading(
+      displayH1,
+      cityCopy?.sectionTitle,
+      city ? `Sobre este servicio en ${city.name}` : 'Sobre este servicio',
+    ),
+  )
 
   const keywords = buildHighlightKeywords({
     primaryKeyword: cityCopy?.primaryKeyword || pageSeo?.h1 || fallbackTitle || '',

@@ -18,6 +18,7 @@ import { applyPageSeo, upsertJsonLd, absoluteUrl } from "../utils/seo-head";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
 import { removeSpaLcpPrerender } from "../utils/static-lcp-shell";
+import { bodySectionHeading, enrichServiceH1 } from "../utils/seo-headings";
 import { Phone, CheckCircle2, PartyPopper, Armchair } from "lucide-react";
 const EventTypePage = lazy(() => import("./EventTypePage"));
 const ProductGalleryCarousel = lazy(() => import("../components/ProductGalleryCarousel"));
@@ -380,17 +381,20 @@ export default function ServicePage({ params }: ServicePageProps) {
     HERO_IMAGES[slug]?.startsWith('/images/barras/') ||
     false;
 
-  const displayH1 = pageCopy?.h1
-    ? toSpanishTitleCase(pageCopy.h1)
-    : city
-      ? toSpanishTitleCase(`${product.title} para Bodas y Eventos en ${city.name}`)
-      : toSpanishTitleCase(`${product.title} para Bodas y Eventos en México`);
+  const displayH1 = toSpanishTitleCase(
+    enrichServiceH1(
+      pageCopy?.h1 || product.title,
+      city?.name || null,
+    ),
+  );
   const displayHeadline = toSpanishTitleCase(pageCopy?.headline || product.headline || '');
-  const displaySectionTitle = pageCopy?.sectionTitle
-    ? toSpanishTitleCase(pageCopy.sectionTitle)
-    : city
-      ? toSpanishTitleCase(`${product.title} para Bodas y Eventos en ${city.name}`)
-      : toSpanishTitleCase(`${product.title} para Bodas y Eventos en México`);
+  const displaySectionTitle = toSpanishTitleCase(
+    bodySectionHeading(
+      displayH1,
+      pageCopy?.sectionTitle,
+      city ? `Sobre este servicio en ${city.name}` : 'Sobre este servicio',
+    ),
+  );
   const kw = buildHighlightKeywords({
     primaryKeyword: pageCopy?.primaryKeyword || '',
     zones: pageCopy?.zones || [],
