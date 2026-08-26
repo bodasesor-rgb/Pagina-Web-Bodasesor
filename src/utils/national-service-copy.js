@@ -15,7 +15,7 @@ export const NATIONAL_COVERAGE_ZONES = [
 
 /** Pages that should NOT get “para Bodas y Eventos…” stuffed into the H1. */
 const META_PAGE_RE =
-  /quienes.?somos|aviso.?de.?privacidad|terminos|politicas.?de.?devoluci|catalogos|galeria|^blog$|buscar/i
+  /quienes.?somos|aviso.?de.?privacidad|terminos|politicas.?de.?devoluci|\bcatalogos\b|\bgaleria\b|\bblog\b|\bbuscar\b/i
 
 function foldAccents(s) {
   return String(s || '')

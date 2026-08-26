@@ -43,7 +43,7 @@ export const PRIORITY_HUB_SERP = {
 
 /** Home SERP + static LCP hero copy (index.html). */
 export const HOME_SERP = {
-  title: 'Banquetes, Catering y Mobiliario',
+  title: 'Banquetes, Catering y Mobiliario para Eventos',
   desc: 'Banquetes, catering gourmet y renta de mobiliario para bodas, XV años y eventos en México. Cotiza por WhatsApp sin compromiso hoy.',
   h1: 'Banquetes, Catering y Mobiliario para Eventos en México',
   sub: 'Banquetes premium, catering y mobiliario elegante para bodas, quinceañeras y eventos corporativos. Cotiza por WhatsApp.',

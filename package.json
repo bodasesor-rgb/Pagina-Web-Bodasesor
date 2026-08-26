@@ -13,6 +13,7 @@
     "audit:performance-shells": "node scripts/audit-performance-shells.mjs",
     "prerender:seo": "node scripts/prerender-spa-seo-shells.mjs",
     "audit:seo": "node scripts/audit-seo-production.mjs",
+    "audit:prepositions": "node scripts/audit-seo-prepositions.mjs",
     "audit:ga": "node scripts/audit-ga-tagging.mjs",
     "check:glued-city": "node scripts/check-glued-city-canonical.mjs",
     "guard:redirects": "node scripts/guard-redirects.mjs",
