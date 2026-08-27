@@ -107,9 +107,9 @@
     </script>
     <style>
       body{margin:0;font-family:Georgia,'Times New Roman',serif}
-      #lcp-hero-wrap{position:fixed;inset:0;z-index:0;margin:0;pointer-events:none;min-height:520px}
+      #lcp-hero-wrap{position:fixed;inset:0;z-index:0;margin:0;pointer-events:none;min-height:520px;overflow:hidden}
       @media (min-width:769px){#lcp-hero-wrap{aspect-ratio:1408/768;min-height:480px}}
-      #lcp-hero-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
+      #lcp-hero-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
       #lcp-hero-wrap::after{content:"";position:absolute;inset:0;background:#16204099}
       #root{position:relative;z-index:1;min-height:100vh}
       #static-hero-copy{position:fixed;left:0;right:0;top:5.5rem;z-index:2;max-width:80rem;margin:0 auto;padding:0 1rem;text-align:center;pointer-events:none}
@@ -129,7 +129,7 @@
          After live: absolute (not fixed) so title/image scroll away with the portada. */
       html.home-lcp-live #root{background:transparent}
       html.home-lcp-live #lcp-hero-wrap.lcp-hero-live{
-        position:absolute;inset:0;z-index:0;bottom:auto;height:auto;min-height:520px
+        position:absolute;inset:0;z-index:0;width:100%;height:100%;min-height:520px;overflow:hidden
       }
       @media (min-width:769px){
         html.home-lcp-live #lcp-hero-wrap.lcp-hero-live{min-height:480px;aspect-ratio:1408/768}

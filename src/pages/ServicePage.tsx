@@ -464,14 +464,14 @@ export default function ServicePage({ params }: ServicePageProps) {
                   </a>
                 </div>
               </div>
-              <div className="lg:col-span-2 flex items-center justify-center bg-[#f5efe8] min-h-[260px] py-8 px-8">
+              <div className="lg:col-span-2 flex items-center justify-center bg-[#162040] lg:bg-[#f5efe8] min-h-[200px] lg:min-h-[260px] py-6 px-6 lg:py-8 lg:px-8">
                 <OptimizedImage
                   src={getProductHeroImage(slug)!}
                   alt={heroAlt}
                   width={400}
                   height={288}
                   priority
-                  className="max-h-72 w-full object-contain drop-shadow-xl"
+                  className="max-h-64 lg:max-h-72 w-full object-contain drop-shadow-xl"
                 />
               </div>
             </div>
