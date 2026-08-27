@@ -48,7 +48,7 @@
     "gsc:redirects": "node scripts/audit-gsc-redirect-relevance.mjs",
     "gsc:traffic-loss": "node scripts/gsc-traffic-loss.mjs",
     "gsc:recover-top": "node scripts/recover-top-gsc-pages.mjs",
-    "gsc:merge-redirects": "node scripts/merge-gsc-priority-redirects.mjs",
+    "gsc:merge-redirects": "node scripts/merge-gsc-priority-redirects.mjs"
   },
   "dependencies": {
     "@fontsource/lato": "^5.2.7",
