@@ -4,9 +4,14 @@ import { blogPosts } from "../data/blog-data";
 import { useEffect, type ReactNode } from "react";
 import { usePageSeo } from "../hooks/usePageSeo";
 import CatalogImage from "../components/CatalogImage";
-import { blogArticleHref, prefersStaticBlogHtml } from "../utils/static-blog";
+import { blogArticleHref } from "../utils/static-blog";
 
-/** Nexus static HTML must hard-navigate; SPA stubs must not replace the article. */
+/**
+ * Always hard-navigate to /blog/{slug}/.
+ * - Nexus posts: Netlify serves static HTML (real article).
+ * - SPA-only posts: no static file → SPA fallback → BlogDetailPage.
+ * Never use wouter Link here: client-nav would paint blog-data stubs over Nexus HTML.
+ */
 function BlogArticleLink({
   post,
   children,
@@ -16,18 +21,10 @@ function BlogArticleLink({
   children: ReactNode;
   className?: string;
 }) {
-  const href = blogArticleHref(post.slug);
-  if (prefersStaticBlogHtml(post)) {
-    return (
-      <a href={href} className={className}>
-        {children}
-      </a>
-    );
-  }
   return (
-    <Link href={`/blog/${post.slug}`} className={className}>
+    <a href={blogArticleHref(post.slug)} className={className}>
       {children}
-    </Link>
+    </a>
   );
 }
 

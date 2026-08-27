@@ -31,6 +31,11 @@ export default function BlogDetailPage({ slug }: Props) {
   const related = blogPosts.filter(p => p.slug !== slug).slice(0, 3);
   const useStaticHtml = prefersStaticBlogHtml(post);
 
+  // BlogDetailPage only mounts inside the SPA. Nexus articles must leave to static HTML.
+  if (typeof window !== 'undefined' && useStaticHtml && slug) {
+    window.location.replace(blogArticleHref(slug));
+  }
+
   usePageSeo({
     title: post?.title ?? "",
     description: post?.excerpt,
@@ -44,7 +49,6 @@ export default function BlogDetailPage({ slug }: Props) {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  // Never paint blog-data stubs over Nexus static HTML.
   useEffect(() => {
     if (!useStaticHtml || !slug) return;
     window.location.replace(blogArticleHref(slug));
@@ -145,8 +149,8 @@ export default function BlogDetailPage({ slug }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-[#162040] font-serif mb-10 text-center">También Te Puede Interesar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {related.map(p => {
-              const card = (
+            {related.map(p => (
+              <a key={p.slug} href={blogArticleHref(p.slug)}>
                 <article className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#162040]">
                   <div className="h-44 overflow-hidden relative">
                     <CatalogImage
@@ -168,13 +172,8 @@ export default function BlogDetailPage({ slug }: Props) {
                     <p className="text-xs text-gray-600 font-serif">{p.readTime} de lectura</p>
                   </div>
                 </article>
-              );
-              return prefersStaticBlogHtml(p) ? (
-                <a key={p.slug} href={blogArticleHref(p.slug)}>{card}</a>
-              ) : (
-                <Link key={p.slug} href={`/blog/${p.slug}`}>{card}</Link>
-              );
-            })}
+              </a>
+            ))}
           </div>
           <div className="text-center mt-10">
             <Link href="/blog" className="inline-block border-2 border-[#162040] text-[#162040] hover:bg-[#162040] hover:text-white px-8 py-3 rounded-xl font-bold font-serif transition-all duration-300">
