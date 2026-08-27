@@ -1,6 +1,104 @@
 // Blog posts extracted from bodasesor.com live bundle
 export const blogPosts = [
     {
+      slug: "amor-frases-de-amor-propio",
+      title: "15 Frases de Amor Propio para Fortalecer tu Bienestar Antes de Casarte",
+      date: "2026-08-27",
+      category: "Bodas",
+      image: "/blog/amor-frases-de-amor-propio/amor-frases-de-amor-propio.webp",
+      excerpt: "Frases de amor propio para cuidar tu bienestar emocional mientras planeas tu boda, con ideas prácticas y cotización Bodasesor.",
+      body: [
+        "El <strong>amor propio</strong> también forma parte de preparar tu boda: te ayuda a disfrutar el proceso y a tomar decisiones con más claridad.",
+        "En Bodasesor acompañamos bodas y eventos en México con banquetes, decoración y coordinación integral.",
+        "Lee el artículo completo en esta URL (HTML Nexus) para las 15 frases y tips de bienestar."
+      ],
+      readTime: "7 min"
+    },
+    {
+      slug: "fiesta-noches-mexicanas",
+      title: "Noches Mexicanas",
+      date: "2026-08-27",
+      category: "Decoración",
+      image: "/blog/fiesta-noches-mexicanas/fiesta-noches-mexicanas.webp",
+      excerpt: "Ideas para armar una fiesta de noches mexicanas: decoración, menú, música y montaje memorable para tu evento.",
+      body: [
+        "Una <strong>noche mexicana</strong> combina color, gastronomía y ambiente festivo para bodas, XV o corporativos.",
+        "Bodasesor puede integrar banquetes, barras, mobiliario y decoración en un solo montaje.",
+        "Consulta el artículo completo en esta misma URL con checklist y recomendaciones."
+      ],
+      readTime: "7 min"
+    },
+    {
+      slug: "inteligencia-artificial-las-mejores-aplicaciones-de-inteligencia-artificial-gratuitas-para-productividad-y-trabajo-eventos-corporativos",
+      title: "Inteligencia Artificial: mejores herramientas gratuitas para optimizar la logística de eventos corporativos",
+      date: "2026-08-27",
+      category: "Corporativos",
+      image: "/blog/inteligencia-artificial-las-mejores-aplicaciones-de-inteligencia-artificial-gratuitas-para-productividad-y-trabajo-eventos-corporativos/hero.webp",
+      excerpt: "La IA puede automatizar tareas de planeación corporativa: checklists, timelines y coordinación de proveedores sin perder control.",
+      body: [
+        "Integrar <strong>inteligencia artificial</strong> en eventos corporativos ayuda a ordenar logística y comunicación del equipo.",
+        "Bodasesor cubre catering, mobiliario y producción para que la ejecución del día sea impecable.",
+        "El artículo completo detalla herramientas gratuitas útiles para organizadores."
+      ],
+      readTime: "7 min"
+    },
+    {
+      slug: "estrenos-en-plataformas-de-streaming-calendario-de-estrenos-en-plataformas-de-streaming-netflix-disney",
+      title: "Calendario completo de estrenos en plataformas de streaming para este mes",
+      date: "2026-08-27",
+      category: "Corporativos",
+      image: "/blog/estrenos-en-plataformas-de-streaming-calendario-de-estrenos-en-plataformas-de-streaming-netflix-disney/hero.webp",
+      excerpt: "Mantente al día de estrenos en streaming este mes: guía práctica para aprovechar mejor tus suscripciones.",
+      body: [
+        "Un <strong>calendario de estrenos</strong> ayuda a planear noches temáticas o activaciones de marca con contenido actual.",
+        "Si organizas un evento corporativo o social, Bodasesor puede resolver catering y montaje.",
+        "Revisa el artículo completo en esta URL para el listado del mes."
+      ],
+      readTime: "7 min"
+    },
+    {
+      slug: "wellness-protocolos-de-wellness-clinicas-de-medicina-preventiva-y-retiros-de-desintoxicacion-vip",
+      title: "Guía de protocolos wellness en clínicas de medicina preventiva y retiros",
+      date: "2026-08-27",
+      category: "Espacios",
+      image: "/blog/wellness-protocolos-de-wellness-clinicas-de-medicina-preventiva-y-retiros-de-desintoxicacion-vip/hero.webp",
+      excerpt: "Cómo evaluar protocolos wellness en clínicas de medicina preventiva y retiros VIP con criterios claros de calidad.",
+      body: [
+        "Los <strong>protocolos wellness</strong> exigen estándares claros de seguridad, atención y seguimiento.",
+        "Si planeas un retiro o evento de bienestar, Bodasesor puede apoyar con catering y montaje profesional.",
+        "Lee la guía completa en esta misma URL."
+      ],
+      readTime: "7 min"
+    },
+    {
+      slug: "hoteles-los-hoteles-boutique-y-resorts-ultra-luxury-mas-exclusivos-de-mexico",
+      title: "Los hoteles boutique y resorts ultra luxury más exclusivos para visitar en México",
+      date: "2026-08-27",
+      category: "Espacios",
+      image: "/blog/hoteles-los-hoteles-boutique-y-resorts-ultra-luxury-mas-exclusivos-de-mexico/hoteles-los-hoteles-boutique-y-resorts-ultra-luxury-mas-exclusivos-de-mexico.webp",
+      excerpt: "Selección de hoteles boutique y resorts ultra luxury en México para bodas, celebraciones y escapadas exclusivas.",
+      body: [
+        "Elegir un <strong>hotel boutique o resort luxury</strong> define el tono de una boda o evento de destino.",
+        "Bodasesor coordina banquetes, decoración y proveedores dentro o fuera del venue.",
+        "Consulta el artículo completo para ideas de locaciones exclusivas."
+      ],
+      readTime: "7 min"
+    },
+    {
+      slug: "bienes-raices-arquitectura-bienes-raices-arquitectura-ciudades-y-zonas-con-mayor-plusvalia-para-inversion-residencial-en-mexico",
+      title: "Cómo elegir el venue ideal: guía de Bienes Raíces y Arquitectura para eventos",
+      date: "2026-08-27",
+      category: "Espacios",
+      image: "/blog/bienes-raices-arquitectura-bienes-raices-arquitectura-ciudades-y-zonas-con-mayor-plusvalia-para-inversion-residencial-en-mexico/hero.webp",
+      excerpt: "Criterios de ubicación, arquitectura y plusvalía para elegir un venue o espacio con potencial para eventos en México.",
+      body: [
+        "Elegir un <strong>venue</strong> implica mirar acceso, capacidad, arquitectura y logística del evento.",
+        "Bodasesor te ayuda a llenar ese espacio con banquete, mobiliario y producción.",
+        "La guía completa está en esta URL con enfoque práctico para organizadores."
+      ],
+      readTime: "7 min"
+    },
+    {
       slug: "como-elegir-el-banquete-perfecto-para-tu-boda-prueba-nexus-ciudad-de-mexico",
       title: "Cómo Elegir el Banquete Perfecto para Tu Boda en Ciudad de México",
       date: "2026-08-27",
