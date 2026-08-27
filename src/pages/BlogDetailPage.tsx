@@ -6,6 +6,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import OptimizedImage from "../components/OptimizedImage";
 import CatalogImage from "../components/CatalogImage";
 import { usePageSeo } from "../hooks/usePageSeo";
+import { blogArticleHref, prefersStaticBlogHtml } from "../utils/static-blog";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -28,6 +29,7 @@ interface Props { slug: string }
 export default function BlogDetailPage({ slug }: Props) {
   const post = getBlogPostBySlug(slug);
   const related = blogPosts.filter(p => p.slug !== slug).slice(0, 3);
+  const useStaticHtml = prefersStaticBlogHtml(post);
 
   usePageSeo({
     title: post?.title ?? "",
@@ -35,18 +37,32 @@ export default function BlogDetailPage({ slug }: Props) {
     path: post ? `/blog/${post.slug}` : undefined,
     h1: post?.title,
     image: post?.image,
-    enabled: Boolean(post),
+    enabled: Boolean(post) && !useStaticHtml,
   });
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  // Never paint blog-data stubs over Nexus static HTML.
+  useEffect(() => {
+    if (!useStaticHtml || !slug) return;
+    window.location.replace(blogArticleHref(slug));
+  }, [slug, useStaticHtml]);
+
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5efe8] text-[#162040] gap-6">
         <h1 className="text-4xl font-serif font-bold">Artículo no encontrado</h1>
         <Link href="/blog" className="text-[#162040] underline font-serif">← Volver al blog</Link>
+      </div>
+    );
+  }
+
+  if (useStaticHtml) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white text-[#162040] font-serif">
+        Cargando artículo…
       </div>
     );
   }
@@ -129,8 +145,8 @@ export default function BlogDetailPage({ slug }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-[#162040] font-serif mb-10 text-center">También Te Puede Interesar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {related.map(p => (
-              <Link key={p.slug} href={`/blog/${p.slug}`}>
+            {related.map(p => {
+              const card = (
                 <article className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#162040]">
                   <div className="h-44 overflow-hidden relative">
                     <CatalogImage
@@ -152,8 +168,13 @@ export default function BlogDetailPage({ slug }: Props) {
                     <p className="text-xs text-gray-600 font-serif">{p.readTime} de lectura</p>
                   </div>
                 </article>
-              </Link>
-            ))}
+              );
+              return prefersStaticBlogHtml(p) ? (
+                <a key={p.slug} href={blogArticleHref(p.slug)}>{card}</a>
+              ) : (
+                <Link key={p.slug} href={`/blog/${p.slug}`}>{card}</Link>
+              );
+            })}
           </div>
           <div className="text-center mt-10">
             <Link href="/blog" className="inline-block border-2 border-[#162040] text-[#162040] hover:bg-[#162040] hover:text-white px-8 py-3 rounded-xl font-bold font-serif transition-all duration-300">

@@ -1,9 +1,35 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { blogPosts } from "../data/blog-data";
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { usePageSeo } from "../hooks/usePageSeo";
 import CatalogImage from "../components/CatalogImage";
+import { blogArticleHref, prefersStaticBlogHtml } from "../utils/static-blog";
+
+/** Nexus static HTML must hard-navigate; SPA stubs must not replace the article. */
+function BlogArticleLink({
+  post,
+  children,
+  className,
+}: {
+  post: (typeof blogPosts)[number];
+  children: ReactNode;
+  className?: string;
+}) {
+  const href = blogArticleHref(post.slug);
+  if (prefersStaticBlogHtml(post)) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={`/blog/${post.slug}`} className={className}>
+      {children}
+    </Link>
+  );
+}
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -60,7 +86,7 @@ export default function BlogPage() {
       {/* ── Featured post ── */}
       <section className="py-16 bg-[#f5efe8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href={`/blog/${featured.slug}`}>
+          <BlogArticleLink post={featured}>
             <div className="group grid grid-cols-1 md:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-[#162040]">
               <div className="relative h-72 md:h-auto overflow-hidden">
                 <CatalogImage
@@ -94,7 +120,7 @@ export default function BlogPage() {
                 </span>
               </div>
             </div>
-          </Link>
+          </BlogArticleLink>
         </div>
       </section>
 
@@ -104,7 +130,7 @@ export default function BlogPage() {
           <h2 className="text-3xl font-bold text-[#162040] font-serif mb-12 text-center">Todos los artículos</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {rest.map(post => (
-              <Link key={post.slug} href={`/blog/${post.slug}`}>
+              <BlogArticleLink key={post.slug} post={post}>
                 <article className="group bg-white border-2 border-[#f5efe8] rounded-2xl overflow-hidden hover:shadow-2xl hover:border-[#162040] transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full flex flex-col">
                   <div className="relative h-52 overflow-hidden">
                     <CatalogImage
@@ -142,7 +168,7 @@ export default function BlogPage() {
                     </div>
                   </div>
                 </article>
-              </Link>
+              </BlogArticleLink>
             ))}
           </div>
           <div className="mt-14 text-center">
