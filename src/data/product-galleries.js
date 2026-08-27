@@ -1,5 +1,5 @@
 /** Shared product hero + gallery image maps for carousels. */
-import nexusGallery from './product-gallery.json'
+import nexusGallery from './product-gallery.json' with { type: 'json' }
 import { resolveNexusGalleryKey } from './product-gallery-key-map.js'
 
 const HERO_IMAGES = {

@@ -63,7 +63,7 @@ function writeStore(store) {
   if (!existsSync(OUT_JS)) {
     writeFileSync(
       OUT_JS,
-      `import data from './city-hub-content.json'\n` +
+      `import data from './city-hub-content.json' with { type: 'json' }\n` +
         `import { normalizeCityHubContent } from './city-hub-schema.js'\n` +
         `import { CITY_MAP } from './city-data.js'\n` +
         `export const CITY_HUB_CONTENT = data\n` +

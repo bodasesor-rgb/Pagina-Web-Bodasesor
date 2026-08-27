@@ -2,7 +2,7 @@
  * Client-side legacy URL resolver (mirrors scripts/redirect-resolver.mjs).
  * Used when Netlify _redirects / edge are not active yet.
  */
-import catalogData from '../data/legacy-catalog-hrefs.json'
+import catalogData from '../data/legacy-catalog-hrefs.json' with { type: 'json' }
 
 const CITY_SUFFIXES = [
   'san-miguel-allende', 'san-luis-potosi', 'ciudad-de-mexico', 'estado-de-mexico',
