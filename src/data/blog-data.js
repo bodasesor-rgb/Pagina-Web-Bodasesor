@@ -1,6 +1,34 @@
 // Blog posts extracted from bodasesor.com live bundle
 export const blogPosts = [
     {
+      slug: "como-elegir-el-banquete-perfecto-para-tu-boda-prueba-nexus-ciudad-de-mexico",
+      title: "Cómo Elegir el Banquete Perfecto para Tu Boda en Ciudad de México",
+      date: "2026-08-27",
+      category: "Banquetes",
+      image: "/blog/como-elegir-el-banquete-perfecto-para-tu-boda-prueba-nexus-ciudad-de-mexico/como-elegir-el-banquete-perfecto-para-tu-boda-prueba-nexus-ciudad-de-mexico.webp",
+      excerpt: "Guía práctica para armar el menú ideal, comparar formatos y cotizar tu banquete de boda en CDMX sin sorpresas.",
+      body: [
+        "Elegir el <strong>banquete perfecto para tu boda</strong> en Ciudad de México implica definir formato (tiempos o buffet), número de invitados y estilo de servicio.",
+        "En Bodasesor te ayudamos a comparar opciones, personalizar el menú y cotizar por WhatsApp con respuesta clara en menos de 24 horas.",
+        "Consulta el artículo completo en esta misma URL: el contenido enriquecido de Nexus incluye menús de ejemplo, checklist y preguntas frecuentes."
+      ],
+      readTime: "6 min"
+    },
+    {
+      slug: "ideas-de-decoracion-para-mesa-principal-en-xv-anos-prueba-nexus-ciudad-de-mexico",
+      title: "Ideas de Decoración para Mesa Principal en XV Años en Ciudad de México",
+      date: "2026-08-27",
+      category: "Decoración",
+      image: "/blog/ideas-de-decoracion-para-mesa-principal-en-xv-anos-prueba-nexus-ciudad-de-mexico/ideas-de-decoracion-para-mesa-principal-en-xv-anos-prueba-nexus-ciudad-de-mexico.webp",
+      excerpt: "Ideas reales para vestir la mesa principal de XV años: flores, iluminación, textiles y detalles que sí se notan en fotos.",
+      body: [
+        "La <strong>mesa principal de XV años</strong> es el punto visual del salón. Combina flores, luz y textiles según el tema de la fiesta.",
+        "En Bodasesor coordinamos decoración, mobiliario y banquetes para que el montaje quede listo el día del evento en CDMX.",
+        "El artículo completo (HTML Nexus) detalla ideas, errores comunes y cómo cotizar sin improvisar."
+      ],
+      readTime: "6 min"
+    },
+    {
       slug: "como-organizar-boda-perfecta-mexico",
       title: "Cómo Organizar la Boda Perfecta en México: Guía Completa 2026",
       date: "2026-03-10",

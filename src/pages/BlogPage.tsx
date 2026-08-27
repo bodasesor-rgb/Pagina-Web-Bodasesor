@@ -11,6 +11,7 @@ const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hol
 const CATEGORY_COLORS: Record<string, string> = {
   'Bodas':        'bg-rose-100 text-rose-700',
   'XV Años':      'bg-purple-100 text-purple-700',
+  'Banquetes':    'bg-amber-100 text-amber-800',
   'Decoración':   'bg-green-100 text-green-700',
   'Corporativos': 'bg-blue-100 text-blue-700',
   'Música':       'bg-yellow-100 text-yellow-700',
