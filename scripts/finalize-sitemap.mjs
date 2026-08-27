@@ -15,7 +15,7 @@ import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises'
 import { existsSync, readFileSync } from 'node:fs'
 import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { collectSpaSeoPathsForSitemap } from './collect-spa-seo-entries.mjs'
+import { collectSpaSeoEntries } from './collect-spa-seo-entries.mjs'
 import { isNexusLandingHtml, isSpaShellHtml } from './lib/nexus-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -107,7 +107,8 @@ async function collectPaths() {
   const paths = new Set(['/'])
   const nexusFromDist = new Set()
 
-  for (const p of collectSpaSeoPathsForSitemap()) {
+  for (const [p, entry] of collectSpaSeoEntries({ includeAllCityProductVariants: false })) {
+    if (entry.noindex) continue
     if (p === '/buscar' || p.startsWith('/buscar') || p.includes('?')) continue
     paths.add(p)
   }
@@ -144,6 +145,9 @@ async function collectPaths() {
           continue
         }
         if (isNexusLanding(html)) {
+          if (/name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html)) {
+            continue
+          }
           const clean = (urlPath.replace(/\/$/, '') || '/').replace(/^\//, '')
           paths.add(`/${clean}`)
           nexusFromDist.add(clean)

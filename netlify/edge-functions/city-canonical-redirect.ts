@@ -257,6 +257,11 @@ function hubNeedsTrailingSlash(rawPathname: string): string | null {
     return `/${segs[0]}/`
   }
 
+  // Nexus SEO slugs (/banquete-kosher-ciudad-de-mexico/) — collapse slash duplicates in GSC
+  if (segs.length === 1 && !last.includes('.')) {
+    return `/${segs[0]}/`
+  }
+
   if (segs.length === 2 && TRAILING_SLASH_HUBS.has(segs[0])) {
     const city = CITY_CANONICAL[segs[1]]
     if (city) return `/${segs[0]}/${city}/`

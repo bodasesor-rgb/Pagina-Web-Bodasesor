@@ -1,5 +1,5 @@
 import { stripCityFromPath } from './city-url'
-import { HERO_IMAGES } from '../data/product-galleries'
+import { getProductHeroImage } from '../data/product-galleries'
 
 /** Known LCP candidates for catalog and event pages (path without city suffix). */
 const LCP_BY_PATH = {
@@ -38,12 +38,15 @@ export function getLcpImageForPath(pathname) {
   if (LCP_BY_PATH[base]) return LCP_BY_PATH[base]
 
   const parts = base.split('/').filter(Boolean)
-  if (parts.length === 1 && HERO_IMAGES[parts[0]]) return HERO_IMAGES[parts[0]]
+  if (parts.length === 1) {
+    const hero = getProductHeroImage(parts[0])
+    if (hero) return hero
+  }
 
   // Banquet menu detail: /banquetes/formal-3-tiempos, /banquete-kosher/...
   if (parts.length === 2 && parts[0].startsWith('banquete')) {
     const parentKey = parts[0] === 'banquetes' ? 'banquetes' : parts[0]
-    return HERO_IMAGES[parentKey] || '/images/banquete-hero.png'
+    return getProductHeroImage(parentKey) || '/images/banquete-hero.png'
   }
 
   return null

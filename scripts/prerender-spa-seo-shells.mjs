@@ -128,10 +128,18 @@ function applySeo(html, entry) {
   ensureMeta('keywords', keywords)
   ensureMeta('robots', entry.noindex ? 'noindex, follow' : 'index, follow')
 
-  out = out.replace(
-    /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
-    `<link rel="canonical" href="${escapeAttr(entry.canonical)}" />`,
-  )
+  const ensureLink = (rel, href) => {
+    const re = new RegExp(`<link\\s+rel="${rel}"\\s+href="[^"]*"\\s*\\/?>`, 'i')
+    const tag = `<link rel="${rel}" href="${escapeAttr(href)}" />`
+    if (re.test(out)) out = out.replace(re, tag)
+    else {
+      out = out.replace(
+        /(<meta\s+name="description"\s+content="[^"]*"\s*\/?>)/i,
+        `$1\n    ${tag}`,
+      )
+    }
+  }
+  ensureLink('canonical', entry.canonical)
 
   out = out.replace(
     /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i,
@@ -160,6 +168,12 @@ function applySeo(html, entry) {
     /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
     `<meta property="og:url" content="${escapeAttr(entry.canonical)}" />`,
   )
+  if (!/<meta\s+property="og:url"/i.test(out)) {
+    out = out.replace(
+      /(<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>)/i,
+      `$1\n    <meta property="og:url" content="${escapeAttr(entry.canonical)}" />`,
+    )
+  }
 
   const ogImage = absoluteOgImage(entry.image)
   const ogType = entry.path.startsWith('/blog/') ? 'article' : 'website'

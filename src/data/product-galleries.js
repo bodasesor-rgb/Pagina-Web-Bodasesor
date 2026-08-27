@@ -1,4 +1,7 @@
 /** Shared product hero + gallery image maps for carousels. */
+import nexusGallery from './product-gallery.json'
+import { resolveNexusGalleryKey } from './product-gallery-key-map.js'
+
 const HERO_IMAGES = {
   // Banquetes — imágenes hero dedicadas
   'banquetes':             '/images/banquete-hero.png',
@@ -210,11 +213,55 @@ export function padGalleryToTarget(images, slug = 'default') {
 export function getProductGalleryImages(slug) {
   const gallery = PRODUCT_GALLERY[slug] ?? DEFAULT_GALLERY
   const heroImg = HERO_IMAGES[slug]
-  const base =
-    typeof heroImg === 'string' && heroImg && gallery[0] !== heroImg
-      ? [heroImg, ...gallery]
-      : [...gallery]
+  const nexusPaths = getNexusGalleryLocalPaths(slug)
+
+  let base
+  if (nexusPaths.length > 0) {
+    // Nexus principal photos first; static gallery fills the rest (no Hostinger hotlink).
+    const seen = new Set(nexusPaths)
+    base = [...nexusPaths]
+    for (const img of gallery) {
+      if (!img || seen.has(img)) continue
+      seen.add(img)
+      base.push(img)
+    }
+  } else {
+    base =
+      typeof heroImg === 'string' && heroImg && gallery[0] !== heroImg
+        ? [heroImg, ...gallery]
+        : [...gallery]
+  }
   return padGalleryToTarget(base, slug || 'default')
+}
+
+/**
+ * Local paths from the last Nexus sync (public/images/galeria-productos/…).
+ * Satellites resolve to the same principal key.
+ * @param {string} slug
+ * @returns {string[]}
+ */
+export function getNexusGalleryLocalPaths(slug) {
+  const key = resolveNexusGalleryKey(slug)
+  if (!key) return []
+  const row = nexusGallery?.byKey?.[key] || nexusGallery?.items?.find((i) => i.key === key)
+  const images = Array.isArray(row?.images) ? row.images : []
+  return images
+    .slice()
+    .sort((a, b) => (Number(a.slot) || 0) - (Number(b.slot) || 0))
+    .map((img) => img.localPath)
+    .filter(Boolean)
+    .slice(0, 3)
+}
+
+/**
+ * Prefer Nexus slot 1 as hero when present; else static HERO_IMAGES.
+ * @param {string} slug
+ * @returns {string|undefined}
+ */
+export function getProductHeroImage(slug) {
+  const nexus = getNexusGalleryLocalPaths(slug)
+  if (nexus[0]) return nexus[0]
+  return HERO_IMAGES[slug]
 }
 
 export { HERO_IMAGES, PRODUCT_GALLERY, DEFAULT_GALLERY }

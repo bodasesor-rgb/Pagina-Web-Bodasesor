@@ -3,7 +3,7 @@ import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useCity } from "../context/CityContext";
 import { getCityHubContent, prefetchCityHubContent } from "../data/city-hub-content";
-import { HERO_IMAGES } from "../data/product-galleries";
+import { HERO_IMAGES, getProductHeroImage } from "../data/product-galleries";
 import OptimizedImage from "../components/OptimizedImage";
 import CatalogImage from "../components/CatalogImage";
 import LazyInView from "../components/LazyInView";
@@ -302,7 +302,7 @@ export default function ServicePage({ params }: ServicePageProps) {
       path: city ? `/${slug}/${city.slug}` : `/${slug}`,
       h1: pageCopy?.h1 || `${product.title}${city ? ` en ${city.name}` : ''}`,
       cityName: city?.name || '',
-      image: HERO_IMAGES[slug] || product.img || product.image,
+      image: getProductHeroImage(slug) || product.img || product.image,
     });
   }, [product, city, pageCopy, slug]);
 
@@ -466,7 +466,7 @@ export default function ServicePage({ params }: ServicePageProps) {
               </div>
               <div className="lg:col-span-2 flex items-center justify-center bg-[#f5efe8] min-h-[260px] py-8 px-8">
                 <OptimizedImage
-                  src={HERO_IMAGES[slug]!}
+                  src={getProductHeroImage(slug)!}
                   alt={heroAlt}
                   width={400}
                   height={288}
@@ -481,7 +481,7 @@ export default function ServicePage({ params }: ServicePageProps) {
         /* Hero estándar con imagen de fondo */
         <section className="relative overflow-hidden bg-[#162040]" style={{ minHeight: '280px' }}>
           <OptimizedImage
-            src={HERO_IMAGES[slug] ?? '/images/galeria/g3.jpg'}
+            src={getProductHeroImage(slug) ?? '/images/galeria/g3.jpg'}
             alt={heroAlt}
             width={1200}
             height={675}

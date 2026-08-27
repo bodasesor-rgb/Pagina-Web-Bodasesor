@@ -18,5 +18,7 @@ public/images/**/*.webp
 !public/images/blog/**/*.webp
 !public/images/blog/**/*.jpg
 !public/images/blog/**/*.png
+# Galería de productos Nexus (≤3 webp / key) — se refresca en build:nexus
+!public/images/galeria-productos/**/*.webp
 # public/blog/** no está en el ignore de webp (solo public/images/**/*.webp)
 # Otras imágenes de producto (no-blog) se ignoran para reducir tamaño del repo

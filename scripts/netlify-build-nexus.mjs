@@ -11,6 +11,7 @@
  * 1b) Sync SEO landings — REQUIRED
  * 1c) Ensure blog seed + sync blogs — REQUIRED (fail if rich blogs missing)
  * 1d) Sync blog images from NEXUS_URL — REQUIRED (sibling *.webp under /blog/{slug}/)
+ * 1e) Sync product gallery from Nexus manifesto (≤3 imgs / principal key)
  * 2) Build SPA
  * 3) Merge SEO + blogs into dist/
  * 4) Patch / guard Nexus + blogs + images + finalize sitemap + prerender + Gate A
@@ -127,6 +128,14 @@ run(
   { optional: allowSpaOnly },
 )
 
+// Product gallery (≤3 imgs/principal key) — refresh from Nexus manifesto every build
+run(
+  '1e Sync galería de productos Nexus → public/images/galeria-productos',
+  'node',
+  ['scripts/sync-product-gallery-from-nexus.mjs'],
+  { optional: true },
+)
+
 run('2/4 Build SPA + redirects', 'npm', ['run', 'build'])
 
 const hasSeo = existsSync(LIVE) && liveLandingCount() > 0
@@ -175,6 +184,12 @@ run(
   'node',
   ['scripts/guard-blogs-dist.mjs'],
   { optional: allowSpaOnly },
+)
+
+run(
+  '4c3 Gate canonical: audit-canonical-dist (Nexus + SPA shells)',
+  'node',
+  ['scripts/audit-canonical-dist.mjs'],
 )
 
 // Gate A — absolute: fail if SPA OR Nexus landings missing

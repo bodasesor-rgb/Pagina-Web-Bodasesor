@@ -8,7 +8,7 @@
  * - Prefer .webp on <img src> when a sibling .webp exists in dist/
  */
 import { readFile, writeFile, readdir, stat } from 'node:fs/promises'
-import { join, dirname } from 'node:path'
+import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { existsSync } from 'node:fs'
 import {
@@ -19,6 +19,7 @@ import {
   imageStemFromPath,
   labelFromSlug,
 } from '../src/utils/seo-page-meta.js'
+import { absoluteUrl } from './lib/seo-canonical.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -275,7 +276,7 @@ function escapeAttr(s) {
 }
 
 function pathFromFile(file) {
-  const rel = file.replace(`${DIST}/`, '').replace(/\\/g, '/')
+  const rel = relative(DIST, file).replace(/\\/g, '/')
   if (rel === 'index.html') return '/'
   return `/${rel.replace(/\/index\.html$/i, '')}`
 }
@@ -300,6 +301,94 @@ function ensureNamedMeta(html, name, content) {
     }
   }
   return { html, changed: false }
+}
+
+function ensureLinkRel(html, rel, href) {
+  const re = new RegExp(`<link\\s+rel="${rel}"\\s+href="[^"]*"\\s*\\/?>`, 'i')
+  const tag = `<link rel="${rel}" href="${escapeAttr(href)}">`
+  if (re.test(html)) {
+    const prev = (html.match(re) || [])[0] || ''
+    if (prev.includes(href)) return { html, changed: false }
+    return { html: html.replace(re, tag), changed: true }
+  }
+  if (/<meta\s+name="description"/i.test(html)) {
+    return {
+      html: html.replace(
+        /(<meta\s+name="description"\s+content="[^"]*"\s*\/?>)/i,
+        `$1\n  ${tag}`,
+      ),
+      changed: true,
+    }
+  }
+  if (/<\/title>/i.test(html)) {
+    return {
+      html: html.replace(/<\/title>/i, `</title>\n  ${tag}`),
+      changed: true,
+    }
+  }
+  return { html, changed: false }
+}
+
+function ensurePropMeta(html, property, content) {
+  const re = new RegExp(`<meta\\s+property="${property}"\\s+content="[^"]*"\\s*\\/?>`, 'i')
+  const tag = `<meta property="${property}" content="${escapeAttr(content)}">`
+  if (re.test(html)) {
+    const prev = (html.match(re) || [])[0] || ''
+    if (prev.includes(content)) return { html, changed: false }
+    return { html: html.replace(re, tag), changed: true }
+  }
+  const canonRe = /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i
+  if (canonRe.test(html)) {
+    return {
+      html: html.replace(canonRe, (m) => `${m}\n  ${tag}`),
+      changed: true,
+    }
+  }
+  if (/<\/title>/i.test(html)) {
+    return {
+      html: html.replace(/<\/title>/i, `</title>\n  ${tag}`),
+      changed: true,
+    }
+  }
+  return { html, changed: false }
+}
+
+/** Force apex bodasesor.com + trailing slash canonical on every Nexus/SEO HTML shell. */
+function patchCanonicalUrls(html, filePath) {
+  const path = pathFromFile(filePath)
+  const isNexus = html.includes('seo-service-hero') || html.includes('seo-section')
+  const isBlog =
+    html.includes('seo-blog-') ||
+    html.includes('seo-blog-conversion') ||
+    html.includes('Bodasesor Eventos Blog')
+  if (!isNexus && !isBlog) return { html, changed: false }
+
+  const canonical = absoluteUrl(path)
+  let out = html
+  let changed = false
+
+  // Strip Hostinger / www mistakes from existing tags before rewrite
+  out = out.replace(
+    /https?:\/\/(?:www\.)?(?:white-ferret[^"'\s>]*hostingersite\.com|www\.bodasesor\.com)[^"'\s>]*/gi,
+    canonical,
+  )
+
+  for (const fn of [
+    () => ensureLinkRel(out, 'canonical', canonical),
+    () => ensurePropMeta(out, 'og:url', canonical),
+  ]) {
+    const r = fn()
+    out = r.html
+    if (r.changed) changed = true
+  }
+
+  if (isNexus || isBlog) {
+    const robots = ensureNamedMeta(out, 'robots', 'index, follow')
+    out = robots.html
+    if (robots.changed) changed = true
+  }
+
+  return { html: out, changed }
 }
 
 function extractTitle(html) {
@@ -487,6 +576,10 @@ function patchHtml(html, filePath) {
   out = identity.html
   if (identity.changed) changed = true
 
+  const canon = patchCanonicalUrls(out, filePath)
+  out = canon.html
+  if (canon.changed) changed = true
+
   const uniqDesc = uniquifyMetaDescription(out, filePath)
   out = uniqDesc.html
   if (uniqDesc.changed) changed = true
@@ -565,7 +658,7 @@ async function main() {
   let gaFixed = 0
 
   for (const file of files) {
-    const rel = file.replace(`${DIST}/`, '')
+    const rel = relative(DIST, file).replace(/\\/g, '/')
     if (rel === 'index.html') continue
 
     const html = await readFile(file, 'utf8')
@@ -573,6 +666,20 @@ async function main() {
 
     const beforeScripts = (html.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length
     const { html: next, changed } = patchHtml(html, file)
+    const isNexus =
+      html.includes('seo-service-hero') || html.includes('seo-section')
+    const expectedCanon = absoluteUrl(pathFromFile(file))
+    const hasCanon =
+      /<link\s+rel=["']canonical["']\s+href=["']https:\/\/bodasesor\.com/i.test(next) &&
+      next.includes(expectedCanon)
+    if (!changed && isNexus && !hasCanon) {
+      const forced = patchCanonicalUrls(html, file)
+      if (forced.changed) {
+        await writeFile(file, forced.html)
+        patched++
+      }
+      continue
+    }
     if (!changed) continue
 
     await writeFile(file, next)
