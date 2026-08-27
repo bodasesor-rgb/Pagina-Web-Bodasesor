@@ -7,7 +7,7 @@
  *   node scripts/audit-seo-production.mjs
  *   BASE_URL=https://bodasesor.com CONCURRENCY=20 node scripts/audit-seo-production.mjs
  */
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -221,11 +221,12 @@ async function main() {
     noindexCount: noindex.length,
   }
 
-  const outDir = join(ROOT, 'artifacts')
+  const outDir = join(ROOT, '.gsc-audit')
   try {
-    writeFileSync(join('/tmp', 'seo-audit-summary.json'), JSON.stringify(summary, null, 2))
+    mkdirSync(outDir, { recursive: true })
+    writeFileSync(join(outDir, 'seo-production-summary.json'), JSON.stringify(summary, null, 2))
     writeFileSync(
-      join('/tmp', 'seo-audit-soft404.json'),
+      join(outDir, 'seo-production-soft404.json'),
       JSON.stringify(
         soft404.map((r) => ({ url: r.url, status: r.status, bytes: r.bytes, title: r.title, canonical: r.canonical })),
         null,
@@ -233,7 +234,7 @@ async function main() {
       ),
     )
     writeFileSync(
-      join('/tmp', 'seo-audit-flagged.json'),
+      join(outDir, 'seo-production-flagged.json'),
       JSON.stringify(
         flagged.map((r) => ({
           url: r.url,

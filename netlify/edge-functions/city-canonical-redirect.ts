@@ -370,6 +370,13 @@ function withHubAlias(pathname: string | null): string | null {
 
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url)
+
+  // Collapse www → apex in one hop (avoids GSC multi-hop on legacy Shopify URLs).
+  if (url.hostname === 'www.bodasesor.com') {
+    const apex = new URL(`${url.pathname}${url.search}`, 'https://bodasesor.com')
+    return Response.redirect(apex.toString(), 301)
+  }
+
   const pathname = url.pathname.replace(/\/+$/, '') || '/'
 
   const buscarHub = resolveBuscarQuery(url)

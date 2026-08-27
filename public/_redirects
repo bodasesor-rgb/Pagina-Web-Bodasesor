@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4379 rules + fallback
+# 4435 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /silla-ghost  https://bodasesor.com/sillas/ghost/  301
@@ -192,8 +192,6 @@
 /xv-anosmorelia/  https://bodasesor.com/xv-anos/morelia/  301
 /paellacuernavaca  https://bodasesor.com/paella/cuernavaca/  301
 /paellacuernavaca/  https://bodasesor.com/paella/cuernavaca/  301
-/silla-camila  https://bodasesor.com/sillas/camila/  301
-/silla-camila/  https://bodasesor.com/sillas/camila/  301
 /wedding-plannerguadalajara  https://bodasesor.com/wedding-planner/guadalajara/  301
 /wedding-plannerguadalajara/  https://bodasesor.com/wedding-planner/guadalajara/  301
 /comidascancun  https://bodasesor.com/comidas/cancun/  301
@@ -232,10 +230,6 @@
 /collections/servicio-de-banquetes-en-puebla/  https://bodasesor.com/banquetes-catering/puebla/  301
 /collections/alimentos-para-empresas-y-comedores-industriales  https://bodasesor.com/alimentos-empresas/  301
 /collections/alimentos-para-empresas-y-comedores-industriales/  https://bodasesor.com/alimentos-empresas/  301
-/collections/arcos-florales-para-ceremonias-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
-/collections/arcos-florales-para-ceremonias-cdmx/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
-/collections/arreglos-para-aniversarios-cdmx  https://bodasesor.com/floreria/ciudad-de-mexico/  301
-/collections/arreglos-para-aniversarios-cdmx/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
 /collections/banquetes-para-eventos-pequenos-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-para-eventos-pequenos-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/servicios-de-catering-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
@@ -272,6 +266,78 @@
 /collections/banquetes-para-xv-anos-cdmx/  https://bodasesor.com/xv-anos/ciudad-de-mexico/  301
 /collections/banquetes-para-fiestas  https://bodasesor.com/banquetes-catering/  301
 /collections/banquetes-para-fiestas/  https://bodasesor.com/banquetes-catering/  301
+/carrito-snackscancun  https://bodasesor.com/carrito-snacks/cancun/  301
+/carrito-snackscancun/  https://bodasesor.com/carrito-snacks/cancun/  301
+/coffee-breakpuebla  https://bodasesor.com/alimentos-empresas/puebla/  301
+/coffee-breakpuebla/  https://bodasesor.com/alimentos-empresas/puebla/  301
+/coffee-breakcancun  https://bodasesor.com/alimentos-empresas/cancun/  301
+/coffee-breakcancun/  https://bodasesor.com/alimentos-empresas/cancun/  301
+/paellamonterrey  https://bodasesor.com/paella/monterrey/  301
+/paellamonterrey/  https://bodasesor.com/paella/monterrey/  301
+/puestos-antojitospuebla  https://bodasesor.com/puestos-antojitos/puebla/  301
+/puestos-antojitospuebla/  https://bodasesor.com/puestos-antojitos/puebla/  301
+/barra-bebidascancun  https://bodasesor.com/barras-de-bebidas/cancun/  301
+/barra-bebidascancun/  https://bodasesor.com/barras-de-bebidas/cancun/  301
+/barra-cafe-premiumlos-cabos  https://bodasesor.com/barras-de-bebidas/los-cabos/  301
+/barra-cafe-premiumlos-cabos/  https://bodasesor.com/barras-de-bebidas/los-cabos/  301
+/barra-moctelesmonterrey  https://bodasesor.com/barras-de-bebidas/monterrey/  301
+/barra-moctelesmonterrey/  https://bodasesor.com/barras-de-bebidas/monterrey/  301
+/barra-sushimonterrey  https://bodasesor.com/barras-de-bebidas/monterrey/  301
+/barra-sushimonterrey/  https://bodasesor.com/barras-de-bebidas/monterrey/  301
+/barras-de-bebidascancun  https://bodasesor.com/barras-de-bebidas/cancun/  301
+/barras-de-bebidascancun/  https://bodasesor.com/barras-de-bebidas/cancun/  301
+/bocadillospachuca  https://bodasesor.com/bocadillos/pachuca/  301
+/bocadillospachuca/  https://bodasesor.com/bocadillos/pachuca/  301
+/cocteles-mixologiamorelia  https://bodasesor.com/cocteles-mixologia/morelia/  301
+/cocteles-mixologiamorelia/  https://bodasesor.com/cocteles-mixologia/morelia/  301
+/paletas-heladoscuernavaca  https://bodasesor.com/paletas-helados/cuernavaca/  301
+/paletas-heladoscuernavaca/  https://bodasesor.com/paletas-helados/cuernavaca/  301
+/parrillada-argentinapuerto-vallarta  https://bodasesor.com/parrillada-argentina/puerto-vallarta/  301
+/parrillada-argentinapuerto-vallarta/  https://bodasesor.com/parrillada-argentina/puerto-vallarta/  301
+/vajillas-estilomonterrey  https://bodasesor.com/vajillas/monterrey/  301
+/vajillas-estilomonterrey/  https://bodasesor.com/vajillas/monterrey/  301
+/vajillas-estilopuebla  https://bodasesor.com/vajillas/puebla/  301
+/vajillas-estilopuebla/  https://bodasesor.com/vajillas/puebla/  301
+/sillas/louis-xvmonterrey  https://bodasesor.com/sillas/louis-xv/monterrey/  301
+/sillas/louis-xvmonterrey/  https://bodasesor.com/sillas/louis-xv/monterrey/  301
+/floreria/letras-gigantes/merida  https://bodasesor.com/floreria/merida/  301
+/floreria/letras-gigantes/merida/  https://bodasesor.com/floreria/merida/  301
+/floreria/letras-gigantes/ciudad-de-mexico  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/floreria/letras-gigantes/ciudad-de-mexico/  https://bodasesor.com/floreria/ciudad-de-mexico/  301
+/silla-ghost/ciudad-de-mexico  https://bodasesor.com/sillas/ghost/  301
+/silla-ghost/ciudad-de-mexico/  https://bodasesor.com/sillas/ghost/  301
+/vajillas-estilo/pachuca  https://bodasesor.com/vajillas/pachuca/  301
+/vajillas-estilo/pachuca/  https://bodasesor.com/vajillas/pachuca/  301
+/vajillas-estilo/ciudad-de-mexico  https://bodasesor.com/vajillas/ciudad-de-mexico/  301
+/vajillas-estilo/ciudad-de-mexico/  https://bodasesor.com/vajillas/ciudad-de-mexico/  301
+/mesas/picnic/puebla  https://bodasesor.com/mesas-sillas/puebla/  301
+/mesas/picnic/puebla/  https://bodasesor.com/mesas-sillas/puebla/  301
+/musica/dueto/guadalajara  https://bodasesor.com/musica/guadalajara/  301
+/musica/dueto/guadalajara/  https://bodasesor.com/musica/guadalajara/  301
+/musica/grupo-versatil/morelia  https://bodasesor.com/musica/morelia/  301
+/musica/grupo-versatil/morelia/  https://bodasesor.com/musica/morelia/  301
+/pistas-tarimas/tarima-madera/acapulco  https://bodasesor.com/pistas-tarimas/acapulco/  301
+/pistas-tarimas/tarima-madera/acapulco/  https://bodasesor.com/pistas-tarimas/acapulco/  301
+/sillas/louis-xv/puebla  https://bodasesor.com/mesas-sillas/puebla/  301
+/sillas/louis-xv/puebla/  https://bodasesor.com/mesas-sillas/puebla/  301
+/collections/banquetes-para-eventos-pequenos-en-puerto-vallarta  https://bodasesor.com/banquetes-catering/puerto-vallarta/  301
+/collections/banquetes-para-eventos-pequenos-en-puerto-vallarta/  https://bodasesor.com/banquetes-catering/puerto-vallarta/  301
+/collections/shows-para-eventos-cancun  https://bodasesor.com/shows/cancun/  301
+/collections/shows-para-eventos-cancun/  https://bodasesor.com/shows/cancun/  301
+/collections/banquetes-para-eventos-en-pachuca  https://bodasesor.com/banquetes-catering/pachuca/  301
+/collections/banquetes-para-eventos-en-pachuca/  https://bodasesor.com/banquetes-catering/pachuca/  301
+/collections/banquete-catering-en-lazaro-cardenas  https://bodasesor.com/banquetes-catering/  301
+/collections/banquete-catering-en-lazaro-cardenas/  https://bodasesor.com/banquetes-catering/  301
+/collections/banquetes-a-domicilio-en-queretaro  https://bodasesor.com/banquetes-catering/queretaro/  301
+/collections/banquetes-a-domicilio-en-queretaro/  https://bodasesor.com/banquetes-catering/queretaro/  301
+/collections/banquetes-para-fiestas-infantiles-en-queretaro  https://bodasesor.com/banquetes-catering/queretaro/  301
+/collections/banquetes-para-fiestas-infantiles-en-queretaro/  https://bodasesor.com/banquetes-catering/queretaro/  301
+/collections/inflables-valle-de-bravo  https://bodasesor.com/inflables/valle-de-bravo/  301
+/collections/inflables-valle-de-bravo/  https://bodasesor.com/inflables/valle-de-bravo/  301
+/products/catering-de-comida-japonesa-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
+/products/catering-de-comida-japonesa-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
+/blogs/noticias/frases-romanticas-buenos-dias-pareja  https://bodasesor.com/blog/  301
+/blogs/noticias/frases-romanticas-buenos-dias-pareja/  https://bodasesor.com/blog/  301
 
 /blogs/noticias?page=11  https://bodasesor.com/blog/  301
 /blogs/noticias?page=2  https://bodasesor.com/blog/  301
@@ -358,8 +424,6 @@
 /blogs/noticias/flores-para-arreglos-2024/  https://bodasesor.com/blog/flores-para-arreglos-2024/  301
 /blogs/noticias/flores-y-decoracion-para-mi-boda-2024  https://bodasesor.com/blog/flores-y-decoracion-para-mi-boda-2024/  301
 /blogs/noticias/flores-y-decoracion-para-mi-boda-2024/  https://bodasesor.com/blog/flores-y-decoracion-para-mi-boda-2024/  301
-/blogs/noticias/frases-romanticas-buenos-dias-pareja  https://bodasesor.com/blog/frases-romanticas-buenos-dias-pareja/  301
-/blogs/noticias/frases-romanticas-buenos-dias-pareja/  https://bodasesor.com/blog/frases-romanticas-buenos-dias-pareja/  301
 /blogs/noticias/gastronomia-para-eventos-sociales-y-corporativos  https://bodasesor.com/blog/gastronomia-para-eventos-sociales-y-corporativos/  301
 /blogs/noticias/gastronomia-para-eventos-sociales-y-corporativos/  https://bodasesor.com/blog/gastronomia-para-eventos-sociales-y-corporativos/  301
 /blogs/noticias/ideas-modernas-para-transformar-tu-evento  https://bodasesor.com/blog/ideas-modernas-para-transformar-tu-evento/  301
@@ -696,8 +760,6 @@
 /collections/banquete-catering-en-la-magdalena-contreras/  https://bodasesor.com/banquetes-catering/  301
 /collections/banquete-catering-en-la-magdalena-petlacalco  https://bodasesor.com/banquetes-catering/  301
 /collections/banquete-catering-en-la-magdalena-petlacalco/  https://bodasesor.com/banquetes-catering/  301
-/collections/banquete-catering-en-lazaro-cardenas  https://bodasesor.com/banquetes-catering/  301
-/collections/banquete-catering-en-lazaro-cardenas/  https://bodasesor.com/banquetes-catering/  301
 /collections/banquete-catering-en-leyes-de-reforma  https://bodasesor.com/banquetes-catering/  301
 /collections/banquete-catering-en-leyes-de-reforma/  https://bodasesor.com/banquetes-catering/  301
 /collections/banquete-catering-en-lindavista  https://bodasesor.com/banquetes-catering/  301
@@ -952,8 +1014,6 @@
 /collections/banquetes-a-domicilio-en-morelia/  https://bodasesor.com/banquetes-catering/morelia/  301
 /collections/banquetes-a-domicilio-en-pachuca  https://bodasesor.com/banquetes-catering/pachuca/  301
 /collections/banquetes-a-domicilio-en-pachuca/  https://bodasesor.com/banquetes-catering/pachuca/  301
-/collections/banquetes-a-domicilio-en-queretaro  https://bodasesor.com/banquetes-catering/queretaro/  301
-/collections/banquetes-a-domicilio-en-queretaro/  https://bodasesor.com/banquetes-catering/queretaro/  301
 /collections/banquetes-a-domicilio-precios-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-a-domicilio-precios-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/banquetes-buffet  https://bodasesor.com/banquetes-catering/  301
@@ -1259,8 +1319,6 @@
 /collections/banquetes-para-eventos-pequenos-en-pachuca/  https://bodasesor.com/banquetes-catering/pachuca/  301
 /collections/banquetes-para-eventos-pequenos-en-puebla  https://bodasesor.com/banquetes-catering/puebla/  301
 /collections/banquetes-para-eventos-pequenos-en-puebla/  https://bodasesor.com/banquetes-catering/puebla/  301
-/collections/banquetes-para-eventos-pequenos-en-puerto-vallarta  https://bodasesor.com/banquetes-catering/puerto-vallarta/  301
-/collections/banquetes-para-eventos-pequenos-en-puerto-vallarta/  https://bodasesor.com/banquetes-catering/puerto-vallarta/  301
 /collections/banquetes-para-eventos-pequenos-en-queretaro  https://bodasesor.com/banquetes-catering/queretaro/  301
 /collections/banquetes-para-eventos-pequenos-en-queretaro/  https://bodasesor.com/banquetes-catering/queretaro/  301
 /collections/banquetes-para-eventos-pequenos-en-valle-de-bravo  https://bodasesor.com/banquetes-catering/valle-de-bravo/  301
@@ -1310,8 +1368,6 @@
 /collections/banquetes-para-fiestas-infantiles-en-pachuca/  https://bodasesor.com/banquetes-catering/pachuca/  301
 /collections/banquetes-para-fiestas-infantiles-en-puebla  https://bodasesor.com/banquetes-catering/puebla/  301
 /collections/banquetes-para-fiestas-infantiles-en-puebla/  https://bodasesor.com/banquetes-catering/puebla/  301
-/collections/banquetes-para-fiestas-infantiles-en-queretaro  https://bodasesor.com/banquetes-catering/queretaro/  301
-/collections/banquetes-para-fiestas-infantiles-en-queretaro/  https://bodasesor.com/banquetes-catering/queretaro/  301
 /collections/banquetes-para-fiestas-infantiles-en-valle-de-bravo  https://bodasesor.com/banquetes-catering/valle-de-bravo/  301
 /collections/banquetes-para-fiestas-infantiles-en-valle-de-bravo/  https://bodasesor.com/banquetes-catering/valle-de-bravo/  301
 /collections/banquetes-para-graduaciones-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
@@ -2383,8 +2439,6 @@
 /collections/inflables-puerto-vallarta/  https://bodasesor.com/inflables/puerto-vallarta/  301
 /collections/inflables-queretaro  https://bodasesor.com/inflables/queretaro/  301
 /collections/inflables-queretaro/  https://bodasesor.com/inflables/queretaro/  301
-/collections/inflables-valle-de-bravo  https://bodasesor.com/inflables/valle-de-bravo/  301
-/collections/inflables-valle-de-bravo/  https://bodasesor.com/inflables/valle-de-bravo/  301
 /collections/innovacion-en-eventos-en-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/innovacion-en-eventos-en-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /collections/innovacion-para-bodas-cdmx  https://bodasesor.com/bodas/ciudad-de-mexico/  301
@@ -3325,8 +3379,6 @@
 /collections/shows-interactivos-cdmx/  https://bodasesor.com/shows/ciudad-de-mexico/  301
 /collections/shows-para-eventos-acapulco  https://bodasesor.com/shows/acapulco/  301
 /collections/shows-para-eventos-acapulco/  https://bodasesor.com/shows/acapulco/  301
-/collections/shows-para-eventos-cancun  https://bodasesor.com/shows/cancun/  301
-/collections/shows-para-eventos-cancun/  https://bodasesor.com/shows/cancun/  301
 /collections/shows-para-eventos-cdmx  https://bodasesor.com/shows/ciudad-de-mexico/  301
 /collections/shows-para-eventos-cdmx/  https://bodasesor.com/shows/ciudad-de-mexico/  301
 /collections/shows-para-eventos-cuernavaca  https://bodasesor.com/shows/cuernavaca/  301
@@ -3823,8 +3875,6 @@
 /products/catering-de-cafe-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /products/catering-de-comida-italiana-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /products/catering-de-comida-italiana-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
-/products/catering-de-comida-japonesa-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
-/products/catering-de-comida-japonesa-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /products/catering-de-comida-mexicana-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /products/catering-de-comida-mexicana-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /products/catering-de-desayunos-cdmx  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301

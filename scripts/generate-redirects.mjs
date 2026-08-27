@@ -7,6 +7,7 @@
 import fs from 'fs'
 import path from 'path'
 import { resolveLegacyPath, getCatalogForClient } from './redirect-resolver.mjs'
+import { GSC_FORCE_EXTRA } from './lib/gsc-force-extra.mjs'
 
 const ROOT = path.resolve(import.meta.dirname, '..')
 const SHEET_ID = '1IkE_zX3tjkGJuDAMzF09swEWuHSaE1wXY2SqOHNNvpk'
@@ -23,7 +24,7 @@ const SITE_BASE = (process.env.SITE_BASE || 'https://bodasesor.com').replace(/\/
  * High-priority redirects from GSC relevance audit (dead / wrong destinations).
  * Written at the TOP of _redirects so they win over generated map rules.
  */
-const GSC_FORCE_REDIRECTS = [
+const GSC_FORCE_REDIRECTS_RAW = [
   ['/silla-ghost', '/sillas/ghost/'],
   ['/silla-crossback', '/sillas/crossback/'],
   ['/silla-basket', '/sillas/basket/'],
@@ -169,7 +170,23 @@ const GSC_FORCE_REDIRECTS = [
   ['/collections/banquetes-para-eventos-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
   ['/collections/banquetes-para-xv-anos-cdmx', '/xv-anos/ciudad-de-mexico/'],
   ['/collections/banquetes-para-fiestas', '/banquetes-catering/'],
+  ...GSC_FORCE_EXTRA,
 ]
+
+/** First rule wins — extras must not override curated GSC_FORCE rows above. */
+function dedupeForce(rows) {
+  const seen = new Set()
+  const out = []
+  for (const [from, to] of rows) {
+    const key = from.toLowerCase()
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push([from, to])
+  }
+  return out
+}
+
+const GSC_FORCE_REDIRECTS = dedupeForce(GSC_FORCE_REDIRECTS_RAW)
 
 function parseCsv(text) {
   const rows = []
