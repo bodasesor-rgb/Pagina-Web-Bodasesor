@@ -1,5 +1,3 @@
-import CityLink from "../components/CityLink";
-const Link = CityLink;
 import { blogPosts } from "../data/blog-data";
 import { useEffect, type ReactNode } from "react";
 import { usePageSeo } from "../hooks/usePageSeo";
