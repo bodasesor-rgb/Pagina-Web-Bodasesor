@@ -12,7 +12,8 @@
   ],
   "neverOverwriteFromLive": [
     "_redirects",
-    "redirects-map.json"
+    "redirects-map.json",
+    "css/seo-landing.css"
   ],
   "neverCopyPrefixes": [
     "banquete-kosher/",
