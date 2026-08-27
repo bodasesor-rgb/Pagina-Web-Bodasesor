@@ -394,18 +394,22 @@ export default async function handler(request: Request, context: Context) {
     return apexRedirect(hubAlias, url.search)
   }
 
+  // Unglue city URLs BEFORE trailing-slash normalize, otherwise
+  // /bodasciudad-de-mexico → /bodasciudad-de-mexico/ (two hops) instead of
+  // one-hop /bodas/ciudad-de-mexico/.
+  const { canonical, safeEarly } = analyzeCityCanonical(url.pathname)
+  const dest = withHubAlias(canonical)
+  if (dest && dest !== pathname && safeEarly) {
+    return apexRedirect(dest, url.search)
+  }
+
   const slashHub = hubNeedsTrailingSlash(url.pathname)
   if (slashHub) {
     return apexRedirect(withHubAlias(slashHub) || slashHub, url.search)
   }
 
-  const { canonical, safeEarly } = analyzeCityCanonical(url.pathname)
-  const dest = withHubAlias(canonical)
-
-  // Fast one-hop for pure glued URLs (edge before Pretty URLs / HTML inspect)
-  if (dest && dest !== pathname && safeEarly) {
-    return apexRedirect(dest, url.search)
-  }
+  // Fast one-hop already handled for safeEarly above.
+  // Hyphenated Nexus landings may still redirect after HTML inspect below.
 
   // Always resolve the static/Nexus/SPA response first.
   // Hyphenated Nexus landings (e.g. /banquete-kosher-ciudad-de-mexico) must NOT
