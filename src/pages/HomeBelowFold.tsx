@@ -9,37 +9,39 @@ import IconFromEmoji from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
 import { withCityPath, stripCityFromPath } from "../utils/city-url";
+import { INSTAGRAM_AD_EXCLUDES } from "../data/instagram-ad-excludes";
 
 const Link = CityLink;
 const WHATSAPP_NUMBER = "5215540080373";
 const WHATSAPP_BASE = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}`;
 
 // ─── Gallery carousel ─────────────────────────────────────────────────────────
-// 30 fotos reales de instagram (sin los excluidos de la galería)
-const gallerySlides = [
-  [1,  3,  4 ].map(n => `/images/instagram/ig${n}.jpg`),
-  [5,  6,  7 ].map(n => `/images/instagram/ig${n}.jpg`),
-  [8,  9,  10].map(n => `/images/instagram/ig${n}.jpg`),
-  [11, 12, 14].map(n => `/images/instagram/ig${n}.jpg`),
-  [15, 16, 17].map(n => `/images/instagram/ig${n}.jpg`),
-  [18, 19, 20].map(n => `/images/instagram/ig${n}.jpg`),
-  [21, 23, 24].map(n => `/images/instagram/ig${n}.jpg`),
-  [25, 26, 27].map(n => `/images/instagram/ig${n}.jpg`),
-  [28, 29, 30].map(n => `/images/instagram/ig${n}.jpg`),
-  [31, 32, 34].map(n => `/images/instagram/ig${n}.jpg`),
+// 60 fotos reales (sin flyers de publicidad)
+const HOME_GALLERY_ALT_POOL = [
+  "Banquete para boda Bodasesor",
+  "Decoración floral para eventos",
+  "XV años con catering gourmet",
+  "Catering servido en sitio",
+  "Mobiliario premium para bodas",
+  "Montaje de mesas para eventos",
+  "Banquete formal México",
+  "Recepción con open bar",
+  "Celebración con wedding planner",
+  "Coffee break empresarial",
+  "Salón decorado para boda",
+  "Buffet y estaciones de comida",
 ];
-const galleryAlts = [
-  ["Banquete para boda Bodasesor", "Decoración floral para eventos", "XV años con catering gourmet"],
-  ["Catering servido en sitio", "Mobiliario premium para bodas", "Montaje de mesas para eventos"],
-  ["Banquete formal México", "Recepción con open bar", "Celebración con wedding planner"],
-  ["Mesas y sillas para eventos", "Coffee break empresarial", "Salón decorado para boda"],
-  ["Catering gourmet Bodasesor", "Servicio de meseros en evento", "Boda con banquete completo"],
-  ["Centros de mesa florales", "Mesa de banquete elegante", "Evento privado con catering"],
-  ["Banquete a domicilio", "Evento íntimo con menú", "Mesa de dulces para XV años"],
-  ["Decoración de boda México", "Quinceañera con banquete", "Buffet y estaciones de comida"],
-  ["Catering corporativo", "Producción integral de eventos", "Banquete formal Bodasesor"],
-  ["Celebración social con catering", "Gala corporativa México", "Evento familiar con mobiliario"],
-];
+const HOME_GALLERY_IDS = Array.from({ length: 281 }, (_, i) => i + 1)
+  .filter((n) => !INSTAGRAM_AD_EXCLUDES.has(n))
+  .slice(0, 60);
+const gallerySlides = [];
+const galleryAlts = [];
+for (let i = 0; i < HOME_GALLERY_IDS.length; i += 3) {
+  const chunk = HOME_GALLERY_IDS.slice(i, i + 3);
+  if (chunk.length < 3) break;
+  gallerySlides.push(chunk.map((n) => `/images/instagram/ig${n}.jpg`));
+  galleryAlts.push(chunk.map((_, j) => HOME_GALLERY_ALT_POOL[(i + j) % HOME_GALLERY_ALT_POOL.length]));
+}
 
 const allGalleryImages = gallerySlides.flat();
 

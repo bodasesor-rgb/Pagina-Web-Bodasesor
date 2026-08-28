@@ -24,8 +24,8 @@ const LCP_BY_PATH = {
   '/xv-anos': '/images/instagram/ig50.jpg',
   '/corporativos': '/images/instagram/ig90.jpg',
   '/graduaciones': '/images/instagram/ig20.jpg',
-  '/baby-shower': '/images/instagram/ig130.jpg',
-  '/cumpleanos': '/images/instagram/ig170.jpg',
+  '/baby-shower': '/images/instagram/ig131.jpg',
+  '/cumpleanos': '/images/instagram/ig174.jpg',
   '/primera-comunion': '/images/instagram/ig70.jpg',
   '/blog': '/images/galeria/g1.jpg',
 }

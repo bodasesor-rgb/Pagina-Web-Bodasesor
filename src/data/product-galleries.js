@@ -1,6 +1,7 @@
 /** Shared product hero + gallery image maps for carousels. */
 import nexusGallery from './product-gallery.json' with { type: 'json' }
 import { resolveNexusGalleryKey } from './product-gallery-key-map.js'
+import { isInstagramAdPath } from './instagram-ad-excludes.js'
 
 const HERO_IMAGES = {
   // Banquetes — imágenes hero dedicadas
@@ -175,9 +176,10 @@ const PRODUCT_GALLERY = {
 const DEFAULT_GALLERY = ['/images/instagram/ig1.jpg','/images/instagram/ig2.jpg','/images/instagram/ig3.jpg','/images/instagram/ig4.jpg','/images/instagram/ig5.jpg','/images/instagram/ig6.jpg','/images/instagram/ig7.jpg','/images/instagram/ig8.jpg','/images/instagram/ig9.jpg','/images/instagram/ig10.jpg','/images/instagram/ig11.jpg','/images/instagram/ig12.jpg','/images/instagram/ig13.jpg','/images/instagram/ig14.jpg','/images/instagram/ig15.jpg','/images/instagram/ig16.jpg','/images/instagram/ig17.jpg','/images/instagram/ig18.jpg','/images/instagram/ig19.jpg','/images/instagram/ig20.jpg','/images/instagram/ig21.jpg','/images/instagram/ig22.jpg','/images/instagram/ig23.jpg','/images/instagram/ig24.jpg','/images/instagram/ig25.jpg','/images/instagram/ig26.jpg','/images/instagram/ig27.jpg','/images/instagram/ig28.jpg','/images/instagram/ig29.jpg','/images/instagram/ig30.jpg'];
 
 /** Same length for every product carousel (hero + gallery, or padded from IG pool). */
-export const GALLERY_TARGET = 31
+export const GALLERY_TARGET = 60
 
-const IG_POOL = Array.from({ length: 200 }, (_, i) => `/images/instagram/ig${i + 1}.jpg`)
+/** Existing IG files are ig1…ig281 (ads filtered out of the pad pool). */
+const IG_POOL = Array.from({ length: 281 }, (_, i) => `/images/instagram/ig${i + 1}.jpg`).filter((p) => !isInstagramAdPath(p))
 
 function slugSeed(slug) {
   let h = 0
@@ -192,7 +194,7 @@ export function padGalleryToTarget(images, slug = 'default') {
   const out = []
   const seen = new Set()
   for (const img of images || []) {
-    if (!img || seen.has(img)) continue
+    if (!img || seen.has(img) || isInstagramAdPath(img)) continue
     seen.add(img)
     out.push(img)
     if (out.length >= GALLERY_TARGET) return out.slice(0, GALLERY_TARGET)

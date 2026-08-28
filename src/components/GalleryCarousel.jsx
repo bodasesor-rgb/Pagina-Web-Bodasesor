@@ -2,24 +2,33 @@ import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { img } from "../data/site"
 import OptimizedImage from "./OptimizedImage"
+import { INSTAGRAM_AD_EXCLUDES } from "../data/instagram-ad-excludes"
 
-const gallerySlides = [
-  [101,102,103],[104,105,106],[107,108,109],[110,111,112],[113,114,115],
-  [116,117,118],[119,120,121],[122,123,124],[125,126,127],[128,129,130],
-].map(group => group.map(n => img(`/images/instagram/ig${n}.jpg`)))
-
-const galleryAlts = [
-  ["Banquete para boda Bodasesor", "Decoración floral para eventos", "XV años con catering gourmet"],
-  ["Catering servido en sitio", "Mobiliario premium para bodas", "Montaje de mesas para eventos"],
-  ["Banquete formal México", "Recepción con open bar", "Celebración con wedding planner"],
-  ["Mesas y sillas para eventos", "Coffee break empresarial", "Salón decorado para boda"],
-  ["Catering gourmet Bodasesor", "Servicio de meseros en evento", "Boda con banquete completo"],
-  ["Centros de mesa florales", "Mesa de banquete elegante", "Evento privado con catering"],
-  ["Banquete a domicilio", "Evento íntimo con menú", "Mesa de dulces para XV años"],
-  ["Decoración de boda México", "Quinceañera con banquete", "Buffet y estaciones de comida"],
-  ["Catering corporativo", "Producción integral de eventos", "Banquete formal Bodasesor"],
-  ["Celebración social con catering", "Gala corporativa México", "Evento familiar con mobiliario"],
+const ALT_POOL = [
+  "Banquete para boda Bodasesor",
+  "Decoración floral para eventos",
+  "XV años con catering gourmet",
+  "Catering servido en sitio",
+  "Mobiliario premium para bodas",
+  "Montaje de mesas para eventos",
+  "Banquete formal México",
+  "Recepción con open bar",
+  "Celebración con wedding planner",
+  "Coffee break empresarial",
+  "Salón decorado para boda",
+  "Buffet y estaciones de comida",
 ]
+const CLEAN_IDS = Array.from({ length: 281 }, (_, i) => i + 1)
+  .filter((n) => !INSTAGRAM_AD_EXCLUDES.has(n))
+  .slice(0, 60)
+const gallerySlides = []
+const galleryAlts = []
+for (let i = 0; i < CLEAN_IDS.length; i += 3) {
+  const chunk = CLEAN_IDS.slice(i, i + 3)
+  if (chunk.length < 3) break
+  gallerySlides.push(chunk.map((n) => img(`/images/instagram/ig${n}.jpg`)))
+  galleryAlts.push(chunk.map((_, j) => ALT_POOL[(i + j) % ALT_POOL.length]))
+}
 
 function Carousel() {
   const [slide, setSlide] = useState(0)
