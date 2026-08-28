@@ -7,6 +7,7 @@ import OptimizedImage from "../components/OptimizedImage";
 import CatalogImage from "../components/CatalogImage";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { blogArticleHref, prefersStaticBlogHtml } from "../utils/static-blog";
+import { hasStaticBlogHtml } from "../data/static-blog-slugs";
 
 const WHATSAPP_NUMBER = "5215540080373";
 const WA_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento`;
@@ -29,7 +30,7 @@ interface Props { slug: string }
 export default function BlogDetailPage({ slug }: Props) {
   const post = getBlogPostBySlug(slug);
   const related = blogPosts.filter(p => p.slug !== slug).slice(0, 3);
-  const useStaticHtml = prefersStaticBlogHtml(post);
+  const useStaticHtml = hasStaticBlogHtml(slug) || prefersStaticBlogHtml(post);
 
   // BlogDetailPage only mounts inside the SPA. Nexus articles must leave to static HTML.
   if (typeof window !== 'undefined' && useStaticHtml && slug) {
@@ -54,19 +55,19 @@ export default function BlogDetailPage({ slug }: Props) {
     window.location.replace(blogArticleHref(slug));
   }, [slug, useStaticHtml]);
 
+  if (useStaticHtml) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white text-[#162040] font-serif">
+        Cargando artículo…
+      </div>
+    );
+  }
+
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5efe8] text-[#162040] gap-6">
         <h1 className="text-4xl font-serif font-bold">Artículo no encontrado</h1>
         <Link href="/blog" className="text-[#162040] underline font-serif">← Volver al blog</Link>
-      </div>
-    );
-  }
-
-  if (useStaticHtml) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white text-[#162040] font-serif">
-        Cargando artículo…
       </div>
     );
   }

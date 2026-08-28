@@ -54,7 +54,10 @@ jobs:
         env:
           SITE_BASE: https://bodasesor.com
           NEXUS_URL: https://white-ferret-567834.hostingersite.com
-          # Pull production ZIP first so SEO landings seed survives Hostinger rate-limits
+          # Seed release already has ≥1200 landings. FORCE=1 crawls Hostinger for hours and
+          # hits the GitHub 6h job limit (deploy cancelled; gallery never published).
+          SEO_SYNC_FORCE: "0"
+          SKIP_NETLIFY_ZIP: "1"
           SEO_SYNC_CONCURRENCY: "3"
           MIN_NEXUS_LANDINGS: "1200"
           MIN_BLOG_PAGES: "50"
@@ -63,7 +66,6 @@ jobs:
           NEXUS_USER: ${{ secrets.NEXUS_USER }}
           NEXUS_PASS: ${{ secrets.NEXUS_PASS }}
           NEXUS_ACCESS_KEY: ${{ secrets.NEXUS_ACCESS_KEY }}
-          SEO_SYNC_FORCE: "1"
 
       - name: Deploy merged dist to Netlify production
         run: npx netlify-cli deploy --prod --dir=dist --no-build --site="${{ secrets.NETLIFY_SITE_ID }}" --message="SPA + Hostinger Nexus SEO + sitemap"
