@@ -117,7 +117,7 @@ export default function Home() {
     <div>
       <HomeJsonLd />
       <section
-        className="relative min-h-[520px] md:min-h-[480px] flex items-center overflow-x-hidden md:overflow-hidden md:aspect-[1408/768]"
+        className="relative min-h-[340px] md:min-h-[320px] flex items-center overflow-x-hidden md:overflow-hidden md:aspect-[21/9]"
         data-testid="section-hero"
         aria-label="Inicio"
       >

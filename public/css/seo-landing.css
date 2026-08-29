@@ -527,9 +527,17 @@ a { color: inherit; text-decoration: none; }
 .seo-hero-image {
   max-height: 288px;
   width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: contain;
   filter: drop-shadow(0 12px 28px rgba(22,32,64,.18));
   border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .seo-hero-image {
+    max-height: 220px;
+  }
 }
 
 /* ── Contenido principal ── */

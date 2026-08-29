@@ -202,144 +202,143 @@
   box-shadow: 0 6px 28px rgba(18, 140, 126, 0.55);
 }
 
-/* Promo discount balloon (bottom of viewport, dismissible) */
-@keyframes discount-balloon-in {
-  from { opacity: 0; transform: translateY(20px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+/* WhatsApp float — lifts when slim promo bar is open */
+html.has-promo-bar .whatsapp-float {
+  bottom: 4.25rem;
 }
-.discount-balloon {
+html.has-promo-bar .review-card-enter {
+  bottom: 5.5rem;
+}
+@media (max-width: 640px) {
+  html.has-promo-bar .whatsapp-float {
+    bottom: 5.5rem;
+  }
+}
+
+/* Slim sticky promo bar (follows scroll, dismissible) */
+@keyframes discount-promo-in {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.discount-promo-bar {
   position: fixed;
-  left: 1rem;
-  right: auto;
-  /* Above home review card (bottom-24 ≈ 6rem + card height) */
-  bottom: 15.5rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 9998;
-  width: min(18.5rem, calc(100vw - 5.5rem));
-  padding: 1rem 1rem 0.9rem;
-  background: linear-gradient(165deg, #1a2a52 0%, #162040 55%, #0f1830 100%);
-  color: #fff;
-  border-radius: 1.15rem;
-  box-shadow: 0 12px 40px rgba(22, 32, 64, 0.45);
+  background: #f5efe8;
+  border-top: 1px solid rgba(22, 32, 64, 0.12);
+  box-shadow: 0 -4px 18px rgba(22, 32, 64, 0.08);
   font-family: Georgia, 'Times New Roman', serif;
-  animation: discount-balloon-in 0.45s ease both;
+  animation: discount-promo-in 0.35s ease both;
 }
-.discount-balloon-close {
-  position: absolute;
-  top: 0.4rem;
-  right: 0.4rem;
-  width: 2.25rem;
-  height: 2.25rem;
+.discount-promo-bar-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0.45rem 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem 1rem;
+  flex-wrap: wrap;
+  min-height: 2.75rem;
+}
+.discount-promo-cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  background: #0d6849;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.discount-promo-cta:hover { background: #0a5740; }
+.discount-promo-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  text-align: center;
+  min-width: 0;
+}
+.discount-promo-title {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #162040;
+  line-height: 1.25;
+}
+.discount-promo-code {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #162040;
+  font-size: 0.72rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.85;
+}
+.discount-promo-code:hover { opacity: 1; }
+.discount-promo-timer {
+  flex-shrink: 0;
+  padding: 0.28rem 0.55rem;
+  border: 1px dashed rgba(22, 32, 64, 0.35);
+  border-radius: 0.35rem;
+  background: #fff;
+}
+.discount-promo-clock {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #162040;
+}
+.discount-promo-close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(22, 32, 64, 0.08);
+  color: #162040;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 2;
 }
-.discount-balloon-close:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+.discount-promo-close:hover {
+  background: rgba(22, 32, 64, 0.16);
 }
-.discount-balloon-eyebrow {
-  margin: 0 1.25rem 0.2rem 0;
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(245, 239, 232, 0.75);
-}
-.discount-balloon-title {
-  margin: 0 0 0.25rem;
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.25;
-}
-.discount-balloon-pct {
-  color: #f5efe8;
-  font-size: 1.45rem;
-}
-.discount-balloon-sub {
-  margin: 0 0 0.75rem;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.72);
-  line-height: 1.35;
-}
-.discount-balloon-timer {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.65rem;
-  padding: 0.45rem 0.6rem;
-  border-radius: 0.65rem;
-  background: rgba(255, 255, 255, 0.08);
-}
-.discount-balloon-timer-label {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.65);
-}
-.discount-balloon-clock {
-  font-variant-numeric: tabular-nums;
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: #f5efe8;
-}
-.discount-balloon-code {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin: 0 0 0.65rem;
-  padding: 0.5rem 0.65rem;
-  border: 1px dashed rgba(245, 239, 232, 0.45);
-  border-radius: 0.65rem;
-  background: rgba(245, 239, 232, 0.08);
-  color: #fff;
-  cursor: pointer;
-  text-align: left;
-}
-.discount-balloon-code:hover { background: rgba(245, 239, 232, 0.14); }
-.discount-balloon-code-label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.6);
-}
-.discount-balloon-code-value {
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-.discount-balloon-cta {
-  display: block;
-  width: 100%;
-  padding: 0.65rem 0.75rem;
-  border-radius: 0.75rem;
-  background: #0d6849;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-.discount-balloon-cta:hover { background: #0a5740; }
-@media (max-width: 480px) {
-  .discount-balloon {
-    left: 0.75rem;
-    bottom: 14.5rem;
-    width: min(18.5rem, calc(100vw - 5.25rem));
+@media (max-width: 640px) {
+  .discount-promo-bar-inner {
+    padding: 0.4rem 0.5rem 0.4rem 0.55rem;
+    gap: 0.45rem 0.55rem;
+    justify-content: flex-start;
   }
-}
-
-@media (min-width: 640px) {
-  .discount-balloon {
-    left: 1.5rem;
-    bottom: 16rem;
+  .discount-promo-msg {
+    flex: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .discount-promo-title {
+    font-size: 0.78rem;
+  }
+  .discount-promo-cta {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.65rem;
+  }
+  .discount-promo-clock {
+    font-size: 0.85rem;
   }
 }
 

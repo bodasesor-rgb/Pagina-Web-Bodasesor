@@ -17,7 +17,7 @@ const HERO_PICTURE_HTML =
   `<img id="lcp-hero" src="/images/hero-bg-new.webp" alt="${HOME_HERO_ALT}" title="${HOME_HERO_ALT}" width="1408" height="768" fetchpriority="high" decoding="async" />`
 
 const HERO_COPY_HTML =
-  '<h1>Banquetes, Catering y Servicios para Eventos en México</h1>' +
+  '<h1>Banquetes, Catering y Servicios<br>para Eventos en México</h1>' +
   '<p class="hero-sub">Banquetes premium, catering gourmet y mobiliario elegante para bodas, quinceañeras, eventos corporativos y celebraciones en todo México</p>' +
   '<div class="hero-btns">' +
   '<a class="btn-wa" href="https://api.whatsapp.com/send/?phone=5215540080373&amp;text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20un%20evento">Cotiza por WhatsApp</a>' +

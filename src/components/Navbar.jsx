@@ -1002,7 +1002,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className="bg-white shadow-lg sticky top-0 z-50"
+      className="bg-white shadow-lg fixed top-0 left-0 right-0 z-50"
       onMouseEnter={() => prefetchProducts()}
       onFocusCapture={() => prefetchProducts()}
     >

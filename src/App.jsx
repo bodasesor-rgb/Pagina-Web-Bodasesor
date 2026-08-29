@@ -216,12 +216,21 @@ function ScrollToTop() {
 function DeferredBelowFold() {
   const [showFab, setShowFab] = useState(false)
   useEffect(() => {
+    // Keep promo/WhatsApp off the main thread during LCP + early INP (CrUX desktop INP ~242ms).
     const reveal = () => setShowFab(true)
+    const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+    const delayMs = isMobile ? 10000 : 8000
     if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(reveal, { timeout: 2500 })
-      return () => window.cancelIdleCallback(id)
+      let idleId = 0
+      const t = setTimeout(() => {
+        idleId = window.requestIdleCallback(reveal, { timeout: 2000 })
+      }, delayMs)
+      return () => {
+        clearTimeout(t)
+        if (idleId) window.cancelIdleCallback(idleId)
+      }
     }
-    const t = setTimeout(reveal, 1500)
+    const t = setTimeout(reveal, delayMs)
     return () => clearTimeout(t)
   }, [])
   return (
@@ -248,6 +257,9 @@ function Router() {
       <StaticLcpCleanup />
       <ScrollToTop />
       <Navbar />
+      {/* Reserves nav height while #static-nav-shell (fixed) paints, then while React nav is fixed.
+          Prevents the sticky→flow swap that caused desktop CLS ~0.34 in CrUX. */}
+      <div className="h-16 md:h-[7rem] shrink-0" aria-hidden="true" data-testid="nav-layout-spacer" />
       <main>
         <ErrorBoundary resetKey={location}>
         <Suspense fallback={<PageLoader />}>

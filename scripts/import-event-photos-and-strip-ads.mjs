@@ -17,7 +17,7 @@ const GALLERY_TARGET = 60
 /** Graphic ads / flyers (COTIZA GRATIS templates + known variants). */
 const AD_EXCLUDES = [
   // User-flagged + fingerprint clusters
-  14, 68, 66, 92, 102, 126, 128, 141, 171,
+  14, 54, 68, 66, 92, 102, 126, 128, 141, 171,
   // 607x1080 graphic templates
   13, 22, 33, 35, 40, 41, 55, 75, 80, 84, 114, 129, 130, 136, 145, 172, 180,
   // Prior GaleriaPage excludes (banners / templates)

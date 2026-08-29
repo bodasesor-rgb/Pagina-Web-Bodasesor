@@ -498,6 +498,28 @@ function patchImageAlts(html, { path, title, h1 }) {
         next = ` title="${escapeAttr(core)}"${next}`
         changed = true
       }
+      // Prioritize LCP hero for CrUX mobile (origin LCP ~4.8s).
+      if (!/\bfetchpriority\s*=/i.test(next)) {
+        next = ` fetchpriority="high"${next}`
+        changed = true
+      }
+      if (!/\bdecoding\s*=/i.test(next)) {
+        next = ` decoding="async"${next}`
+        changed = true
+      }
+      if (!/\bwidth\s*=/i.test(next)) {
+        next = ` width="1200"${next}`
+        changed = true
+      }
+      if (!/\bheight\s*=/i.test(next)) {
+        next = ` height="675"${next}`
+        changed = true
+      }
+      // Never lazy-load the LCP image
+      if (/\bloading\s*=\s*["']lazy["']/i.test(next)) {
+        next = next.replace(/\bloading\s*=\s*["']lazy["']/i, 'loading="eager"')
+        changed = true
+      }
     } else if (!/\btitle\s*=/i.test(next)) {
       next = ` title="${escapeAttr(core)}"${next}`
       changed = true
@@ -552,6 +574,44 @@ function patchImageAlts(html, { path, title, h1 }) {
   return { html: html2, changed }
 }
 
+/**
+ * Preload the first seo-hero / LCP image so mobile CrUX starts fetch earlier.
+ */
+function ensureHeroImagePreload(html) {
+  const isNexus = html.includes('seo-service-hero') || html.includes('seo-hero-image')
+  if (!isNexus || !/<\/head>/i.test(html)) return { html, changed: false }
+
+  const heroMatch =
+    html.match(/<img\b[^>]*class=["'][^"']*seo-hero-image[^"']*["'][^>]*>/i) ||
+    html.match(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/i)
+  if (!heroMatch) return { html, changed: false }
+
+  const src = (heroMatch[0].match(/\bsrc=["']([^"']+)["']/i) || [])[1] || ''
+  if (!src || !/\.(webp|jpe?g|png)(\?|$)/i.test(src)) return { html, changed: false }
+  if (html.includes(src) && /rel=["']preload["'][^>]*as=["']image["']/i.test(html) && html.includes(src)) {
+    // Already has a preload pointing at this src (rough check)
+    const preloadForSrc = new RegExp(
+      `rel=["']preload["'][^>]*href=["']${src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`,
+      'i',
+    )
+    const preloadForSrcAlt = new RegExp(
+      `href=["']${src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*rel=["']preload["']`,
+      'i',
+    )
+    if (preloadForSrc.test(html) || preloadForSrcAlt.test(html)) {
+      return { html, changed: false }
+    }
+  }
+
+  const type = /\.webp(\?|$)/i.test(src)
+    ? ' type="image/webp"'
+    : /\.png(\?|$)/i.test(src)
+      ? ' type="image/png"'
+      : ' type="image/jpeg"'
+  const tag = `  <link rel="preload" as="image" href="${src}"${type} fetchpriority="high" />\n`
+  return { html: html.replace(/<\/head>/i, `${tag}</head>`), changed: true }
+}
+
 function patchHtml(html, filePath) {
   let changed = false
   let out = html
@@ -587,6 +647,10 @@ function patchHtml(html, filePath) {
   const imgs = patchImageAlts(out, identity)
   out = imgs.html
   if (imgs.changed) changed = true
+
+  const heroPreload = ensureHeroImagePreload(out)
+  out = heroPreload.html
+  if (heroPreload.changed) changed = true
 
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {
     const next = shortenTitle(inner)
