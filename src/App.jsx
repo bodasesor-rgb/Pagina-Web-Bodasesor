@@ -65,7 +65,7 @@ const CombinacionDetailPage = lazy(() => import('./pages/CombinacionDetailPage.t
 const QuienesSomosPage = lazy(() => import('./pages/QuienesSomosPage.tsx'))
 const LegalPage = lazy(() => import('./pages/LegalPage.tsx'))
 const BlogPage = lazy(() => import('./pages/BlogPage.tsx'))
-const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage.tsx'))
+const BlogStaticRedirect = lazy(() => import('./pages/BlogStaticRedirect.tsx'))
 const ServicePage = lazy(() => import('./pages/ServicePage.tsx'))
 const BanqueteMenuDetailPage = lazy(() => import('./pages/BanqueteMenuDetailPage.tsx'))
 const SearchPage = lazy(() => import('./pages/SearchPage.tsx'))
@@ -424,7 +424,7 @@ function Router() {
           <Route path="/blog" component={BlogPage} />
           <Route path="/blog/:slug">
             {/* Keep full slug — blog titles often end in -cdmx/-mexico (not a city route). */}
-            {(params) => <BlogDetailPage slug={params.slug} />}
+            {(params) => <BlogStaticRedirect slug={params.slug} />}
           </Route>
 
           {/* Búsqueda */}

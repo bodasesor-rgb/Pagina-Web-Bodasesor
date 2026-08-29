@@ -1,4 +1,4 @@
-import { blogPosts } from "../data/blog-data";
+import { getBlogFeed } from "../data/blog-feed";
 import { useEffect, type ReactNode } from "react";
 import { usePageSeo } from "../hooks/usePageSeo";
 import CatalogImage from "../components/CatalogImage";
@@ -15,7 +15,7 @@ function BlogArticleLink({
   children,
   className,
 }: {
-  post: (typeof blogPosts)[number];
+  post: ReturnType<typeof getBlogFeed>[number];
   children: ReactNode;
   className?: string;
 }) {
@@ -56,6 +56,7 @@ export default function BlogPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  const blogPosts = getBlogFeed();
   const featured = blogPosts[0];
   const rest = blogPosts.slice(1);
 
@@ -171,7 +172,7 @@ export default function BlogPage() {
               href="/blog/articulos/"
               className="inline-flex items-center gap-2 border-2 border-[#162040] text-[#162040] hover:bg-[#162040] hover:text-white px-10 py-4 rounded-xl font-bold font-serif text-lg transition-all duration-300 hover:scale-105"
             >
-              Ver más blogs
+              Ver biblioteca completa
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3"/>
               </svg>

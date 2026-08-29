@@ -1,7 +1,7 @@
 import CityLink from "../components/CityLink";
 const Link = CityLink;
 import { useEffect } from "react";
-import { getBlogPostBySlug, blogPosts } from "../data/blog-data";
+import { getBlogPostBySlug, getBlogFeed } from "../data/blog-feed";
 import Breadcrumbs from "../components/Breadcrumbs";
 import OptimizedImage from "../components/OptimizedImage";
 import CatalogImage from "../components/CatalogImage";
@@ -29,7 +29,7 @@ interface Props { slug: string }
 
 export default function BlogDetailPage({ slug }: Props) {
   const post = getBlogPostBySlug(slug);
-  const related = blogPosts.filter(p => p.slug !== slug).slice(0, 3);
+  const related = getBlogFeed().filter(p => p.slug !== slug).slice(0, 3);
   const useStaticHtml = hasStaticBlogHtml(slug) || prefersStaticBlogHtml(post);
 
   // BlogDetailPage only mounts inside the SPA. Nexus articles must leave to static HTML.

@@ -17,6 +17,7 @@ import { HOME_SERP } from '../data/priority-hub-serp.js'
 import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
 import { absoluteOgImage } from '../utils/seo-social'
+import { hasStaticBlogHtml } from '../data/static-blog-slugs'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
@@ -282,11 +283,18 @@ export default function GlobalSEO() {
     }
 
     if (blogMatch) {
-      // Lazy-load blog corpus only on article URLs (keeps ~700KB off the home critical path)
-      import('../data/blog-data')
-        .then(({ blogPosts }) => {
+      // Nexus static HTML owns title/meta — never paint blog-data stubs during client nav.
+      if (hasStaticBlogHtml(blogMatch[1])) {
+        return () => {
+          cancelled = true
+        }
+      }
+
+      // Lazy-load blog corpus only on SPA-only article URLs
+      import('../data/blog-feed')
+        .then(({ getBlogFeed }) => {
           if (cancelled) return
-          const blogPost = blogPosts.find((p) => p.slug === blogMatch[1])
+          const blogPost = getBlogFeed().find((p) => p.slug === blogMatch[1])
           if (!blogPost) {
             applyNonBlog(null)
             return

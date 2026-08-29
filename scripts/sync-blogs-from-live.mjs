@@ -131,6 +131,23 @@ async function listBlogPathsFromSitemap() {
   return [...paths]
 }
 
+/** Discover article slugs from Nexus /blog/articulos/ (sitemap on Hostinger is often missing). */
+async function listBlogPathsFromArticulosIndex() {
+  const paths = new Set()
+  const skip = new Set(['articulos', 'images', 'css', 'blog', 'assets'])
+  for (const origin of ORIGINS) {
+    const html =
+      (await fetchText(`${origin}/blog/articulos/`)) || (await fetchText(`${origin}/blog/articulos`))
+    if (!html || isSpaShell(html)) continue
+    for (const m of html.matchAll(/\/blog\/([a-z0-9-]+)\/?/gi)) {
+      const slug = m[1].toLowerCase()
+      if (skip.has(slug)) continue
+      paths.add(`/blog/${slug}`)
+    }
+  }
+  return [...paths]
+}
+
 function relFromBlogPath(path) {
   const clean = path.replace(/\/+$/, '') || '/blog'
   if (clean === '/blog') return 'blog/index.html'
@@ -179,9 +196,11 @@ async function main() {
   const seedSlugs = loadSeedSlugs()
   const existing = await listExistingBlogPaths()
   const fromSitemap = await listBlogPathsFromSitemap()
+  const fromArticulos = await listBlogPathsFromArticulosIndex()
 
   const paths = new Set([
     ...fromSitemap,
+    ...fromArticulos,
     ...existing,
     ...seedSlugs.map((s) => `/blog/${s}`),
     '/blog/articulos',
@@ -190,7 +209,7 @@ async function main() {
   paths.delete('/blog')
 
   console.log(
-    `  candidates: sitemap=${fromSitemap.length} seed=${seedSlugs.length} existing=${existing.length} union=${paths.size}`,
+    `  candidates: sitemap=${fromSitemap.length} articulos=${fromArticulos.length} seed=${seedSlugs.length} existing=${existing.length} union=${paths.size}`,
   )
 
   let saved = 0
@@ -280,6 +299,25 @@ async function main() {
   })
   if (imgs.status !== 0 && !allowSpaOnly) {
     process.exit(imgs.status ?? 1)
+  }
+
+  // SPA /blog hub cards from Nexus articulos index
+  const listing = spawnSync('node', ['scripts/generate-blog-listing-from-nexus.mjs'], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: process.env,
+  })
+  if (listing.status !== 0 && !allowSpaOnly) {
+    process.exit(listing.status ?? 1)
+  }
+
+  const slugs = spawnSync('node', ['scripts/generate-static-blog-slugs.mjs'], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: process.env,
+  })
+  if (slugs.status !== 0 && !allowSpaOnly) {
+    process.exit(slugs.status ?? 1)
   }
 }
 
