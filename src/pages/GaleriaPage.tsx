@@ -116,19 +116,19 @@ export default function GaleriaPage() {
       {/* ── PHOTO GRID ── */}
       <section className="py-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-2 space-y-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             {ALL_PHOTOS.map((photo, i) => (
               <div
                 key={i}
-                className="break-inside-avoid cursor-pointer overflow-hidden rounded-lg group relative"
+                className="aspect-square cursor-pointer overflow-hidden rounded-lg group relative bg-[#f5efe8]"
                 onClick={() => setLightboxIdx(i)}
               >
                 <OptimizedImage
                   src={photo.src}
                   alt={photo.alt}
-                  width={864}
-                  height={1080}
-                  className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={480}
+                  height={480}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   onError={e => { (e.target as HTMLImageElement).src = '/images/galeria/g1.jpg'; }}
                 />
                 <div className="absolute inset-0 bg-[#162040]/0 group-hover:bg-[#162040]/30 transition-colors duration-300 flex items-center justify-center">

@@ -6,6 +6,7 @@ import GlobalSEO from './components/GlobalSEO'
 import GoogleAnalytics from './components/GoogleAnalytics'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import Navbar from './components/Navbar'
+import DiscountBalloon from './components/DiscountBalloon'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
 import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero, removeSpaLcpPrerender } from './utils/static-lcp-shell'
 import { syncLcpPreload } from './utils/lcp-preload'
@@ -15,7 +16,6 @@ import { prefetchProducts } from './data/products-loader'
 
 const Footer = lazy(() => import('./components/Footer'))
 const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
-const DiscountBalloon = lazy(() => import('./components/DiscountBalloon'))
 
 import Home from './pages/Home.tsx'
 
@@ -214,36 +214,29 @@ function ScrollToTop() {
 }
 
 function DeferredBelowFold() {
+  const [showPromo, setShowPromo] = useState(false)
   const [showFab, setShowFab] = useState(false)
   useEffect(() => {
-    // Keep promo/WhatsApp off the main thread during LCP + early INP (CrUX desktop INP ~242ms).
-    const reveal = () => setShowFab(true)
+    const promoTimer = setTimeout(() => setShowPromo(true), 2000)
     const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
-    const delayMs = isMobile ? 10000 : 8000
-    if ('requestIdleCallback' in window) {
-      let idleId = 0
-      const t = setTimeout(() => {
-        idleId = window.requestIdleCallback(reveal, { timeout: 2000 })
-      }, delayMs)
-      return () => {
-        clearTimeout(t)
-        if (idleId) window.cancelIdleCallback(idleId)
-      }
+    const fabTimer = setTimeout(() => setShowFab(true), isMobile ? 9000 : 7000)
+    return () => {
+      clearTimeout(promoTimer)
+      clearTimeout(fabTimer)
     }
-    const t = setTimeout(reveal, delayMs)
-    return () => clearTimeout(t)
   }, [])
   return (
-    <Suspense fallback={null}>
-      {/* Footer (Lo Más Buscado / Catálogos) must load with the page — not after idle */}
-      <Footer />
+    <>
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
+      {showPromo ? <DiscountBalloon /> : null}
       {showFab ? (
-        <>
-          <DiscountBalloon />
+        <Suspense fallback={null}>
           <WhatsAppFab />
-        </>
+        </Suspense>
       ) : null}
-    </Suspense>
+    </>
   )
 }
 

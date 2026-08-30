@@ -4,8 +4,8 @@ const CODE = 'CierreRapido'
 const DISCOUNT_PCT = 10
 const MIN_GUESTS = 35
 const DURATION_MS = 5 * 60 * 60 * 1000
-const STORAGE_END = 'bs_cierre_rapido_ends_v2'
-const STORAGE_DISMISS = 'bs_cierre_rapido_dismissed_v2'
+const STORAGE_END = 'bs_cierre_rapido_ends_v3'
+const STORAGE_DISMISS = 'bs_cierre_rapido_dismissed_v3'
 const WHATSAPP_NUMBER = '5215540080373'
 const PROMO_BAR_CLASS = 'has-promo-bar'
 
@@ -76,21 +76,12 @@ export default function DiscountBalloon() {
 
   useEffect(() => {
     if (wasDismissed()) return
-    const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
-    const show = () => {
-      const end = getOrCreateEnd()
-      const left = end - Date.now()
-      if (left <= 0) return
-      setRemainingMs(left)
-      setReady(true)
-      setVisible(true)
-    }
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(show, { timeout: isMobile ? 14000 : 12000 })
-      return () => window.cancelIdleCallback(id)
-    }
-    const t = setTimeout(show, isMobile ? 12000 : 10000)
-    return () => clearTimeout(t)
+    const end = getOrCreateEnd()
+    const left = end - Date.now()
+    if (left <= 0) return
+    setRemainingMs(left)
+    setReady(true)
+    setVisible(true)
   }, [])
 
   useEffect(() => {

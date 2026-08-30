@@ -225,7 +225,7 @@ html.has-promo-bar .review-card-enter {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9998;
+  z-index: 10000;
   background: #f5efe8;
   border-top: 1px solid rgba(22, 32, 64, 0.12);
   box-shadow: 0 -4px 18px rgba(22, 32, 64, 0.08);
