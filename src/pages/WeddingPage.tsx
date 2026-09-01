@@ -5,7 +5,6 @@ import type { WeddingProduct } from "../data/wedding-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import CatalogImage from "../components/CatalogImage";
-
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa saber más sobre sus servicios de Wedding Planner. ¿Me pueden dar información?");
 

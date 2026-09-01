@@ -107,15 +107,15 @@
     </script>
     <style>
       body{margin:0;font-family:Georgia,'Times New Roman',serif}
-      #lcp-hero-wrap{position:fixed;top:4rem;left:0;right:0;z-index:0;margin:0;pointer-events:none;height:clamp(220px,36vw,300px);overflow:hidden}
-      @media (min-width:768px){#lcp-hero-wrap{top:7rem;height:clamp(240px,26vw,320px)}}
+      #lcp-hero-wrap{position:fixed;top:4rem;left:0;right:0;z-index:0;margin:0;pointer-events:none;height:clamp(320px,48vw,420px);overflow:hidden}
+      @media (min-width:768px){#lcp-hero-wrap{top:7rem;height:clamp(360px,32vw,440px)}}
       #lcp-hero-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
       #lcp-hero-wrap::after{content:"";position:absolute;inset:0;background:#16204099}
       #root{position:relative;z-index:1;min-height:100vh}
-      #static-hero-copy{position:fixed;left:0;right:0;top:4rem;z-index:2;height:clamp(220px,36vw,300px);max-width:80rem;margin:0 auto;padding:0.75rem 1rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;box-sizing:border-box}
-      @media (min-width:768px){#static-hero-copy{top:7rem;height:clamp(240px,26vw,320px);padding:1rem 1.5rem 1.25rem}}
-      #static-hero-copy h1{margin:0 0 0.5rem;color:#fff;font-size:1.5rem;line-height:1.15;font-weight:700}
-      #static-hero-copy .hero-sub{margin:0 auto 0.75rem;color:#f5efe8;font-size:0.9rem;line-height:1.4;max-width:36rem}
+      #static-hero-copy{position:fixed;left:0;right:0;top:4rem;z-index:2;height:clamp(320px,48vw,420px);max-width:80rem;margin:0 auto;padding:1rem 1rem 1.25rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;box-sizing:border-box}
+      @media (min-width:768px){#static-hero-copy{top:7rem;height:clamp(360px,32vw,440px);padding:1.25rem 1.5rem 1.5rem}}
+      #static-hero-copy h1{margin:0 0 0.65rem;color:#fff;font-size:1.65rem;line-height:1.15;font-weight:700}
+      #static-hero-copy .hero-sub{margin:0 auto 1rem;color:#f5efe8;font-size:0.95rem;line-height:1.45;max-width:36rem}
       #static-hero-copy .hero-btns{display:flex;flex-direction:column;gap:0.75rem;align-items:center;pointer-events:auto}
       #static-hero-copy .btn-wa{display:inline-block;background:#0d6849;color:#fff;padding:0.875rem 1.75rem;border-radius:0.5rem;font-weight:700;text-decoration:none;font-size:1.05rem}
       #static-hero-copy .btn-svc{display:inline-block;background:#fff;color:#162040;padding:0.875rem 1.75rem;border-radius:0.5rem;font-weight:700;text-decoration:none;border:2px solid #fff;font-size:1.05rem}
@@ -143,7 +143,7 @@
         html.home-lcp-live #static-hero-copy.lcp-copy-live{padding:1rem 1.5rem 1.25rem}
       }
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
-      @media (min-width:768px){#static-hero-copy h1{font-size:2.35rem;margin-bottom:0.65rem}#static-hero-copy .hero-sub{font-size:1.05rem;margin-bottom:0.85rem}}
+      @media (min-width:768px){#static-hero-copy h1{font-size:2.75rem;margin-bottom:0.75rem}#static-hero-copy .hero-sub{font-size:1.1rem;margin-bottom:1.1rem}}
       /* Inner pages: prerendered LCP hero (image + H1 before React) */
       #spa-lcp-prerender{position:relative;z-index:0;min-height:280px;background:#162040;overflow:hidden}
       html.no-lcp-prerender #spa-lcp-prerender{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important}

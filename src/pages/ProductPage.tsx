@@ -207,13 +207,19 @@ export default function ProductPage() {
             </p>
 
             <div className="mt-6 p-4 bg-muted rounded-xl flex items-center gap-3">
-              <CatalogImage
-                src="/images/sello-garantia.webp"
-                alt="Garantía"
-                className="h-12 w-auto"
-                width={64}
-                height={48}
-              />
+              <picture>
+                <source srcSet="/images/sello-garantia-cutout.webp" type="image/webp" />
+                <img
+                  src="/images/sello-garantia-cutout.png"
+                  alt="Garantía Bodasesor"
+                  width={64}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-12 w-auto object-contain"
+                  style={{ background: 'transparent' }}
+                />
+              </picture>
               <div>
                 <p className="text-sm font-semibold text-foreground">Garantía Bodasesor</p>
                 <p className="text-xs text-muted-foreground">Calidad verificada en todos nuestros proveedores.</p>

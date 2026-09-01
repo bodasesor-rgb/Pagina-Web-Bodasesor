@@ -10,7 +10,6 @@ import {
   CATALOGOS,
   getCatalogoPagePath,
 } from "../data/catalogos-embeds";
-
 const Link = CityLink;
 const WA =
   "https://api.whatsapp.com/send/?phone=5215540080373&text=" +

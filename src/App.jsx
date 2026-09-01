@@ -13,6 +13,7 @@ import { syncLcpPreload } from './utils/lcp-preload'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
 import { prefetchProducts } from './data/products-loader'
+import GlobalPageInternalLinks from './components/GlobalPageInternalLinks'
 
 const Footer = lazy(() => import('./components/Footer'))
 const WhatsAppFab = lazy(() => import('./components/WhatsAppFab'))
@@ -217,7 +218,7 @@ function DeferredBelowFold() {
   const [showPromo, setShowPromo] = useState(false)
   const [showFab, setShowFab] = useState(false)
   useEffect(() => {
-    const promoTimer = setTimeout(() => setShowPromo(true), 2000)
+    const promoTimer = setTimeout(() => setShowPromo(true), 1500)
     const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
     const fabTimer = setTimeout(() => setShowFab(true), isMobile ? 9000 : 7000)
     return () => {
@@ -455,6 +456,7 @@ function Router() {
         </Suspense>
         </ErrorBoundary>
       </main>
+      <GlobalPageInternalLinks />
       <DeferredBelowFold />
     </>
   )

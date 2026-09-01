@@ -7,14 +7,30 @@ import { CITY_MAP } from '../data/city-data'
 const RELATED_HUBS = [
   { href: '/banquetes-catering', label: 'Banquetes y Catering' },
   { href: '/mesas-sillas', label: 'Mesas y Sillas' },
+  { href: '/mesas-personalizadas', label: 'Mesas Personalizadas' },
+  { href: '/combinaciones-mesas-sillas', label: 'Combinaciones Mesas y Sillas' },
+  { href: '/vajillas', label: 'Vajillas' },
+  { href: '/colgantes', label: 'Colgantes' },
+  { href: '/entelados', label: 'Entelados' },
   { href: '/barras-de-bebidas', label: 'Barras de Bebidas' },
   { href: '/floreria', label: 'Florería' },
+  { href: '/carpas', label: 'Carpas' },
   { href: '/fotografia', label: 'Fotografía y Video' },
   { href: '/wedding-planner', label: 'Wedding Planner' },
   { href: '/musica', label: 'Música' },
   { href: '/pistas-tarimas', label: 'Pistas y Tarimas' },
   { href: '/salas-periqueras', label: 'Salas y Periqueras' },
+  { href: '/shows', label: 'Shows' },
+  { href: '/audio-iluminacion-video', label: 'Audio e Iluminación' },
+  { href: '/reposteria', label: 'Repostería' },
   { href: '/alimentos-empresas', label: 'Catering Empresarial' },
+  { href: '/espacios-eventos', label: 'Espacios para Eventos' },
+  { href: '/bodas', label: 'Bodas' },
+  { href: '/xv-anos', label: 'XV Años' },
+  { href: '/corporativos', label: 'Eventos Corporativos' },
+  { href: '/galeria', label: 'Galería' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/catalogos', label: 'Catálogos' },
 ]
 
 const NEARBY_CITIES = [
@@ -38,7 +54,7 @@ export default function SeoRelatedLinks({ basePath = '/banquetes-catering', titl
   const serviceTitle = title || 'este servicio'
 
   const hubLinks = RELATED_HUBS.filter((h) => h.href !== basePath)
-    .slice(0, 5)
+    .slice(0, 10)
     .map((h) => ({
       href: withCityPath(h.href, city?.slug),
       label: city ? `${h.label} en ${city.short || city.name}` : h.label,
@@ -70,7 +86,7 @@ export default function SeoRelatedLinks({ basePath = '/banquetes-catering', titl
     if (!link.href || seen.has(link.href)) continue
     seen.add(link.href)
     unique.push(link)
-    if (unique.length >= 9) break
+    if (unique.length >= 12) break
   }
 
   if (!unique.length) return null

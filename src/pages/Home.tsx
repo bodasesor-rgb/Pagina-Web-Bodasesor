@@ -51,11 +51,21 @@ const heroReviews = [
   { name: "Esteban Ramírez",      city: "Oaxaca",           text: "Excelente atención desde la cotización hasta el último detalle del evento.", time: "Hace 11 meses",   photo: "/images/reviews/avatar-53.jpg" },
 ];
 
+const REVIEW_DISMISS_KEY = 'bs_review_balloon_dismissed_v1'
+
 function RotatingReviewCard() {
   const [idx, setIdx] = useState(0);
   const [key, setKey] = useState(0);
   const [ready, setReady] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
   useEffect(() => {
+    try {
+      if (sessionStorage.getItem(REVIEW_DISMISS_KEY) === '1') {
+        setDismissed(true)
+        return
+      }
+    } catch { /* ignore */ }
     const start = () => setReady(true);
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(start, { timeout: 5000 });
@@ -64,16 +74,34 @@ function RotatingReviewCard() {
     const t = setTimeout(start, 3000);
     return () => clearTimeout(t);
   }, []);
+
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || dismissed) return;
     const t = setInterval(() => { setIdx(i => (i + 1) % heroReviews.length); setKey(k => k + 1); }, 4500);
     return () => clearInterval(t);
-  }, [ready]);
-  if (!ready) return null;
+  }, [ready, dismissed]);
+
+  const dismiss = () => {
+    try { sessionStorage.setItem(REVIEW_DISMISS_KEY, '1') } catch { /* ignore */ }
+    setDismissed(true)
+  }
+
+  if (!ready || dismissed) return null;
   const r = heroReviews[idx];
   return (
-    <div key={key} className="review-card-enter fixed bottom-24 left-4 sm:left-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-4 w-72 min-h-[7.5rem] z-40 border border-white/50">
-      <div className="flex items-start gap-3">
+    <div key={key} className="review-card-enter fixed bottom-24 left-4 sm:left-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-4 w-72 min-h-[7.5rem] z-40 border border-white/50">
+      <button
+        type="button"
+        onClick={dismiss}
+        className="absolute top-2 right-2 w-8 h-8 inline-flex items-center justify-center rounded-full bg-[#162040]/10 hover:bg-[#162040]/20 text-[#162040] transition-colors"
+        aria-label="Cerrar reseñas"
+        data-testid="review-balloon-close"
+      >
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </button>
+      <div className="flex items-start gap-3 pr-6">
         <CatalogImage
           src={r.photo}
           alt={r.name}
@@ -117,7 +145,7 @@ export default function Home() {
     <div>
       <HomeJsonLd />
       <section
-        className="relative min-h-[260px] md:min-h-[280px] lg:min-h-[300px] flex flex-col justify-center overflow-x-hidden overflow-hidden"
+        className="relative min-h-[380px] md:min-h-[400px] lg:min-h-[420px] flex flex-col justify-center overflow-x-hidden overflow-hidden"
         data-testid="section-hero"
         aria-label="Inicio"
       >

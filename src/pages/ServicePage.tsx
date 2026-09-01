@@ -925,14 +925,19 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </div>
               ))}
             </div>
-            <CatalogImage
-              src="/images/sello-garantia-transparent.webp"
-              alt="Garantía de Felicidad Bodasesor"
-              className="h-24 w-auto drop-shadow-lg"
-              width={120}
-              height={90}
-              fallback="/images/sello-garantia.webp"
-            />
+            <picture>
+              <source srcSet="/images/sello-garantia-cutout.webp" type="image/webp" />
+              <img
+                src="/images/sello-garantia-cutout.png"
+                alt="Garantía de Felicidad Bodasesor"
+                width={160}
+                height={120}
+                loading="lazy"
+                decoding="async"
+                className="h-24 w-auto object-contain"
+                style={{ background: 'transparent' }}
+              />
+            </picture>
           </div>
         </div>
       </section>

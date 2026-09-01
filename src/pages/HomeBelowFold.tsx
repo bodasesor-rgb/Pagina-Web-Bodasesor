@@ -4,7 +4,6 @@ import CityLink from "../components/CityLink";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Lightbox } from "../components/Lightbox";
 import OptimizedImage from "../components/OptimizedImage";
-import CatalogImage from "../components/CatalogImage";
 import IconFromEmoji from "../components/IconFromEmoji";
 import { useCity } from "../context/CityContext";
 import { CITY_MAP } from "../data/city-data";
@@ -222,47 +221,52 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
   return (
     <>
       {/* ── Stats (trust badges) ── */}
-      <section id="trust-badges" className="bg-[#f5efe8] py-16 relative overflow-visible cv-auto" data-testid="section-stats">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <section id="trust-badges" className="bg-[#f5efe8] py-14 relative overflow-hidden cv-auto" data-testid="section-stats">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 items-center text-center">
             <StatBlock delay={0}>
-              <div className="flex justify-center mb-4">
-                <svg className="w-16 h-16 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center mb-3">
+                <svg className="w-12 h-12 md:w-14 md:h-14 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-[#162040] mb-3 font-serif">1,000+</div>
-              <div className="text-gray-800 font-medium text-lg font-serif">Eventos realizados</div>
+              <div className="text-4xl md:text-5xl font-bold text-[#162040] mb-2 font-serif">1,000+</div>
+              <div className="text-gray-800 font-medium text-sm md:text-base font-serif">Eventos realizados</div>
             </StatBlock>
             <StatBlock delay={400}>
-              <div className="flex justify-center mb-4">
-                <svg className="w-16 h-16 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center mb-3">
+                <svg className="w-12 h-12 md:w-14 md:h-14 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                 </svg>
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-[#162040] mb-3 font-serif">10,000+</div>
-              <div className="text-gray-800 font-medium text-lg font-serif">Personas atendidas</div>
+              <div className="text-4xl md:text-5xl font-bold text-[#162040] mb-2 font-serif">10,000+</div>
+              <div className="text-gray-800 font-medium text-sm md:text-base font-serif">Personas atendidas</div>
             </StatBlock>
             <StatBlock delay={800}>
-              <div className="flex justify-center mb-4">
-                <svg className="w-16 h-16 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
+              <div className="flex justify-center mb-3">
+                <svg className="w-12 h-12 md:w-14 md:h-14 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                 </svg>
               </div>
-              <div className="text-5xl md:text-6xl font-bold text-[#162040] mb-3 font-serif">4.6/5</div>
-              <div className="text-gray-800 font-medium text-lg font-serif">Calificación promedio</div>
+              <div className="text-4xl md:text-5xl font-bold text-[#162040] mb-2 font-serif">4.6/5</div>
+              <div className="text-gray-800 font-medium text-sm md:text-base font-serif">Calificación promedio</div>
             </StatBlock>
-          </div>
-          {/* Sello — absolutely positioned to the right, partially outside */}
-          <div className="hidden md:block absolute top-1/2 -translate-y-1/2 -right-8 lg:-right-16">
-            <CatalogImage
-              src="/images/sello-garantia-transparent.webp"
-              alt="Garantía de Felicidad Bodasesor"
-              className="h-32 w-auto drop-shadow-lg"
-              width={160}
-              height={120}
-              fallback="/images/sello-garantia.webp"
-            />
+            <div className="flex flex-col items-center justify-center col-span-2 md:col-span-1">
+              <picture>
+                <source srcSet="/images/sello-garantia-cutout.webp" type="image/webp" />
+                <img
+                  src="/images/sello-garantia-cutout.png"
+                  alt="Garantía de Felicidad Bodasesor"
+                  width={200}
+                  height={150}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-28 md:h-32 w-auto object-contain"
+                  style={{ background: 'transparent' }}
+                />
+              </picture>
+              <div className="text-gray-800 font-medium text-sm md:text-base font-serif mt-2">Garantía de felicidad</div>
+            </div>
           </div>
         </div>
       </section>
