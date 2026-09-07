@@ -291,7 +291,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-stretch text-center">
             <StatBlock delay={0}>
               <div className="flex justify-center mb-1.5">
-                <svg className="w-7 h-7 md:w-8 md:h-8 text-[#0d6849]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 md:w-8 md:h-8 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
@@ -300,7 +300,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
             </StatBlock>
             <StatBlock delay={150}>
               <div className="flex justify-center mb-1.5">
-                <svg className="w-7 h-7 md:w-8 md:h-8 text-[#0d6849]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 md:w-8 md:h-8 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                 </svg>
               </div>
@@ -309,7 +309,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
             </StatBlock>
             <StatBlock delay={300}>
               <div className="flex justify-center mb-1.5">
-                <svg className="w-7 h-7 md:w-8 md:h-8 text-[#0d6849]" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 md:w-8 md:h-8 text-[#162040]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                 </svg>
               </div>
@@ -476,7 +476,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
       <section className="py-10 md:py-12 bg-white" data-testid="section-ciudades">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6">
-            <p className="text-xs font-bold text-[#0d6849] mb-2 font-serif tracking-wider">COBERTURA NACIONAL</p>
+            <p className="text-xs font-bold text-[#162040] mb-2 font-serif tracking-wider">COBERTURA NACIONAL</p>
             <h2 className="text-3xl md:text-4xl font-bold text-[#162040] mb-2 font-serif">Banquetes y Catering en Las Principales Ciudades</h2>
             <p className="text-base text-gray-700 max-w-3xl mx-auto font-serif">Llevamos la excelencia de nuestros servicios a todo México</p>
           </div>
@@ -525,7 +525,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
               },
             ].map((step) => (
               <div key={step.title} className="text-center bg-[#eceef2] rounded-xl p-4 md:p-5">
-                <div className="relative inline-flex items-center justify-center w-14 h-14 bg-white text-[#0d6849] rounded-xl mb-3 shadow-sm">
+                <div className="relative inline-flex items-center justify-center w-14 h-14 bg-white text-[#162040] rounded-xl mb-3 shadow-sm">
                   <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {step.icon}
                   </svg>
@@ -543,7 +543,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div>
-              <p className="text-xs font-bold text-[#0d6849] mb-2 font-serif tracking-widest uppercase">Quiénes somos</p>
+              <p className="text-xs font-bold text-[#162040] mb-2 font-serif tracking-widest uppercase">Quiénes somos</p>
               <h2 className="text-3xl md:text-4xl font-bold text-[#162040] mb-4 font-serif leading-tight">
                 Creamos Eventos Que Se Convierten en Recuerdos
               </h2>
@@ -572,7 +572,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 { icon: '💡', title: 'Creatividad e innovación', desc: 'Experiencias originales que sorprenden a tus invitados.' },
               ].map(p => (
                 <div key={p.title} className="bg-[#eceef2] rounded-xl p-4 transition-all duration-300 hover:-translate-y-0.5">
-                  <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center mb-2 text-[#0d6849]">
+                  <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center mb-2 text-[#162040]">
                     <IconFromEmoji emoji={p.icon} className="w-4 h-4" />
                   </div>
                   <h3 className="font-bold text-[#162040] font-serif mb-1 text-sm">{p.title}</h3>
