@@ -18,6 +18,13 @@ const JSON_LD = {
         'https://www.facebook.com/bodasesor',
         'https://www.instagram.com/bodasesor',
       ],
+      knowsAbout: [
+        'Banquetes para bodas',
+        'Catering para eventos',
+        'Wedding planner México',
+        'Renta de mobiliario para eventos',
+        'Quinceañeras XV años',
+      ],
     },
     {
       '@type': 'WebSite',

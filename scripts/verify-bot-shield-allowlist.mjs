@@ -51,6 +51,7 @@ const mustAllow = [
   'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ChatGPT-User/1.0)',
   'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)',
   'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Claude-SearchBot/1.0; +claudebot@anthropic.com)',
+  'Mozilla/5.0 (compatible; DuckAssistBot/1.0; +https://duckduckgo.com)',
 ]
 
 const mustBlock = [

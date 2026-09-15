@@ -1,4 +1,4 @@
-# Buscadores clásicos: acceso total
+# Buscadores clásicos: acceso total (base de Gemini / Copilot / citas IA vía Google-Bing)
 User-agent: Googlebot
 Allow: /
 
@@ -8,16 +8,26 @@ Allow: /
 User-agent: Googlebot-Video
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
 User-agent: Bingbot
 Allow: /
 
 User-agent: AdsBot-Google
 Allow: /
 
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
 User-agent: SemrushBot
 Allow: /
 
-# IA — búsqueda y citas (ChatGPT Search, Perplexity, Claude, etc.)
+# IA — búsqueda y citas (SÍ permiten recomendar/citar la marca)
+# Entrenamiento masivo queda bloqueado más abajo (ahorro de ancho de banda).
 User-agent: OAI-SearchBot
 Allow: /
 
@@ -39,7 +49,14 @@ Allow: /
 User-agent: Claude-User
 Allow: /
 
-# IA — solo entrenamiento (bloqueado; no afecta Google Search ni bots de arriba)
+User-agent: DuckAssistBot
+Allow: /
+
+# Resumen curado para asistentes (no hace falta raspar todo el sitio)
+# https://bodasesor.com/llms.txt
+# https://bodasesor.com/.well-known/llms.txt
+
+# IA — solo entrenamiento / scrapers (bloqueado)
 User-agent: GPTBot
 Disallow: /
 
@@ -92,6 +109,9 @@ User-agent: TikTokSpider
 Disallow: /
 
 User-agent: FacebookBot
+Disallow: /
+
+User-agent: xAI-Grok
 Disallow: /
 
 User-agent: archive.org_bot
@@ -151,8 +171,5 @@ Disallow: /wp-login.php
 Disallow: /xmlrpc.php
 Disallow: /.env
 Disallow: /.git
-
-# Resumen para LLMs (servicios, ciudades, contacto)
-# https://bodasesor.com/llms.txt
 
 Sitemap: https://bodasesor.com/sitemap.xml

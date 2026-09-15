@@ -110,7 +110,7 @@ const ALLOW = [
   /Bodasesor/i,
   /Cursor/i,
   /CursorBrowser/i,
-  // AI search / citations (not training — GPTBot stays in BLOCK)
+  // AI search / citations (not training — GPTBot / ClaudeBot / Grok stay in BLOCK)
   /OAI-SearchBot/i,
   /ChatGPT-User/i,
   /SearchGPT/i,
@@ -118,6 +118,8 @@ const ALLOW = [
   /Perplexity-User/i,
   /Claude-SearchBot/i,
   /Claude-User/i,
+  // DuckDuckGo AI answers (citation; not training crawl)
+  /DuckAssistBot/i,
 ]
 
 // ═══════════════════════════════════════════════════════════════
@@ -143,7 +145,7 @@ const BLOCK = [
   /meta-externalagent/i,
   /Timpibot/i,
   /PetalBot/i,
-  /DuckAssistBot/i,
+  // DuckAssistBot moved to ALLOW (AI answers / citations)
   /AI2Bot/i,
   /Webzio-Extended/i,
   /ICC-Crawler/i,
