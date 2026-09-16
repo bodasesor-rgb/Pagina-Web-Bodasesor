@@ -44,7 +44,15 @@ export default function HomeSeoContent() {
               servicio de banquetes y catering
             </Link>{' '}
             incluye menús personalizados para 10 a más de 500 invitados: alta cocina, banquete kosher, taquizas,
-            parrilladas, barras de sushi, coffee break empresarial, mesas de dulces,{' '}
+            parrilladas,{' '}
+            <Link href="/barra-sushi" className="text-[#162040] font-semibold hover:underline">
+              barra de sushi CDMX
+            </Link>
+            , coffee break empresarial,{' '}
+            <Link href="/mesa-dulces" className="text-[#162040] font-semibold hover:underline">
+              mesa de dulces CDMX
+            </Link>
+            ,{' '}
             <Link href="/barras-de-bebidas" className="text-[#162040] font-semibold hover:underline">
               barras de bebidas
             </Link>{' '}
@@ -76,12 +84,16 @@ export default function HomeSeoContent() {
           </h3>
           <p>
             Integramos{' '}
+            <Link href="/espacios-eventos" className="text-[#162040] font-semibold hover:underline">
+              salón de eventos y venues
+            </Link>
+            ,{' '}
             <Link href="/salas-periqueras" className="text-[#162040] font-semibold hover:underline">
               mobiliario premium
             </Link>
             ,{' '}
             <Link href="/pistas-tarimas" className="text-[#162040] font-semibold hover:underline">
-              pistas y tarimas
+              pista de madera y tarimas
             </Link>
             , carpas,{' '}
             <Link href="/floreria" className="text-[#162040] font-semibold hover:underline">

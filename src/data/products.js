@@ -2318,8 +2318,8 @@ const PRODUCTS = [
       slug: "barra-sushi",
       title: "Barra de Sushi y Poke Bowl para Eventos",
       headline: "La experiencia japonesa que conquista a tus invitados",
-      seoTitle: "Barra de Sushi para Eventos y Bodas | Bodasesor",
-      seoDescription: "Sushi, rolls, nigiri y poke bowls preparados en vivo para eventos, bodas y corporativos. Chef japonés certificado, ingredientes de primera calidad.",
+      seoTitle: "Barra de Sushi CDMX para Eventos | Bodasesor",
+      seoDescription: "Barra de sushi en CDMX y México: chef en vivo, rolls, nigiri y poke bowl para bodas y eventos. Cotiza por WhatsApp sin compromiso.",
       description: [
         "Nuestra barra de sushi lleva la experiencia de un restaurante japonés de lujo directamente a tu evento. Un chef especializado en cocina japonesa prepara cada pieza en vivo, garantizando frescura absoluta y la técnica correcta.",
         "Usamos arroz de sushi japonés auténtico, nori de primera calidad, salmón noruego, atún de grado sashimi, aguacate Hass y la selección más amplia de ingredientes premium. El resultado es sushi que rivaliza con los mejores restaurantes de la ciudad.",
@@ -5647,8 +5647,8 @@ const PRODUCTS = [
       slug: "mesa-dulces",
       title: "Mesa de Dulces para Eventos",
       headline: "El rincón más dulce y fotografiado de tu celebración",
-      seoTitle: "Mesa de Dulces para Bodas y Eventos | Bodasesor",
-      seoDescription: "Mesas de dulces decoradas para bodas, XV años, baby showers y fiestas. Diseño personalizado, dulces artesanales y presentación que impresiona.",
+      seoTitle: "Mesa de Dulces CDMX y Eventos | Bodasesor",
+      seoDescription: "Mesa de dulces en CDMX y México para bodas, XV años y baby shower. Diseño personalizado y dulces artesanales. Cotiza por WhatsApp.",
       description: [
         "La mesa de dulces es el corazón visual de cualquier celebración. No es solo un conjunto de golosinas: es una instalación decorativa temática que combina colores, alturas, texturas y dulces artesanales en una composición digna de revista.",
         "Nuestro equipo de diseño trabaja contigo para crear la mesa que refleje perfectamente el estilo de tu evento: romántica, moderna, vintage, tropical o temática personalizada. Cada elemento —desde el letrero hasta la jarra de los dulces— está pensado para el conjunto.",
@@ -6679,8 +6679,8 @@ const PRODUCTS = [
       slug: "pistas-tarimas",
       title: "Pistas de Baile y Tarimas para Eventos",
       headline: "La pista que todos quieren estrenar",
-      seoTitle: "Renta de Pistas de Baile y Tarimas para Eventos | Bodasesor",
-      seoDescription: "Renta de pistas de baile y tarimas para eventos, bodas y XV años. Madera, LED, iluminada y espejada. Instalación profesional y tamaños personalizados.",
+      seoTitle: "Pista de Madera y Tarimas para Eventos | Bodasesor",
+      seoDescription: "Renta de pista de madera, tarima de madera, LED y espejo para bodas y eventos. Instalación profesional. Cotiza por WhatsApp.",
       description: [
         "La pista de baile es el corazón de toda fiesta. Una buena pista marca la diferencia entre un evento donde todos se quedan sentados y uno donde el último en irse es el más cansado. Contamos con 6 modelos diferentes para cada estilo de evento.",
         "Desde la clásica pista de madera de parquet hasta la espectacular pista LED con iluminación programable, pasando por la pista espejo que duplica visualmente el espacio. Fabricamos y rentamos en tamaños desde 4x4m hasta 12x12m según tus necesidades.",

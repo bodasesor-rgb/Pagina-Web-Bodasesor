@@ -6,13 +6,19 @@ import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import CatalogImage from "../components/CatalogImage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
-const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un espacio para mi evento. ¿Me pueden dar información sobre sus venues?");
+const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un salón de eventos o espacio para mi celebración. ¿Me pueden asesorar?");
 
 export default function EspaciosPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("espacios-eventos", "Espacios para Eventos");
+    useCityHubPage(
+      "espacios-eventos",
+      PRIORITY_HUB_SERP["espacios-eventos"].h1,
+      ["salón de eventos", "salones para eventos", "haciendas", "locales para eventos"],
+      hubPageSeo("espacios-eventos"),
+    );
   return (
     <div className="min-h-screen bg-white">
       <section className="bg-[#162040] text-white">
@@ -24,7 +30,7 @@ export default function EspaciosPage() {
               {displayHeadline ? (
                 <HighlightKeywords text={displayHeadline} keywords={keywords} className="font-bold text-white" />
               ) : (
-                "Salones, haciendas, jardines y terrazas. El venue perfecto para convertir tu evento en una experiencia única e irrepetible."
+                "Salón de eventos, haciendas, jardines y terrazas. Te asesoramos para encontrar el venue perfecto y armar la producción completa."
               )}
             </p>
             {cityCopy?.zones?.length ? (
@@ -68,7 +74,7 @@ export default function EspaciosPage() {
         faqs={cityCopy?.faqs}
         fallback={
           <p>
-            <strong>Espacios para eventos</strong>
+            <strong>Salón de eventos y espacios</strong>
             {city ? (
               <>
                 {" "}en <strong className="text-[#162040]">{city.name}</strong> y área metropolitana
@@ -76,7 +82,7 @@ export default function EspaciosPage() {
             ) : (
               <> en México</>
             )}
-            : salones, haciendas, jardines y terrazas con asesoría personalizada.
+            : salones para eventos, haciendas, jardines y terrazas con asesoría personalizada de Bodasesor.
           </p>
         }
       />

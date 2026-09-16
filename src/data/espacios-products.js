@@ -20,12 +20,12 @@ export const espaciosNavItems = [
 export const ESPACIOS = [
   {
     "slug": "haciendas",
-    "name": "Haciendas",
-    "tagline": "Servicio profesional de haciendas para tu evento",
-    "short": "Contrata haciendas con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
+    "name": "Haciendas para Eventos",
+    "tagline": "Haciendas en CDMX y México para bodas y eventos",
+    "short": "Asesoría para elegir haciendas en CDMX y todo México. Coordinación de venue, banquetes y producción con Bodasesor.",
     "img": "/images/espacios/haciendas.png",
     "incluye": [
-      "Servicio profesional de haciendas",
+      "Búsqueda y recomendación de haciendas",
       "Atención personalizada desde la cotización",
       "Coordinación con proveedores certificados",
       "Supervisión el día del evento"
@@ -36,16 +36,16 @@ export const ESPACIOS = [
       "Eventos corporativos",
       "Celebraciones privadas"
     ],
-    "desc": "En Bodasesor ofrecemos haciendas con los más altos estándares de calidad. Nuestro equipo coordina cada detalle para que tu evento sea impecable."
+    "desc": "Te ayudamos a encontrar haciendas para eventos en CDMX y el resto de México, y coordinamos banquete, mobiliario y producción para que el día salga impecable."
   },
   {
     "slug": "jardines",
-    "name": "Jardines",
-    "tagline": "Servicio profesional de jardines para tu evento",
-    "short": "Contrata jardines con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
+    "name": "Jardines para Eventos",
+    "tagline": "Jardines y venues al aire libre para tu celebración",
+    "short": "Jardines para bodas y eventos al aire libre. Asesoría de venue y producción integral con Bodasesor.",
     "img": "/images/espacios/jardines.png",
     "incluye": [
-      "Servicio profesional de jardines",
+      "Recomendación de jardines y exteriores",
       "Atención personalizada desde la cotización",
       "Coordinación con proveedores certificados",
       "Supervisión el día del evento"
@@ -56,16 +56,16 @@ export const ESPACIOS = [
       "Eventos corporativos",
       "Celebraciones privadas"
     ],
-    "desc": "En Bodasesor ofrecemos jardines con los más altos estándares de calidad. Nuestro equipo coordina cada detalle para que tu evento sea impecable."
+    "desc": "Jardines para eventos con asesoría Bodasesor: elegimos el espacio y armamos carpas, mobiliario y catering según el clima y el estilo de tu fiesta."
   },
   {
     "slug": "salones",
-    "name": "Salones",
-    "tagline": "Servicio profesional de salones para tu evento",
-    "short": "Contrata salones con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
+    "name": "Salón de Eventos",
+    "tagline": "Salones para eventos, bodas y graduaciones",
+    "short": "Salón de eventos y salones para fiestas, bodas y graduaciones. Te asesoramos para elegir el local ideal en México.",
     "img": "/images/espacios/salones.png",
     "incluye": [
-      "Servicio profesional de salones",
+      "Asesoría para elegir salón de eventos",
       "Atención personalizada desde la cotización",
       "Coordinación con proveedores certificados",
       "Supervisión el día del evento"
@@ -73,19 +73,19 @@ export const ESPACIOS = [
     "idealPara": [
       "Bodas",
       "XV Años",
-      "Eventos corporativos",
-      "Celebraciones privadas"
+      "Graduaciones",
+      "Eventos corporativos"
     ],
-    "desc": "En Bodasesor ofrecemos salones con los más altos estándares de calidad. Nuestro equipo coordina cada detalle para que tu evento sea impecable."
+    "desc": "Buscas un salón de eventos o salones para fiestas: te orientamos según invitados, zona y presupuesto, y coordinamos el montaje completo con Bodasesor."
   },
   {
     "slug": "terrazas",
-    "name": "Terrazas",
-    "tagline": "Servicio profesional de terrazas para tu evento",
-    "short": "Contrata terrazas con Bodasesor. Calidad garantizada, atención personalizada y experiencia en eventos en todo México.",
+    "name": "Terrazas para Eventos",
+    "tagline": "Terrazas con vista y ambiente para tu celebración",
+    "short": "Terrazas para bodas y eventos. Ambientación, mobiliario y coordinación con Bodasesor en México.",
     "img": "/images/espacios/terrazas.png",
     "incluye": [
-      "Servicio profesional de terrazas",
+      "Recomendación de terrazas",
       "Atención personalizada desde la cotización",
       "Coordinación con proveedores certificados",
       "Supervisión el día del evento"
@@ -96,6 +96,6 @@ export const ESPACIOS = [
       "Eventos corporativos",
       "Celebraciones privadas"
     ],
-    "desc": "En Bodasesor ofrecemos terrazas con los más altos estándares de calidad. Nuestro equipo coordina cada detalle para que tu evento sea impecable."
+    "desc": "Terrazas para eventos con asesoría Bodasesor: elegimos el espacio y coordinamos iluminación, mobiliario y catering para ambientar la noche."
   }
 ]

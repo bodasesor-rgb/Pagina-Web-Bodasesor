@@ -5,12 +5,18 @@ import type { WeddingProduct } from "../data/wedding-products";
 import HighlightKeywords from "../components/HighlightKeywords";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import CatalogImage from "../components/CatalogImage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa saber más sobre sus servicios de Wedding Planner. ¿Me pueden dar información?");
 
 export default function WeddingPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("wedding-planner", "Wedding Planner");
+    useCityHubPage(
+      "wedding-planner",
+      PRIORITY_HUB_SERP["wedding-planner"].h1,
+      ["wedding planner", "wedding planner puebla", "bodas"],
+      hubPageSeo("wedding-planner"),
+    );
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}

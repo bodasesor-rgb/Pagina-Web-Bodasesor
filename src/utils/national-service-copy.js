@@ -276,31 +276,97 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       seoTitle: PRIORITY_HUB_SERP['pistas-tarimas'].title,
       seoDescription: PRIORITY_HUB_SERP['pistas-tarimas'].desc,
       h1: PRIORITY_HUB_SERP['pistas-tarimas'].h1,
-      sectionTitle: 'Acabados, medidas y montaje profesional',
+      sectionTitle: 'Pista de madera, tarimas y montaje',
       description: [
-        'Renta de pistas de baile y tarimas para bodas, XV años y eventos: madera, LED, espejo, escenarios y estrados a medida con instalación profesional.',
-        'Una pista de baile bien dimensionada es el centro de la celebración. También montamos tarimas, escenarios y sets completos con barras y cabinas coordinadas.',
-        'Cotiza pistas de baile o tarimas por WhatsApp: te proponemos medidas, acabados y logística según tu venue en México.',
+        'Renta de pista de madera, pistas LED y tarima de madera para bodas, XV años y eventos: escenarios y estrados a medida con instalación profesional.',
+        'Una pista de baile bien dimensionada es el centro de la celebración. También montamos tarimas de madera, escenarios y sets completos con barras y cabinas coordinadas.',
+        'Cotiza pista de madera o tarima por WhatsApp: te proponemos medidas, acabados y logística según tu venue en México.',
       ],
       localBullets: [
-        'Pistas de baile en madera, LED, espejo y acabados premium.',
-        'Tarimas, escenarios y estrados a la medida del venue.',
+        'Pista de madera, LED, espejo y acabados premium.',
+        'Tarima de madera, escenarios y estrados a la medida del venue.',
         'Sets completos con barras y cabinas coordinadas.',
         'Montaje, nivelación y retiro incluidos.',
         'Cotización por WhatsApp en menos de 24 horas.',
       ],
       faqs: [
         {
-          q: '¿Rentan pistas de baile para eventos?',
-          a: 'Sí. Ofrecemos pistas de baile a medida (madera, LED, espejo y más) con instalación, nivelación y retiro incluidos para bodas y fiestas.',
+          q: '¿Rentan pista de madera para eventos?',
+          a: 'Sí. Ofrecemos pista de madera y otros acabados (LED, espejo) con instalación, nivelación y retiro incluidos para bodas y fiestas.',
         },
         {
-          q: '¿También rentan tarimas para eventos?',
-          a: 'Sí. Tarimas básicas, escenarios y estrados según el tamaño de tu espacio. Puedes combinar pista de baile y tarima en un solo set.',
+          q: '¿También rentan tarima de madera?',
+          a: 'Sí. Tarimas de madera, escenarios y estrados según el tamaño de tu espacio. Puedes combinar pista de baile y tarima en un solo set.',
         },
         {
           q: '¿Cómo cotizo una pista de baile o tarima?',
           a: 'Escríbenos por WhatsApp con medidas aproximadas del venue, fecha y ciudad. Te enviamos opciones y disponibilidad sin compromiso.',
+        },
+      ],
+    },
+    'espacios-eventos': {
+      headline: PRIORITY_HUB_SERP['espacios-eventos'].headline,
+      seoTitle: PRIORITY_HUB_SERP['espacios-eventos'].title,
+      seoDescription: PRIORITY_HUB_SERP['espacios-eventos'].desc,
+      h1: PRIORITY_HUB_SERP['espacios-eventos'].h1,
+      sectionTitle: 'Salón de eventos, haciendas y venues',
+      description: [
+        'Buscas un salón de eventos, locales para fiestas, haciendas o terrazas: Bodasesor te asesora para elegir el espacio según invitados, zona y estilo, y coordina la producción completa.',
+        'Trabajamos salones para eventos, haciendas en CDMX y México, jardines y terrazas. Combinamos venue con banquetes, mobiliario, florería y audiovisual en un solo equipo.',
+        'Cotiza por WhatsApp: cuéntanos ciudad, fecha e invitados y te orientamos sobre salones para eventos cerca de ti o haciendas disponibles.',
+      ],
+      localBullets: [
+        'Salón de eventos y salones para bodas, XV años y graduaciones.',
+        'Haciendas en CDMX y principales ciudades de México.',
+        'Jardines y terrazas con ambientación y logística completa.',
+        'Asesoría de venue + banquete, mobiliario y producción.',
+        'Cotización por WhatsApp en menos de 24 horas.',
+      ],
+      faqs: [
+        {
+          q: '¿Ayudan a encontrar un salón de eventos?',
+          a: 'Sí. Te orientamos para elegir salón de eventos o locales según invitados, zona y presupuesto, y coordinamos montaje y catering.',
+        },
+        {
+          q: '¿También trabajan haciendas en CDMX?',
+          a: 'Sí. Asesoramos haciendas en CDMX y otras ciudades, y armamos banquete, mobiliario y decoración en el mismo paquete.',
+        },
+        {
+          q: '¿Cómo cotizo un espacio para mi evento?',
+          a: 'Escríbenos por WhatsApp al 55 4008 0373 con ciudad, fecha e invitados. Te proponemos opciones de salón, hacienda o terraza sin compromiso.',
+        },
+      ],
+    },
+    'wedding-planner': {
+      headline: PRIORITY_HUB_SERP['wedding-planner'].headline,
+      seoTitle: PRIORITY_HUB_SERP['wedding-planner'].title,
+      seoDescription: PRIORITY_HUB_SERP['wedding-planner'].desc,
+      h1: PRIORITY_HUB_SERP['wedding-planner'].h1,
+      sectionTitle: 'Planeación y coordinación de bodas',
+      description: [
+        'Wedding planner para bodas en México: planeación, timeline, proveedores y coordinación el día del evento con el equipo Bodasesor.',
+        'Atendemos bodas en CDMX, Puebla y todo el país. Unificamos banquete, decoración, música y logística para que disfrutes sin estrés.',
+        'Cotiza tu wedding planner por WhatsApp: te compartimos alcance del servicio y siguientes pasos según fecha y ciudad.',
+      ],
+      localBullets: [
+        'Wedding planner con coordinación integral del día.',
+        'Proveedores internos: banquete, florería, música y más.',
+        'Cobertura en CDMX, Puebla y principales ciudades.',
+        'Timeline, ensayos y supervisión en sitio.',
+        'Cotización por WhatsApp sin compromiso.',
+      ],
+      faqs: [
+        {
+          q: '¿Ofrecen wedding planner en Puebla y CDMX?',
+          a: 'Sí. Coordinamos bodas en Puebla, CDMX y otras ciudades de México con el mismo estándar de producción Bodasesor.',
+        },
+        {
+          q: '¿Qué incluye el servicio de wedding planner?',
+          a: 'Planeación, selección de proveedores, timeline, ensayos y coordinación el día del evento. Podemos incluir banquete y montaje en el mismo paquete.',
+        },
+        {
+          q: '¿Cómo inicio con un wedding planner Bodasesor?',
+          a: 'Escríbenos por WhatsApp con fecha y ciudad de la boda. Te enviamos propuesta y agenda de primera llamada sin compromiso.',
         },
       ],
     },
