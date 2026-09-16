@@ -165,6 +165,19 @@ function eventTypeNational(label, servicesHint) {
   }
 }
 
+function priorityEventType(slug, label, servicesHint) {
+  const p = PRIORITY_HUB_SERP[slug]
+  const base = eventTypeNational(label, servicesHint)
+  if (!p) return base
+  return {
+    ...base,
+    headline: p.headline,
+    seoTitle: p.title,
+    seoDescription: p.desc,
+    h1: p.h1,
+  }
+}
+
 /**
  * National defaults for category hub pages (banquetes-catering, barras-de-bebidas, mesas-personalizadas).
  */
@@ -312,12 +325,12 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       sectionTitle: 'Salón de eventos, haciendas y venues',
       description: [
         'Buscas un salón de eventos, locales para fiestas, haciendas o terrazas: Bodasesor te asesora para elegir el espacio según invitados, zona y estilo, y coordina la producción completa.',
-        'Trabajamos salones para eventos, haciendas en CDMX y México, jardines y terrazas. Combinamos venue con banquetes, mobiliario, florería y audiovisual en un solo equipo.',
+        'Trabajamos salones para eventos, haciendas en CDMX (incluida la zona de Teotihuacán) y México, jardines y terrazas. Combinamos venue con banquetes, mobiliario, florería y audiovisual en un solo equipo.',
         'Cotiza por WhatsApp: cuéntanos ciudad, fecha e invitados y te orientamos sobre salones para eventos cerca de ti o haciendas disponibles.',
       ],
       localBullets: [
         'Salón de eventos y salones para bodas, XV años y graduaciones.',
-        'Haciendas en CDMX y principales ciudades de México.',
+        'Haciendas en CDMX, Teotihuacán y principales ciudades de México.',
         'Jardines y terrazas con ambientación y logística completa.',
         'Asesoría de venue + banquete, mobiliario y producción.',
         'Cotización por WhatsApp en menos de 24 horas.',
@@ -328,8 +341,8 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
           a: 'Sí. Te orientamos para elegir salón de eventos o locales según invitados, zona y presupuesto, y coordinamos montaje y catering.',
         },
         {
-          q: '¿También trabajan haciendas en CDMX?',
-          a: 'Sí. Asesoramos haciendas en CDMX y otras ciudades, y armamos banquete, mobiliario y decoración en el mismo paquete.',
+          q: '¿También trabajan haciendas en CDMX y Teotihuacán?',
+          a: 'Sí. Asesoramos haciendas en CDMX, zona Teotihuacán y otras ciudades, y armamos banquete, mobiliario y decoración en el mismo paquete.',
         },
         {
           q: '¿Cómo cotizo un espacio para mi evento?',
@@ -371,13 +384,22 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
       ],
     },
     'barras-de-bebidas': {
-      headline:
-        'Desde aguas frescas y mocteles hasta mixología premium, café de especialidad y carritos de helado.',
+      headline: PRIORITY_HUB_SERP['barras-de-bebidas'].headline,
+      seoTitle: PRIORITY_HUB_SERP['barras-de-bebidas'].title,
+      seoDescription: PRIORITY_HUB_SERP['barras-de-bebidas'].desc,
+      h1: PRIORITY_HUB_SERP['barras-de-bebidas'].h1,
+      sectionTitle: 'Barras para bebidas: opciones y montaje',
+      description: [
+        'Barras de bebidas para eventos: mocteles, mixología, café premium y carritos de helado con bartenders y baristas profesionales.',
+        'Armamos barras para bebidas con o sin alcohol, cristalería, hielo y garnishes incluidos. Combina varias estaciones en un solo open bar.',
+        'Cotiza tu barra de bebidas por WhatsApp: te proponemos carta y personal según invitados, duración y ciudad.',
+      ],
       localBullets: [
-        'Opciones con y sin alcohol para todo tipo de evento.',
+        'Barras para bebidas con y sin alcohol para todo tipo de evento.',
         'Bartenders y baristas certificados con montaje incluido.',
         'Cristalería, hielo, garnishes y desmontaje en el paquete.',
         'Combina varias barras en un solo open bar coordinado.',
+        'Cotización por WhatsApp en menos de 24 horas.',
       ],
       faqs: [
         {
@@ -391,6 +413,105 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
         {
           q: '¿Atienden eventos con y sin alcohol?',
           a: 'Sí. Tenemos opciones 100% sin alcohol (mocteles, aguas, café, helados) y mixología premium con bartenders profesionales.',
+        },
+      ],
+    },
+    fotografia: {
+      headline: PRIORITY_HUB_SERP.fotografia.headline,
+      seoTitle: PRIORITY_HUB_SERP.fotografia.title,
+      seoDescription: PRIORITY_HUB_SERP.fotografia.desc,
+      h1: PRIORITY_HUB_SERP.fotografia.h1,
+      sectionTitle: 'Fotografía, video y cabinas para tu evento',
+      description: [
+        'Video y fotografía para eventos: cobertura profesional, cabinas, cámara 360 y producción audiovisual para bodas y fiestas.',
+        'Capturamos la ceremonia, la recepción y los detalles. También montamos cabinas de fotos, Magic Mirror y pantallas para entretenimiento.',
+        'Cotiza fotografía y video por WhatsApp: te enviamos paquetes según horas de cobertura y ciudad.',
+      ],
+      localBullets: [
+        'Fotógrafo y videógrafo para bodas y eventos.',
+        'Cabinas de fotos, cámara 360 y experiencias interactivas.',
+        'Entrega digital organizada y opciones de álbum.',
+        'Cobertura en CDMX y principales ciudades de México.',
+        'Cotización por WhatsApp sin compromiso.',
+      ],
+      faqs: [
+        {
+          q: '¿Ofrecen video y fotografía para eventos?',
+          a: 'Sí. Paquetes de fotografía y video para bodas, XV años y eventos sociales, con cobertura de ceremonia y recepción.',
+        },
+        {
+          q: '¿También rentan cabinas de fotos?',
+          a: 'Sí. Cabinas, Magic Mirror, pantalla verde y cámara 360 para entretenimiento durante la fiesta.',
+        },
+        {
+          q: '¿Cómo cotizo fotografía o video?',
+          a: 'Escríbenos por WhatsApp con fecha, ciudad y horas de cobertura. Te enviamos opciones sin compromiso.',
+        },
+      ],
+    },
+    shows: {
+      headline: PRIORITY_HUB_SERP.shows.headline,
+      seoTitle: PRIORITY_HUB_SERP.shows.title,
+      seoDescription: PRIORITY_HUB_SERP.shows.desc,
+      h1: PRIORITY_HUB_SERP.shows.h1,
+      sectionTitle: 'Shows en vivo para tu celebración',
+      description: [
+        'Shows y entretenimiento para eventos: percusión, danza, circo y tecnología de luz para bodas, XV años y fiestas.',
+        'Coordinamos el timing con tu timeline para que cada acto entre en el momento correcto sin frenar la fiesta.',
+        'Cotiza shows por WhatsApp: te proponemos actos según duración, espacio y estilo del evento.',
+      ],
+      localBullets: [
+        'Batucada, danza, circo y shows con tecnología.',
+        'Actos de ~6 minutos o sets más largos según el paquete.',
+        'Coordinación con DJ y maestro de ceremonias.',
+        'Cobertura nacional con logística incluida.',
+        'Cotización por WhatsApp en menos de 24 horas.',
+      ],
+      faqs: [
+        {
+          q: '¿Qué tipo de shows ofrecen?',
+          a: 'Percusión, danza, circo y actos con luz/tecnología. Armamos un set según el estilo de tu evento.',
+        },
+        {
+          q: '¿Puedo combinar varios shows?',
+          a: 'Sí. Es común combinar batucada de entrada con un acto de danza o circo a media noche.',
+        },
+        {
+          q: '¿Cómo cotizo un show?',
+          a: 'Escríbenos por WhatsApp con fecha, ciudad y tipo de evento. Te enviamos disponibilidad y propuesta.',
+        },
+      ],
+    },
+    musica: {
+      headline: PRIORITY_HUB_SERP.musica.headline,
+      seoTitle: PRIORITY_HUB_SERP.musica.title,
+      seoDescription: PRIORITY_HUB_SERP.musica.desc,
+      h1: PRIORITY_HUB_SERP.musica.h1,
+      sectionTitle: 'DJ y música en vivo',
+      description: [
+        'Música y DJ para eventos: ambientación, baile y momentos clave con playlist a tu medida.',
+        'Grupos versátiles, mariachi, saxofón y DJ profesional para bodas, XV años y corporativos.',
+        'Cotiza música para tu evento por WhatsApp con duración y estilo deseado.',
+      ],
+      localBullets: [
+        'DJ profesional con equipo de audio.',
+        'Música en vivo: grupos, mariachi y saxofón.',
+        'Coordinación de entradas, vals y último baile.',
+        'Compatible con shows y audio Bodasesor.',
+        'Cotización por WhatsApp sin compromiso.',
+      ],
+      faqs: [
+        {
+          q: '¿Incluyen DJ para la fiesta?',
+          a: 'Sí. DJ con equipo, playlist personalizada y coordinación de momentos clave del evento.',
+        },
+        {
+          q: '¿También hay música en vivo?',
+          a: 'Sí. Grupos versátiles, mariachi, saxofón y más según el estilo de tu celebración.',
+        },
+        {
+          q: '¿Cómo cotizo música o DJ?',
+          a: 'Escríbenos por WhatsApp con fecha, ciudad y horas de servicio. Te enviamos opciones disponibles.',
         },
       ],
     },
@@ -418,13 +539,29 @@ export function buildNationalHubCopy(hubSlug, fallbackTitle) {
         },
       ],
     },
-    bodas: eventTypeNational('Bodas', 'banquetes, florería, música, fotografía y wedding planner'),
-    corporativos: eventTypeNational('Eventos Corporativos', 'coffee break, catering, audio e iluminación'),
-    'xv-anos': eventTypeNational('XV Años', 'banquete, decoración, música, shows y mesa de dulces'),
-    graduaciones: eventTypeNational('Graduaciones', 'catering, música, decoración y fotografía'),
+    bodas: priorityEventType('bodas', 'Bodas', 'banquetes, florería, música, fotografía y wedding planner'),
+    corporativos: priorityEventType(
+      'corporativos',
+      'Eventos Corporativos',
+      'coffee break, catering, audio e iluminación',
+    ),
+    'xv-anos': priorityEventType(
+      'xv-anos',
+      'XV Años',
+      'banquete, decoración, música, shows y mesa de dulces',
+    ),
+    graduaciones: priorityEventType(
+      'graduaciones',
+      'Graduaciones',
+      'catering, música, decoración y fotografía',
+    ),
     'baby-shower': eventTypeNational('Baby Shower', 'decoración, catering, mesa de dulces y fotografía'),
     cumpleanos: eventTypeNational('Cumpleaños', 'catering, música, inflables y mesa de dulces'),
-    'primera-comunion': eventTypeNational('Primera Comunión', 'banquete, decoración y mesa de dulces'),
+    'primera-comunion': priorityEventType(
+      'primera-comunion',
+      'Primera Comunión',
+      'banquete, decoración y mesa de dulces',
+    ),
     cenas: eventTypeNational('Cenas', 'menús de gala, protocolo y ambientación'),
     comidas: eventTypeNational('Comidas', 'catering de mediodía y almuerzos'),
     desayunos: eventTypeNational('Desayunos', 'brunch, estaciones en vivo y café premium'),

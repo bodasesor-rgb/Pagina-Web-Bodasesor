@@ -6,13 +6,19 @@ import HighlightKeywords from "../components/HighlightKeywords";
 import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import CatalogImage from "../components/CatalogImage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar música en vivo para mi evento. ¿Me pueden dar información?");
 
 export default function MusicaPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("musica", "Música para Eventos");
+    useCityHubPage(
+      "musica",
+      PRIORITY_HUB_SERP.musica.h1,
+      ["música para eventos", "dj para eventos", "música en vivo"],
+      hubPageSeo("musica"),
+    );
   return (
     <div className="min-h-screen bg-white">
       <section className="bg-[#162040] text-white">

@@ -127,15 +127,15 @@ export default function HomeSeoContent() {
           </h3>
           <p>
             Producción completa para{' '}
-            <Link href="/bodas" className="text-[#162040] font-semibold hover:underline">bodas</Link>,{' '}
-            <Link href="/xv-anos" className="text-[#162040] font-semibold hover:underline">quinceañeras</Link>,{' '}
-            <Link href="/graduaciones" className="text-[#162040] font-semibold hover:underline">graduaciones</Link>,{' '}
-            <Link href="/baby-shower" className="text-[#162040] font-semibold hover:underline">baby showers</Link>,{' '}
-            <Link href="/primera-comunion" className="text-[#162040] font-semibold hover:underline">primeras comuniones</Link>{' '}
+            <Link href="/bodas" className="text-[#162040] font-semibold hover:underline">bodas y eventos</Link>,{' '}
+            <Link href="/xv-anos" className="text-[#162040] font-semibold hover:underline">XV años</Link>,{' '}
+            <Link href="/graduaciones" className="text-[#162040] font-semibold hover:underline">fiestas de graduación</Link>,{' '}
+            <Link href="/primera-comunion" className="text-[#162040] font-semibold hover:underline">fiesta de primera comunión</Link>,{' '}
+            <Link href="/baby-shower" className="text-[#162040] font-semibold hover:underline">baby showers</Link>{' '}
             y{' '}
             <Link href="/corporativos" className="text-[#162040] font-semibold hover:underline">eventos corporativos</Link>.
             Atendemos{' '}
-            <Link href="/ciudad-de-mexico" className="text-[#162040] font-semibold hover:underline">CDMX</Link>,{' '}
+            <Link href="/ciudad-de-mexico" className="text-[#162040] font-semibold hover:underline">eventos CDMX</Link>,{' '}
             <Link href="/guadalajara" className="text-[#162040] font-semibold hover:underline">Guadalajara</Link>,{' '}
             <Link href="/monterrey" className="text-[#162040] font-semibold hover:underline">Monterrey</Link>,{' '}
             <Link href="/cancun" className="text-[#162040] font-semibold hover:underline">Cancún</Link>{' '}

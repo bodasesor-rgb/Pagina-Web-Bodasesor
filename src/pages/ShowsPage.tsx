@@ -7,6 +7,7 @@ import CityHubSeoSections from "../components/CityHubSeoSections";
 import { useCityHubPage } from "../hooks/useCityHubPage";
 import { Drum, Sparkles, Zap, CircleDot, CheckCircle2 } from "lucide-react";
 import CatalogImage from "../components/CatalogImage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WA_BASE = "https://wa.me/5215540080373?text=";
 const waGeneral = WA_BASE + encodeURIComponent("Hola, me interesa cotizar un show de entretenimiento para mi evento. ¿Me pueden dar información?");
@@ -20,7 +21,12 @@ const categoryConfig = {
 
 export default function ShowsPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("shows", "Shows y Entretenimiento");
+    useCityHubPage(
+      "shows",
+      PRIORITY_HUB_SERP.shows.h1,
+      ["shows", "entretenimiento para eventos", "show party"],
+      hubPageSeo("shows"),
+    );
   return (
     <div className="min-h-screen bg-white">
 

@@ -4,6 +4,7 @@ import OptimizedImage from "../components/OptimizedImage";
 import HighlightKeywords from "../components/HighlightKeywords";
 import ProductGalleryCarousel from "../components/ProductGalleryCarousel";
 import { useCityHubPage } from "../hooks/useCityHubPage";
+import { hubPageSeo, PRIORITY_HUB_SERP } from "../data/priority-hub-serp";
 
 const WA = "https://wa.me/5215540080373?text=";
 const waGeneral = WA + encodeURIComponent("Hola, me interesa cotizar una barra de bebidas para mi evento. ¿Me pueden dar información?");
@@ -63,7 +64,12 @@ const ITEMS = [
 
 export default function BarrasBebidasPage() {
   const { city, cityCopy, displayH1, displayHeadline, displaySectionTitle, keywords } =
-    useCityHubPage("barras-de-bebidas", "Barras de Bebidas");
+    useCityHubPage(
+      "barras-de-bebidas",
+      PRIORITY_HUB_SERP["barras-de-bebidas"].h1,
+      ["barras de bebidas", "barras para bebidas", "barra de bebidas"],
+      hubPageSeo("barras-de-bebidas"),
+    );
   const faqs = cityCopy?.faqs?.length ? cityCopy.faqs : DEFAULT_FAQS;
 
   return (

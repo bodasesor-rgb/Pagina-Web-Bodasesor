@@ -14,8 +14,8 @@ const PRODUCTS = [
       slug: "banquetes",
       title: "Banquete Formal para Eventos",
       headline: "Gastronomía de lujo para tu celebración más importante",
-      seoTitle: "Banquetes para Eventos en México | Bodasesor",
-      seoDescription: "Banquetes formales de alta cocina para bodas, xv años, graduaciones y corporativos. Menús gourmet, servicio de meseros y presentación impecable.",
+      seoTitle: "Banquetes para Bodas y Eventos | Bodasesor",
+      seoDescription: "Banquetes para bodas y eventos en México y Puebla: menús formales, meseros y montaje. Cotiza por WhatsApp con Bodasesor.",
       description: [
         "Nuestros banquetes formales elevan cualquier celebración al más alto nivel gastronómico. Combinamos técnicas culinarias de vanguardia con los mejores ingredientes para crear experiencias que tus invitados recordarán por años.",
         "Cada banquete incluye servicio de meseros profesionales, montaje de mesas con cristalería fina y presentación cuidada en cada platillo. Nos adaptamos a cualquier estilo: desde el banquete más íntimo hasta los grandes eventos de 1,000 comensales.",
@@ -8486,10 +8486,10 @@ const PRODUCTS = [
     },
     {
       slug: "bodas",
-      title: "Servicios para Bodas en México",
-      headline: "Todo lo que necesitas para la boda de tus sueños en un solo lugar",
-      seoTitle: "Servicios Completos para Bodas en México | Bodasesor",
-      seoDescription: "Banquetes, flores, música, fotografía, mobiliario y wedding planner para bodas en toda la república. Bodasesor: el aliado de las novias más exigentes.",
+      title: "Organización de Bodas y Eventos",
+      headline: "Tu boda o evento completo con un solo equipo Bodasesor",
+      seoTitle: "Organización de Bodas y Eventos | Bodasesor",
+      seoDescription: "Organización de bodas y eventos en México: banquete, decoración, música, foto y wedding planner. Cotiza por WhatsApp.",
       description: [
         "Una boda es mucho más que un evento: es la celebración del amor y el comienzo de una nueva historia. Bodasesor nació para acompañar a las parejas en la organización de su día más importante, ofreciendo acceso a los mejores proveedores de México en un solo lugar.",
         "Desde el banquete gourmet hasta la decoración floral, desde el DJ que mantiene la fiesta hasta el fotógrafo que eterniza cada emoción: coordinamos todos los elementos para que tu boda sea exactamente como la imaginaste.",
@@ -8635,10 +8635,10 @@ const PRODUCTS = [
     },
     {
       slug: "xv-anos",
-      title: "Servicios para XV Años",
-      headline: "La fiesta de quince que toda niña merece",
-      seoTitle: "Servicios para Quinceañeras en México | Bodasesor",
-      seoDescription: "Organización completa de quinceañeras: banquetes, flores, música, inflables, shows, mesa de dulces y coordinación. XV años perfectos con Bodasesor.",
+      title: "XV Años y Quinceañeras en México",
+      headline: "Paquetes completos para XV años con banquete, música y shows",
+      seoTitle: "XV Años y Quinceañeras en México | Bodasesor",
+      seoDescription: "Organización de XV años: banquete, decoración, música, shows y mesa de dulces. Cotiza por WhatsApp.",
       description: [
         "Los quince años son un momento único en la vida de toda niña. Es la celebración de una etapa que merece ser recordada con alegría, lujo y los detalles que hacen única a cada quinceañera. Bodasesor tiene todo lo que necesitas para organizarlos en un solo lugar.",
         "Coordinamos el banquete, la decoración y florería, la música y el DJ para el vals y la fiesta, el show de entretenimiento, la mesa de dulces, el pastel y todos los elementos que hacen que una quinceañera sea extraordinaria.",
@@ -8784,10 +8784,10 @@ const PRODUCTS = [
     },
     {
       slug: "corporativos",
-      title: "Servicios para Eventos Corporativos",
-      headline: "Eventos empresariales que proyectan la imagen que tu marca merece",
-      seoTitle: "Eventos Corporativos Profesionales en México | Bodasesor",
-      seoDescription: "Organización de eventos corporativos: lanzamientos, congresos, cenas de gala, team building y posadas empresariales. Calidad ejecutiva en cada detalle.",
+      title: "Eventos Corporativos en México",
+      headline: "Eventos empresariales con catering, coffee break y audiovisual",
+      seoTitle: "Eventos Corporativos en México | Bodasesor",
+      seoDescription: "Eventos corporativos: coffee break, catering, audio e iluminación. Cotiza por WhatsApp con Bodasesor.",
       description: [
         "Los eventos corporativos son la carta de presentación de tu empresa ante clientes, socios y colaboradores. Un evento empresarial bien ejecutado transmite profesionalismo, solidez y la atención al detalle que define a las organizaciones de primer nivel.",
         "Desde coffee breaks para juntas hasta congresos de 5,000 personas, pasando por cenas de gala, lanzamientos de producto y posadas navideñas empresariales: Bodasesor tiene la experiencia y los proveedores para hacerlo impecable.",
@@ -9231,10 +9231,10 @@ const PRODUCTS = [
     },
     {
       slug: "graduaciones",
-      title: "Servicios para Graduaciones",
-      headline: "El inicio del siguiente capítulo, celebrado como merece",
-      seoTitle: "Organización de Graduaciones en México | Bodasesor",
-      seoDescription: "Catering, música, decoración y fotografía para fiestas de graduación. Desde graduaciones universitarias hasta de preparatoria y posgrado.",
+      title: "Fiestas de Graduación en México",
+      headline: "Celebra tu graduación con catering, música y producción completa",
+      seoTitle: "Fiestas de Graduación en México | Bodasesor",
+      seoDescription: "Fiestas de graduación y organización de graduaciones: catering, música, decoración y foto. Cotiza por WhatsApp.",
       description: [
         "Una graduación es el final de una etapa de esfuerzo y el inicio de uno lleno de posibilidades. Merece ser celebrada con una fiesta que esté a la altura del logro: buena comida, música que mantenga a todos bailando y una fotografía que capture la alegría del momento.",
         "Bodasesor organiza graduaciones de todos los niveles: preparatoria, universidad, maestría y doctorado. Coordinamos con colegios y universidades para los eventos colectivos, y también atendemos fiestas familiares de graduación de cualquier escala.",
@@ -9380,10 +9380,10 @@ const PRODUCTS = [
     },
     {
       slug: "primera-comunion",
-      title: "Servicios para Primera Comunión",
-      headline: "Un día sagrado que merece la celebración más especial",
-      seoTitle: "Organización de Primera Comunión en México | Bodasesor",
-      seoDescription: "Catering, decoración, mesa de dulces y fotografía para fiestas de Primera Comunión. Celebraciones elegantes y memorables para este día tan especial.",
+      title: "Fiesta de Primera Comunión",
+      headline: "Organizamos tu fiesta de primera comunión de punta a punta",
+      seoTitle: "Fiesta de Primera Comunión | Bodasesor",
+      seoDescription: "Fiesta de primera comunión: banquete, decoración, mesa de dulces y fotografía. Cotiza con Bodasesor por WhatsApp.",
       description: [
         "La Primera Comunión es uno de los momentos más significativos en la vida de un niño y de toda la familia. Es un día sagrado que merece ser celebrado con una fiesta que combine la solemnidad del momento con la alegría de la celebración.",
         "Bodasesor organiza recepciones de Primera Comunión con el nivel de detalle y elegancia que el día merece. Desde el brindis posterior a la misa hasta la fiesta familiar completa, coordinamos todo para que la familia solo tenga que vivir el momento.",

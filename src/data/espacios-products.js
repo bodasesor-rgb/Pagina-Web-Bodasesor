@@ -21,8 +21,8 @@ export const ESPACIOS = [
   {
     "slug": "haciendas",
     "name": "Haciendas para Eventos",
-    "tagline": "Haciendas en CDMX y México para bodas y eventos",
-    "short": "Asesoría para elegir haciendas en CDMX y todo México. Coordinación de venue, banquetes y producción con Bodasesor.",
+    "tagline": "Haciendas en CDMX, Teotihuacán y México para bodas y eventos",
+    "short": "Asesoría para elegir haciendas en CDMX, zona Teotihuacán y todo México. Coordinación de venue, banquetes y producción con Bodasesor.",
     "img": "/images/espacios/haciendas.png",
     "incluye": [
       "Búsqueda y recomendación de haciendas",
@@ -36,7 +36,7 @@ export const ESPACIOS = [
       "Eventos corporativos",
       "Celebraciones privadas"
     ],
-    "desc": "Te ayudamos a encontrar haciendas para eventos en CDMX y el resto de México, y coordinamos banquete, mobiliario y producción para que el día salga impecable."
+    "desc": "Te ayudamos a encontrar haciendas en CDMX, cerca de Teotihuacán y en el resto de México, y coordinamos banquete, mobiliario y producción para que el día salga impecable."
   },
   {
     "slug": "jardines",
