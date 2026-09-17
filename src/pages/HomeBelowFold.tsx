@@ -231,7 +231,7 @@ function TestimonialsCarousel() {
         {visible.map((t, i) => (
           <div
             key={`${t.name}-${idx}-${i}`}
-            className={`bg-[#eceef2] p-5 rounded-xl border border-[#162040]/10 ${i > 0 ? 'hidden md:block' : ''}`}
+            className={`bg-white p-5 rounded-xl border border-[#162040]/15 shadow-sm ${i > 0 ? 'hidden md:block' : ''}`}
           >
             <FiveStars />
             <p className="text-gray-700 mb-4 italic font-serif text-sm md:text-base leading-relaxed line-clamp-4">
@@ -524,7 +524,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>,
               },
             ].map((step) => (
-              <div key={step.title} className="text-center p-4 md:p-5">
+              <div key={step.title} className="text-center bg-white rounded-xl p-4 md:p-5 shadow-sm border border-[#162040]/8">
                 <div className="relative inline-flex items-center justify-center w-14 h-14 text-[#162040] mb-3">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {step.icon}
@@ -571,7 +571,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                 { icon: '✨', title: 'Calidad en cada detalle', desc: 'Los mejores proveedores de catering, decoración y logística.' },
                 { icon: '💡', title: 'Creatividad e innovación', desc: 'Experiencias originales que sorprenden a tus invitados.' },
               ].map(p => (
-                <div key={p.title} className="p-4 transition-all duration-300 hover:-translate-y-0.5">
+                <div key={p.title} className="p-4 rounded-xl border border-[#162040] transition-all duration-300 hover:-translate-y-0.5">
                   <div className="w-9 h-9 flex items-center justify-center mb-2 text-[#162040]">
                     <IconFromEmoji emoji={p.icon} className="w-5 h-5" />
                   </div>
