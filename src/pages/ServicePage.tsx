@@ -919,7 +919,7 @@ export default function ServicePage({ params }: ServicePageProps) {
                 { num: '10,000+', label: 'Personas atendidas' },
                 { num: '4.6/5', label: 'Calificación promedio' },
               ].map((s, i) => (
-                <div key={i} className="text-center p-4 bg-[#f5efe8] rounded-2xl">
+                <div key={i} className="text-center p-4">
                   <p className="text-2xl font-serif font-bold text-[#162040]">{s.num}</p>
                   <p className="text-xs text-gray-600 font-serif mt-1">{s.label}</p>
                 </div>
