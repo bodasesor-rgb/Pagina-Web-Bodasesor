@@ -218,8 +218,9 @@ function DeferredBelowFold() {
   const [showPromo, setShowPromo] = useState(false)
   const [showFab, setShowFab] = useState(false)
   useEffect(() => {
-    const promoTimer = setTimeout(() => setShowPromo(true), 1500)
     const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+    // Defer promo well past LCP (PageSpeed / CWV) — never during first paint
+    const promoTimer = setTimeout(() => setShowPromo(true), isMobile ? 10000 : 8000)
     const fabTimer = setTimeout(() => setShowFab(true), isMobile ? 9000 : 7000)
     return () => {
       clearTimeout(promoTimer)
