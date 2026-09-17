@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "watch:images": "node scripts/watch-images.mjs",
+    "dev:full": "concurrently \"npm run dev\" \"npm run watch:images\"",
     "generate:redirects": "node scripts/generate-redirects.mjs",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "generate:google-shopping": "node scripts/generate-google-shopping-feed.mjs",
@@ -50,7 +52,8 @@
     "gsc:redirects": "node scripts/audit-gsc-redirect-relevance.mjs",
     "gsc:traffic-loss": "node scripts/gsc-traffic-loss.mjs",
     "gsc:recover-top": "node scripts/recover-top-gsc-pages.mjs",
-    "gsc:merge-redirects": "node scripts/merge-gsc-priority-redirects.mjs"
+    "gsc:merge-redirects": "node scripts/merge-gsc-priority-redirects.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/lato": "^5.2.7",
@@ -76,6 +79,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "husky": "^9.1.7",
     "puppeteer-core": "^25.2.0",
     "sharp": "^0.35.3",
     "typescript": "^6.0.3",
