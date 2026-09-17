@@ -227,8 +227,14 @@ export default function ServicePage({ params }: ServicePageProps) {
   const [loaded, setLoaded] = useState(false);
 
   useLayoutEffect(() => {
-    removeSpaLcpPrerender();
-  }, [slug]);
+    // Only drop the prerender overlay after the real product hero is ready.
+    // Removing on first mount (while skeleton shows) reassigns LCP to a late React image.
+    if (!loaded || !product) return
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => removeSpaLcpPrerender())
+    })
+    return () => cancelAnimationFrame(id)
+  }, [loaded, product, slug]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

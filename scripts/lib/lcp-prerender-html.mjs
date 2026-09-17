@@ -32,11 +32,12 @@ export function injectServiceLcpShell(html, entry) {
 `
   out = out.replace(/<\/head>/i, `${preloads}  </head>`)
 
+  // img src must be WebP (never PNG): some crawlers/agents fetch <img src> even with <source>.
   const shell = `<div id="spa-lcp-prerender" class="spa-lcp-prerender">
     <picture id="spa-lcp-hero" class="spa-lcp-hero">
       <source media="(max-width: 768px)" srcset="${escapeAttr(urls.sm)}" type="image/webp" />
       <source srcset="${escapeAttr(urls.webp)}" type="image/webp" />
-      <img src="${escapeAttr(urls.raster)}" alt="${escapeAttr(entry.h1)}" width="1200" height="675" fetchpriority="high" decoding="sync" />
+      <img src="${escapeAttr(urls.sm)}" alt="${escapeAttr(entry.h1)}" width="1200" height="675" fetchpriority="high" decoding="sync" />
     </picture>
     <div class="spa-lcp-overlay" aria-hidden="true"></div>
     <div id="spa-lcp-copy" class="spa-lcp-copy">

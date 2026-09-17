@@ -19,11 +19,12 @@ export default function OptimizedImage({
   const webpSmSrc = preferWebpSm(src)
   const useWebp = webpSrc !== src
   const useSm = useWebp && webpSmSrc !== webpSrc
+  const isAbsolute = /\babsolute\b/.test(className)
 
-  const aspectStyle =
-    width && height
-      ? { aspectRatio: `${width} / ${height}`, backgroundColor: '#f5efe8', ...style }
-      : { backgroundColor: '#f5efe8', ...style }
+  // Absolute cover heroes: never force aspect-ratio (collapses/shifts parent layout).
+  const aspectStyle = !isAbsolute && width && height
+    ? { aspectRatio: `${width} / ${height}`, backgroundColor: '#f5efe8', ...style }
+    : { ...(isAbsolute ? {} : { backgroundColor: '#f5efe8' }), ...style }
 
   const imgProps = {
     alt,
@@ -51,7 +52,7 @@ export default function OptimizedImage({
   }
 
   return (
-    <picture>
+    <picture className={isAbsolute ? 'absolute inset-0 block h-full w-full' : undefined}>
       {useSm ? (
         <source
           media="(max-width: 768px)"
@@ -61,7 +62,8 @@ export default function OptimizedImage({
         />
       ) : null}
       <source srcSet={webpSrc} type="image/webp" sizes={sizes} />
-      <img src={src} {...imgProps} />
+      {/* Priority: WebP as src so agents never fetch the heavy PNG fallback */}
+      <img src={priority ? webpSrc : src} {...imgProps} />
     </picture>
   )
 }

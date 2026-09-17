@@ -75,9 +75,13 @@ const LegacyShopifyRedirect = lazy(() => import('./components/LegacyShopifyRedir
 const EventosLegacyRedirect = lazy(() => import('./components/EventosLegacyRedirect.jsx'))
 
 function PageLoader() {
+  // Match service-page hero height so Suspense → page swap does not inflate CLS
   return (
-    <div className="min-h-[40vh] flex items-center justify-center font-serif text-gray-700">
-      Cargando…
+    <div className="min-h-screen bg-white" aria-busy="true" aria-live="polite">
+      <section className="bg-[#162040] min-h-[280px] md:min-h-[320px]" aria-hidden="true" />
+      <div className="flex min-h-[20vh] items-center justify-center font-serif text-gray-700">
+        Cargando…
+      </div>
     </div>
   )
 }
@@ -180,6 +184,7 @@ function StaticLcpCleanup() {
   useLayoutEffect(() => {
     if (isHomePath(location)) {
       // Keep #lcp-hero-wrap + #static-hero-copy — Home owns early LCP (image + H1).
+      removeSpaLcpPrerender()
       document.getElementById('static-nav-shell')?.remove()
       syncLcpPreload('/')
     } else {
@@ -188,9 +193,58 @@ function StaticLcpCleanup() {
       document.getElementById('static-nav-shell')?.remove()
       removeHomeStaticHero()
       syncLcpPreload(location)
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => removeSpaLcpPrerender())
-      })
+      // Keep #spa-lcp-prerender until React paints a real <main h1>.
+      // Early removal (before lazy ServicePage + products chunk) destroyed the LCP
+      // element and caused LCP ~5s + in-flow CLS ~0.7 on product pages.
+      let cancelled = false
+      let observer = null
+      let safetyTimer = null
+      const tryRemove = () => {
+        if (cancelled) return true
+        if (!document.getElementById('spa-lcp-prerender')) return true
+        const h1 = document.querySelector('main h1')
+        if (!h1) return false
+        // Prefer waiting until product hero image is present when the page has one
+        const heroImg = document.querySelector(
+          'main section img[fetchpriority="high"], main section img[fetchPriority="high"]',
+        )
+        if (heroImg && !heroImg.complete) {
+          heroImg.addEventListener(
+            'load',
+            () => {
+              if (!cancelled) removeSpaLcpPrerender()
+            },
+            { once: true },
+          )
+          return false
+        }
+        removeSpaLcpPrerender()
+        return true
+      }
+      const startWatch = () => {
+        if (tryRemove()) return
+        observer = new MutationObserver(() => {
+          if (tryRemove()) {
+            observer?.disconnect()
+            if (safetyTimer) clearTimeout(safetyTimer)
+          }
+        })
+        observer.observe(document.getElementById('root') || document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+        })
+        safetyTimer = setTimeout(() => {
+          observer?.disconnect()
+          removeSpaLcpPrerender()
+        }, 8000)
+      }
+      requestAnimationFrame(() => requestAnimationFrame(startWatch))
+      return () => {
+        cancelled = true
+        observer?.disconnect()
+        if (safetyTimer) clearTimeout(safetyTimer)
+      }
     }
   }, [location])
   useEffect(() => {

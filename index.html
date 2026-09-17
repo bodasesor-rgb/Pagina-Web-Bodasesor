@@ -124,9 +124,6 @@
       /* Mobile: only navy bar — white row would look like a second menu */
       #static-nav-shell .nav-sub{display:none}
       @media (min-width:768px){#static-nav-shell .nav-sub{display:block;height:3rem;background:#fff;box-shadow:0 4px 6px -1px rgb(0 0 0/.1)}}
-      /* Align prerender shell with React fixed-nav + spacer (avoids CLS when shell is removed) */
-      #spa-lcp-prerender{margin-top:4rem}
-      @media (min-width:768px){#spa-lcp-prerender{margin-top:7rem}}
       html.no-lcp-hero #static-hero-copy,html.no-lcp-hero #lcp-hero-wrap{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       html.no-lcp-shell #static-hero-copy,html.no-lcp-shell #lcp-hero-wrap,html.no-lcp-shell #static-nav-shell{display:none!important;visibility:hidden!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
       /* Home: keep preloaded hero + static H1 behind/over transparent root (early LCP).
@@ -144,10 +141,12 @@
       }
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy h1{font-size:2.75rem;margin-bottom:0.75rem}#static-hero-copy .hero-sub{font-size:1.1rem;margin-bottom:1.1rem}}
-      /* Inner pages: prerendered LCP hero (image + H1 before React) */
-      #spa-lcp-prerender{position:relative;z-index:0;min-height:280px;background:#162040;overflow:hidden}
+      /* Inner pages: fixed LCP overlay (OUT of document flow).
+         Removing it must not shift layout — in-flow shell caused CLS ~0.7 on product pages. */
+      #spa-lcp-prerender{position:fixed;top:4rem;left:0;right:0;z-index:40;min-height:280px;background:#162040;overflow:hidden;pointer-events:none}
+      @media (min-width:768px){#spa-lcp-prerender{top:7rem;min-height:320px}}
       html.no-lcp-prerender #spa-lcp-prerender{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important}
-      .spa-lcp-hero{position:absolute;inset:0;margin:0}
+      .spa-lcp-hero{position:absolute;inset:0;margin:0;display:block;width:100%;height:100%}
       .spa-lcp-hero img{width:100%;height:100%;object-fit:cover;object-position:center}
       .spa-lcp-overlay{position:absolute;inset:0;background:#1620408c;z-index:1;pointer-events:none}
       .spa-lcp-copy{position:relative;z-index:2;max-width:80rem;margin:0 auto;padding:2.5rem 1rem 3.5rem;pointer-events:none}
