@@ -17,7 +17,7 @@ import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-tit
 import { applyPageSeo, upsertJsonLd, absoluteUrl } from "../utils/seo-head";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
-import { removeSpaLcpPrerender } from "../utils/static-lcp-shell";
+import { removeSpaLcpPrerender, adoptSpaLcpPrerender } from "../utils/static-lcp-shell";
 import { bodySectionHeading, enrichServiceH1 } from "../utils/seo-headings";
 import { Phone, CheckCircle2, PartyPopper, Armchair } from "lucide-react";
 const EventTypePage = lazy(() => import("./EventTypePage"));
@@ -225,16 +225,9 @@ export default function ServicePage({ params }: ServicePageProps) {
   const slug = stripCityFromSlug(rawSlug);
   const [product, setProduct] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
-  useLayoutEffect(() => {
-    // Only drop the prerender overlay after the real product hero is ready.
-    // Removing on first mount (while skeleton shows) reassigns LCP to a late React image.
-    if (!loaded || !product) return
-    const id = requestAnimationFrame(() => {
-      requestAnimationFrame(() => removeSpaLcpPrerender())
-    })
-    return () => cancelAnimationFrame(id)
-  }, [loaded, product, slug]);
+  const [shellAdopted, setShellAdopted] = useState(
+    () => typeof document !== 'undefined' && !!document.getElementById('spa-lcp-prerender'),
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -293,6 +286,23 @@ export default function ServicePage({ params }: ServicePageProps) {
   const cityCopy = city && hubStoreReady ? getCityHubContent(slug, city.slug) : null;
   const pageCopy = cityCopy || (product ? buildNationalServiceCopy(product) : null);
 
+  // Adopt prerender LCP shell into the React hero (same DOM node = early LCP).
+  useLayoutEffect(() => {
+    if (!loaded || !product) return;
+    const hero = document.querySelector('[data-spa-hero]');
+    if (!hero) return;
+    const h1Text = toSpanishTitleCase(
+      enrichServiceH1(pageCopy?.h1 || product.title, city?.name || null),
+    );
+    hero.setAttribute('data-spa-hero-h1', h1Text);
+    if (document.getElementById('spa-lcp-prerender')) {
+      const ok = adoptSpaLcpPrerender(hero, h1Text);
+      setShellAdopted(!!ok);
+    } else {
+      setShellAdopted(false);
+    }
+  }, [loaded, product, pageCopy?.h1, city?.name, slug]);
+
   useEffect(() => {
     if (!product) return;
     const titleSource = pageCopy?.seoTitle || product.seoTitle || product.title;
@@ -346,9 +356,13 @@ export default function ServicePage({ params }: ServicePageProps) {
   }, [product, pageCopy, city, slug]);
 
   if (!loaded) {
+    // Shell already paints the hero — avoid a second skeleton block (CLS).
+    if (typeof document !== 'undefined' && document.getElementById('spa-lcp-prerender')) {
+      return <div className="sr-only" aria-busy="true">Cargando servicio…</div>;
+    }
     return (
       <div className="min-h-screen bg-white" aria-busy="true" aria-live="polite">
-        <section className="bg-[#162040] min-h-[280px] md:min-h-[320px] flex items-end">
+        <section className="bg-[#162040] min-h-[400px] md:min-h-[360px] flex items-end">
           <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 py-10">
             <div className="h-4 w-40 bg-white/20 rounded mb-5" />
             <div className="h-10 w-2/3 max-w-xl bg-white/25 rounded mb-4" />
@@ -484,20 +498,33 @@ export default function ServicePage({ params }: ServicePageProps) {
           </div>
         </section>
       ) : (
-        /* Hero estándar con imagen de fondo */
-        <section className="relative overflow-hidden bg-[#162040]" style={{ minHeight: '280px' }}>
-          <OptimizedImage
-            src={getProductHeroImage(slug) ?? '/images/galeria/g3.jpg'}
-            alt={heroAlt}
-            width={1200}
-            height={675}
-            priority
-            className="absolute inset-0 w-full h-full object-cover opacity-60"
-          />
-          <div className="absolute inset-0 bg-[#162040]/55" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-14">
+        /* Hero estándar con imagen de fondo — adopt prerender shell when present */
+        <section
+          data-spa-hero
+          data-spa-hero-h1={displayH1}
+          className="relative overflow-hidden bg-[#162040] min-h-[400px] md:min-h-[360px]"
+        >
+          {!shellAdopted ? (
+            <OptimizedImage
+              data-spa-hero-media
+              src={getProductHeroImage(slug) ?? '/images/galeria/g3.jpg'}
+              alt={heroAlt}
+              width={1200}
+              height={675}
+              priority
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
+            />
+          ) : (
+            <div data-spa-hero-media aria-hidden="true" />
+          )}
+          <div className="absolute inset-0 bg-[#162040]/55 z-[1]" />
+          <div className="relative z-[2] max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-14">
             <Breadcrumbs items={crumbItems} variant="dark" className="mb-5" />
-            <h1 className="text-4xl md:text-5xl lg:text-5xl font-serif font-bold leading-tight mb-4 text-white">
+            {/* Georgia (not Playfair) so LCP text never waits on webfont idle load */}
+            <h1
+              className="text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-4 text-white"
+              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
               {displayH1}
             </h1>
             <p className="text-lg md:text-xl text-white/80 font-serif mb-4 leading-relaxed max-w-2xl">

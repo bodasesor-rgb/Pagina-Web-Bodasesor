@@ -141,17 +141,21 @@
       }
       @media (min-width:640px){#static-hero-copy .hero-btns{flex-direction:row;justify-content:center;gap:1.5rem}}
       @media (min-width:768px){#static-hero-copy h1{font-size:2.75rem;margin-bottom:0.75rem}#static-hero-copy .hero-sub{font-size:1.1rem;margin-bottom:1.1rem}}
-      /* Inner pages: fixed LCP overlay (OUT of document flow).
-         Removing it must not shift layout — in-flow shell caused CLS ~0.7 on product pages. */
-      #spa-lcp-prerender{position:fixed;top:4rem;left:0;right:0;z-index:40;min-height:280px;background:#162040;overflow:hidden;pointer-events:none}
-      @media (min-width:768px){#spa-lcp-prerender{top:7rem;min-height:320px}}
-      html.no-lcp-prerender #spa-lcp-prerender{display:none!important;visibility:hidden!important;height:0!important;overflow:hidden!important}
+      /* Inner pages: IN-FLOW LCP shell (reserves height before React — avoids CLS
+         from a fixed overlay + late hero mount). Adopted into [data-spa-hero]. */
+      #spa-lcp-prerender{position:relative;z-index:0;margin-top:4rem;min-height:400px;background:#162040;overflow:hidden;pointer-events:none}
+      @media (min-width:768px){#spa-lcp-prerender{margin-top:7rem;min-height:360px}}
+      html.no-lcp-prerender #spa-lcp-prerender{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;margin:0!important;overflow:hidden!important}
+      #spa-lcp-prerender.spa-lcp-live{position:absolute;inset:0;min-height:100%;z-index:0;margin:0!important}
       .spa-lcp-hero{position:absolute;inset:0;margin:0;display:block;width:100%;height:100%}
       .spa-lcp-hero img{width:100%;height:100%;object-fit:cover;object-position:center}
       .spa-lcp-overlay{position:absolute;inset:0;background:#1620408c;z-index:1;pointer-events:none}
       .spa-lcp-copy{position:relative;z-index:2;max-width:80rem;margin:0 auto;padding:2.5rem 1rem 3.5rem;pointer-events:none}
       .spa-lcp-copy h1{margin:0;color:#fff;font-size:2.25rem;line-height:1.2;font-weight:700;font-family:Georgia,'Times New Roman',serif}
       @media (min-width:768px){.spa-lcp-copy{padding:3.5rem 3rem 4rem}.spa-lcp-copy h1{font-size:3rem}}
+      /* After adopt: shell image stays (LCP); React owns text/CTAs */
+      html.spa-lcp-adopted #spa-lcp-copy{display:none!important}
+      html.spa-lcp-adopted [data-spa-hero-media]{display:none!important}
     </style>
   </head>
   <body>

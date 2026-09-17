@@ -272,13 +272,13 @@ export function getNexusGalleryLocalPaths(slug) {
 }
 
 /**
- * Prefer Nexus slot 1 as hero when present; else static HERO_IMAGES.
+ * Canonical LCP hero — always the static WebP-optimized asset.
+ * Nexus gallery photos stay below-the-fold in getProductGalleryImages().
+ * Using Nexus slot 1 here forced late LCP (heavy JPG after JS).
  * @param {string} slug
  * @returns {string|undefined}
  */
 export function getProductHeroImage(slug) {
-  const nexus = getNexusGalleryLocalPaths(slug)
-  if (nexus[0]) return nexus[0]
   return HERO_IMAGES[slug]
 }
 

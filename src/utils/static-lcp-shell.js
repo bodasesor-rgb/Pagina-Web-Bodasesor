@@ -148,8 +148,36 @@ export function removeHomeStaticHero() {
 
 /** Remove prerendered inner-page LCP shell once React paints the real hero. */
 export function removeSpaLcpPrerender() {
+  document.documentElement.classList.remove('spa-lcp-adopted')
   document.documentElement.classList.add('no-lcp-prerender')
   document.getElementById('spa-lcp-prerender')?.remove()
+}
+
+/**
+ * Home-style adopt: move the prerender shell INTO the React hero so the same
+ * image + H1 remain the LCP element (never destroy → reassign late).
+ * @param {HTMLElement | null} heroEl
+ * @param {string} [h1Text]
+ */
+export function adoptSpaLcpPrerender(heroEl, h1Text) {
+  const shell = document.getElementById('spa-lcp-prerender')
+  if (!shell || !heroEl) return false
+
+  document.documentElement.classList.remove('no-lcp-prerender')
+  document.documentElement.classList.add('spa-lcp-adopted')
+
+  if (typeof h1Text === 'string' && h1Text.trim()) {
+    const h1 = shell.querySelector('#spa-lcp-copy h1, .spa-lcp-copy h1')
+    if (h1) h1.textContent = h1Text.trim()
+  }
+
+  if (shell.parentElement !== heroEl) {
+    heroEl.insertBefore(shell, heroEl.firstChild)
+  }
+  shell.classList.add('spa-lcp-live')
+  shell.style.removeProperty('display')
+  shell.style.removeProperty('visibility')
+  return true
 }
 
 /** Inline boot script source — keep in sync with index.html home/LCP path gate */

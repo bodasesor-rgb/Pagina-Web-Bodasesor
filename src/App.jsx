@@ -8,7 +8,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import Navbar from './components/Navbar'
 import DiscountBalloon from './components/DiscountBalloon'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
-import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero, removeSpaLcpPrerender } from './utils/static-lcp-shell'
+import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero, removeSpaLcpPrerender, adoptSpaLcpPrerender } from './utils/static-lcp-shell'
 import { syncLcpPreload } from './utils/lcp-preload'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
@@ -75,10 +75,14 @@ const LegacyShopifyRedirect = lazy(() => import('./components/LegacyShopifyRedir
 const EventosLegacyRedirect = lazy(() => import('./components/EventosLegacyRedirect.jsx'))
 
 function PageLoader() {
-  // Match service-page hero height so Suspense → page swap does not inflate CLS
+  // If prerender LCP shell is already on the page, do NOT paint a second hero
+  // (double height → CLS). Keep a tiny busy marker only.
+  if (typeof document !== 'undefined' && document.getElementById('spa-lcp-prerender')) {
+    return <div className="sr-only" aria-busy="true" aria-live="polite">Cargando…</div>
+  }
   return (
     <div className="min-h-screen bg-white" aria-busy="true" aria-live="polite">
-      <section className="bg-[#162040] min-h-[280px] md:min-h-[320px]" aria-hidden="true" />
+      <section className="bg-[#162040] min-h-[400px] md:min-h-[360px]" aria-hidden="true" />
       <div className="flex min-h-[20vh] items-center justify-center font-serif text-gray-700">
         Cargando…
       </div>
@@ -193,38 +197,25 @@ function StaticLcpCleanup() {
       document.getElementById('static-nav-shell')?.remove()
       removeHomeStaticHero()
       syncLcpPreload(location)
-      // Keep #spa-lcp-prerender until React paints a real <main h1>.
-      // Early removal (before lazy ServicePage + products chunk) destroyed the LCP
-      // element and caused LCP ~5s + in-flow CLS ~0.7 on product pages.
+      // Adopt shell into React hero (same LCP node). Never destroy early —
+      // destroying forced Lighthouse to wait on React+Playfair (~4–5s LCP).
       let cancelled = false
       let observer = null
       let safetyTimer = null
-      const tryRemove = () => {
+      const tryAdopt = () => {
         if (cancelled) return true
-        if (!document.getElementById('spa-lcp-prerender')) return true
-        const h1 = document.querySelector('main h1')
-        if (!h1) return false
-        // Prefer waiting until product hero image is present when the page has one
-        const heroImg = document.querySelector(
-          'main section img[fetchpriority="high"], main section img[fetchPriority="high"]',
-        )
-        if (heroImg && !heroImg.complete) {
-          heroImg.addEventListener(
-            'load',
-            () => {
-              if (!cancelled) removeSpaLcpPrerender()
-            },
-            { once: true },
-          )
-          return false
-        }
-        removeSpaLcpPrerender()
+        const shell = document.getElementById('spa-lcp-prerender')
+        if (!shell) return true
+        const hero = document.querySelector('[data-spa-hero]')
+        if (!hero) return false
+        const h1Text = hero.getAttribute('data-spa-hero-h1') || ''
+        adoptSpaLcpPrerender(hero, h1Text)
         return true
       }
       const startWatch = () => {
-        if (tryRemove()) return
+        if (tryAdopt()) return
         observer = new MutationObserver(() => {
-          if (tryRemove()) {
+          if (tryAdopt()) {
             observer?.disconnect()
             if (safetyTimer) clearTimeout(safetyTimer)
           }
@@ -234,9 +225,10 @@ function StaticLcpCleanup() {
           subtree: true,
           attributes: true,
         })
+        // Pages without a hero shell target (legal, 404): drop overlay eventually
         safetyTimer = setTimeout(() => {
           observer?.disconnect()
-          removeSpaLcpPrerender()
+          if (!document.querySelector('[data-spa-hero]')) removeSpaLcpPrerender()
         }, 8000)
       }
       requestAnimationFrame(() => requestAnimationFrame(startWatch))
