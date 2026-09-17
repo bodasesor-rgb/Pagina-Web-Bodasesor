@@ -5,6 +5,7 @@ export const STATIC_BLOG_SLUGS = new Set([
   '5-tradiciones-de-boda-que-ya-pasaron-de-moda-y-cuales-las-reemplazan',
   'acta-de-nacimiento-en-linea-blog',
   'amazon-blog',
+  'ambrosia-banqueteria-bodasesor',
   'amor-frases-de-amor-propio',
   'anne-hathaway-belleza-moda',
   'articulos',
