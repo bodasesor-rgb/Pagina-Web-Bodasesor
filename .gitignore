@@ -14,6 +14,10 @@ public/sitemap.xml
 public/images/**/*.webp
 # Guarantee seal cutout (true alpha) — must ship with SPA
 !public/images/sello-garantia-cutout.webp
+# CRÍTICO: Permitir WebP de productos para LCP optimizado
+!public/images/productos/**/*.webp
+!public/images/banquete*.webp
+!public/images/hero-bg*.webp
 # ⚠️ EXCEPCIÓN CRÍTICA: Permitir imágenes de blog generadas por Nexus
 # Nexus mantiene blog HTML + imágenes en public/images/blog/ y public/blog/{slug}/
 # Estos deben commitarse para que aparezcan en Netlify (no son product webps)
