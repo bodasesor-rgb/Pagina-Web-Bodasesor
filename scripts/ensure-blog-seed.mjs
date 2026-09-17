@@ -16,8 +16,8 @@
  * Env: MIN_BLOG_PAGES=50
  */
 import { execSync } from 'node:child_process'
-import { existsSync, readFileSync } from 'node:fs'
-import { mkdir, readFile, writeFile, readdir, access } from 'node:fs/promises'
+import { existsSync, readFileSync, rmSync, mkdirSync } from 'node:fs'
+import { mkdir, readFile, writeFile, readdir, access, rm } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -86,7 +86,13 @@ async function mergeSeedIntoLive() {
     throw new Error(`Falta seed de blogs: ${SEED_TGZ}`)
   }
   const tmp = join(ROOT, '.tmp-blog-seed')
-  execSync(`rm -rf "${tmp}" && mkdir -p "${tmp}"`, { stdio: 'inherit' })
+  // Clean and create temp dir (Windows-compatible)
+  if (existsSync(tmp)) {
+    rmSync(tmp, { recursive: true, force: true })
+  }
+  mkdirSync(tmp, { recursive: true })
+  
+  // Extract tar (tar is available via Git Bash on Windows)
   execSync(`tar -xzf "${SEED_TGZ}" -C "${tmp}"`, { stdio: 'inherit' })
   const seedBlog = join(tmp, 'blog')
   if (!existsSync(seedBlog)) {
@@ -143,7 +149,10 @@ async function mergeSeedIntoLive() {
     imagesWritten++
   }
 
-  execSync(`rm -rf "${tmp}"`, { stdio: 'inherit' })
+  // Clean up temp dir (Windows-compatible)
+  if (existsSync(tmp)) {
+    rmSync(tmp, { recursive: true, force: true })
+  }
   return { written, kept, skippedThin, imagesWritten, seedFiles: seedFiles.length }
 }
 
