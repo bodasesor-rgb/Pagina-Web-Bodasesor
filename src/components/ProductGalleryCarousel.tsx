@@ -122,7 +122,7 @@ export default function ProductGalleryCarousel({
         </div>
         {images.length > 1 && (
           <div
-            className="flex justify-center gap-1 py-3 bg-white"
+            className="flex justify-center gap-1 py-3 bg-white max-w-full overflow-x-auto overscroll-x-contain px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             role="tablist"
             aria-label="Miniaturas de galería"
           >
@@ -134,7 +134,7 @@ export default function ProductGalleryCarousel({
                 aria-label={`Ver foto ${i + 1} de ${images.length}`}
                 aria-selected={i === idx}
                 onClick={() => setIdx(i)}
-                className="inline-flex min-w-11 min-h-11 items-center justify-center"
+                className="inline-flex min-w-9 min-h-9 sm:min-w-11 sm:min-h-11 items-center justify-center shrink-0"
               >
                 <span
                   aria-hidden="true"

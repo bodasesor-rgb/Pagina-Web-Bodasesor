@@ -59,7 +59,7 @@ function GalleryCarousel() {
             Fotos {slide * 3 + 1}–{Math.min(slide * 3 + 3, total)} de {total}
           </span>
         </div>
-        <button type="button" onClick={prev} aria-label="Ver fotos anteriores" className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 -ml-4 md:-ml-6">
+        <button type="button" onClick={prev} aria-label="Ver fotos anteriores" className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 md:-ml-6">
           <ChevronLeft className="w-6 h-6" aria-hidden="true" />
         </button>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 md:px-12">
@@ -88,10 +88,10 @@ function GalleryCarousel() {
             </div>
           ))}
         </div>
-        <button type="button" onClick={next} aria-label="Ver fotos siguientes" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 -mr-4 md:-mr-6">
+        <button type="button" onClick={next} aria-label="Ver fotos siguientes" className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 md:-mr-6">
           <ChevronRight className="w-6 h-6" aria-hidden="true" />
         </button>
-        <div className="flex justify-center gap-1 mt-8" role="tablist" aria-label="Grupos de fotos de la galería">
+        <div className="flex justify-center gap-1 mt-8 max-w-full overflow-x-auto overscroll-x-contain px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Grupos de fotos de la galería">
           {gallerySlides.map((_, i) => (
             <button
               type="button"
@@ -100,7 +100,7 @@ function GalleryCarousel() {
               aria-label={`Grupo de fotos ${i + 1} de ${gallerySlides.length}`}
               aria-selected={i === slide}
               onClick={() => setSlide(i)}
-              className="inline-flex min-w-11 min-h-11 items-center justify-center"
+              className="inline-flex min-w-9 min-h-9 sm:min-w-11 sm:min-h-11 items-center justify-center shrink-0"
             >
               <span
                 aria-hidden="true"
