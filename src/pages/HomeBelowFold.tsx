@@ -45,40 +45,75 @@ for (let i = 0; i < HOME_GALLERY_IDS.length; i += 3) {
 const allGalleryImages = gallerySlides.flat();
 
 function GalleryCarousel() {
-  const [slide, setSlide] = useState(0);
+  const [idx, setIdx] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-  const prev = () => setSlide(s => (s - 1 + gallerySlides.length) % gallerySlides.length);
-  const next = () => setSlide(s => (s + 1) % gallerySlides.length);
   const total = allGalleryImages.length;
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+  const next = () => setIdx((i) => (i + 1) % total);
+
+  // Desktop still shows 3-up groups; mobile is a true 1-image carousel.
+  const desktopSlide = Math.floor(idx / 3) % gallerySlides.length;
+  const desktopImages = gallerySlides[desktopSlide] || [];
 
   return (
     <>
-      <div className="relative">
-        <div className="flex justify-between items-center mb-4 px-8 md:px-12">
+      <div className="relative overflow-hidden">
+        <div className="flex justify-between items-center mb-4 px-4 sm:px-8 md:px-12">
           <span className="text-sm text-gray-600 font-serif">
-            Fotos {slide * 3 + 1}–{Math.min(slide * 3 + 3, total)} de {total}
+            <span className="md:hidden">Foto {idx + 1} de {total}</span>
+            <span className="hidden md:inline">
+              Fotos {desktopSlide * 3 + 1}–{Math.min(desktopSlide * 3 + 3, total)} de {total}
+            </span>
           </span>
         </div>
-        <button type="button" onClick={prev} aria-label="Ver fotos anteriores" className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 md:-ml-6">
+
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Ver foto anterior"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-3 md:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110"
+        >
           <ChevronLeft className="w-6 h-6" aria-hidden="true" />
         </button>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 md:px-12">
-          {gallerySlides[slide].map((src, i) => (
+
+        {/* Mobile: one image */}
+        <div className="md:hidden px-12">
+          <div
+            className="relative h-72 sm:h-80 overflow-hidden rounded-2xl border-4 border-white bg-[#f5efe8] cursor-pointer"
+            onClick={() => setLightboxIdx(idx)}
+          >
+            <OptimizedImage
+              src={allGalleryImages[idx]}
+              alt={galleryAlts[Math.floor(idx / 3)]?.[idx % 3] || `Evento Bodasesor ${idx + 1}`}
+              title={galleryAlts[Math.floor(idx / 3)]?.[idx % 3] || 'Bodasesor Eventos'}
+              width={640}
+              height={320}
+              priority={idx === 0}
+              sizes="100vw"
+              className="w-full h-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
+            />
+          </div>
+        </div>
+
+        {/* Desktop: 3-up */}
+        <div className="hidden md:grid grid-cols-3 gap-6 px-12">
+          {desktopImages.map((src, i) => (
             <div
               key={src}
               className="relative h-80 overflow-hidden rounded-2xl group cursor-pointer border-4 border-white hover:border-[#162040] transition-all duration-300 bg-[#f5efe8]"
-              onClick={() => setLightboxIdx(slide * 3 + i)}
+              onClick={() => setLightboxIdx(desktopSlide * 3 + i)}
             >
               <OptimizedImage
                 src={src}
-                alt={galleryAlts[slide][i]}
-                title={galleryAlts[slide][i]}
+                alt={galleryAlts[desktopSlide][i]}
+                title={galleryAlts[desktopSlide][i]}
                 width={640}
                 height={320}
-                priority={slide === 0 && i === 0}
-                sizes="(min-width: 768px) 33vw, 100vw"
-                className="w-full h-full object-contain"
-                onError={e => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
+                priority={desktopSlide === 0 && i === 0}
+                sizes="33vw"
+                className="w-full h-full object-cover"
+                onError={(e) => { (e.target as HTMLImageElement).src = '/images/galeria-1.png'; }}
               />
               <div className="absolute inset-0 bg-[#162040]/0 group-hover:bg-[#162040]/40 transition-all duration-300 flex items-center justify-center">
                 <svg className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,26 +123,42 @@ function GalleryCarousel() {
             </div>
           ))}
         </div>
-        <button type="button" onClick={next} aria-label="Ver fotos siguientes" className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 md:-mr-6">
+
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Ver foto siguiente"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-[#162040] hover:bg-[#1a2a52] text-white p-3 md:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110"
+        >
           <ChevronRight className="w-6 h-6" aria-hidden="true" />
         </button>
-        <div className="flex justify-center gap-1 mt-8 max-w-full overflow-x-auto overscroll-x-contain px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Grupos de fotos de la galería">
-          {gallerySlides.map((_, i) => (
-            <button
-              type="button"
-              key={i}
-              role="tab"
-              aria-label={`Grupo de fotos ${i + 1} de ${gallerySlides.length}`}
-              aria-selected={i === slide}
-              onClick={() => setSlide(i)}
-              className="inline-flex min-w-9 min-h-9 sm:min-w-11 sm:min-h-11 items-center justify-center shrink-0"
-            >
-              <span
-                aria-hidden="true"
-                className={`block h-3 rounded-full transition-all duration-300 ${i === slide ? 'w-8 bg-[#162040]' : 'w-3 bg-gray-400 hover:bg-[#162040]'}`}
-              />
-            </button>
-          ))}
+
+        <div className="mt-6 flex items-center justify-center gap-3 px-4">
+          <p className="md:hidden text-sm text-gray-600 font-serif tabular-nums" aria-live="polite">
+            {idx + 1} / {total}
+          </p>
+          <div
+            className="hidden md:flex justify-center gap-1 max-w-full overflow-x-auto overscroll-x-contain px-2"
+            role="tablist"
+            aria-label="Grupos de fotos de la galería"
+          >
+            {gallerySlides.map((_, i) => (
+              <button
+                type="button"
+                key={`d-${i}`}
+                role="tab"
+                aria-label={`Grupo de fotos ${i + 1} de ${gallerySlides.length}`}
+                aria-selected={i === desktopSlide}
+                onClick={() => setIdx(i * 3)}
+                className="inline-flex min-w-11 min-h-11 items-center justify-center shrink-0"
+              >
+                <span
+                  aria-hidden="true"
+                  className={`block h-3 rounded-full transition-all duration-300 ${i === desktopSlide ? 'w-8 bg-[#162040]' : 'w-3 bg-gray-400 hover:bg-[#162040]'}`}
+                />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       {lightboxIdx !== null && (
@@ -115,8 +166,8 @@ function GalleryCarousel() {
           images={allGalleryImages}
           index={lightboxIdx}
           onClose={() => setLightboxIdx(null)}
-          onPrev={() => setLightboxIdx(i => ((i ?? 0) - 1 + total) % total)}
-          onNext={() => setLightboxIdx(i => ((i ?? 0) + 1) % total)}
+          onPrev={() => setLightboxIdx((i) => ((i ?? 0) - 1 + total) % total)}
+          onNext={() => setLightboxIdx((i) => ((i ?? 0) + 1) % total)}
         />
       )}
     </>
@@ -316,7 +367,7 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
               <div className="text-2xl md:text-3xl font-bold text-[#162040] mb-0.5 font-serif">4.6/5</div>
               <div className="text-gray-700 font-medium text-xs md:text-sm font-serif">Calificación promedio</div>
             </StatBlock>
-            <div className="flex flex-col items-center justify-center col-span-2 md:col-span-1 p-3 md:p-4">
+            <div className="flex flex-col items-center justify-center p-3 md:p-4">
               <picture>
                 <source srcSet="/images/sello-garantia-cutout.webp" type="image/webp" />
                 <img
@@ -326,11 +377,11 @@ export default function HomeBelowFold({ city: cityProp }: HomeBelowFoldProps) {
                   height={150}
                   loading="lazy"
                   decoding="async"
-                  className="h-16 md:h-20 w-auto object-contain"
+                  className="h-16 md:h-20 w-auto max-w-full object-contain mx-auto"
                   style={{ background: 'transparent' }}
                 />
               </picture>
-              <div className="text-gray-700 font-medium text-xs md:text-sm font-serif mt-1">Garantía de felicidad</div>
+              <div className="text-gray-700 font-medium text-xs md:text-sm font-serif mt-1 text-center">Garantía de felicidad</div>
             </div>
           </div>
         </div>
