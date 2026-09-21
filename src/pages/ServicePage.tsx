@@ -17,7 +17,7 @@ import { toSpanishTitleCase, buildHighlightKeywords } from "../utils/spanish-tit
 import { applyPageSeo, upsertJsonLd, absoluteUrl } from "../utils/seo-head";
 import { stripCityFromSlug } from "../utils/city-url";
 import { buildFaqPageJsonLd, buildServiceCityJsonLd, defaultServiceFaqs } from "../utils/seo-meta";
-import { removeSpaLcpPrerender, adoptSpaLcpPrerender } from "../utils/static-lcp-shell";
+import { removeSpaLcpPrerender, adoptSpaLcpPrerender, releaseSpaLcpToBody } from "../utils/static-lcp-shell";
 import { bodySectionHeading, enrichServiceH1 } from "../utils/seo-headings";
 import { Phone, CheckCircle2, PartyPopper, Armchair } from "lucide-react";
 const EventTypePage = lazy(() => import("./EventTypePage"));
@@ -301,7 +301,18 @@ export default function ServicePage({ params }: ServicePageProps) {
     } else {
       setShellAdopted(false);
     }
+    return () => releaseSpaLcpToBody();
   }, [loaded, product, pageCopy?.h1, city?.name, slug]);
+
+  // While products.js loads: keep a stable hero slot and adopt immediately.
+  useLayoutEffect(() => {
+    if (loaded) return;
+    if (typeof document === 'undefined' || !document.getElementById('spa-lcp-prerender')) return;
+    const hero = document.querySelector('[data-spa-hero]');
+    if (!hero) return;
+    adoptSpaLcpPrerender(hero, '');
+    return () => releaseSpaLcpToBody();
+  }, [loaded, slug]);
 
   useEffect(() => {
     if (!product) return;
@@ -356,9 +367,18 @@ export default function ServicePage({ params }: ServicePageProps) {
   }, [product, pageCopy, city, slug]);
 
   if (!loaded) {
-    // Shell already paints the hero — avoid a second skeleton block (CLS).
+    // Keep a hero slot matching #spa-lcp-prerender so adopt can run before paint.
+    // sr-only left the shell above #root until products.js loaded → CLS ~0.9.
     if (typeof document !== 'undefined' && document.getElementById('spa-lcp-prerender')) {
-      return <div className="sr-only" aria-busy="true">Cargando servicio…</div>;
+      return (
+        <section
+          data-spa-hero
+          className="relative overflow-hidden bg-[#162040] min-h-[400px] md:min-h-[360px]"
+          aria-busy="true"
+        >
+          <span className="sr-only">Cargando servicio…</span>
+        </section>
+      );
     }
     return (
       <div className="min-h-screen bg-white" aria-busy="true" aria-live="polite">

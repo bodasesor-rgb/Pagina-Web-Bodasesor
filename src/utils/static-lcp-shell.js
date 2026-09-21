@@ -154,6 +154,21 @@ export function removeSpaLcpPrerender() {
 }
 
 /**
+ * Re-parent shell before a React hero unmounts so React does not destroy the
+ * LCP image node (loading slot → real ServicePage hero).
+ */
+export function releaseSpaLcpToBody() {
+  const shell = document.getElementById('spa-lcp-prerender')
+  if (!shell) return
+  const root = document.getElementById('root')
+  if (!root) return
+  if (shell.nextSibling === root && shell.parentNode === root.parentNode) return
+  shell.classList.remove('spa-lcp-live')
+  document.documentElement.classList.remove('spa-lcp-adopted')
+  root.parentNode.insertBefore(shell, root)
+}
+
+/**
  * Home-style adopt: move the prerender shell INTO the React hero so the same
  * image + H1 remain the LCP element (never destroy → reassign late).
  * @param {HTMLElement | null} heroEl

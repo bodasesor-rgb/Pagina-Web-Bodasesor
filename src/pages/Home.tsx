@@ -1,15 +1,14 @@
-import { useState, useEffect, useLayoutEffect, lazy, Suspense } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useCity } from "../context/CityContext";
 import HomeSeoContent from "../components/HomeSeoContent";
 import HomeJsonLd from "../components/HomeJsonLd";
+import HomeBelowFold from "./HomeBelowFold";
 import {
   enableHomeStaticHero,
   disableHomeStaticHero,
   syncStaticHeroCopy,
 } from "../utils/static-lcp-shell";
 import CatalogImage from "../components/CatalogImage";
-
-const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
 
 /**
  * Keep preloaded #lcp-hero-wrap + #static-hero-copy as the LCP layer.
@@ -157,9 +156,9 @@ export default function Home() {
         </div>
       </section>
 
-      <Suspense fallback={null}>
-        <HomeBelowFold />
-      </Suspense>
+      {/* Eager (not Suspense): lazy HomeBelowFold inserted ~2–6k px above
+          #sobre-bodasesor and caused CLS ~0.46 on that SEO block. */}
+      <HomeBelowFold />
 
       <HomeSeoContent />
     </div>

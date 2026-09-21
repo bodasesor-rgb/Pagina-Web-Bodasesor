@@ -8,7 +8,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import Navbar from './components/Navbar'
 import DiscountBalloon from './components/DiscountBalloon'
 import { parseCityFromPath, stripCityFromSlug } from './utils/city-url'
-import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero, removeSpaLcpPrerender, adoptSpaLcpPrerender } from './utils/static-lcp-shell'
+import { hideStaticLcpShell, hideStaticHeroOnly, isHomePath, removeHomeStaticHero, removeSpaLcpPrerender, adoptSpaLcpPrerender, releaseSpaLcpToBody } from './utils/static-lcp-shell'
 import { syncLcpPreload } from './utils/lcp-preload'
 import { useCityAwareLocation } from './utils/city-router'
 import { resolveBasePath } from './utils/page-routes'
@@ -74,11 +74,30 @@ const NotFound = lazy(() => import('./pages/not-found.tsx'))
 const LegacyShopifyRedirect = lazy(() => import('./components/LegacyShopifyRedirect.jsx'))
 const EventosLegacyRedirect = lazy(() => import('./components/EventosLegacyRedirect.jsx'))
 
+function SpaShellHeroSlot() {
+  // Same box as #spa-lcp-prerender. Adopt shell here in useLayoutEffect BEFORE paint
+  // so the shell never sits above #root while React content also mounts (that CLS ~0.5–0.9).
+  useLayoutEffect(() => {
+    const shell = document.getElementById('spa-lcp-prerender')
+    const hero = document.querySelector('[data-spa-hero]')
+    if (shell && hero) adoptSpaLcpPrerender(hero, hero.getAttribute('data-spa-hero-h1') || '')
+    return () => releaseSpaLcpToBody()
+  }, [])
+  return (
+    <section
+      data-spa-hero
+      className="relative overflow-hidden bg-[#162040] min-h-[400px] md:min-h-[360px]"
+      aria-busy="true"
+      aria-label="Cargando"
+    />
+  )
+}
+
 function PageLoader() {
-  // If prerender LCP shell is already on the page, do NOT paint a second hero
-  // (double height → CLS). Keep a tiny busy marker only.
+  // Prerender shell already paints the hero — reserve the same slot and adopt into it
+  // (do not return sr-only: that leaves shell outside #root until product JS loads → huge CLS).
   if (typeof document !== 'undefined' && document.getElementById('spa-lcp-prerender')) {
-    return <div className="sr-only" aria-busy="true" aria-live="polite">Cargando…</div>
+    return <SpaShellHeroSlot />
   }
   return (
     <div className="min-h-screen bg-white" aria-busy="true" aria-live="polite">

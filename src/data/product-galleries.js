@@ -288,4 +288,4 @@ export function getProductHeroImage(slug) {
   return HERO_IMAGES[slug]
 }
 
-export { HERO_IMAGES, PRODUCT_GALLERY, DEFAULT_GALLERY, BANQUETE_COMIDA_PHOTOS }
+export { HERO_IMAGES, PRODUCT_GALLERY, DEFAULT_GALLERY }

@@ -1,5 +1,5 @@
-/* font-display: swap is set inside @fontsource CSS — keep Georgia/Arial fallbacks below to avoid FOIT */
-@import '@fontsource/playfair-display/latin-400.css';
+/* Critical path: Lato only. Playfair loads after idle (see main.jsx) to cut
+   render-blocking font CSS + CLS when weight 700 swaps on product strips. */
 @import '@fontsource/lato/latin-400.css';
 @import "tailwindcss";
 @import "tw-animate-css";
