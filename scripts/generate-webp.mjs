@@ -22,6 +22,7 @@ const MAX_MOBILE_WEBP_BYTES = 55 * 1024
 const FOLDER_MAX_EDGE = {
   instagram: 800,
   galeria: 800,
+  banquetes: 800,
 }
 
 async function walk(dir, files = []) {

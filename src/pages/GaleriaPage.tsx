@@ -4,6 +4,7 @@ import OptimizedImage from "../components/OptimizedImage";
 import CatalogImage from "../components/CatalogImage";
 import { usePageSeo } from "../hooks/usePageSeo";
 import { INSTAGRAM_AD_EXCLUDES } from "../data/instagram-ad-excludes";
+import { BANQUETE_COMIDA_PHOTOS } from "../data/product-galleries";
 function Instagram({ className }) { return <svg className={className} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>; }
 
 const EXCLUDED = INSTAGRAM_AD_EXCLUDES;
@@ -23,12 +24,19 @@ const GALLERY_ALT_SERVICES = [
   'Evento corporativo Bodasesor',
 ]
 
-const ALL_PHOTOS = Array.from({ length: 281 }, (_, i) => i + 1)
+const BANQUETE_COMIDA_GALLERY = BANQUETE_COMIDA_PHOTOS.map((src, i) => ({
+  src,
+  alt: `Banquete y catering Bodasesor — platillo ${i + 1} | Bodasesor`,
+}))
+
+const INSTAGRAM_PHOTOS = Array.from({ length: 281 }, (_, i) => i + 1)
   .filter(n => !EXCLUDED.has(n))
   .map((n, i) => ({
     src: `/images/instagram/ig${n}.jpg`,
     alt: `${GALLERY_ALT_SERVICES[i % GALLERY_ALT_SERVICES.length]} — foto ${i + 1} | Bodasesor`,
   }))
+
+const ALL_PHOTOS = [...BANQUETE_COMIDA_GALLERY, ...INSTAGRAM_PHOTOS]
 
 const TOTAL_PHOTOS = ALL_PHOTOS.length;
 
