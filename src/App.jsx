@@ -205,8 +205,8 @@ function CatchAllRoute({ slug }) {
 function StaticLcpCleanup() {
   const [location] = useLocation()
   useLayoutEffect(() => {
-    // Boot legal strip is for no-JS / OAuth crawlers; hide once React owns the chrome.
-    document.getElementById('site-legal-boot')?.setAttribute('hidden', '')
+    // Keep #site-legal-boot visible: Google Auth brand checks may execute JS;
+    // hiding it removed the only no-JS privacy/purpose copy from the viewport.
     if (isHomePath(location)) {
       // Keep #lcp-hero-wrap + #static-hero-copy — Home owns early LCP (image + H1).
       removeSpaLcpPrerender()

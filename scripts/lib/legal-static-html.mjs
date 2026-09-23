@@ -4,7 +4,7 @@ export const LEGAL_STATIC = {
   '/aviso-de-privacidad': {
     h1: 'Aviso de Privacidad',
     intro:
-      'Bodasesor (Bodasesor Eventos) publica este aviso para informar cómo tratamos datos personales y el uso de APIs de Google en herramientas internas del sitio.',
+      'Bodasesor (también “Bodasesor Eventos”, sitio bodasesor.com) publica este Aviso de Privacidad para explicar cómo tratamos datos personales de clientes y el uso de APIs de Google en herramientas internas de Bodasesor.',
     sections: [
       {
         h: 'Responsable del tratamiento',
@@ -16,20 +16,20 @@ export const LEGAL_STATIC = {
         h: 'Datos que recabamos',
         p: [
           'Podemos recabar nombre, teléfono, correo electrónico, ciudad del evento, fecha tentativa y detalles de cotización cuando nos contactas por WhatsApp, formulario, teléfono o correo.',
-          'También utilizamos datos técnicos de navegación (páginas visitadas, dispositivo) a través de herramientas de analítica como Google Analytics, para mejorar el sitio.',
+          'También utilizamos datos técnicos de navegación (páginas visitadas, dispositivo) a través de herramientas de analítica como Google Analytics, para mejorar el sitio Bodasesor.',
         ],
       },
       {
-        h: 'Uso de APIs de Google',
+        h: 'Uso de APIs de Google por Bodasesor',
         p: [
-          'Bodasesor puede utilizar APIs de Google (por ejemplo Search Console o Indexing) con cuentas autorizadas del equipo para indexar y monitorear páginas propias de bodasesor.com. No vendemos datos de usuarios de Google a terceros.',
-          'El acceso a datos de Google se limita a la operación del sitio Bodasesor y al cumplimiento de políticas de Google aplicables.',
+          'Bodasesor puede utilizar APIs de Google (por ejemplo Search Console o Indexing) con cuentas autorizadas del equipo para indexar y monitorear únicamente páginas propias de bodasesor.com.',
+          'No vendemos datos de usuarios de Google a terceros. El acceso a datos de Google se limita a la operación del sitio y marca Bodasesor y al cumplimiento de las políticas de Google aplicables.',
         ],
       },
       {
         h: 'Finalidad',
         p: [
-          'Usamos tus datos para responder cotizaciones, coordinar servicios de banquetes y eventos, dar seguimiento comercial y mejorar la experiencia del sitio.',
+          'Usamos tus datos para responder cotizaciones, coordinar servicios de banquetes y eventos, dar seguimiento comercial y mejorar la experiencia del sitio Bodasesor.',
           'No vendemos tu información a terceros. Podemos compartirla solo con proveedores necesarios para prestar el servicio (por ejemplo, logística o producción), bajo confidencialidad.',
         ],
       },
