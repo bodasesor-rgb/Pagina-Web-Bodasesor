@@ -285,6 +285,19 @@ function isBrandVerifyPath(pathname: string): boolean {
   return BRAND_VERIFY_PATHS.has(p)
 }
 
+/** Fetchers Google Auth Platform uses for brand checks (not always Googlebot). */
+function isBrandVerifyFetcher(ua: string): boolean {
+  return (
+    /Go-http-client/i.test(ua) ||
+    /^Java\//i.test(ua) ||
+    /AppEngine-Google/i.test(ua) ||
+    /google-site-verification/i.test(ua) ||
+    /googlebot/i.test(ua) ||
+    /googleother/i.test(ua) ||
+    /google-inspectiontool/i.test(ua)
+  )
+}
+
 // HTML pages only — a real page load is 1 HTML + many assets. Counting assets
 // at 30/min would 429 a normal visitor (and Googlebot, if we used Netlify's
 // path rateLimit). ALLOW list (Google/Bing/social) bypasses this entirely.
@@ -415,17 +428,16 @@ export default async (request: Request, context: Context) => {
     })
   }
 
-  // OAuth / Auth Platform brand verification — MUST be fully public.
-  // Google uses Google-Site-Verification, Go-http-client, Java, AppEngine, and
-  // sometimes bare/tooling UAs. Any 403 here = “página de acceso” / “no responde”.
-  if (isBrandVerifyPath(pathname)) {
-    return context.next()
-  }
-
   const ua = request.headers.get('user-agent') || ''
   const { category, subcategory } = parseAgentCategory(
     request.headers.get('netlify-agent-category'),
   )
+
+  // OAuth brand paths: allow known Google fetchers only (not fully public).
+  // Full bypass was temporary for first Auth Platform verification.
+  if (isBrandVerifyPath(pathname) && isBrandVerifyFetcher(ua)) {
+    return context.next()
+  }
 
   // SEO / social previews always pass (HTML + assets)
   if (ALLOW.some((rx) => rx.test(ua))) return context.next()
