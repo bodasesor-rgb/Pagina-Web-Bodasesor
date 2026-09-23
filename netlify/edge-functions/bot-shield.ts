@@ -81,6 +81,11 @@ const ALLOW = [
   /google-favicon/i,
   /googleproducer/i,
   /google-safety/i,
+  // OAuth / Auth Platform brand verification (user-triggered fetchers from
+  // gae.googleusercontent.com — NOT Googlebot; hits Netlify "tooling" otherwise)
+  /AppEngine-Google/i,
+  /Google-Cloud-Scheduler/i,
+  /GoogleStackdriverMonitoring/i,
   // PageSpeed Insights / Lighthouse lab (otherwise Netlify marks tooling → 403)
   /chrome-lighthouse/i,
   /pagespeed.?insights/i,

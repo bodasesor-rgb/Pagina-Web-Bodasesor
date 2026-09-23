@@ -38,6 +38,7 @@ const mustAllow = [
   'Mozilla/5.0 (compatible; Google-Site-Verification/1.0)',
   'FeedFetcher-Google; (+http://www.google.com/feedfetcher.html)',
   'Mozilla/5.0 (compatible; Google-Read-Aloud; +https://support.google.com/webmasters/answer/1061943)',
+  'AppEngine-Google; (+http://code.google.com/appengine; appid: s~oauth-brand-verify)',
   'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)',
   'Mozilla/5.0 (compatible; AdsBot-Google; +http://www.google.com/adsbot.html)',
   'Mozilla/5.0 (compatible; BodasesorNexusVerify/1.0; +https://bodasesor.com)',
