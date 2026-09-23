@@ -268,6 +268,27 @@ const BLOCK = [
 
 const ASSET_PATH = /\.(js|css|map|webp|png|jpe?g|gif|svg|ico|woff2?|ttf|txt|xml|json)$/i
 
+/**
+ * OAuth / Auth Platform brand verification hits these URLs with Go-http-client
+ * or Java (not Googlebot). Must stay public or Google reports “página de acceso”.
+ */
+const BRAND_VERIFY_PATHS = new Set([
+  '/',
+  '/aviso-de-privacidad',
+  '/terminos-y-condiciones',
+  '/politicas-de-devoluciones',
+  '/quienes-somos',
+])
+
+function isBrandVerifyPath(pathname: string): boolean {
+  const p = pathname.replace(/\/+$/, '') || '/'
+  return BRAND_VERIFY_PATHS.has(p)
+}
+
+function isBrandVerifyFetcher(ua: string): boolean {
+  return /Go-http-client/i.test(ua) || /^Java\//i.test(ua) || /AppEngine-Google/i.test(ua)
+}
+
 // HTML pages only — a real page load is 1 HTML + many assets. Counting assets
 // at 30/min would 429 a normal visitor (and Googlebot, if we used Netlify's
 // path rateLimit). ALLOW list (Google/Bing/social) bypasses this entirely.
@@ -405,6 +426,9 @@ export default async (request: Request, context: Context) => {
 
   // SEO / social previews always pass (HTML + assets)
   if (ALLOW.some((rx) => rx.test(ua))) return context.next()
+
+  // Google OAuth brand checks (Auth Platform) — Go/Java fetchers, not Googlebot
+  if (isBrandVerifyPath(pathname) && isBrandVerifyFetcher(ua)) return context.next()
 
   // page-preview (WhatsApp/Slack/etc.) — allow even if not in ALLOW regex
   if (category === 'page-preview') return context.next()

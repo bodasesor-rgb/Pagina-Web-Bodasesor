@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import CityLink from '../components/CityLink'
 import Breadcrumbs from '../components/Breadcrumbs'
 import { usePageSeo } from '../hooks/usePageSeo'
@@ -40,6 +41,7 @@ const CONTENT: Record<LegalKind, LegalDoc> = {
         p: [
           'Podemos recabar nombre, teléfono, correo electrónico, ciudad del evento, fecha tentativa y detalles de cotización cuando nos contactas por WhatsApp, formulario, teléfono o correo.',
           'También utilizamos datos técnicos de navegación (páginas visitadas, dispositivo) a través de herramientas de analítica como Google Analytics, para mejorar el sitio.',
+          'Bodasesor puede usar APIs de Google (Search Console / Indexing) con cuentas del equipo para indexar y monitorear únicamente páginas de bodasesor.com. No vendemos datos de usuarios de Google.',
         ],
       },
       {
@@ -159,6 +161,11 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
     path: data.path,
     h1: data.title,
   })
+
+  useEffect(() => {
+    document.getElementById('spa-legal-prerender')?.remove()
+    document.getElementById('spa-crawler-content')?.remove()
+  }, [kind])
 
   return (
     <div className="min-h-screen bg-white">

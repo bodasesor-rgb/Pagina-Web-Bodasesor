@@ -20,6 +20,7 @@ import {
 import { absoluteOgImage, DEFAULT_OG_IMAGE_ALT } from '../src/utils/seo-social.js'
 import { isNexusLandingHtml } from './lib/nexus-html.mjs'
 import { injectServiceLcpShell } from './lib/lcp-prerender-html.mjs'
+import { renderLegalStaticHtml } from './lib/legal-static-html.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -288,7 +289,7 @@ function applySeo(html, entry) {
     out = out.replace(/<\/head>/i, `  ${jsonLdTag}\n  </head>`)
   }
 
-  // Visible breadcrumb for noscript / static crawlers
+  // Crawler-visible content (home hero is hidden via no-lcp-hero)
   const crumbHtml = crumbItems
     .map((item, i) => {
       const sep = i === 0 ? '' : ' / '
@@ -299,11 +300,27 @@ function applySeo(html, entry) {
     })
     .join('')
 
-  // Crawler-visible content (home hero is hidden via no-lcp-hero)
-  const noscript = `<noscript><main style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(description)}</p></main></noscript>`
+  const legalMain = renderLegalStaticHtml(entry.path, escapeHtml)
+  const crawlerMain = legalMain
+    ? legalMain
+    : `<main id="spa-crawler-content" style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(description)}</p></main>`
+
+  // Visible without JS (Google OAuth brand fetchers do not execute React)
+  if (out.includes('<div id="root"></div>')) {
+    out = out.replace('<div id="root"></div>', `${crawlerMain}\n    <div id="root"></div>`)
+  }
+
+  const noscript = `<noscript>${crawlerMain}</noscript>`
   if (out.includes('</body>')) {
     out = out.replace('</body>', `${noscript}\n  </body>`)
   }
+
+  // Strip home document.write hero strings from inner shells — Google treated
+  // those JS string literals as homepage content on /aviso-de-privacidad.
+  out = out.replace(
+    /document\.write\(\s*[\s\S]*?static-hero-copy[\s\S]*?\);\s*/g,
+    '/* home LCP document.write omitted on inner shell */',
+  )
 
   // Also rewrite static hero copy so any crawler that ignores noscript still sees product text
   out = out.replace(
