@@ -62,7 +62,7 @@ export default function CatalogEmbed({
   minHeight?: number;
 }) {
   const [loaded, setLoaded] = useState(false);
-  const height = minHeight ?? (catalog.provider === "canva" ? 560 : 480);
+  const height = minHeight ?? (catalog.provider === "canva" ? 720 : 680);
 
   useEffect(() => {
     ensureCatalogPreconnects();
@@ -71,7 +71,7 @@ export default function CatalogEmbed({
 
   return (
     <div
-      className="relative w-full bg-[#f5efe8] rounded-xl overflow-hidden border border-[#162040]/10"
+      className="relative w-full bg-[#f5efe8] rounded-xl overflow-hidden border border-[#162040]/10 shadow-sm"
       style={{ minHeight: height }}
     >
       {!loaded && (
@@ -86,8 +86,8 @@ export default function CatalogEmbed({
       <iframe
         src={catalog.embedSrc}
         title={`Catálogo ${catalog.title} | Bodasesor`}
-        className="w-full border-0 bg-white"
-        style={{ height }}
+        className="w-full border-0 bg-white block"
+        style={{ height, minHeight: height }}
         allow="fullscreen"
         loading="eager"
         referrerPolicy="no-referrer"

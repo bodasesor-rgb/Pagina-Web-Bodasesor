@@ -82,8 +82,8 @@ export default function CatalogoDetailPage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <CatalogEmbed catalog={catalog} minHeight={640} />
+      <div className="w-full max-w-[1500px] mx-auto px-2 sm:px-4 lg:px-6 py-6 md:py-10">
+        <CatalogEmbed catalog={catalog} minHeight={820} />
         <p className="mt-4 text-center text-sm text-gray-500 font-serif">
           Vista segura en bodasesor.com — el contenido se muestra embebido, sin abrir herramientas externas.
         </p>

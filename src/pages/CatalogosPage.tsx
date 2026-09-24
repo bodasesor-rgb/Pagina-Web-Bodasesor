@@ -118,7 +118,7 @@ export default function CatalogosPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 py-10 space-y-5">
+      <div className="w-full max-w-[1500px] mx-auto px-2 sm:px-4 lg:px-6 py-10 space-y-5">
         {filtered.map((catalog) => {
           const isOpen = openSlug === catalog.slug;
           const pagePath = getCatalogoPagePath(catalog.slug);
@@ -169,8 +169,8 @@ export default function CatalogosPage() {
                 </div>
               </div>
               {isOpen && (
-                <div className="px-4 pb-5 md:px-6 md:pb-6">
-                  <CatalogEmbed catalog={catalog} />
+                <div className="px-2 pb-4 sm:px-4 md:px-5 md:pb-6">
+                  <CatalogEmbed catalog={catalog} minHeight={780} />
                 </div>
               )}
             </article>
