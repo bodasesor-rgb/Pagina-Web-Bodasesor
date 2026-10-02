@@ -21,6 +21,7 @@ const COMPRESSIONS = [
   [/Estado de México/i, 'Edomex'],
   [/\s+para\s+Eventos\b(?=.*\s+en\s+)/i, ''],
   [/^Servicio\s+de\s+/i, ''],
+  [/San Miguel de Allende/i, 'San Miguel'],
 ]
 
 /**
@@ -36,16 +37,27 @@ export function buildSeoTitle(headline, cityShort = null) {
   for (const [re, rep] of COMPRESSIONS) {
     if (core.length <= maxCore) break
     core = core.replace(re, rep).replace(/\s{2,}/g, ' ').trim()
+    core = core.charAt(0).toUpperCase() + core.slice(1)
   }
   if (core.length <= maxCore) return `${core}${BRAND}`
 
-  const cut = core.slice(0, maxCore)
-  const atWord = core.charAt(maxCore) === ' ' || !cut.includes(' ') ? cut : cut.slice(0, cut.lastIndexOf(' '))
-  const tidy = atWord
+  // Keep a trailing location ("… en Monterrey") so city variants stay distinct after truncation.
+  const loc = core.match(/\s+en\s+[A-ZÁÉÍÓÚÑ][^|]{1,24}$/)
+  if (loc && loc.index > 12) {
+    const head = truncateAtWord(core.slice(0, loc.index), maxCore - loc[0].length)
+    if (head.length >= 12) return `${head}${loc[0]}${BRAND}`
+  }
+  return `${truncateAtWord(core, maxCore)}${BRAND}`
+}
+
+function truncateAtWord(text, max) {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max)
+  const atWord = text.charAt(max) === ' ' || !cut.includes(' ') ? cut : cut.slice(0, cut.lastIndexOf(' '))
+  return atWord
     .replace(/(\s+(de|del|la|las|el|los|y|e|en|para|con|a|o|por|sin|sobre|tu|tus|mi|su|sus|que))+$/i, '')
     .replace(/[\s,:;—|-]+$/, '')
     .trim()
-  return `${tidy}${BRAND}`
 }
 
 /** Shorten an existing full title (e.g. Nexus HTML) to ≤60 chars. */

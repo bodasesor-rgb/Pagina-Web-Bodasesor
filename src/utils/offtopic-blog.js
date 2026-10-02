@@ -50,3 +50,12 @@ export function isOffTopicBlogPath(path) {
   const parts = p.split('/').filter(Boolean)
   return parts.length === 2 && isOffTopicBlogSlug(parts[1])
 }
+
+/** Nexus QA pages ("…-prueba/", "…-prueba-nexus-…", "…-prueba-746c/") — never index. */
+export function isNexusTestPath(path) {
+  return /(^|-)prueba(-nexus|-[0-9a-f]{4})?(-|$)/.test(String(path || '').toLowerCase().replace(/\/+$/, '').split('/').pop())
+}
+
+export function isNoindexPath(path) {
+  return isOffTopicBlogPath(path) || isNexusTestPath(path)
+}

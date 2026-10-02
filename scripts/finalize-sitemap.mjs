@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url'
 import { collectSpaSeoEntries } from './collect-spa-seo-entries.mjs'
 import { isNexusLandingHtml, isSpaShellHtml } from './lib/nexus-html.mjs'
 import { INSTAGRAM_AD_EXCLUDES } from '../src/data/instagram-ad-excludes.js'
-import { isOffTopicBlogPath } from '../src/utils/offtopic-blog.js'
+import { isNoindexPath } from '../src/utils/offtopic-blog.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -372,7 +372,7 @@ async function collectPaths(imageMap) {
           !p.startsWith('/buscar') &&
           !p.startsWith('/nexus-output-pages/') &&
           !redirected.has(p.replace(/\/$/, '') || '/') &&
-          !isOffTopicBlogPath(p),
+          !isNoindexPath(p),
       )
       .sort(),
     nexusFromDist: [...nexusFromDist].sort(),

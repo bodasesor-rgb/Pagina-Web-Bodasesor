@@ -90,9 +90,13 @@ async function main() {
 
     if (!isNexus && !isSpaSeo) continue
 
-    const expected = absoluteUrl(path)
+    const isMirror = path.startsWith('/nexus-output-pages/')
+    const expected = absoluteUrl(isMirror ? path.slice('/nexus-output-pages'.length) : path)
     const canonical = extractCanonical(html)
     const ogUrl = extractOgUrl(html)
+    if (isMirror && !/name=["']robots["'][^>]+noindex/i.test(html)) {
+      issues.push(`nexus mirror without noindex: ${path}`)
+    }
 
     if (isNexus) {
       nexusTotal++

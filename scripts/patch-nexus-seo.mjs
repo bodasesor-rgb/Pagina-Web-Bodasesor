@@ -20,8 +20,8 @@ import {
   labelFromSlug,
 } from '../src/utils/seo-page-meta.js'
 import { absoluteUrl } from './lib/seo-canonical.mjs'
-import { isOffTopicBlogPath } from '../src/utils/offtopic-blog.js'
-import { shortenExistingTitle } from '../src/utils/seo-title.js'
+import { isNoindexPath } from '../src/utils/offtopic-blog.js'
+import { SEO_TITLE_MAX, shortenExistingTitle } from '../src/utils/seo-title.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -370,7 +370,7 @@ function patchCanonicalUrls(html, filePath) {
   }
 
   if (isNexus || isBlog) {
-    const directive = isMirror || isOffTopicBlogPath(path) ? 'noindex, follow' : 'index, follow'
+    const directive = isMirror || isNoindexPath(path) ? 'noindex, follow' : 'index, follow'
     const robots = ensureNamedMeta(out, 'robots', directive)
     out = robots.html
     if (robots.changed) changed = true
@@ -435,7 +435,7 @@ function pruneOffTopicListing(html) {
   }
   let out = html.replace(/<article class="seo-blog-index-card">[\s\S]*?<\/article>\s*/g, (card) => {
     const href = (card.match(/href="([^"]+)"/) || [])[1] || ''
-    return isOffTopicBlogPath(blogPath(href)) ? '' : card
+    return isNoindexPath(blogPath(href)) ? '' : card
   })
   out = out.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, (tag, json) => {
     if (!json.includes('"ItemList"')) return tag
@@ -450,7 +450,7 @@ function pruneOffTopicListing(html) {
       walk(data)
       for (const list of lists) {
         list.itemListElement = list.itemListElement
-          .filter((it) => !isOffTopicBlogPath(blogPath(it.url || it.item?.['@id'] || '')))
+          .filter((it) => !isNoindexPath(blogPath(it.url || it.item?.['@id'] || '')))
           .map((it, i) => ({ ...it, position: i + 1 }))
         if ('numberOfItems' in list) list.numberOfItems = list.itemListElement.length
       }
@@ -743,9 +743,27 @@ function patchHtml(html, filePath) {
     /(^|\|)\s*Bodasesor Eventos Blog/i.test(t) ||
     (t.split('|')[0].trim().length < 18 && identity.h1.length > t.split('|')[0].trim().length)
   const blogH1 = pathFromFile(filePath).startsWith('/blog/') ? identity.h1 : ''
+  const isLanding = out.includes('seo-service-hero')
+  const words = (s) => s.toLowerCase().split(/\s+/).filter(Boolean)
+  // Earlier deploys truncated landing titles ("a Domicilio" dropped) — restore from the H1 when it still fits.
+  const h1Restores = (t) => {
+    const core = t.split('|')[0].trim()
+    const h1 = identity.h1 || ''
+    if (!isLanding || h1.length < core.length || h1.length > SEO_TITLE_MAX) return false
+    const hw = new Set(words(h1))
+    return words(core).every((w) => hw.has(w))
+  }
+  // H1 too long to carry " | Bodasesor" → keep the full H1 (distinct keywords) and drop the brand.
+  const nextTitle = (t) => {
+    if (h1Restores(t)) {
+      const branded = shortenTitle(identity.h1)
+      return branded.split('|')[0].trim().length < identity.h1.length ? identity.h1 : branded
+    }
+    return shortenTitle(blogH1 && isGenericBlogTitle(t) ? identity.h1 : t)
+  }
 
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {
-    const next = shortenTitle(blogH1 && isGenericBlogTitle(inner) ? blogH1 : inner)
+    const next = nextTitle(inner)
     if (next === inner) return match
     changed = true
     return `<title>${next}</title>`
@@ -754,7 +772,7 @@ function patchHtml(html, filePath) {
   out = out.replace(
     /<meta\s+property="og:title"\s+content="([^"]*)"\s*\/?>/gi,
     (match, inner) => {
-      const next = shortenTitle(blogH1 && isGenericBlogTitle(inner) ? blogH1 : inner)
+      const next = nextTitle(inner)
       if (next === inner) return match
       changed = true
       return `<meta property="og:title" content="${escapeAttr(next)}">`
