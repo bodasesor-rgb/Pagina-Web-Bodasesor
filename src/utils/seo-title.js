@@ -42,7 +42,7 @@ export function buildSeoTitle(headline, cityShort = null) {
   if (core.length <= maxCore) return `${core}${BRAND}`
 
   // Keep a trailing location ("… en Monterrey") so city variants stay distinct after truncation.
-  const loc = core.match(/\s+en\s+[A-ZÁÉÍÓÚÑ][^|]{1,24}$/)
+  const loc = core.match(/\s+en\s+(?!(Cada|Casa|Tu|Tus|Su|Sus|Un|Una|El|La|Los|Las)\b)[A-ZÁÉÍÓÚÑ][^|:]{1,24}$/)
   if (loc && loc.index > 12) {
     const head = truncateAtWord(core.slice(0, loc.index), maxCore - loc[0].length)
     if (head.length >= 12) return `${head}${loc[0]}${BRAND}`
@@ -53,9 +53,11 @@ export function buildSeoTitle(headline, cityShort = null) {
 function truncateAtWord(text, max) {
   if (text.length <= max) return text
   const cut = text.slice(0, max)
+  const colon = cut.lastIndexOf(':')
+  if (colon >= 15) return cut.slice(0, colon).trim()
   const atWord = text.charAt(max) === ' ' || !cut.includes(' ') ? cut : cut.slice(0, cut.lastIndexOf(' '))
   return atWord
-    .replace(/(\s+(de|del|la|las|el|los|y|e|en|para|con|a|o|por|sin|sobre|tu|tus|mi|su|sus|que))+$/i, '')
+    .replace(/(\s+(de|del|la|las|el|los|y|e|en|para|con|a|al|o|por|sin|sobre|tu|tus|mi|su|sus|que|qué|cómo|cuál|cuáles|es|son))+$/i, '')
     .replace(/[\s,:;—|-]+$/, '')
     .trim()
 }
