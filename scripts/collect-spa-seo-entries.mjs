@@ -21,12 +21,13 @@ import { FLORERIA } from '../src/data/floreria-products.js'
 import { SHOWS } from '../src/data/shows-products.js'
 import { COMBINACIONES } from '../src/data/combinaciones-products.js'
 import { blogPosts } from '../src/data/blog-data.js'
-import { isOffTopicBlogSlug } from '../src/utils/offtopic-blog.js'
+import { isNoindexBlogPost } from '../src/utils/offtopic-blog.js'
 import { CITY_MAP } from '../src/data/city-data.js'
 import { SPA_SEO_HUBS } from '../src/data/spa-seo-hubs.js'
 import { CATALOGOS } from '../src/data/catalogos-embeds.js'
 import { getCityHubContent } from './lib/load-city-hub-content.mjs'
 import { buildSeoTitle } from '../src/utils/seo-title.js'
+import { enrichServiceH1 } from '../src/utils/seo-headings.js'
 import { clampMetaDescription } from '../src/utils/seo-meta.js'
 import { HERO_IMAGES } from '../src/data/product-galleries.js'
 
@@ -78,24 +79,28 @@ function isCityExemptPath(path) {
 }
 
 /** City landing / service titles — avoid "Bodas para Bodas y Eventos en X" */
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const KNOWN_CITY_RE = new RegExp(
+  `\\s+en\\s+(${[
+    ...new Set(
+      Object.values(CITY_MAP)
+        .flatMap((c) => [c.name, c.short])
+        .concat(['CDMX', 'México', 'Mexico'])
+        .filter(Boolean),
+    ),
+  ]
+    .sort((a, b) => b.length - a.length)
+    .map(escapeRe)
+    .join('|')})\\b.*$`,
+  'i',
+)
+
 function cityHeadline(baseTitle, cityName) {
   const core = String(baseTitle || '').trim()
   if (!core) return `Servicios para Eventos en ${cityName}`
-  if (/en\s+[A-ZÁÉÍÓÚÑ]/i.test(core)) return core
+  if (core.toLowerCase().includes(String(cityName).toLowerCase())) return core
+  if (KNOWN_CITY_RE.test(core)) return `${core.replace(KNOWN_CITY_RE, '')} en ${cityName}`
   return `${core} en ${cityName}`
-}
-
-/** Only pass abbreviation to title builder when it adds signal (CDMX, GDL…) */
-function usefulCityShort(city) {
-  if (!city?.short) return null
-  const short = city.short.trim()
-  const name = String(city.name || '').trim()
-  if (!short || !name) return null
-  if (short.toLowerCase() === name.toLowerCase()) return null
-  // "Morelia" / "Toluca" style — short equals first token
-  const first = name.split(/[\s/]/)[0]
-  if (short.toLowerCase() === first.toLowerCase()) return null
-  return short
 }
 
 function hubHeroImage(path) {
@@ -154,7 +159,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
         `Banquetes y Eventos en ${city.name}`,
         `Banquetes, catering, mobiliario y servicios para bodas y eventos en ${city.name}. Cotiza con Bodasesor.`,
         `Banquetes y Eventos en ${city.name}`,
-        usefulCityShort(city),
+        null,
       ),
     )
   }
@@ -168,15 +173,21 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
       const city = CITY_MAP[citySlug]
       const cityName = city?.name || citySlug
       const local = getCityHubContent(hubSlug, citySlug)
-      const headline = local?.h1 || cityHeadline(h.title, cityName)
+      const mentionsCity = (t) => {
+        const f = String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+        return [cityName, city?.short].filter(Boolean).some((c) =>
+          f.includes(String(c).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()),
+        )
+      }
+      const headline = local?.h1 && mentionsCity(local.h1) ? local.h1 : cityHeadline(local?.h1 || h.title, cityName)
       const desc = local?.seoDescription || `${h.desc} Cotiza en ${cityName} y área metropolitana.`
       put(
         entry(
           `${h.path}/${citySlug}`,
-          local?.seoTitle || headline,
+          local?.seoTitle && mentionsCity(local.seoTitle) ? local.seoTitle : headline,
           desc,
           headline,
-          usefulCityShort(city),
+          null,
           { image: hubImage },
         ),
       )
@@ -187,7 +198,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
     if (!post?.slug || !post?.title) continue
     const e = entry(`/blog/${post.slug}`, post.title, post.excerpt || post.title, post.title, null, {
       image: post.image || null,
-      noindex: isOffTopicBlogSlug(post.slug),
+      noindex: isNoindexBlogPost(post),
     })
     if (e && Array.isArray(post.body)) e.body = post.body
     put(e)
@@ -223,7 +234,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
     put(
       entry(
         `/catalogos/${c.slug}`,
-        `${c.title} | Catálogos Bodasesor`,
+        `Catálogo ${c.title}`,
         `Catálogo ${c.title} de Bodasesor 2026. Cotiza banquetes, barras, mobiliario y más por WhatsApp.`,
         c.title,
       ),
@@ -259,7 +270,8 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
     for (const item of list) {
       const name = item[nameKey] || item.name
       if (!name || !item.slug) continue
-      put(entry(hrefFn(item), name, item.desc || item.short || name, name, null, { image: item.img || null }))
+      const headline = name.length < 16 ? enrichServiceH1(name) : name
+      put(entry(hrefFn(item), headline, item.desc || item.short || name, name, null, { image: item.img || null }))
     }
   }
 
@@ -286,7 +298,7 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
             headline,
             `${base.description} Cotiza en ${cityName} y área metropolitana.`,
             headline,
-            usefulCityShort(city),
+            null,
             { noindex: true, image: base.image || null },
           ),
         )

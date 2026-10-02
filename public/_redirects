@@ -1,5 +1,5 @@
 # Auto-generated — npm run generate:redirects
-# 4443 rules + fallback
+# 4447 rules + fallback
 
 # GSC relevance overrides (must stay above map rules)
 /products/mesa-rustica-rectangular-silla-crossback-natural-cdmx  https://bodasesor.com/sillas/crossback/  301
@@ -418,6 +418,10 @@
 /products/catering-de-comida-japonesa-cdmx/  https://bodasesor.com/banquetes-catering/ciudad-de-mexico/  301
 /blogs/noticias/frases-romanticas-buenos-dias-pareja  https://bodasesor.com/blog/frases-romanticas-buenos-dias-pareja/  301
 /blogs/noticias/frases-romanticas-buenos-dias-pareja/  https://bodasesor.com/blog/frases-romanticas-buenos-dias-pareja/  301
+/banquetes-kosher/buffet  https://bodasesor.com/banquete-kosher/buffet/  301
+/banquetes-kosher/buffet/  https://bodasesor.com/banquete-kosher/buffet/  301
+/banquetes-kosher  https://bodasesor.com/banquete-kosher/  301
+/banquetes-kosher/  https://bodasesor.com/banquete-kosher/  301
 
 /blogs/noticias?page=11  https://bodasesor.com/blog/  301
 /blogs/noticias?page=2  https://bodasesor.com/blog/  301

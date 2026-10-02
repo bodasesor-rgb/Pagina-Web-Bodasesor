@@ -21,6 +21,7 @@ import {
 } from '../src/utils/seo-page-meta.js'
 import { absoluteUrl } from './lib/seo-canonical.mjs'
 import { isOffTopicBlogPath } from '../src/utils/offtopic-blog.js'
+import { shortenExistingTitle } from '../src/utils/seo-title.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -37,30 +38,8 @@ const GA_SNIPPET = `<!-- Google tag (gtag.js) -->
 </script>
 `
 
-function stripBrand(text) {
-  return String(text ?? '')
-    .replace(/\s*—\s*Cotización Gratis\s*/gi, ' ')
-    .replace(/(\s*\|\s*Bodasesor(\s+Eventos)?)+\s*$/i, '')
-    .replace(/\s+a Domicilio/gi, '')
-    .replace(/\s{2,}/g, ' ')
-    .trim()
-}
-
-function buildTitle(core) {
-  const brand = ' | Bodasesor'
-  let title = `${core}${brand}`
-  if (title.length <= MAX_TITLE) return title
-  const cut = core.slice(0, MAX_TITLE - brand.length)
-  const atWord = cut.includes(' ') ? cut.slice(0, cut.lastIndexOf(' ')) : cut
-  const tidy = atWord
-    .replace(/(\s+(de|del|la|las|el|los|y|e|en|para|con|a|o|por|sin|sobre|tu|tus|mi|su|sus|que))+$/i, '')
-    .replace(/[\s,:;—-]+$/, '')
-    .trim()
-  return `${tidy}${brand}`
-}
-
 function shortenTitle(raw) {
-  return buildTitle(stripBrand(raw))
+  return shortenExistingTitle(raw)
 }
 
 async function walkHtml(dir, files = []) {
@@ -370,7 +349,8 @@ function patchCanonicalUrls(html, filePath) {
     html.includes('Bodasesor Eventos Blog')
   if (!isNexus && !isBlog) return { html, changed: false }
 
-  const canonical = absoluteUrl(path)
+  const isMirror = path.startsWith('/nexus-output-pages/')
+  const canonical = absoluteUrl(isMirror ? path.slice('/nexus-output-pages'.length) : path)
   let out = html
   let changed = false
 
@@ -390,7 +370,7 @@ function patchCanonicalUrls(html, filePath) {
   }
 
   if (isNexus || isBlog) {
-    const directive = isOffTopicBlogPath(path) ? 'noindex, follow' : 'index, follow'
+    const directive = isMirror || isOffTopicBlogPath(path) ? 'noindex, follow' : 'index, follow'
     const robots = ensureNamedMeta(out, 'robots', directive)
     out = robots.html
     if (robots.changed) changed = true
@@ -408,6 +388,92 @@ function extractH1(html) {
   const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)
   if (!m) return ''
   return m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+const PLURAL_ARTICLE = [
+  [/\b(E|e)l (banquetes|arreglos|votos|mensajes|centros de mesa)\b/g, (_, e, n) => `${e === 'E' ? 'Los' : 'los'} ${n}`],
+  [/\b(E|e)l (ideas|flores|mesas|sillas|carpas|bodas|tendencias|frases|palabras)\b/g, (_, e, n) => `${e === 'E' ? 'Las' : 'las'} ${n}`],
+  [/\bcuesta (los|las) /g, 'cuestan $1 '],
+]
+
+function fixTextNode(t) {
+  let s = t
+    .replace(/(\S)[ \t]+([,.;])(?=\s|$)/g, '$1$2')
+    .replace(/^[ \t]+([,;])(?=\s)/, '$1')
+    .replace(/\b(de|la|el|en|para|que|los|las|con|del) \1\b/gi, '$1')
+  for (const [re, rep] of PLURAL_ARTICLE) s = s.replace(re, rep)
+  return s
+}
+
+/** Nexus copy polish: markdown leftovers, doubled words, spaced punctuation, plural articles. */
+function cleanNexusText(html) {
+  if (!html.includes('seo-service-hero') && !html.includes('seo-section') && !html.includes('seo-blog-')) {
+    return { html, changed: false }
+  }
+  const parts = html.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<head\b[\s\S]*?<\/head>)/i)
+  const out = parts
+    .map((part, i) => {
+      if (i % 2 === 1) return part
+      return part
+        .replace(/\*\*\s*(<strong>[^<]*<\/strong>)\s*\*\*/g, '$1')
+        .replace(/\*\*\s*([^*<>\n]{1,160}?)\s*\*\*/g, '<strong>$1</strong>')
+        .replace(/>([^<]+)</g, (m, t) => `>${fixTextNode(t).replace(/\*\*/g, '')}<`)
+    })
+    .join('')
+  return { html: out, changed: out !== html }
+}
+
+/** Drop off-topic posts (cards + ItemList JSON-LD) from Nexus blog listing pages. */
+function pruneOffTopicListing(html) {
+  if (!html.includes('seo-blog-index-card')) return { html, changed: false }
+  const blogPath = (url) => {
+    try {
+      return new URL(url, 'https://bodasesor.com').pathname
+    } catch {
+      return ''
+    }
+  }
+  let out = html.replace(/<article class="seo-blog-index-card">[\s\S]*?<\/article>\s*/g, (card) => {
+    const href = (card.match(/href="([^"]+)"/) || [])[1] || ''
+    return isOffTopicBlogPath(blogPath(href)) ? '' : card
+  })
+  out = out.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, (tag, json) => {
+    if (!json.includes('"ItemList"')) return tag
+    try {
+      const data = JSON.parse(json)
+      const lists = []
+      const walk = (n) => {
+        if (!n || typeof n !== 'object') return
+        if (n['@type'] === 'ItemList' && Array.isArray(n.itemListElement)) lists.push(n)
+        for (const v of Object.values(n)) walk(v)
+      }
+      walk(data)
+      for (const list of lists) {
+        list.itemListElement = list.itemListElement
+          .filter((it) => !isOffTopicBlogPath(blogPath(it.url || it.item?.['@id'] || '')))
+          .map((it, i) => ({ ...it, position: i + 1 }))
+        if ('numberOfItems' in list) list.numberOfItems = list.itemListElement.length
+      }
+      return `<script type="application/ld+json">${JSON.stringify(data)}</script>`
+    } catch {
+      return tag
+    }
+  })
+  return { html: out, changed: out !== html }
+}
+
+/** Nexus blog template H1 ("Los Mejores Eventos para Eventos") → article title from breadcrumb. */
+function fixGenericBlogH1(html, filePath) {
+  if (!pathFromFile(filePath).startsWith('/blog/')) return { html, changed: false }
+  const h1 = extractH1(html)
+  if (!/^Los Mejores .+ para .+$/i.test(h1)) return { html, changed: false }
+  const crumb = html.match(/<nav[^>]*>[\s\S]*?<span>([^<]{8,})<\/span>\s*<\/nav>/i)
+  const real = crumb ? crumb[1].trim() : ''
+  if (!real) return { html, changed: false }
+  return {
+    html: html.replace(/(<h1[^>]*>)[\s\S]*?(<\/h1>)/i, `$1${real}$2`),
+    changed: true,
+  }
 }
 
 /** Inject author/publisher/keywords unique per page path. */
@@ -640,6 +706,18 @@ function patchHtml(html, filePath) {
   out = heroes.html
   if (heroes.changed) changed = true
 
+  const listing = pruneOffTopicListing(out)
+  out = listing.html
+  if (listing.changed) changed = true
+
+  const copy = cleanNexusText(out)
+  out = copy.html
+  if (copy.changed) changed = true
+
+  const blogH1Fix = fixGenericBlogH1(out, filePath)
+  out = blogH1Fix.html
+  if (blogH1Fix.changed) changed = true
+
   const identity = patchIdentityMetas(out, filePath)
   out = identity.html
   if (identity.changed) changed = true
@@ -660,7 +738,10 @@ function patchHtml(html, filePath) {
   out = heroPreload.html
   if (heroPreload.changed) changed = true
 
-  const isGenericBlogTitle = (t) => /^\s*Blog\s*\|/i.test(t) || /^\s*Bodasesor Eventos Blog/i.test(t)
+  const isGenericBlogTitle = (t) =>
+    /^\s*Blog\s*\|/i.test(t) ||
+    /(^|\|)\s*Bodasesor Eventos Blog/i.test(t) ||
+    (t.split('|')[0].trim().length < 18 && identity.h1.length > t.split('|')[0].trim().length)
   const blogH1 = pathFromFile(filePath).startsWith('/blog/') ? identity.h1 : ''
 
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {

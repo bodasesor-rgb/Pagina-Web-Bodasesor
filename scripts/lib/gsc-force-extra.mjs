@@ -44,4 +44,7 @@ export const GSC_FORCE_EXTRA = [
   ['/products/catering-de-comida-japonesa-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
   // Dead blog slug → blog index (no matching static article)
   ['/blogs/noticias/frases-romanticas-buenos-dias-pareja', '/blog/frases-romanticas-buenos-dias-pareja/'],
+  // Nexus landings link the plural hub
+  ['/banquetes-kosher/buffet', '/banquete-kosher/buffet/'],
+  ['/banquetes-kosher', '/banquete-kosher/'],
 ]

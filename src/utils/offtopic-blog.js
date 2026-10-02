@@ -33,6 +33,17 @@ export function isOffTopicBlogSlug(slug) {
   return OFFTOPIC_SLUGS.has(s) || OFFTOPIC_SUFFIX.test(s) || OFFTOPIC_PREFIX.test(s)
 }
 
+/** Legacy SPA posts still built from the shared filler template (pending rewrite). */
+const TEMPLATE_SIGNATURE = 'pocas decisiones pesan tanto como'
+
+export function isTemplateBlogPost(post) {
+  return Array.isArray(post?.body) && post.body.some((b) => typeof b === 'string' && b.includes(TEMPLATE_SIGNATURE))
+}
+
+export function isNoindexBlogPost(post) {
+  return isOffTopicBlogSlug(post?.slug) || isTemplateBlogPost(post)
+}
+
 export function isOffTopicBlogPath(path) {
   const p = String(path || '').toLowerCase()
   if (!p.startsWith('/blog/')) return false

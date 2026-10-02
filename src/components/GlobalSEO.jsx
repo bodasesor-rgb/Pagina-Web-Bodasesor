@@ -18,6 +18,8 @@ import { clampMetaDescription } from '../utils/seo-meta'
 import { organizationRef } from '../utils/seo-page-meta'
 import { absoluteOgImage } from '../utils/seo-social'
 import { hasStaticBlogHtml } from '../data/static-blog-slugs'
+import { isNoindexBlogPost } from '../utils/offtopic-blog'
+import { buildSeoTitle } from '../utils/seo-title'
 
 const SITE_BASE = 'https://bodasesor.com'
 const PAGE_JSONLD_ID = 'bodasesor-page-jsonld'
@@ -292,14 +294,14 @@ export default function GlobalSEO() {
 
       // Lazy-load blog corpus only on SPA-only article URLs
       import('../data/blog-feed')
-        .then(({ getBlogFeed }) => {
+        .then(({ getBlogPostBySlug }) => {
           if (cancelled) return
-          const blogPost = getBlogFeed().find((p) => p.slug === blogMatch[1])
+          const blogPost = getBlogPostBySlug(blogMatch[1])
           if (!blogPost) {
             applyNonBlog(null)
             return
           }
-          const title = `${blogPost.title} | Bodasesor Blog`
+          const title = buildSeoTitle(blogPost.title)
           document.title = title
           const blogDesc = clampMetaDescription(blogPost.excerpt || blogPost.title)
           upsertMeta('name', 'description', blogDesc)
@@ -333,7 +335,7 @@ export default function GlobalSEO() {
               keywords,
             }),
           )
-          upsertMeta('name', 'robots', 'index, follow')
+          upsertMeta('name', 'robots', isNoindexBlogPost(blogPost) ? 'noindex, follow' : 'index, follow')
         })
         .catch(() => {
           if (!cancelled) applyNonBlog(null)

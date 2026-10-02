@@ -115,12 +115,16 @@ export function useCityHubPage(
     const slug = String(hubSlug || '').replace(/^\/+|\/+$/g, '')
     const seoPath = city ? `/${slug}/${city.slug}` : `/${slug}`
 
+    const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    const mentionsCity = (t?: string | null) =>
+      !city || [city.name, city.short].filter(Boolean).some((c) => fold(t || '').includes(fold(String(c))))
+    const candidate = cityCopy?.seoTitle || pageSeo?.seoTitle
     const titleSource =
-      cityCopy?.seoTitle ||
-      pageSeo?.seoTitle ||
-      (city
-        ? `${fallbackTitle} en ${city.short || city.name}`
-        : fallbackTitle)
+      candidate && mentionsCity(candidate)
+        ? candidate
+        : city
+          ? displayH1 || `${fallbackTitle} en ${city.name}`
+          : candidate || fallbackTitle
 
     const descSource =
       cityCopy?.seoDescription ||

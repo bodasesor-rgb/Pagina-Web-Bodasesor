@@ -119,6 +119,21 @@ function loadJsonSlugs() {
   }
 }
 
+/** Exact (non-wildcard) 301/302 sources in _redirects — never list them in the sitemap. */
+function redirectSources() {
+  const file = existsSync(join(DIST, '_redirects')) ? join(DIST, '_redirects') : join(ROOT, 'public', '_redirects')
+  const out = new Set()
+  if (!existsSync(file)) return out
+  for (const line of readFileSync(file, 'utf8').split('\n')) {
+    const [from, to, status] = line.trim().split(/\s+/)
+    if (!from || from.startsWith('#') || from.includes('*') || from.includes(':') || !to) continue
+    if (!/^30[12]!?$/.test(status || '301')) continue
+    const src = from.replace(/\/$/, '') || '/'
+    if (src !== (to.replace(/\/$/, '') || '/')) out.add(src)
+  }
+  return out
+}
+
 function loadBlogSlugs() {
   const p = join(ROOT, 'seo-seed', 'blog-slugs.txt')
   if (!existsSync(p)) return []
@@ -346,6 +361,7 @@ async function collectPaths(imageMap) {
     }
   }
 
+  const redirected = redirectSources()
   return {
     paths: [...paths]
       .filter(
@@ -354,6 +370,8 @@ async function collectPaths(imageMap) {
           !p.includes('?') &&
           p !== '/buscar' &&
           !p.startsWith('/buscar') &&
+          !p.startsWith('/nexus-output-pages/') &&
+          !redirected.has(p.replace(/\/$/, '') || '/') &&
           !isOffTopicBlogPath(p),
       )
       .sort(),

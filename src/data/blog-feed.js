@@ -8,7 +8,7 @@ import {
   blogPosts as legacyBlogPosts,
   getBlogPostBySlug as getLegacyBlogPostBySlug,
 } from './blog-data.js'
-import { isOffTopicBlogSlug } from '../utils/offtopic-blog.js'
+import { isNoindexBlogPost } from '../utils/offtopic-blog.js'
 
 function getAllBlogPosts() {
   const nexus = Array.isArray(listing?.posts) ? listing.posts : []
@@ -18,7 +18,7 @@ function getAllBlogPosts() {
 }
 
 export function getBlogFeed() {
-  return getAllBlogPosts().filter((p) => !isOffTopicBlogSlug(p.slug))
+  return getAllBlogPosts().filter((p) => !isNoindexBlogPost(p))
 }
 
 /** @deprecated Prefer getBlogFeed() — kept for call sites that expect an array binding. */
