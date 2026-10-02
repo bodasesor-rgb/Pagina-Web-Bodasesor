@@ -22,7 +22,6 @@ import {
 import { absoluteUrl } from './lib/seo-canonical.mjs'
 import { isNoindexPath } from '../src/utils/offtopic-blog.js'
 import { SEO_TITLE_MAX, shortenExistingTitle } from '../src/utils/seo-title.js'
-
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const DIST = join(ROOT, 'dist')
@@ -415,6 +414,7 @@ function cleanNexusText(html) {
     .map((part, i) => {
       if (i % 2 === 1) return part
       return part
+        .replace(/<p\b[^>]*>\s*[.,;:]?\s*<\/p>\s*/g, '')
         .replace(/\*\*\s*(<strong>[^<]*<\/strong>)\s*\*\*/g, '$1')
         .replace(/\*\*\s*([^*<>\n]{1,160}?)\s*\*\*/g, '<strong>$1</strong>')
         .replace(/>([^<]+)</g, (m, t) => `>${fixTextNode(t).replace(/\*\*/g, '')}<`)
@@ -755,6 +755,8 @@ function patchHtml(html, filePath) {
   }
   // H1 too long to carry " | Bodasesor" → keep the full H1 (distinct keywords) and drop the brand.
   const nextTitle = (t) => {
+    const core = t.split('|')[0].trim()
+    if (isLanding && core.length < 12 && !/\s/.test(core)) return shortenTitle(`${core} para Eventos y Fiestas en México`)
     if (h1Restores(t)) {
       const branded = shortenTitle(identity.h1)
       return branded.split('|')[0].trim().length < identity.h1.length ? identity.h1 : branded
