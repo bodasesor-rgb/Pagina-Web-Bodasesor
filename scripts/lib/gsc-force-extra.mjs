@@ -43,5 +43,5 @@ export const GSC_FORCE_EXTRA = [
   ['/collections/inflables-valle-de-bravo', '/inflables/valle-de-bravo/'],
   ['/products/catering-de-comida-japonesa-cdmx', '/banquetes-catering/ciudad-de-mexico/'],
   // Dead blog slug → blog index (no matching static article)
-  ['/blogs/noticias/frases-romanticas-buenos-dias-pareja', '/blog/'],
+  ['/blogs/noticias/frases-romanticas-buenos-dias-pareja', '/blog/frases-romanticas-buenos-dias-pareja/'],
 ]
