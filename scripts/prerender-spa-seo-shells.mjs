@@ -301,13 +301,25 @@ function applySeo(html, entry) {
     .join('')
 
   const legalMain = renderLegalStaticHtml(entry.path, escapeHtml)
+  const articleBody = Array.isArray(entry.body)
+    ? entry.body
+        .map((html) => {
+          const clean = String(html).replace(/<(?!\/?(strong|em|b|i|a|br|h2|h3|ul|ol|li)\b)[^>]*>/gi, '')
+          return /^\s*<(h2|h3|ul|ol)\b/i.test(clean) ? clean : `<p>${clean}</p>`
+        })
+        .join('')
+    : ''
   const crawlerMain = legalMain
     ? legalMain
-    : `<main id="spa-crawler-content" style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(description)}</p></main>`
+    : `<main id="spa-crawler-content" style="padding:2rem;font-family:Georgia,serif;color:#162040"><nav aria-label="Migas de pan" style="margin-bottom:1rem;font-size:0.9rem">${crumbHtml}</nav><h1>${escapeHtml(entry.h1)}</h1><p>${escapeHtml(description)}</p>${articleBody}</main>`
 
-  // Visible without JS (Google OAuth brand fetchers do not execute React)
+  // In the HTML for non-JS fetchers (OAuth brand checks), but visually hidden so it
+  // never paints above the app or shifts layout; React removes it on mount.
   if (out.includes('<div id="root"></div>')) {
-    out = out.replace('<div id="root"></div>', `${crawlerMain}\n    <div id="root"></div>`)
+    out = out.replace(
+      '<div id="root"></div>',
+      `<div id="spa-crawler-wrap" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)">${crawlerMain}</div>\n    <div id="root"></div>`,
+    )
   }
 
   const noscript = `<noscript>${crawlerMain}</noscript>`

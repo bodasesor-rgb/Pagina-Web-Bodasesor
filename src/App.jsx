@@ -207,6 +207,7 @@ function StaticLcpCleanup() {
   useLayoutEffect(() => {
     // OAuth brand strip stays in HTML for crawlers but must never paint for visitors.
     document.getElementById('site-legal-boot')?.setAttribute('hidden', '')
+    document.getElementById('spa-crawler-wrap')?.remove()
     if (isHomePath(location)) {
       // Keep #lcp-hero-wrap + #static-hero-copy — Home owns early LCP (image + H1).
       removeSpaLcpPrerender()

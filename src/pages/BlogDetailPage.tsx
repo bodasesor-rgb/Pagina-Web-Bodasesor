@@ -118,10 +118,15 @@ export default function BlogDetailPage({ slug }: Props) {
           {post.excerpt}
         </p>
         <div className="space-y-6">
-          {post.body.map((paragraph, i) => (
-            <p key={i} className="text-gray-700 font-serif text-lg leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: paragraph }} />
-          ))}
+          {post.body.map((paragraph, i) =>
+            /^\s*<(h2|h3|ul|ol)\b/i.test(paragraph) ? (
+              <div key={i} className="blog-block text-gray-700 font-serif text-lg leading-relaxed [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#162040] [&_h2]:mt-10 [&_h2]:mb-2 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[#162040] [&_h3]:mt-6 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2"
+                dangerouslySetInnerHTML={{ __html: paragraph }} />
+            ) : (
+              <p key={i} className="text-gray-700 font-serif text-lg leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: paragraph }} />
+            )
+          )}
         </div>
 
         {/* CTA inline */}

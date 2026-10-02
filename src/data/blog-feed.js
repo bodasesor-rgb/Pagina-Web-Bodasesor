@@ -8,12 +8,17 @@ import {
   blogPosts as legacyBlogPosts,
   getBlogPostBySlug as getLegacyBlogPostBySlug,
 } from './blog-data.js'
+import { isOffTopicBlogSlug } from '../utils/offtopic-blog.js'
 
-export function getBlogFeed() {
+function getAllBlogPosts() {
   const nexus = Array.isArray(listing?.posts) ? listing.posts : []
   const seen = new Set(nexus.map((p) => p.slug))
   const legacy = legacyBlogPosts.filter((p) => p?.slug && !seen.has(p.slug))
   return [...nexus, ...legacy]
+}
+
+export function getBlogFeed() {
+  return getAllBlogPosts().filter((p) => !isOffTopicBlogSlug(p.slug))
 }
 
 /** @deprecated Prefer getBlogFeed() — kept for call sites that expect an array binding. */
@@ -21,7 +26,7 @@ export const blogPosts = getBlogFeed()
 
 export function getBlogPostBySlug(slug) {
   if (!slug) return null
-  const hit = getBlogFeed().find((p) => p.slug === slug)
+  const hit = getAllBlogPosts().find((p) => p.slug === slug)
   if (hit) return hit
   return getLegacyBlogPostBySlug(slug)
 }

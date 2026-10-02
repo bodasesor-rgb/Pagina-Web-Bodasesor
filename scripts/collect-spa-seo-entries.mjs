@@ -21,6 +21,7 @@ import { FLORERIA } from '../src/data/floreria-products.js'
 import { SHOWS } from '../src/data/shows-products.js'
 import { COMBINACIONES } from '../src/data/combinaciones-products.js'
 import { blogPosts } from '../src/data/blog-data.js'
+import { isOffTopicBlogSlug } from '../src/utils/offtopic-blog.js'
 import { CITY_MAP } from '../src/data/city-data.js'
 import { SPA_SEO_HUBS } from '../src/data/spa-seo-hubs.js'
 import { CATALOGOS } from '../src/data/catalogos-embeds.js'
@@ -184,11 +185,12 @@ export function collectSpaSeoEntries({ includeAllCityProductVariants = true } = 
 
   for (const post of blogPosts) {
     if (!post?.slug || !post?.title) continue
-    put(
-      entry(`/blog/${post.slug}`, post.title, post.excerpt || post.title, post.title, null, {
-        image: post.image || null,
-      }),
-    )
+    const e = entry(`/blog/${post.slug}`, post.title, post.excerpt || post.title, post.title, null, {
+      image: post.image || null,
+      noindex: isOffTopicBlogSlug(post.slug),
+    })
+    if (e && Array.isArray(post.body)) e.body = post.body
+    put(e)
   }
 
   for (const p of products) {

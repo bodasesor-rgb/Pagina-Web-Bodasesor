@@ -20,6 +20,7 @@ import {
   labelFromSlug,
 } from '../src/utils/seo-page-meta.js'
 import { absoluteUrl } from './lib/seo-canonical.mjs'
+import { isOffTopicBlogPath } from '../src/utils/offtopic-blog.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -39,7 +40,7 @@ const GA_SNIPPET = `<!-- Google tag (gtag.js) -->
 function stripBrand(text) {
   return String(text ?? '')
     .replace(/\s*—\s*Cotización Gratis\s*/gi, ' ')
-    .replace(/\s*\|\s*Bodasesor(\s+Eventos)?\s*$/i, '')
+    .replace(/(\s*\|\s*Bodasesor(\s+Eventos)?)+\s*$/i, '')
     .replace(/\s+a Domicilio/gi, '')
     .replace(/\s{2,}/g, ' ')
     .trim()
@@ -49,7 +50,13 @@ function buildTitle(core) {
   const brand = ' | Bodasesor'
   let title = `${core}${brand}`
   if (title.length <= MAX_TITLE) return title
-  return `${core.slice(0, MAX_TITLE - brand.length).trim()}${brand}`
+  const cut = core.slice(0, MAX_TITLE - brand.length)
+  const atWord = cut.includes(' ') ? cut.slice(0, cut.lastIndexOf(' ')) : cut
+  const tidy = atWord
+    .replace(/(\s+(de|del|la|las|el|los|y|e|en|para|con|a|o|por|sin|sobre|tu|tus|mi|su|sus|que))+$/i, '')
+    .replace(/[\s,:;—-]+$/, '')
+    .trim()
+  return `${tidy}${brand}`
 }
 
 function shortenTitle(raw) {
@@ -383,7 +390,8 @@ function patchCanonicalUrls(html, filePath) {
   }
 
   if (isNexus || isBlog) {
-    const robots = ensureNamedMeta(out, 'robots', 'index, follow')
+    const directive = isOffTopicBlogPath(path) ? 'noindex, follow' : 'index, follow'
+    const robots = ensureNamedMeta(out, 'robots', directive)
     out = robots.html
     if (robots.changed) changed = true
   }
@@ -652,8 +660,11 @@ function patchHtml(html, filePath) {
   out = heroPreload.html
   if (heroPreload.changed) changed = true
 
+  const isGenericBlogTitle = (t) => /^\s*Blog\s*\|/i.test(t) || /^\s*Bodasesor Eventos Blog/i.test(t)
+  const blogH1 = pathFromFile(filePath).startsWith('/blog/') ? identity.h1 : ''
+
   out = out.replace(/<title>([^<]*)<\/title>/i, (match, inner) => {
-    const next = shortenTitle(inner)
+    const next = shortenTitle(blogH1 && isGenericBlogTitle(inner) ? blogH1 : inner)
     if (next === inner) return match
     changed = true
     return `<title>${next}</title>`
@@ -662,10 +673,10 @@ function patchHtml(html, filePath) {
   out = out.replace(
     /<meta\s+property="og:title"\s+content="([^"]*)"\s*\/?>/gi,
     (match, inner) => {
-      const next = shortenTitle(inner)
+      const next = shortenTitle(blogH1 && isGenericBlogTitle(inner) ? blogH1 : inner)
       if (next === inner) return match
       changed = true
-      return `<meta property="og:title" content="${next}">`
+      return `<meta property="og:title" content="${escapeAttr(next)}">`
     },
   )
 

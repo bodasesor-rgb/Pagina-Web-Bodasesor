@@ -26,7 +26,13 @@ export function buildSeoTitle(headline, cityShort = null) {
   if (title.length <= SEO_TITLE_MAX) return title
 
   const maxCore = SEO_TITLE_MAX - BRAND.length
-  return `${core.slice(0, maxCore).trim()}${BRAND}`
+  const cut = core.slice(0, maxCore)
+  const atWord = core.charAt(maxCore) === ' ' || !cut.includes(' ') ? cut : cut.slice(0, cut.lastIndexOf(' '))
+  const tidy = atWord
+    .replace(/(\s+(de|del|la|las|el|los|y|e|en|para|con|a|o|por|sin|sobre|tu|tus|mi|su|sus|que))+$/i, '')
+    .replace(/[\s,:;—-]+$/, '')
+    .trim()
+  return `${tidy}${BRAND}`
 }
 
 /** Shorten an existing full title (e.g. Nexus HTML) to ≤60 chars. */
